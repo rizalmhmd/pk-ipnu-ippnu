@@ -1,0 +1,38 @@
+<?php
+
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\MemberController;
+use App\Http\Controllers\Admin\AgendaController;
+use App\Http\Controllers\Admin\PageSettingController;
+use App\Http\Controllers\Admin\SiteSettingController;
+use App\Http\Controllers\PublicController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
+
+// Public Routes
+Route::get('/', [PublicController::class, 'index'])->name('home');
+Route::get('/profil', [PublicController::class, 'profile'])->name('profile');
+Route::get('/berita', [PublicController::class, 'news'])->name('news.index');
+Route::get('/berita/{slug}', [PublicController::class, 'newsDetail'])->name('news.show');
+Route::get('/galeri', [PublicController::class, 'gallery'])->name('gallery.index');
+
+// Admin Routes (Protected)
+Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    Route::resource('posts', PostController::class);
+    Route::resource('galleries', GalleryController::class);
+    Route::resource('members', MemberController::class);
+    Route::resource('agendas', AgendaController::class);
+    Route::resource('page-settings', PageSettingController::class)->only(['index', 'edit', 'update']);
+    Route::get('site-settings', [SiteSettingController::class, 'edit'])->name('site-settings.edit');
+    Route::put('site-settings', [SiteSettingController::class, 'update'])->name('site-settings.update');
+    
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
