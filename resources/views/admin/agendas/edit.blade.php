@@ -22,6 +22,17 @@
                 @error('title')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
+            <div class="mb-4">
+                <label for="category" class="form-label fw-bold small text-uppercase text-muted">Kategori Agenda</label>
+                <select class="form-select @error('category') id-invalid @enderror" id="category" name="category" required>
+                    <option value="organisasi" {{ (old('category', $agenda->category) == 'organisasi') ? 'selected' : '' }}>Kegiatan Organisasi (Biru)</option>
+                    <option value="nasional" {{ (old('category', $agenda->category) == 'nasional') ? 'selected' : '' }}>Hari Libur Nasional (Merah)</option>
+                    <option value="keagamaan" {{ (old('category', $agenda->category) == 'keagamaan') ? 'selected' : '' }}>Hari Besar Keagamaan (Hijau)</option>
+                    <option value="khusus" {{ (old('category', $agenda->category) == 'khusus') ? 'selected' : '' }}>Hari Khusus (Kuning)</option>
+                </select>
+                @error('category')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="row mb-4">

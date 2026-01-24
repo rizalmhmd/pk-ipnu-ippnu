@@ -5,15 +5,15 @@
     <h1 class="h2 fw-bold text-dark">Pengaturan Halaman</h1>
 </div>
 
-<div class="card border-0 shadow-sm">
+<div class="card-premium">
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="bg-light">
+            <table class="table table-hover table-premium align-middle mb-0">
+                <thead>
                     <tr>
-                        <th scope="col" class="ps-4 py-3 border-0 text-muted small fw-bold text-uppercase">Halaman</th>
-                        <th scope="col" class="py-3 border-0 text-muted small fw-bold text-uppercase">Judul Hero</th>
-                        <th scope="col" class="pe-4 py-3 border-0 text-end text-muted small fw-bold text-uppercase">Aksi</th>
+                        <th scope="col" class="ps-4">Halaman</th>
+                        <th scope="col">Judul Hero</th>
+                        <th scope="col" class="pe-4 text-end">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,7 +34,7 @@
                         </td>
                         <td>{{ $setting->hero_title }}</td>
                         <td class="pe-4 text-end">
-                            <a href="{{ route('admin.page-settings.edit', $setting->id) }}" class="btn btn-sm btn-outline-primary shadow-sm">
+                            <a href="{{ route('admin.page-settings.edit', $setting->id) }}" class="btn btn-sm btn-outline-primary rounded-pill px-3">
                                 <i class="bi bi-gear-fill me-1"></i> Atur
                             </a>
                         </td>

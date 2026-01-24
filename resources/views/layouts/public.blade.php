@@ -217,6 +217,7 @@
 
         /* Hero Section */
         .hero-section {
+            background: var(--primary-green); /* Fallback color */
             background: linear-gradient(rgba(0, 64, 0, 0.85), rgba(0, 0, 128, 0.85)), 
                         url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
@@ -471,6 +472,30 @@
 
         .navbar-toggler-icon-custom {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* Image Optimization Utilities */
+        .img-placeholder {
+            background-color: var(--gray-100);
+            position: relative;
+            overflow: hidden;
+        }
+        .img-placeholder::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: translateX(-100%);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+        img {
+            transition: opacity 0.3s ease-in-out;
         }
     </style>
 </head>

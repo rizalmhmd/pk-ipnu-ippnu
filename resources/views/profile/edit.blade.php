@@ -12,42 +12,42 @@
     </div>
 @endif
 
-<div class="row">
+<div class="row g-4">
     <!-- Update Profile Information -->
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-header bg-white py-3">
-                <h5 class="mb-0">Informasi Profil</h5>
-                <small class="text-muted">Perbarui informasi profil dan alamat email akun Anda.</small>
+    <div class="col-md-6">
+        <div class="card-premium h-100">
+            <div class="card-header py-3">
+                <h5 class="mb-0 fw-bold">Informasi Profil</h5>
+                <small class="text-secondary opacity-75">Perbarui informasi profil dan alamat email akun Anda.</small>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4">
                 <form method="post" action="{{ route('admin.profile.update') }}">
                     @csrf
                     @method('patch')
 
                     <div class="mb-3">
-                        <label for="name" class="form-label">Nama Lengkap</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $user->name) }}" required autofocus autocomplete="name">
+                        <label for="name" class="form-label-premium">Nama Lengkap</label>
+                        <input type="text" class="form-control form-control-premium @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name', $user->name) }}" required autofocus autocomplete="name">
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $user->email) }}" required autocomplete="username">
+                    <div class="mb-4">
+                        <label for="email" class="form-label-premium">Email</label>
+                        <input type="email" class="form-control form-control-premium @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email', $user->email) }}" required autocomplete="username">
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
 
                         @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                            <div class="mt-2">
-                                <p class="text-sm text-gray-800">
+                            <div class="mt-3">
+                                <p class="text-sm text-secondary">
                                     Alamat email Anda belum diverifikasi.
-                                    <button form="send-verification" class="btn btn-link p-0 m-0 align-baseline">Klik di sini untuk mengirim ulang email verifikasi.</button>
+                                    <button form="send-verification" class="btn btn-link p-0 m-0 align-baseline text-primary">Klik di sini untuk mengirim ulang email verifikasi.</button>
                                 </p>
                                 @if (session('status') === 'verification-link-sent')
-                                    <p class="mt-2 font-medium text-sm text-green-600">
+                                    <p class="mt-2 fw-medium text-sm text-success">
                                         Link verifikasi baru telah dikirim ke alamat email Anda.
                                     </p>
                                 @endif
@@ -55,52 +55,52 @@
                         @endif
                     </div>
 
-                    <button type="submit" class="btn btn-primary bg-gradient border-0 shadow-sm px-4">Simpan Perubahan</button>
+                    <button type="submit" class="btn-premium px-4">Simpan Perubahan</button>
                 </form>
             </div>
         </div>
     </div>
 
     <!-- Update Password -->
-    <div class="col-md-6 mb-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-header bg-white py-3">
-                <h5 class="mb-0">Perbarui Password</h5>
-                <small class="text-muted">Pastikan akun Anda menggunakan password yang panjang dan acak agar tetap aman.</small>
+    <div class="col-md-6">
+        <div class="card-premium h-100">
+            <div class="card-header py-3">
+                <h5 class="mb-0 fw-bold">Perbarui Password</h5>
+                <small class="text-secondary opacity-75">Pastikan akun Anda menggunakan password yang panjang dan acak.</small>
             </div>
-            <div class="card-body">
+            <div class="card-body p-4">
                 <form method="post" action="{{ route('password.update') }}">
                     @csrf
                     @method('put')
 
                     <div class="mb-3">
-                        <label for="current_password" class="form-label">Password Saat Ini</label>
-                        <input type="password" class="form-control @error('current_password', 'updatePassword') is-invalid @enderror" id="current_password" name="current_password" autocomplete="current-password">
+                        <label for="current_password" class="form-label-premium">Password Saat Ini</label>
+                        <input type="password" class="form-control form-control-premium @error('current_password', 'updatePassword') is-invalid @enderror" id="current_password" name="current_password" autocomplete="current-password">
                         @error('current_password', 'updatePassword')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password Baru</label>
-                        <input type="password" class="form-control @error('password', 'updatePassword') is-invalid @enderror" id="password" name="password" autocomplete="new-password">
+                        <label for="password" class="form-label-premium">Password Baru</label>
+                        <input type="password" class="form-control form-control-premium @error('password', 'updatePassword') is-invalid @enderror" id="password" name="password" autocomplete="new-password">
                         @error('password', 'updatePassword')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
-                        <input type="password" class="form-control @error('password_confirmation', 'updatePassword') is-invalid @enderror" id="password_confirmation" name="password_confirmation" autocomplete="new-password">
+                    <div class="mb-4">
+                        <label for="password_confirmation" class="form-label-premium">Konfirmasi Password</label>
+                        <input type="password" class="form-control form-control-premium @error('password_confirmation', 'updatePassword') is-invalid @enderror" id="password_confirmation" name="password_confirmation" autocomplete="new-password">
                         @error('password_confirmation', 'updatePassword')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary bg-gradient border-0 shadow-sm px-4">Simpan Password</button>
+                    <button type="submit" class="btn-premium px-4">Simpan Password</button>
 
                     @if (session('status') === 'password-updated')
-                        <p class="small text-success mt-2 mb-0">Password berhasil disimpan.</p>
+                        <p class="small text-success mt-3 mb-0"><i class="bi bi-check-circle me-1"></i> Password berhasil disimpan.</p>
                     @endif
                 </form>
             </div>
@@ -108,15 +108,15 @@
     </div>
     
     <!-- Delete Account -->
-    <div class="col-12 mb-4">
-        <div class="card shadow-sm border-danger">
-            <div class="card-header bg-danger text-white py-3">
-                <h5 class="mb-0">Hapus Akun</h5>
-                <small>Setelah akun Anda dihapus, semua data dan sumber dayanya akan dihapus secara permanen.</small>
+    <div class="col-12">
+        <div class="card-premium border-danger border-opacity-25">
+            <div class="card-header bg-danger bg-opacity-10 py-3">
+                <h5 class="mb-0 fw-bold text-danger">Zona Berbahaya</h5>
+                <small class="text-danger opacity-75">Setelah akun Anda dihapus, semua data akan dihapus secara permanen.</small>
             </div>
-            <div class="card-body">
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmUserDeletionModal">
-                    Hapus Akun
+            <div class="card-body p-4">
+                <button type="button" class="btn btn-outline-danger rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#confirmUserDeletionModal">
+                    Hapus Akun Permanen
                 </button>
             </div>
         </div>

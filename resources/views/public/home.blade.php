@@ -23,11 +23,11 @@
                 @forelse($posts as $post)
                 <div class="col-md-6 mb-4">
                     <div class="card card-custom h-100 border-0 shadow-sm animate-fade-in-up">
-                        <div class="position-relative">
+                        <div class="position-relative overflow-hidden img-placeholder" style="height: 200px;">
                             @if($post->image)
-                            <img src="{{ $storageUrl($post->image) }}" class="card-img-top" alt="{{ $post->title }}" style="height: 200px; object-fit: cover;">
+                            <img src="{{ $storageUrl($post->image) }}" class="card-img-top" alt="{{ $post->title }}" style="height: 200px; object-fit: cover;" loading="lazy" decoding="async">
                             @else
-                            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="News Image" style="height: 200px; object-fit: cover;">
+                            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="News Image" style="height: 200px; object-fit: cover;" loading="lazy" decoding="async">
                             @endif
                             <div class="position-absolute top-0 end-0 m-2">
                                 <span class="badge bg-primary rounded-pill shadow-sm">News</span>
@@ -43,7 +43,7 @@
                 </div>
                 @empty
                 <div class="col-12 text-center py-5">
-                    <img src="https://illustrations.popsy.co/gray/empty-states.svg" alt="Empty" style="max-height: 150px;" class="mb-3">
+                    <img src="https://illustrations.popsy.co/gray/empty-states.svg" alt="Empty" style="max-height: 150px;" class="mb-3" loading="lazy">
                     <p class="text-muted">Belum ada berita terbaru saat ini.</p>
                 </div>
                 @endforelse
@@ -54,12 +54,12 @@
                 <div class="card-header bg-white border-0 pt-4 px-4 pb-0">
                     <h5 class="fw-bold mb-0">{{ optional($greeting)->hero_title ?? 'Sambutan Ketua' }}</h5>
                 </div>
-                <div class="card-body p-4">
-                    <div class="text-center mb-3">
+                <div class="card-body p-4 text-center">
+                    <div class="mb-3 d-inline-block img-placeholder rounded-circle" style="width: 100px; height: 100px;">
                         @if(optional($greeting)->hero_image)
-                        <img src="{{ $storageUrl($greeting->hero_image) }}" class="rounded-circle shadow-sm mb-3" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--primary-green);">
+                        <img src="{{ $storageUrl($greeting->hero_image) }}" class="rounded-circle shadow-sm" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--primary-green);" loading="lazy">
                         @else
-                        <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px; border: 3px solid var(--primary-green);">
+                        <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 100px; height: 100px; border: 3px solid var(--primary-green);">
                             <i class="fas fa-user-tie fa-3x text-muted"></i>
                         </div>
                         @endif

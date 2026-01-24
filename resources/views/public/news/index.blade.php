@@ -13,11 +13,11 @@
         @forelse($posts as $index => $post)
         <div class="col-md-6 col-lg-4 mb-4">
             <div class="card card-custom h-100 border-0 shadow-sm animate-fade-in-up" style="animation-delay: {{ $index * 0.05 }}s">
-                <div class="position-relative">
+                <div class="position-relative overflow-hidden img-placeholder" style="height: 220px;">
                     @if($post->image)
-                    <img src="{{ $storageUrl($post->image) }}" class="card-img-top" alt="{{ $post->title }}" style="height: 220px; object-fit: cover;">
+                    <img src="{{ $storageUrl($post->image) }}" class="card-img-top" alt="{{ $post->title }}" style="height: 220px; object-fit: cover;" loading="lazy" decoding="async">
                     @else
-                    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="News Image" style="height: 220px; object-fit: cover;">
+                    <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="News Image" style="height: 220px; object-fit: cover;" loading="lazy" decoding="async">
                     @endif
                     <div class="position-absolute bottom-0 start-0 m-3">
                         <span class="badge bg-white text-primary rounded-pill shadow-sm px-3">Berita</span>

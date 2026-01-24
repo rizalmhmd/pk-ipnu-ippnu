@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 24 Jan 2026 pada 08.06
+-- Waktu pembuatan: 24 Jan 2026 pada 09.15
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `agendas` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
+  `category` varchar(255) NOT NULL DEFAULT 'organisasi',
   `description` text DEFAULT NULL,
   `event_date` date NOT NULL,
   `event_time` time DEFAULT NULL,
@@ -42,8 +43,8 @@ CREATE TABLE `agendas` (
 -- Dumping data untuk tabel `agendas`
 --
 
-INSERT INTO `agendas` (`id`, `title`, `description`, `event_date`, `event_time`, `location`, `created_at`, `updated_at`) VALUES
-(1, 'rapat', 'Epic Games, Inc. adalah pengembang perangkat lunak dan penerbit permainan video Amerika yang berbasis di Cary, North Carolina. Perusahaan ini didirikan oleh Tim Sweeney sebagai Potomac Computer Systems pada tahun 1991, awalnya berlokasi di rumah orang tuanya di Potomac, Maryland.', '2026-01-31', '12:00:00', 'PCNU', '2026-01-23 23:35:00', '2026-01-23 23:58:08');
+INSERT INTO `agendas` (`id`, `title`, `category`, `description`, `event_date`, `event_time`, `location`, `created_at`, `updated_at`) VALUES
+(1, 'rapat', 'organisasi', 'Epic Games, Inc. adalah pengembang perangkat lunak dan penerbit permainan video Amerika yang berbasis di Cary, North Carolina. Perusahaan ini didirikan oleh Tim Sweeney sebagai Potomac Computer Systems pada tahun 1991, awalnya berlokasi di rumah orang tuanya di Potomac, Maryland.', '2026-01-31', '12:00:00', 'PCNU', '2026-01-23 23:35:00', '2026-01-23 23:58:08');
 
 -- --------------------------------------------------------
 
@@ -177,7 +178,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (29, '2026_01_23_103307_add_content_to_page_settings_table', 1),
 (30, '2026_01_23_160051_create_site_settings_table', 1),
 (31, '2026_01_23_170114_add_default_hero_to_site_settings_table', 2),
-(32, '2026_01_24_065245_add_event_time_to_agendas_table', 3);
+(32, '2026_01_24_065245_add_event_time_to_agendas_table', 3),
+(33, '2026_01_24_072224_add_category_to_agendas_table', 4);
 
 -- --------------------------------------------------------
 
@@ -258,7 +260,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('tjSJg7iz0NeLFtId1nYio7VST3IVT7M0Fjxud6BU', NULL, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiUjB1U01SRkRLQm9xZ0R4M3IxS2ptaXp6d2tFTjJEcDlpNllMQnpBMCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mjg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9nYWxlcmkiO3M6NToicm91dGUiO3M6MTM6ImdhbGxlcnkuaW5kZXgiO319', 1769238315);
+('SIOXrVGE0Nm52SifTR93u8Kh454w5e3kPQm6cdw3', 1, '127.0.0.1', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiNnBlUGN4Q3JVNFlUQVdJTjVERFRZRkFmc2lvcDFRZUg1YWx5ZWoycSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9hZ2VuZGFzIjtzOjU6InJvdXRlIjtzOjE5OiJhZG1pbi5hZ2VuZGFzLmluZGV4Ijt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9', 1769242460);
 
 -- --------------------------------------------------------
 
@@ -462,7 +464,7 @@ ALTER TABLE `members`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT untuk tabel `page_settings`

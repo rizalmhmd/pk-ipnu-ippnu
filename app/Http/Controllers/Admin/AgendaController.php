@@ -33,6 +33,7 @@ class AgendaController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'category' => 'required|string|in:nasional,organisasi,keagamaan,khusus',
             'event_date' => 'required|date',
             'event_time' => 'nullable',
             'location' => 'nullable|string|max:255',
@@ -60,6 +61,7 @@ class AgendaController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
+            'category' => 'required|string|in:nasional,organisasi,keagamaan,khusus',
             'event_date' => 'required|date',
             'event_time' => 'nullable',
             'location' => 'nullable|string|max:255',

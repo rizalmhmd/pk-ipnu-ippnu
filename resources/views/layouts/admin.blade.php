@@ -3,413 +3,456 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - PKPT IPNU IPPNU</title>
+    <title>Admin Dashboard - {{ $siteSetting->site_name ?? 'PKPT IPNU IPPNU' }}</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Bootstrap 5 CSS -->
+    <!-- CSS Dependencies -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     
     @stack('styles')
     
     <style>
         :root {
-            --primary-color: #008000;
-            --primary-blue: #0000FF;
+            --primary-color: #059669;
+            --primary-blue: #2563eb;
             --secondary-color: #64748b;
             --success-color: #10b981;
             --info-color: #3b82f6;
             --warning-color: #f59e0b;
             --danger-color: #ef4444;
-            --light-color: #f8fafc;
-            --dark-color: #0f172a;
-            --sidebar-width: 260px;
+            --sidebar-width: 280px;
+            --sidebar-collapsed: 80px;
             --font-family: 'Inter', sans-serif;
-            --glass-bg: rgba(255, 255, 255, 0.95);
-            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-            --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --font-heading: 'Plus Jakarta Sans', sans-serif;
+            
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-sidebar: #ffffff;
+            --bg-navbar: rgba(255, 255, 255, 0.85);
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+        }
+
+        html.dark-mode {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-sidebar: #1e293b;
+            --bg-navbar: rgba(30, 41, 59, 0.85);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --card-bg: #1e293b;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
             font-family: var(--font-family);
             font-size: 0.9375rem;
-            background-color: #f1f5f9;
-            color: var(--dark-color);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: var(--font-heading); font-weight: 600; }
+        .text-dark { color: var(--text-primary) !important; }
+        .text-muted { color: var(--text-secondary) !important; }
+        .bg-white { background-color: var(--card-bg) !important; }
+
+        .navbar-premium {
+            position: fixed;
+            top: 0; left: 0; right: 0; height: 70px;
+            background: var(--bg-navbar);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1050; padding: 0 1.5rem;
+            display: flex; align-items: center;
+        }
+
+        .sidebar-premium {
+            position: fixed;
+            top: 0; bottom: 0; left: 0; width: var(--sidebar-width);
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
+            z-index: 1040; padding-top: 70px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column;
+            overflow-y: auto;
             overflow-x: hidden;
         }
+
+        .sidebar-premium.collapsed { width: var(--sidebar-collapsed); }
         
-        /* Navbar Refinement */
-        .navbar-custom {
-            background-color: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-            height: 64px;
-            z-index: 1040;
+        .main-content {
+            margin-left: var(--sidebar-width); margin-top: 70px;
+            padding: 2.5rem; min-height: calc(100vh - 70px);
+            transition: margin-left 0.3s;
         }
-        
-        .navbar-brand {
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 1.4rem;
-            letter-spacing: -0.025em;
-        }
+        .main-content.collapsed { margin-left: var(--sidebar-collapsed); }
 
-        /* Sidebar Refinement */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 1050;
-            width: var(--sidebar-width);
-            padding: 1.5rem 0.75rem;
-            background-color: #fff;
-            border-right: 1px solid #e2e8f0;
-            overflow-y: auto;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        @media (min-width: 992px) {
-            .sidebar {
-                top: 64px;
-            }
-        }
-
-        .sidebar-header {
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1rem 1.5rem;
-            border-bottom: 1px solid #f1f5f9;
-            margin-bottom: 1rem;
-        }
-
-        .btn-close:focus {
-            box-shadow: none;
-            outline: 2px solid var(--primary-color);
-        }
-
-        @media (max-width: 991.98px) {
-            .sidebar {
-                left: 0;
-                transform: translateX(-100%);
-                padding-top: 0.5rem;
-                box-shadow: none;
-                visibility: hidden;
-                border-right: none;
-            }
-            .sidebar.show {
-                transform: translateX(0);
-                box-shadow: 10px 0 25px -5px rgba(0, 0, 0, 0.2);
-                visibility: visible;
-            }
-            .sidebar-header {
-                display: flex;
-            }
-            #sidebarClose {
-                width: 40px;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 50%;
-                border: 1px solid #e2e8f0;
-                background: #f8fafc;
-                color: #64748b;
-                cursor: pointer;
-                transition: all 0.2s;
-            }
-            #sidebarClose:hover {
-                background: #f1f5f9;
-                color: var(--danger-color);
-            }
-        }
-        
-        .sidebar-heading {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            color: var(--secondary-color);
-            margin: 1.5rem 1rem 0.5rem;
-        }
-
+        /* Typography & Nav */
+        .nav-list { list-style: none; padding: 1.5rem 1rem; margin: 0; flex-grow: 1; }
+        .nav-item { margin-bottom: 0.25rem; }
         .nav-link {
-            font-weight: 500;
-            color: #475569;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 0.125rem;
-            display: flex;
-            align-items: center;
-            transition: all 0.2s;
+            display: flex; align-items: center; padding: 0.875rem 1rem;
+            color: var(--text-secondary); text-decoration: none;
+            border-radius: var(--radius-md); transition: all 0.2s;
         }
-
-        .nav-link:hover {
-            color: var(--primary-color);
-            background-color: #f8fafc;
-            transform: translateX(4px);
-        }
-
+        .nav-link:hover { color: var(--text-primary); background: var(--bg-secondary); transform: translateX(4px); }
         .nav-link.active {
-            color: white;
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-blue) 100%);
-            box-shadow: 0 4px 12px rgba(0, 128, 0, 0.2);
+            color: white; background: linear-gradient(135deg, var(--primary-color), var(--primary-blue));
+            box-shadow: 0 4px 12px rgba(0, 128, 0, 0.3); font-weight: 600;
         }
-        
-        .nav-link i {
-            margin-right: 0.75rem;
-            font-size: 1.25rem;
-            opacity: 0.8;
-        }
+        .nav-icon { font-size: 1.25rem; margin-right: 0.75rem; width: 24px; text-align: center; }
+        .nav-link.active .nav-icon { color: white; }
+        .badge { margin-left: auto; font-size: 0.625rem; padding: 0.25rem 0.6rem; border-radius: 2rem; background: rgba(255, 255, 255, 0.2); color: white; }
+        .nav-link.active .badge { background: white; color: var(--primary-color); }
 
-        .nav-link.active i {
-            opacity: 1;
-        }
+        .sidebar-divider { position: relative; margin: 1.5rem 1rem; height: 1px; background: var(--border-color); }
+        .sidebar-divider span { position: absolute; top: -10px; left: 1rem; background: var(--bg-sidebar); padding: 0 0.5rem; font-size: 0.7rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Main Content Refinement */
-        main {
-            padding: 2rem;
-            min-height: calc(100vh - 64px);
-            transition: all 0.3s ease;
-            margin-top: 64px;
-        }
+        .sidebar-header { padding: 2rem 1.5rem; text-align: center; border-bottom: 1px solid var(--border-color); }
+        .sidebar-header h3 { font-size: 1.15rem; margin-bottom: 0.25rem; }
+        .sidebar-header p { font-size: 0.75rem; color: var(--text-secondary); margin: 0; }
 
-        @media (min-width: 992px) {
-            main {
-                margin-left: var(--sidebar-width);
-            }
-        }
-        
-        .card {
-            border: none;
-            border-radius: 1rem;
-            box-shadow: var(--card-shadow);
-            transition: all 0.3s ease;
-            background: #fff;
-        }
-        
-        .card:hover {
-            box-shadow: var(--card-shadow-hover);
-        }
-        
-        .btn {
-            padding: 0.6rem 1.2rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
+        .user-dropdown { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 1rem; border-radius: var(--radius-md); background: var(--bg-secondary); cursor: pointer; transition: all 0.2s; border: 1px solid var(--border-color); color: var(--text-primary); }
+        .user-dropdown:hover { background: var(--card-bg); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+        .user-avatar { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary-color), var(--primary-blue)); border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-weight: 600; }
 
-        .btn-sm {
-            padding: 0.4rem 0.8rem;
-            font-size: 0.8125rem;
+        .sidebar-toggle {
+            position: absolute; top: 1.25rem; right: -12px;
+            width: 24px; height: 24px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-blue));
+            border-radius: 50%; color: white; cursor: pointer;
+            z-index: 1050; display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow-md); transition: all 0.2s;
         }
-        
-        .bg-gradient {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-blue) 100%) !important;
-        }
+        .sidebar-toggle:hover { transform: scale(1.1); box-shadow: var(--shadow-lg); }
 
-        /* Mobile Refinement */
+        .sidebar-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px); z-index: 1035; display: none; }
+        .sidebar-overlay.show { display: block; }
+
         @media (max-width: 991.98px) {
-            .sidebar-backdrop {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(15, 23, 42, 0.4);
-                backdrop-filter: blur(4px);
-                z-index: 1045;
-                display: none;
-            }
-            .sidebar-backdrop.show {
-                display: block;
-            }
-            main {
-                padding: 1.5rem 1rem;
-            }
+            .sidebar-premium { transform: translateX(-100%); }
+            .sidebar-premium.show { transform: translateX(0); box-shadow: 15px 0 35px rgba(0,0,0,0.1); }
+            .main-content { margin-left: 0 !important; padding: 1.5rem; }
+            .sidebar-toggle { display: none; }
+            .mobile-menu-btn { display: block !important; }
         }
+        .mobile-menu-btn { display: none; }
 
-        /* Table Design */
-        .table thead th {
-            background-color: #f8fafc;
-            font-weight: 700;
-            text-transform: uppercase;
+        .brand-logo { 
+            width: 42px; height: 42px; 
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-blue)); 
+            border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            color: white !important; font-size: 1.25rem; 
+            box-shadow: 0 4px 10px rgba(0,128,0,0.2);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .brand-logo img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+        .brand-text { background: linear-gradient(135deg, var(--primary-color), var(--primary-blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 800; font-size: 1.35rem; }
+
+        /* Global CRUD Styling */
+        .table-premium thead th {
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
             font-size: 0.75rem;
-            color: #64748b;
-            padding: 1rem;
-            border-bottom: 2px solid #e2e8f0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            padding: 1.25rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .table-premium tbody td { padding: 1.25rem 1rem; color: var(--text-primary); border-bottom: 1px solid var(--border-color); }
+        .form-label-premium { font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .form-control-premium { 
+            background-color: var(--bg-secondary); 
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            transition: all 0.2s;
+            color: var(--text-primary);
+        }
+        .form-control-premium:focus {
+            background-color: var(--card-bg);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1);
+            outline: none;
         }
 
-        .table tbody td {
-            padding: 1rem;
-            vertical-align: middle;
-            color: #334155;
-            border-bottom: 1px solid #f1f5f9;
-        }
+        .card-premium { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); transition: all 0.3s; }
+        .card-premium:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
 
-        .alert {
-            border: none;
-            border-radius: 0.75rem;
-            box-shadow: var(--card-shadow);
+        .btn-premium { background: linear-gradient(135deg, var(--primary-color), var(--primary-blue)); border: none; color: white; padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 600; transition: all 0.3s; box-shadow: 0 4px 12px rgba(0, 128, 0, 0.2); }
+        .btn-premium:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 128, 0, 0.3); color: white; }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .spinner-premium { width: 40px; height: 40px; border: 3px solid var(--border-color); border-top: 3px solid var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; }
+        .hover-lift { transition: all 0.3s; }
+        .hover-lift:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .alert-premium { border: none; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); background: var(--card-bg); border-left: 4px solid; color: var(--text-primary); }
+        .form-check-input:checked { background-color: var(--primary-color); border-color: var(--primary-color); }
+        
+        /* Dark mode transitions */
+        html.dark-mode .nav-link:not(.active) { color: var(--text-secondary); }
+        html.dark-mode .nav-link:not(.active):hover { background: rgba(255, 255, 255, 0.05); color: white; }
+
+        /* Global Dark Mode Overrides for Bootstrap */
+        html.dark-mode .card { background-color: var(--card-bg); border-color: var(--border-color); color: var(--text-primary); }
+        html.dark-mode .card-header { background-color: rgba(255, 255, 255, 0.03); border-color: var(--border-color); color: var(--text-primary); }
+        html.dark-mode .table { color: var(--text-primary); border-color: var(--border-color); --bs-table-bg: transparent; }
+        html.dark-mode .table td, html.dark-mode .table th { background-color: transparent !important; color: var(--text-primary); }
+        html.dark-mode .table-hover tbody tr:hover { background-color: rgba(255, 255, 255, 0.05) !important; }
+        html.dark-mode .modal-content { background-color: var(--bg-sidebar); border-color: var(--border-color); color: var(--text-primary); }
+        html.dark-mode .modal-header, html.dark-mode .modal-footer { border-color: var(--border-color); }
+        html.dark-mode .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+        html.dark-mode .dropdown-menu { background-color: var(--bg-sidebar); border-color: var(--border-color); box-shadow: 0 10px 25px rgba(0,0,0,0.5) !important; }
+        html.dark-mode .dropdown-item { color: var(--text-primary); }
+        html.dark-mode .dropdown-item:hover { background-color: rgba(255, 255, 255, 0.05); color: var(--text-primary); }
+        html.dark-mode .dropdown-item.text-danger:hover { background-color: rgba(239, 68, 68, 0.1); color: #ef4444; }
+        html.dark-mode .dropdown-divider { border-color: var(--border-color); }
+        html.dark-mode .form-control, html.dark-mode .form-select { 
+            background-color: var(--bg-secondary); 
+            border-color: var(--border-color); 
+            color: var(--text-primary); 
         }
+        html.dark-mode .form-control:focus, html.dark-mode .form-select:focus { 
+            background-color: var(--bg-secondary); 
+            color: var(--text-primary); 
+        }
+        html.dark-mode .input-group-text { background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-secondary); }
+        html.dark-mode .bg-light { background-color: var(--bg-secondary) !important; }
+        html.dark-mode .text-muted { color: var(--text-secondary) !important; }
+        html.dark-mode .alert-success { background-color: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: #10b981; }
+        html.dark-mode .alert-danger { background-color: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2); color: #ef4444; }
+
+        /* Custom Scrollbar for Dark Mode */
+        html.dark-mode ::-webkit-scrollbar { width: 8px; }
+        html.dark-mode ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        html.dark-mode ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+        html.dark-mode ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
     </style>
 </head>
 <body>
-    
-    <header class="navbar navbar-custom fixed-top flex-md-nowrap p-0 px-3">
-        <div class="d-flex align-items-center w-100">
-            <button class="btn btn-link link-dark d-lg-none me-2 p-0" type="button" id="sidebarToggle" aria-label="Toggle navigation">
-                <i class="bi bi-list fs-2"></i>
-            </button>
-            <a class="navbar-brand me-0" href="{{ route('home') }}">
-               PKPT IPNU IPPNU
-            </a>
-            
-            <div class="ms-auto d-flex align-items-center">
-                <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                        <i class="bi bi-box-arrow-right"></i> <span class="d-none d-sm-inline">Keluar</span>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </header>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
 
-    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
-
-    <nav id="sidebarMenu" class="sidebar">
-        <div class="sidebar-header">
-            <span class="fw-bold text-primary">Menu Admin</span>
-            <div id="sidebarClose">
-                <i class="bi bi-x-lg fs-5"></i>
+    <!-- Navbar -->
+    <nav class="navbar-premium">
+        <div class="d-flex align-items-center justify-content-between w-100">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-link mobile-menu-btn p-0" type="button" id="mobileMenuBtn">
+                    <i class="bi bi-list fs-2 text-dark"></i>
+                </button>
+                <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
+                    <div class="brand-logo">
+                        @if($siteSetting->site_logo)
+                            <img src="{{ $storageUrl($siteSetting->site_logo) }}" alt="Logo">
+                        @else
+                            <i class="bi bi-building"></i>
+                        @endif
+                    </div>
+                    <span class="brand-text d-none d-sm-inline">{{ $siteSetting->site_name ?? 'PKPT IPNU IPPNU' }}</span>
+                </a>
             </div>
-        </div>
-        <div class="pt-1">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
-                        <i class="bi bi-speedometer2"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.posts.*') ? 'active' : '' }}" href="{{ route('admin.posts.index') }}">
-                        <i class="bi bi-newspaper"></i> Berita
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.galleries.*') ? 'active' : '' }}" href="{{ route('admin.galleries.index') }}">
-                        <i class="bi bi-images"></i> Galeri
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.members.*') ? 'active' : '' }}" href="{{ route('admin.members.index') }}">
-                        <i class="bi bi-people"></i> Anggota
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.agendas.*') ? 'active' : '' }}" href="{{ route('admin.agendas.index') }}">
-                        <i class="bi bi-calendar-event"></i> Agenda
-                    </a>
-                </li>
-            </ul>
-            
-            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-                <span>Pengaturan</span>
-            </h6>
-            <ul class="nav flex-column mb-2">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.site-settings.*') ? 'active' : '' }}" href="{{ route('admin.site-settings.edit') }}">
-                        <i class="bi bi-gear"></i> Pengaturan Situs
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('admin.page-settings.*') ? 'active' : '' }}" href="{{ route('admin.page-settings.index') }}">
-                        <i class="bi bi-window-sidebar"></i> Pengaturan Halaman
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.profile.edit') }}">
-                        <i class="bi bi-person-circle"></i> Profil Saya
-                    </a>
-                </li>
-            </ul>
+
+            <div class="d-flex align-items-center gap-3">
+                <div class="form-check form-switch mb-0 d-flex align-items-center gap-2">
+                    <i class="bi bi-sun-fill text-warning"></i>
+                    <input class="form-check-input" type="checkbox" role="switch" id="themeToggle">
+                    <i class="bi bi-moon-stars-fill text-primary"></i>
+                </div>
+
+                <div class="dropdown">
+                    <div class="user-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="user-avatar">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</div>
+                        <div class="user-info d-none d-md-block">
+                            <div class="fw-bold" style="font-size: 0.85rem;">{{ Auth::user()->name }}</div>
+                            <div class="text-muted" style="font-size: 0.7rem;">Administrator</div>
+                        </div>
+                        <i class="bi bi-chevron-down ms-1" style="font-size: 0.7rem;"></i>
+                    </div>
+                    
+                    <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg mt-2 py-2" style="min-width: 220px; border-radius: 12px;">
+                        <li><div class="px-3 py-2 border-bottom border-color mb-2"><div class="fw-bold text-dark">{{ Auth::user()->name }}</div><div class="text-muted small">{{ Auth::user()->email }}</div></div></li>
+                        <li><a class="dropdown-item py-2" href="{{ route('admin.profile.edit') }}"><i class="bi bi-person-circle me-2"></i> Profil Saya</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item py-2 text-danger"><i class="bi bi-box-arrow-right me-2"></i> Keluar</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <main id="mainContent">
-        @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-            <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar-premium" id="sidebar">
+        <div class="sidebar-toggle" id="sidebarToggle"><i class="bi bi-chevron-left"></i></div>
+
+        <div class="sidebar-header">
+            <h3 class="fw-bold text-dark">Admin Panel</h3>
+            <p>{{ $siteSetting->site_name ?? 'PKPT IPNU IPPNU' }}</p>
         </div>
+
+        <div class="flex-grow-1 overflow-auto">
+            <ul class="nav-list">
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}"><i class="bi bi-speedometer2 nav-icon"></i><span class="nav-link-text">Dashboard</span></a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.posts.*') ? 'active' : '' }}" href="{{ route('admin.posts.index') }}"><i class="bi bi-newspaper nav-icon"></i><span class="nav-link-text">Berita</span><span class="badge">{{ $adminCounts->posts ?? 0 }}</span></a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.galleries.*') ? 'active' : '' }}" href="{{ route('admin.galleries.index') }}"><i class="bi bi-images nav-icon"></i><span class="nav-link-text">Galeri</span><span class="badge">{{ $adminCounts->galleries ?? 0 }}</span></a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.members.*') ? 'active' : '' }}" href="{{ route('admin.members.index') }}"><i class="bi bi-people nav-icon"></i><span class="nav-link-text">Anggota</span><span class="badge">{{ $adminCounts->members ?? 0 }}</span></a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.agendas.*') ? 'active' : '' }}" href="{{ route('admin.agendas.index') }}"><i class="bi bi-calendar-event nav-icon"></i><span class="nav-link-text">Agenda</span><span class="badge">{{ $adminCounts->agendas ?? 0 }}</span></a></li>
+
+                <div class="sidebar-divider"><span>Pengaturan</span></div>
+
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.site-settings.*') ? 'active' : '' }}" href="{{ route('admin.site-settings.edit') }}"><i class="bi bi-gear nav-icon"></i><span class="nav-link-text">Pengaturan Situs</span></a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.page-settings.*') ? 'active' : '' }}" href="{{ route('admin.page-settings.index') }}"><i class="bi bi-window-sidebar nav-icon"></i><span class="nav-link-text">Halaman</span></a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.profile.*') ? 'active' : '' }}" href="{{ route('admin.profile.edit') }}"><i class="bi bi-person-badge nav-icon"></i><span class="nav-link-text">Profil Saya</span></a></li>
+            </ul>
+        </div>
+
+        <div class="mt-auto p-4 border-top text-center" style="border-color: var(--border-color)">
+            <small class="text-muted d-block mb-2">© {{ date('Y') }} PKPT IPNU IPPNU</small>
+            <div class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3">Sistem Online</div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        @if(session('success'))
+            <div class="alert alert-success alert-premium animate__animated animate__fadeIn mb-4" role="alert">
+                <div class="d-flex align-items-center"><i class="bi bi-check-circle-fill me-2 fs-5"></i><div class="flex-grow-1">{{ session('success') }}</div><button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+            </div>
         @endif
-        
-        <div class="py-2">
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-premium animate__animated animate__fadeIn mb-4" role="alert">
+                <div class="d-flex align-items-center"><i class="bi bi-exclamation-circle-fill me-2 fs-5"></i><div class="flex-grow-1">{{ session('error') }}</div><button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+            </div>
+        @endif
+
+        <div class="animate__animated animate__fadeIn">
             @yield('content')
         </div>
     </main>
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-    (function() {
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const sidebarClose = document.getElementById('sidebarClose');
-        const sidebarMenu = document.getElementById('sidebarMenu');
-        const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.body;
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            const themeToggle = document.getElementById('themeToggle');
 
-        function openSidebar() {
-            if (sidebarMenu) sidebarMenu.classList.add('show');
-            if (sidebarBackdrop) sidebarBackdrop.classList.add('show');
-            document.body.style.overflow = 'hidden';
-            console.log('Sidebar opened');
-        }
+            // Sync theme toggle with current state
+            if (document.documentElement.classList.contains('dark-mode')) {
+                themeToggle.checked = true;
+            }
 
-        function closeSidebar() {
-            if (sidebarMenu) sidebarMenu.classList.remove('show');
-            if (sidebarBackdrop) sidebarBackdrop.classList.remove('show');
-            document.body.style.overflow = '';
-            console.log('Sidebar closed');
-        }
-
-        if (sidebarToggle) {
-            sidebarToggle.onclick = function(e) {
-                e.preventDefault();
-                openSidebar();
-            };
-        }
-
-        if (sidebarClose) {
-            sidebarClose.onclick = function(e) {
-                e.preventDefault();
-                closeSidebar();
-            };
-        }
-
-        if (sidebarBackdrop) {
-            sidebarBackdrop.onclick = function() {
-                closeSidebar();
-            };
-        }
-
-        // Close sidebar when clicking on a link (on mobile)
-        const navLinks = document.querySelectorAll('.sidebar .nav-link');
-        navLinks.forEach(link => {
-            link.onclick = function() {
-                if (window.innerWidth < 992) {
-                    closeSidebar();
+            // Sidebar state
+            let isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+            function updateSidebar(collapsed) {
+                if (window.innerWidth >= 992) {
+                    if (collapsed) {
+                        sidebar.classList.add('collapsed');
+                        mainContent.classList.add('collapsed');
+                        sidebarToggle.innerHTML = '<i class="bi bi-chevron-right"></i>';
+                    } else {
+                        sidebar.classList.remove('collapsed');
+                        mainContent.classList.remove('collapsed');
+                        sidebarToggle.innerHTML = '<i class="bi bi-chevron-left"></i>';
+                    }
                 }
+            }
+            updateSidebar(isCollapsed);
+
+            sidebarToggle.addEventListener('click', () => {
+                isCollapsed = !isCollapsed;
+                localStorage.setItem('sidebarCollapsed', isCollapsed);
+                updateSidebar(isCollapsed);
+            });
+
+            // Mobile menu
+            mobileMenuBtn.addEventListener('click', () => {
+                sidebar.classList.add('show');
+                sidebarOverlay.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+
+            const closeMobile = () => {
+                sidebar.classList.remove('show');
+                sidebarOverlay.classList.remove('show');
+                document.body.style.overflow = '';
             };
+            sidebarOverlay.addEventListener('click', closeMobile);
+
+            // Theme toggle logic
+            themeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    document.documentElement.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 992) {
+                    closeMobile();
+                    updateSidebar(isCollapsed);
+                }
+            });
+
+            // Active nav handling
+            const path = window.location.pathname;
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const href = link.getAttribute('href');
+                if (path === href || (href !== '/' && path.startsWith(href))) {
+                    link.classList.add('active');
+                }
+            });
         });
-    })();
     </script>
+
     @stack('scripts')
 </body>
 </html>
