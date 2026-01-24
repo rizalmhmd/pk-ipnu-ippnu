@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
     <h1 class="h2 fw-bold text-dark">Edit Agenda</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ route('admin.agendas.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('admin.agendas.index') }}" class="btn btn-outline-secondary shadow-sm">
             <i class="bi bi-arrow-left me-2"></i> Kembali
         </a>
     </div>
@@ -25,14 +25,21 @@
             </div>
 
             <div class="row mb-4">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="event_date" class="form-label fw-bold small text-uppercase text-muted">Tanggal Pelaksanaan</label>
                     <input type="date" class="form-control @error('event_date') is-invalid @enderror" id="event_date" name="event_date" value="{{ old('event_date', $agenda->event_date->format('Y-m-d')) }}" required>
                     @error('event_date')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <label for="event_time" class="form-label fw-bold small text-uppercase text-muted">Waktu / Jam (Opsional)</label>
+                    <input type="time" class="form-control @error('event_time') is-invalid @enderror" id="event_time" name="event_time" value="{{ old('event_time', $agenda->event_time ? \Carbon\Carbon::parse($agenda->event_time)->format('H:i') : '') }}">
+                    @error('event_time')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="col-md-4">
                     <label for="location" class="form-label fw-bold small text-uppercase text-muted">Lokasi (Opsional)</label>
                     <input type="text" class="form-control @error('location') is-invalid @enderror" id="location" name="location" value="{{ old('location', $agenda->location) }}" placeholder="Contoh: Gedung PCNU">
                     @error('location')

@@ -10,6 +10,7 @@ class Agenda extends Model
         'title',
         'description',
         'event_date',
+        'event_time',
         'location',
     ];
 

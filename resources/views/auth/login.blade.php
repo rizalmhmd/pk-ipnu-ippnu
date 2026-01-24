@@ -6,39 +6,70 @@
     <title>Login Admin - PKPT IPNU IPPNU</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #f1f5f9;
+            font-family: 'Inter', sans-serif;
             height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            margin: 0;
+            padding: 1rem;
         }
         .login-card {
-            max-width: 400px;
+            max-width: 420px;
             width: 100%;
             border: none;
-            border-radius: 1rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border-radius: 1.25rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background: white;
         }
         .card-header {
             background: linear-gradient(135deg, #008000 0%, #0000FF 100%);
             color: white;
             text-align: center;
-            padding: 2rem 1rem;
-            border-radius: 1rem 1rem 0 0 !important;
+            padding: 3rem 1rem;
+            border: none;
+            border-radius: 0 !important;
+        }
+        .card-header h3 {
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+        .form-control {
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            background-color: #f8fafc;
+        }
+        .form-control:focus {
+            background-color: #fff;
+            border-color: #008000;
+            box-shadow: 0 0 0 4px rgba(0, 128, 0, 0.1);
         }
         .login-btn {
             background: linear-gradient(135deg, #008000 0%, #0000FF 100%);
             border: none;
             color: white;
             width: 100%;
-            padding: 0.75rem;
-            font-weight: bold;
+            padding: 0.875rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
         }
         .login-btn:hover {
-            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(0, 128, 0, 0.2);
             color: white;
+            opacity: 0.95;
         }
     </style>
 </head>

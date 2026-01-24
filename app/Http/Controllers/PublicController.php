@@ -55,4 +55,30 @@ class PublicController extends Controller
         $pageSetting = PageSetting::where('page_name', 'gallery')->first();
         return view('public.gallery', compact('galleries', 'pageSetting'));
     }
+
+    public function agenda()
+    {
+        $pageSetting = PageSetting::where('page_name', 'agenda')->first();
+        return view('public.agenda.index', compact('pageSetting'));
+    }
+
+    public function getAgendasJson()
+    {
+        $agendas = Agenda::all();
+        
+        $events = $agendas->map(function($agenda) {
+            return [
+                'id' => $agenda->id,
+                'title' => $agenda->title,
+                'start' => $agenda->event_date->toDateString(),
+                'time' => $agenda->event_time ? \Carbon\Carbon::parse($agenda->event_time)->format('H:i') : null,
+                'description' => $agenda->description,
+                'location' => $agenda->location,
+                'allDay' => true,
+                'color' => '#008000', // PKPT Color
+            ];
+        });
+
+        return response()->json($events);
+    }
 }

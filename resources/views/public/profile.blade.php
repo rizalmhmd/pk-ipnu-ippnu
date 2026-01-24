@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-<section class="hero-section rounded-4 overflow-hidden shadow-lg mt-4 mb-5" style="{{ $pageSetting && $pageSetting->hero_image ? 'background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(' . asset('storage/' . $pageSetting->hero_image) . ');' : '' }}">
+<section class="hero-section rounded-4 overflow-hidden shadow-lg mt-4 mb-5" style="{{ $pageSetting && $pageSetting->hero_image ? 'background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(' . $storageUrl($pageSetting->hero_image) . ');' : '' }}">
     <div class="container text-center text-white py-5 px-4">
         <h1 class="display-3 fw-bold mb-3 animate-fade-in-up">{{ optional($pageSetting)->hero_title ?? 'Profil Organisasi' }}</h1>
         <p class="lead mb-0 animate-fade-in-up" style="animation-delay: 0.1s">{{ optional($pageSetting)->hero_description ?? 'Mengenal lebih dekat PKPT IPNU IPPNU' }}</p>
@@ -62,7 +62,7 @@
                 <div class="card-body p-4">
                     <div class="mb-3">
                         @if($member->photo)
-                        <img src="{{ asset('storage/' . $member->photo) }}" class="rounded-circle shadow-sm border border-4 border-white" style="width: 120px; height: 120px; object-fit: cover;" alt="{{ $member->name }}">
+                        <img src="{{ $storageUrl($member->photo) }}" class="rounded-circle shadow-sm border border-4 border-white" style="width: 120px; height: 120px; object-fit: cover;" alt="{{ $member->name }}">
                         @else
                         <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center border border-4 border-white" style="width: 120px; height: 120px;">
                             <i class="fas fa-user fa-3x text-muted"></i>

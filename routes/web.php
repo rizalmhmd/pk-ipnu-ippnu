@@ -17,6 +17,8 @@ Route::get('/profil', [PublicController::class, 'profile'])->name('profile');
 Route::get('/berita', [PublicController::class, 'news'])->name('news.index');
 Route::get('/berita/{slug}', [PublicController::class, 'newsDetail'])->name('news.show');
 Route::get('/galeri', [PublicController::class, 'gallery'])->name('gallery.index');
+Route::get('/agenda', [PublicController::class, 'agenda'])->name('agenda.index');
+Route::get('/api/agendas', [PublicController::class, 'getAgendasJson'])->name('api.agendas');
 
 // Admin Routes (Protected)
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {

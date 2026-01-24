@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-<section class="hero-section rounded-4 overflow-hidden shadow-lg mt-4 mb-5" style="{{ $pageSetting && $pageSetting->hero_image ? 'background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(' . asset('storage/' . $pageSetting->hero_image) . ');' : '' }}">
+<section class="hero-section rounded-4 overflow-hidden shadow-lg mt-4 mb-5" style="{{ $pageSetting && $pageSetting->hero_image ? 'background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(' . $storageUrl($pageSetting->hero_image) . ');' : '' }}">
     <div class="container text-center text-white py-5 px-4">
         <h1 class="display-3 fw-bold mb-3 animate-fade-in-up">{{ optional($pageSetting)->hero_title ?? 'Selamat Datang di PKPT IPNU IPPNU' }}</h1>
         <p class="lead mb-4 animate-fade-in-up" style="animation-delay: 0.1s">{{ optional($pageSetting)->hero_description ?? 'Belajar, Berjuang, Bertaqwa' }}</p>
@@ -25,7 +25,7 @@
                     <div class="card card-custom h-100 border-0 shadow-sm animate-fade-in-up">
                         <div class="position-relative">
                             @if($post->image)
-                            <img src="{{ asset('storage/' . $post->image) }}" class="card-img-top" alt="{{ $post->title }}" style="height: 200px; object-fit: cover;">
+                            <img src="{{ $storageUrl($post->image) }}" class="card-img-top" alt="{{ $post->title }}" style="height: 200px; object-fit: cover;">
                             @else
                             <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="News Image" style="height: 200px; object-fit: cover;">
                             @endif
@@ -57,7 +57,7 @@
                 <div class="card-body p-4">
                     <div class="text-center mb-3">
                         @if(optional($greeting)->hero_image)
-                        <img src="{{ asset('storage/' . $greeting->hero_image) }}" class="rounded-circle shadow-sm mb-3" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--primary-green);">
+                        <img src="{{ $storageUrl($greeting->hero_image) }}" class="rounded-circle shadow-sm mb-3" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid var(--primary-green);">
                         @else
                         <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 100px; height: 100px; border: 3px solid var(--primary-green);">
                             <i class="fas fa-user-tie fa-3x text-muted"></i>
@@ -91,7 +91,7 @@
                                 <div>
                                     <h6 class="fw-bold mb-1">{{ $agenda->title }}</h6>
                                     <div class="small text-muted mb-1">
-                                        <i class="far fa-clock me-1"></i> {{ $agenda->event_date->format('H:i') }} WIB
+                                        <i class="far fa-clock me-1"></i> {{ $agenda->event_time ? \Carbon\Carbon::parse($agenda->event_time)->format('H:i') : '00:00' }} WIB
                                     </div>
                                     @if($agenda->location)
                                     <div class="small text-muted">

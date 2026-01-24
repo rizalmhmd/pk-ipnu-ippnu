@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
     <h1 class="h2 fw-bold text-dark">Edit Anggota</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ route('admin.members.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('admin.members.index') }}" class="btn btn-outline-secondary shadow-sm">
             <i class="bi bi-arrow-left me-2"></i> Kembali
         </a>
     </div>
@@ -38,7 +38,7 @@
                 <div class="form-text text-muted">Biarkan kosong jika tidak ingin mengganti gambar.</div>
                 @if($member->photo)
                     <div class="mt-3">
-                        <img src="{{ asset('storage/' . $member->photo) }}" alt="Current Photo" class="rounded shadow-sm" width="100" height="100" style="object-fit: cover;">
+                        <img src="{{ $storageUrl($member->photo) }}" alt="Current Photo" class="rounded shadow-sm" width="100" height="100" style="object-fit: cover;">
                         <div class="small text-muted mt-1">Foto saat ini</div>
                     </div>
                 @endif

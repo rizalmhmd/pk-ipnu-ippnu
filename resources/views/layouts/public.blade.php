@@ -7,7 +7,7 @@
     <title>@yield('title', $siteSetting->site_name ?? 'PKPT IPNU IPPNU') - Portal Resmi</title>
     
     @if($siteSetting->favicon)
-    <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $siteSetting->favicon) }}">
+    <link rel="icon" type="image/x-icon" href="{{ $storageUrl($siteSetting->favicon) }}">
     @endif
     
     <!-- Bootstrap 5 CSS -->
@@ -20,6 +20,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    @stack('styles')
 
     <style>
         :root {
@@ -157,6 +159,41 @@
             border-radius: 2px;
         }
 
+        /* Mobile Adjustments */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background: rgba(0, 80, 0, 0.98);
+                backdrop-filter: blur(15px);
+                margin: 0.75rem -0.75rem 0;
+                padding: 1.5rem 1rem;
+                border-radius: var(--radius-md);
+                box-shadow: var(--shadow-xl);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .nav-item {
+                margin-bottom: 0.5rem;
+            }
+            .nav-item:last-child {
+                margin-bottom: 0;
+            }
+            .nav-link-custom {
+                padding: 0.85rem 1.25rem !important;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                background: rgba(255, 255, 255, 0.05);
+            }
+            .nav-link-custom.active::after {
+                display: none;
+            }
+            .btn-admin {
+                margin-top: 1rem;
+                padding: 1rem !important;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         .btn-admin {
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -224,11 +261,16 @@
         }
 
         @media (max-width: 768px) {
+            .hero-section {
+                padding: 10rem 0 6rem; /* Increase top padding on mobile to avoid navbar overlap */
+            }
             .hero-title {
-                font-size: 2.5rem;
+                font-size: 2.25rem;
+                margin-bottom: 1rem;
             }
             .hero-subtitle {
-                font-size: 1.1rem;
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
             }
         }
 
@@ -439,7 +481,7 @@
             <!-- Brand -->
             <a class="navbar-brand-custom" href="{{ route('home') }}">
                 @if($siteSetting->site_logo)
-                    <img src="{{ asset('storage/' . $siteSetting->site_logo) }}" alt="Logo" height="40" class="me-2">
+                    <img src="{{ $storageUrl($siteSetting->site_logo) }}" alt="Logo" height="40" class="me-2">
                 @else
                     <i class="fas fa-users"></i>
                 @endif
@@ -480,6 +522,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link-custom {{ request()->routeIs('agenda.*') ? 'active' : '' }}" 
+                           href="{{ route('agenda.index') }}">
+                            <i class="fas fa-calendar-alt me-1"></i> Agenda
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link-custom btn-admin" href="{{ route('login') }}">
                             <i class="fas fa-lock"></i> Admin Area
                         </a>
@@ -493,7 +541,7 @@
     @hasSection('hero')
         @yield('hero')
     @else
-        <section class="hero-section" style="{{ $siteSetting->default_hero_image ? 'background-image: linear-gradient(rgba(0, 64, 0, 0.75), rgba(0, 0, 128, 0.75)), url(' . asset('storage/' . $siteSetting->default_hero_image) . ');' : '' }}">
+        <section class="hero-section" style="{{ $siteSetting->default_hero_image ? 'background-image: linear-gradient(rgba(0, 64, 0, 0.75), rgba(0, 0, 128, 0.75)), url(' . $storageUrl($siteSetting->default_hero_image) . ');' : '' }}">
             <div class="container">
                 <div class="hero-content animate-fade-in-up text-center">
                     <h1 class="hero-title">{{ $siteSetting->default_hero_title ?? 'Portal Resmi PKPT IPNU IPPNU' }}</h1>
@@ -547,6 +595,7 @@
                             <li><a href="{{ route('profile') }}"><i class="fas fa-chevron-right"></i> Profil</a></li>
                             <li><a href="{{ route('news.index') }}"><i class="fas fa-chevron-right"></i> Berita</a></li>
                             <li><a href="{{ route('gallery.index') }}"><i class="fas fa-chevron-right"></i> Galeri</a></li>
+                            <li><a href="{{ route('agenda.index') }}"><i class="fas fa-chevron-right"></i> Agenda</a></li>
                         </ul>
                     </div>
                 </div>
@@ -690,5 +739,6 @@
             }, 300);
         });
     </script>
+    @stack('scripts')
 </body>
 </html>

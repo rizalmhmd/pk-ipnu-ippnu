@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
     <h1 class="h2 fw-bold text-dark">Tambah Berita Baru</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ route('admin.posts.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('admin.posts.index') }}" class="btn btn-outline-secondary shadow-sm">
             <i class="bi bi-arrow-left me-2"></i> Kembali
         </a>
     </div>

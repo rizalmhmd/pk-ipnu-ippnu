@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-<section class="hero-section rounded-4 overflow-hidden shadow-lg mt-4 mb-5" style="{{ $pageSetting && $pageSetting->hero_image ? 'background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(' . asset('storage/' . $pageSetting->hero_image) . ');' : '' }}">
+<section class="hero-section rounded-4 overflow-hidden shadow-lg mt-4 mb-5" style="{{ $pageSetting && $pageSetting->hero_image ? 'background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(' . $storageUrl($pageSetting->hero_image) . ');' : '' }}">
     <div class="container text-center text-white py-5 px-4">
         <h1 class="display-3 fw-bold mb-3 animate-fade-in-up">{{ optional($pageSetting)->hero_title ?? 'Berita Terbaru' }}</h1>
         <p class="lead mb-0 animate-fade-in-up" style="animation-delay: 0.1s">{{ optional($pageSetting)->hero_description ?? 'Informasi dan kegiatan terkini' }}</p>
@@ -15,7 +15,7 @@
             <div class="card card-custom h-100 border-0 shadow-sm animate-fade-in-up" style="animation-delay: {{ $index * 0.05 }}s">
                 <div class="position-relative">
                     @if($post->image)
-                    <img src="{{ asset('storage/' . $post->image) }}" class="card-img-top" alt="{{ $post->title }}" style="height: 220px; object-fit: cover;">
+                    <img src="{{ $storageUrl($post->image) }}" class="card-img-top" alt="{{ $post->title }}" style="height: 220px; object-fit: cover;">
                     @else
                     <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="card-img-top" alt="News Image" style="height: 220px; object-fit: cover;">
                     @endif

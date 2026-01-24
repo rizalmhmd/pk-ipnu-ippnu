@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
     <h1 class="h2 fw-bold text-dark">Agenda Kegiatan</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ route('admin.agendas.create') }}" class="btn btn-primary shadow-sm">
+        <a href="{{ route('admin.agendas.create') }}" class="btn btn-primary bg-gradient border-0 shadow-sm">
             <i class="bi bi-plus-lg me-2"></i> Tambah Agenda
         </a>
     </div>
@@ -29,21 +29,26 @@
                             <span class="fw-bold text-dark">{{ $agenda->title }}</span>
                         </td>
                         <td>
-                            <i class="bi bi-calendar me-1 text-muted"></i> {{ $agenda->event_date->format('d M Y') }}
+                            <div class="d-flex flex-column">
+                                <span><i class="bi bi-calendar me-1 text-muted"></i> {{ $agenda->event_date->format('d M Y') }}</span>
+                                @if($agenda->event_time)
+                                <small class="text-muted"><i class="bi bi-clock me-1"></i> {{ \Carbon\Carbon::parse($agenda->event_time)->format('H:i') }} WIB</small>
+                                @endif
+                            </div>
                         </td>
                         <td>
                             {{ $agenda->location ?? '-' }}
                         </td>
                         <td class="pe-4 text-end">
-                            <div class="btn-group">
+                            <div class="d-flex justify-content-end gap-2">
                                 <a href="{{ route('admin.agendas.edit', $agenda->id) }}" class="btn btn-sm btn-outline-primary" title="Edit">
-                                    <i class="bi bi-pencil-fill"></i>
+                                    <i class="bi bi-pencil-square"></i>
                                 </a>
                                 <form action="{{ route('admin.agendas.destroy', $agenda->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus agenda ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">
-                                        <i class="bi bi-trash-fill"></i>
+                                        <i class="bi bi-trash3"></i>
                                     </button>
                                 </form>
                             </div>

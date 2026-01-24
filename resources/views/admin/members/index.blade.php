@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
     <h1 class="h2 fw-bold text-dark">Manajemen Anggota</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ route('admin.members.create') }}" class="btn btn-primary shadow-sm">
+        <a href="{{ route('admin.members.create') }}" class="btn btn-primary bg-gradient border-0 shadow-sm">
             <i class="bi bi-plus-lg me-2"></i> Tambah Anggota
         </a>
     </div>
@@ -30,7 +30,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="avatar me-3">
                                     @if($member->photo)
-                                    <img src="{{ asset('storage/' . $member->photo) }}" alt="{{ $member->name }}" class="rounded-circle" width="48" height="48" style="object-fit: cover;">
+                                    <img src="{{ $storageUrl($member->photo) }}" alt="{{ $member->name }}" class="rounded-circle" width="48" height="48" style="object-fit: cover;">
                                     @else
                                     <img src="https://ui-avatars.com/api/?name={{ urlencode($member->name) }}&background=0d6efd&color=fff&size=48" alt="{{ $member->name }}" class="rounded-circle" width="48" height="48">
                                     @endif
@@ -45,15 +45,15 @@
                             <span class="badge bg-light text-dark border fw-normal">{{ $member->position }}</span>
                         </td>
                         <td class="pe-4 text-end">
-                            <div class="btn-group">
-                                <a href="{{ route('admin.members.edit', $member->id) }}" class="btn btn-sm btn-outline-secondary" title="Edit">
-                                    <i class="bi bi-pencil"></i>
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="{{ route('admin.members.edit', $member->id) }}" class="btn btn-sm btn-outline-primary" title="Edit">
+                                    <i class="bi bi-pencil-square"></i>
                                 </a>
                                 <form action="{{ route('admin.members.destroy', $member->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Yakin ingin menghapus anggota ini?')" title="Hapus">
-                                        <i class="bi bi-trash"></i>
+                                        <i class="bi bi-trash3"></i>
                                     </button>
                                 </form>
                             </div>

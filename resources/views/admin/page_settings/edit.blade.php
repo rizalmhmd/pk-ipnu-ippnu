@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
     <h1 class="h2 fw-bold text-dark">Atur Halaman: <span class="text-capitalize">{{ $pageSetting->page_name }}</span></h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ route('admin.page-settings.index') }}" class="btn btn-outline-secondary">
+        <a href="{{ route('admin.page-settings.index') }}" class="btn btn-outline-secondary shadow-sm">
             <i class="bi bi-arrow-left me-2"></i> Kembali
         </a>
     </div>
@@ -38,7 +38,7 @@
                 <div class="form-text text-muted">Format yang disarankan: JPG, WEBP. Ukuran besar (misal 1920x1080). Maksimal 2MB.</div>
                 @if($pageSetting->hero_image)
                     <div class="mt-3">
-                        <img src="{{ asset('storage/' . $pageSetting->hero_image) }}" alt="Current Background" class="img-thumbnail rounded shadow-sm" style="max-height: 200px">
+                        <img src="{{ $storageUrl($pageSetting->hero_image) }}" alt="Current Background" class="img-thumbnail rounded shadow-sm" style="max-height: 200px">
                         <div class="small text-muted mt-1">Background saat ini</div>
                     </div>
                 @endif

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
     <h1 class="h2 fw-bold text-dark">Pengaturan Situs</h1>
 </div>
 
@@ -60,7 +60,7 @@
                         <input type="file" class="form-control @error('site_logo') is-invalid @enderror" id="site_logo" name="site_logo">
                         @if($setting->site_logo)
                             <div class="mt-2">
-                                <img src="{{ asset('storage/' . $setting->site_logo) }}" alt="Logo" class="img-thumbnail" style="max-height: 50px">
+                                <img src="{{ $storageUrl($setting->site_logo) }}" alt="Logo" class="img-thumbnail" style="max-height: 50px">
                             </div>
                         @endif
                         @error('site_logo')
@@ -73,7 +73,7 @@
                         <input type="file" class="form-control @error('favicon') is-invalid @enderror" id="favicon" name="favicon">
                         @if($setting->favicon)
                             <div class="mt-2">
-                                <img src="{{ asset('storage/' . $setting->favicon) }}" alt="Favicon" class="img-thumbnail" style="max-height: 32px">
+                                <img src="{{ $storageUrl($setting->favicon) }}" alt="Favicon" class="img-thumbnail" style="max-height: 32px">
                             </div>
                         @endif
                         @error('favicon')
@@ -156,7 +156,7 @@
                             <input type="file" class="form-control @error('default_hero_image') is-invalid @enderror" id="default_hero_image" name="default_hero_image">
                             @if($setting->default_hero_image)
                                 <div class="mt-2">
-                                    <img src="{{ asset('storage/' . $setting->default_hero_image) }}" alt="Hero Default" class="img-thumbnail" style="max-height: 100px">
+                                    <img src="{{ $storageUrl($setting->default_hero_image) }}" alt="Hero Default" class="img-thumbnail" style="max-height: 100px">
                                 </div>
                             @endif
                         </div>

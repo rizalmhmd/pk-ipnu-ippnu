@@ -1,20 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
-    <div>
-        <h1 class="h2 fw-bold text-dark">Dashboard</h1>
-        <p class="text-muted mb-0">Selamat datang kembali, {{ auth()->user()->name }}!</p>
-    </div>
-    <div class="btn-toolbar mb-2 mb-md-0">
-        <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-        </div>
-        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-            <span data-feather="calendar"></span>
-            This week
-        </button>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
+    <div class="mb-2 mb-md-0">
+        <h1 class="h2 fw-bold text-dark mb-1">Dashboard</h1>
+        <p class="text-muted mb-0">Selamat datang kembali, <span class="fw-semibold text-primary">{{ auth()->user()->name }}</span>!</p>
     </div>
 </div>
 
@@ -22,9 +12,9 @@
     <div class="col-md-4">
         <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="text-uppercase text-muted fw-semibold ls-1 mb-0">Total Berita</h6>
-                    <div class="icon-shape bg-primary bg-opacity-10 text-primary rounded-3 p-2">
+                <div class="d-flex align-items-center justify-content-between flex-nowrap mb-3">
+                    <h6 class="text-uppercase text-muted fw-bold small ls-1 mb-0 me-2">Total Berita</h6>
+                    <div class="icon-shape bg-primary bg-opacity-10 text-primary rounded-3">
                         <i class="bi bi-file-earmark-text fs-4"></i>
                     </div>
                 </div>
@@ -40,9 +30,9 @@
     <div class="col-md-4">
         <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="text-uppercase text-muted fw-semibold ls-1 mb-0">Galeri Foto</h6>
-                    <div class="icon-shape bg-success bg-opacity-10 text-success rounded-3 p-2">
+                <div class="d-flex align-items-center justify-content-between flex-nowrap mb-3">
+                    <h6 class="text-uppercase text-muted fw-bold small ls-1 mb-0 me-2">Galeri Foto</h6>
+                    <div class="icon-shape bg-success bg-opacity-10 text-success rounded-3">
                         <i class="bi bi-images fs-4"></i>
                     </div>
                 </div>
@@ -58,9 +48,9 @@
     <div class="col-md-4">
         <div class="card h-100 border-0 shadow-sm">
             <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h6 class="text-uppercase text-muted fw-semibold ls-1 mb-0">Anggota</h6>
-                    <div class="icon-shape bg-info bg-opacity-10 text-info rounded-3 p-2">
+                <div class="d-flex align-items-center justify-content-between flex-nowrap mb-3">
+                    <h6 class="text-uppercase text-muted fw-bold small ls-1 mb-0 me-2">Anggota</h6>
+                    <div class="icon-shape bg-info bg-opacity-10 text-info rounded-3">
                         <i class="bi bi-people fs-4"></i>
                     </div>
                 </div>

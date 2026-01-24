@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Profil Saya</h1>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
+    <h1 class="h2 fw-bold text-dark">Profil Saya</h1>
 </div>
 
 @if (session('status') === 'profile-updated')
@@ -55,7 +55,7 @@
                         @endif
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary bg-gradient border-0 shadow-sm px-4">Simpan Perubahan</button>
                 </form>
             </div>
         </div>
@@ -97,7 +97,7 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Simpan Password</button>
+                    <button type="submit" class="btn btn-primary bg-gradient border-0 shadow-sm px-4">Simpan Password</button>
 
                     @if (session('status') === 'password-updated')
                         <p class="small text-success mt-2 mb-0">Password berhasil disimpan.</p>

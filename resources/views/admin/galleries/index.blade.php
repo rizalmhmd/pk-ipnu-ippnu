@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
     <h1 class="h2 fw-bold text-dark">Manajemen Galeri</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ route('admin.galleries.create') }}" class="btn btn-primary shadow-sm">
+        <a href="{{ route('admin.galleries.create') }}" class="btn btn-primary bg-gradient border-0 shadow-sm">
             <i class="bi bi-plus-lg me-2"></i> Tambah Foto
         </a>
     </div>
@@ -15,13 +15,13 @@
     <div class="col-md-3">
         <div class="card shadow-sm h-100 border-0 gallery-card">
             <div class="position-relative overflow-hidden group">
-                <img src="{{ asset('storage/' . $gallery->image_path) }}" class="card-img-top" alt="{{ $gallery->title }}" style="height: 200px; object-fit: cover;">
+                <img src="{{ $storageUrl($gallery->image_path) }}" class="card-img-top" alt="{{ $gallery->title }}" style="height: 200px; object-fit: cover;">
                 <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex align-items-center justify-content-center opacity-0 transition-all">
                                             <form action="{{ route('admin.galleries.destroy', $gallery->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm rounded-circle shadow" onclick="return confirm('Yakin ingin menghapus foto ini?')" title="Hapus">
-                                <i class="bi bi-trash"></i>
+                            <button type="submit" class="btn btn-danger btn-sm rounded-circle shadow-lg" onclick="return confirm('Yakin ingin menghapus foto ini?')" title="Hapus">
+                                <i class="bi bi-trash3"></i>
                             </button>
                         </form>
                 </div>

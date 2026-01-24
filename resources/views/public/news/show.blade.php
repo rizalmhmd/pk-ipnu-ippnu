@@ -27,7 +27,7 @@
 
             @if($post->image)
             <div class="position-relative rounded-4 overflow-hidden shadow-lg mb-5 animate-fade-in-up" style="animation-delay: 0.2s">
-                <img src="{{ asset('storage/' . $post->image) }}" class="img-fluid w-100" alt="{{ $post->title }}" style="max-height: 500px; object-fit: cover;">
+                <img src="{{ $storageUrl($post->image) }}" class="img-fluid w-100" alt="{{ $post->title }}" style="max-height: 500px; object-fit: cover;">
             </div>
             @endif
 

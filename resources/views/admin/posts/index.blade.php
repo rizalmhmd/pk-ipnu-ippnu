@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4">
     <h1 class="h2 fw-bold text-dark">Manajemen Berita</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
-        <a href="{{ route('admin.posts.create') }}" class="btn btn-primary shadow-sm">
+        <a href="{{ route('admin.posts.create') }}" class="btn btn-primary bg-gradient border-0 shadow-sm">
             <i class="bi bi-plus-lg me-2"></i> Tambah Berita
         </a>
     </div>
@@ -29,15 +29,15 @@
                         <td class="fw-medium text-dark">{{ $post->title }}</td>
                         <td class="text-secondary"><i class="bi bi-calendar3 me-2"></i>{{ \Carbon\Carbon::parse($post->published_at)->format('d M Y') }}</td>
                         <td class="pe-4 text-end">
-                            <div class="btn-group">
-                                <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-sm btn-outline-secondary" title="Edit">
-                                    <i class="bi bi-pencil"></i>
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-sm btn-outline-primary" title="Edit">
+                                    <i class="bi bi-pencil-square"></i>
                                 </a>
                                 <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Yakin ingin menghapus berita ini?')" title="Hapus">
-                                        <i class="bi bi-trash"></i>
+                                        <i class="bi bi-trash3"></i>
                                     </button>
                                 </form>
                             </div>
