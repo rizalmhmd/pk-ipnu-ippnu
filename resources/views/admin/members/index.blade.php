@@ -47,7 +47,10 @@
                         <td>
                             <div class="d-flex flex-column gap-1">
                                 <span class="badge bg-primary bg-opacity-10 text-primary align-self-start border border-primary border-opacity-25 py-1 px-2">{{ $member->position }}</span>
-                                <small class="text-secondary opacity-75">Aktif Sejak {{ $member->created_at->format('M Y') }}</small>
+                                <div class="d-flex gap-2 align-items-center">
+                                    <span class="badge {{ $member->type == 'ipnu' ? 'bg-success' : 'bg-info' }} bg-opacity-10 {{ $member->type == 'ipnu' ? 'text-success' : 'text-primary' }} border {{ $member->type == 'ipnu' ? 'border-success' : 'border-primary' }} border-opacity-25 py-0 px-2 small">{{ strtoupper($member->type) }}</span>
+                                    <small class="text-secondary opacity-75">Order: {{ $member->order }}</small>
+                                </div>
                             </div>
                         </td>
                         <td class="pe-4 text-end">

@@ -24,12 +24,53 @@
                 @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="position" class="form-label-premium">Jabatan / Peran</label>
-                <input type="text" class="form-control-premium w-100 @error('position') is-invalid @enderror" id="position" name="position" value="{{ old('position', $member->position) }}" placeholder="Contoh: Ketua Umum" required>
-                @error('position')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+            <div class="row gx-4">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="position" class="form-label-premium">Jabatan / Peran</label>
+                        <input type="text" class="form-control-premium w-100 @error('position') is-invalid @enderror" id="position" name="position" value="{{ old('position', $member->position) }}" placeholder="Contoh: Ketua Umum" required>
+                        @error('position')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="instagram" class="form-label-premium">Username Instagram (Opsional)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-secondary bg-opacity-10 border-color"><i class="bi bi-instagram"></i></span>
+                            <input type="text" class="form-control-premium @error('instagram') is-invalid @enderror" id="instagram" name="instagram" value="{{ old('instagram', $member->instagram) }}" placeholder="rizalmhmd_">
+                        </div>
+                        @error('instagram')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <div class="row gx-4">
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="type" class="form-label-premium">Organisasi</label>
+                        <select class="form-select form-control-premium w-100 @error('type') is-invalid @enderror" id="type" name="type" required>
+                            <option value="ipnu" {{ old('type', $member->type) == 'ipnu' ? 'selected' : '' }}>IPNU</option>
+                            <option value="ippnu" {{ old('type', $member->type) == 'ippnu' ? 'selected' : '' }}>IPPNU</option>
+                        </select>
+                        @error('type')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-4">
+                        <label for="order" class="form-label-premium">Urutan Tampil (Opsional)</label>
+                        <input type="number" class="form-control-premium w-100 @error('order') is-invalid @enderror" id="order" name="order" value="{{ old('order', $member->order) }}" placeholder="0">
+                        <div class="form-text small">Angka lebih kecil tampil di atas.</div>
+                        @error('order')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
             </div>
 
             <div class="mb-5">

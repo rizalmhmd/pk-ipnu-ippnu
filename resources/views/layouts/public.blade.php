@@ -553,8 +553,8 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link-custom btn-admin" href="{{ route('login') }}">
-                            <i class="fas fa-lock"></i> Admin Area
+                        <a class="nav-link-custom btn-admin" href="{{ Auth::check() ? route('admin.dashboard') : route('login') }}">
+                            <i class="fas fa-lock"></i> {{ Auth::check() ? 'Dashboard' : 'Admin Area' }}
                         </a>
                     </li>
                 </ul>
@@ -633,7 +633,7 @@
                             <li><a href="#"><i class="fas fa-chevron-right"></i> Kebijakan Privasi</a></li>
                             <li><a href="#"><i class="fas fa-chevron-right"></i> Syarat & Ketentuan</a></li>
                             <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
-                            <li><a href="{{ route('login') }}"><i class="fas fa-chevron-right"></i> Admin Area</a></li>
+                            <li><a href="{{ Auth::check() ? route('admin.dashboard') : route('login') }}"><i class="fas fa-chevron-right"></i> {{ Auth::check() ? 'Dashboard' : 'Admin Area' }}</a></li>
                         </ul>
                     </div>
                 </div>

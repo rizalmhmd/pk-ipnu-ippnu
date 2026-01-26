@@ -27,6 +27,9 @@ class MemberController extends Controller
             'name' => 'required',
             'position' => 'required',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'instagram' => 'nullable|string',
+            'type' => 'required|in:ipnu,ippnu',
+            'order' => 'nullable|integer',
         ]);
 
         $data = $request->all();
@@ -51,6 +54,9 @@ class MemberController extends Controller
             'name' => 'required',
             'position' => 'required',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'instagram' => 'nullable|string',
+            'type' => 'required|in:ipnu,ippnu',
+            'order' => 'nullable|integer',
         ]);
 
         $data = $request->all();

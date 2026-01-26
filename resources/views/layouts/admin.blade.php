@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - {{ $siteSetting->site_name ?? 'PKPT IPNU IPPNU' }}</title>
     
+    @if($siteSetting->favicon)
+    <link rel="icon" type="image/x-icon" href="{{ $storageUrl($siteSetting->favicon) }}">
+    @endif
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
