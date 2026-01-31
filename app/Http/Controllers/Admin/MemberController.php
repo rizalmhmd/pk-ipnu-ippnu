@@ -35,7 +35,7 @@ class MemberController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('members', 'public');
+            $data['photo'] = $request->file('photo')->store('members');
         }
 
         Member::create($data);
@@ -63,9 +63,13 @@ class MemberController extends Controller
 
         if ($request->hasFile('photo')) {
             if ($member->photo) {
-                Storage::disk('public')->delete($member->photo);
+                try {
+                    Storage::delete($member->photo);
+                } catch (\Exception $e) {
+                    // Ignore if file not found on cloud
+                }
             }
-            $data['photo'] = $request->file('photo')->store('members', 'public');
+            $data['photo'] = $request->file('photo')->store('members');
         }
 
         $member->update($data);
@@ -76,7 +80,11 @@ class MemberController extends Controller
     public function destroy(Member $member)
     {
         if ($member->photo) {
-            Storage::disk('public')->delete($member->photo);
+            try {
+                Storage::delete($member->photo);
+            } catch (\Exception $e) {
+                // Ignore if already deleted from cloud
+            }
         }
         $member->delete();
 

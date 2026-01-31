@@ -34,7 +34,7 @@ class PostController extends Controller
         $data['published_at'] = now();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('posts', 'public');
+            $data['image'] = $request->file('image')->store('posts');
         }
 
         Post::create($data);
@@ -60,9 +60,13 @@ class PostController extends Controller
 
         if ($request->hasFile('image')) {
             if ($post->image) {
-                Storage::disk('public')->delete($post->image);
+                try {
+                    Storage::delete($post->image);
+                } catch (\Exception $e) {
+                    // Log or ignore if file not found on cloud
+                }
             }
-            $data['image'] = $request->file('image')->store('posts', 'public');
+            $data['image'] = $request->file('image')->store('posts');
         }
 
         $post->update($data);
@@ -73,7 +77,11 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         if ($post->image) {
-            Storage::disk('public')->delete($post->image);
+            try {
+                Storage::delete($post->image);
+            } catch (\Exception $e) {
+                // Ignore if already deleted from cloud
+            }
         }
         $post->delete();
 

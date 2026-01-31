@@ -45,23 +45,35 @@ class SiteSettingController extends Controller
 
         if ($request->hasFile('site_logo')) {
             if ($setting->site_logo) {
-                Storage::disk('public')->delete($setting->site_logo);
+                try {
+                    Storage::delete($setting->site_logo);
+                } catch (\Exception $e) {
+                    // Ignore if not found on cloud
+                }
             }
-            $validated['site_logo'] = $request->file('site_logo')->store('site', 'public');
+            $validated['site_logo'] = $request->file('site_logo')->store('site');
         }
 
         if ($request->hasFile('favicon')) {
             if ($setting->favicon) {
-                Storage::disk('public')->delete($setting->favicon);
+                try {
+                    Storage::delete($setting->favicon);
+                } catch (\Exception $e) {
+                    // Ignore if not found on cloud
+                }
             }
-            $validated['favicon'] = $request->file('favicon')->store('site', 'public');
+            $validated['favicon'] = $request->file('favicon')->store('site');
         }
 
         if ($request->hasFile('default_hero_image')) {
             if ($setting->default_hero_image) {
-                Storage::disk('public')->delete($setting->default_hero_image);
+                try {
+                    Storage::delete($setting->default_hero_image);
+                } catch (\Exception $e) {
+                    // Ignore if not found on cloud
+                }
             }
-            $validated['default_hero_image'] = $request->file('default_hero_image')->store('site', 'public');
+            $validated['default_hero_image'] = $request->file('default_hero_image')->store('site');
         }
 
         $setting->update($validated);

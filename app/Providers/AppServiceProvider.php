@@ -44,6 +44,20 @@ class AppServiceProvider extends ServiceProvider
                 // If it's already a full URL, return it
                 if (filter_var($path, FILTER_VALIDATE_URL)) return $path;
                 
+                // If using Cloudinary or other cloud disks
+                if (config('filesystems.default') !== 'local' && config('filesystems.default') !== 'public') {
+                    try {
+                        return \Illuminate\Support\Facades\Storage::url($path);
+                    } catch (\Exception $e) {
+                        // Fallback to local storage if not found on cloud
+                        $root = request()->getSchemeAndHttpHost();
+                        if (file_exists(base_path('../index.php'))) {
+                             return $root . '/web-pkpt/storage/app/public/' . $path;
+                        }
+                        return $root . '/storage/' . $path;
+                    }
+                }
+
                 $root = request()->getSchemeAndHttpHost();
                 
                 // Detection for the specific ProFreeHost structure (project inside htdocs/web-pkpt)

@@ -33,9 +33,13 @@ class PageSettingController extends Controller
 
         if ($request->hasFile('hero_image')) {
             if ($pageSetting->hero_image) {
-                Storage::disk('public')->delete($pageSetting->hero_image);
+                try {
+                    Storage::delete($pageSetting->hero_image);
+                } catch (\Exception $e) {
+                    // Ignore if file not found on cloud
+                }
             }
-            $validated['hero_image'] = $request->file('hero_image')->store('hero-images', 'public');
+            $validated['hero_image'] = $request->file('hero_image')->store('hero-images');
         }
 
         $pageSetting->update($validated);

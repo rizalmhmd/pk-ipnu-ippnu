@@ -28,7 +28,7 @@ class GalleryController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $imagePath = $request->file('image')->store('galleries', 'public');
+        $imagePath = $request->file('image')->store('galleries');
 
         Gallery::create([
             'title' => $request->title,
@@ -40,7 +40,11 @@ class GalleryController extends Controller
 
     public function destroy(Gallery $gallery)
     {
-        Storage::disk('public')->delete($gallery->image_path);
+        try {
+            Storage::delete($gallery->image_path);
+        } catch (\Exception $e) {
+            // Ignore if already deleted from cloud
+        }
         $gallery->delete();
 
         return redirect()->route('admin.galleries.index')->with('success', 'Foto berhasil dihapus dari galeri');
