@@ -334,6 +334,14 @@
                 const event = info.event;
                 const props = event.extendedProps;
                 
+                // Debug logging
+                console.log('Event clicked:', {
+                    title: event.title,
+                    isAgenda: props.isAgenda,
+                    hasLocation: !!props.location,
+                    location: props.location
+                });
+                
                 // Set Header Theme
                 const header = document.getElementById('modalThemeHeader');
                 const category = props.category || 'organisasi';
@@ -359,13 +367,23 @@
                 }
                 document.getElementById('modalDateTime').innerText = dateStr;
 
-                // Location
+                // Location - ONLY show for organizational activities (category = 'organisasi')
+                // IMPORTANT: Reset/clear first to avoid stale data
                 const locWrapper = document.getElementById('locationWrapper');
-                if (props.location && props.location.trim() !== '') {
+                const modalLocation = document.getElementById('modalLocation');
+                
+                // Clear previous location data
+                modalLocation.innerText = '';
+                
+                // Only show if it's an organizational event AND has location
+                // Hide for: keagamaan, nasional, khusus events
+                if (category === 'organisasi' && props.location && props.location.trim() !== '') {
                     locWrapper.style.display = 'flex';
-                    document.getElementById('modalLocation').innerText = props.location;
+                    modalLocation.innerText = props.location;
+                    console.log('Showing location for organisasi event:', props.location);
                 } else {
                     locWrapper.style.display = 'none';
+                    console.log('Hiding location field (category:', category, ')');
                 }
 
                 // Description

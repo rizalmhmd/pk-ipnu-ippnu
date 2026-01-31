@@ -26,9 +26,9 @@
             <div class="mb-4">
                 <label for="category" class="form-label-premium">Kategori Agenda</label>
                 <select class="form-select form-control-premium @error('category') is-invalid @enderror" id="category" name="category" required>
-                    <option value="organisasi" {{ old('category') == 'organisasi' ? 'selected' : '' }}>Kegiatan Organisasi (Biru)</option>
+                    <option value="organisasi" {{ old('category') == 'organisasi' ? 'selected' : '' }}>Kegiatan Organisasi (Hijau)</option>
                     <option value="nasional" {{ old('category') == 'nasional' ? 'selected' : '' }}>Hari Libur Nasional (Merah)</option>
-                    <option value="keagamaan" {{ old('category') == 'keagamaan' ? 'selected' : '' }}>Hari Besar Keagamaan (Hijau)</option>
+                    <option value="keagamaan" {{ old('category') == 'keagamaan' ? 'selected' : '' }}>Hari Besar Keagamaan (Biru)</option>
                     <option value="khusus" {{ old('category') == 'khusus' ? 'selected' : '' }}>Hari Khusus (Kuning)</option>
                 </select>
                 @error('category')

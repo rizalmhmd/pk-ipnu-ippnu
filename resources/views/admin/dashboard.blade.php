@@ -114,7 +114,7 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="card-premium p-4 text-white h-100 border-0" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-blue));">
+        <div class="card-premium p-4 text-white h-100 border-0 status-sistem-card" style="background: linear-gradient(135deg, var(--primary-color), var(--primary-blue));">
             <div class="d-flex align-items-center gap-2 mb-4">
                 <i class="bi bi-cpu fs-4"></i>
                 <h5 class="fw-bold mb-0">Status Sistem</h5>
@@ -122,20 +122,20 @@
             <div class="d-flex flex-column gap-3">
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="opacity-75 small fw-medium">Versi Framework</span>
-                    <span class="badge bg-white bg-opacity-20 text-white border border-white border-opacity-25 px-2 py-1">{{ app()->version() }}</span>
+                    <span class="badge status-badge px-2 py-1">{{ app()->version() }}</span>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="opacity-75 small fw-medium">Versi PHP</span>
-                    <span class="badge bg-white bg-opacity-20 text-white border border-white border-opacity-25 px-2 py-1">{{ PHP_VERSION }}</span>
+                    <span class="badge status-badge px-2 py-1">{{ PHP_VERSION }}</span>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="opacity-75 small fw-medium">Environment</span>
-                    <span class="badge bg-white bg-opacity-20 text-white border border-white border-opacity-25 px-2 py-1">{{ app()->environment() }}</span>
+                    <span class="badge status-badge px-2 py-1">{{ app()->environment() }}</span>
                 </div>
                 <hr class="border-white opacity-25 my-2">
                 <div class="text-center mt-2">
                     <p class="small opacity-75 mb-3">Seluruh sistem berjalan dengan normal dan optimal.</p>
-                    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 bg-white bg-opacity-20 rounded-pill">
+                    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 status-indicator rounded-pill">
                         <span class="spinner-grow spinner-grow-sm text-white" role="status"></span>
                         <span class="small fw-bold">Sistem Stabil</span>
                     </div>
@@ -171,5 +171,26 @@
         transform: translateX(-50%);
     }
     .activity-item:last-child .activity-icon-wrap::after { display: none; }
+    
+    /* Status Sistem Styling */
+    .status-badge {
+        background-color: rgba(15, 23, 42, 0.6) !important;
+        color: white !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        font-weight: 600;
+    }
+    
+    .status-indicator {
+        background-color: rgba(15, 23, 42, 0.6) !important;
+    }
+    
+    html.dark-mode .status-badge {
+        background-color: rgba(255, 255, 255, 0.25) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    }
+    
+    html.dark-mode .status-indicator {
+        background-color: rgba(255, 255, 255, 0.25) !important;
+    }
 </style>
 @endsection
