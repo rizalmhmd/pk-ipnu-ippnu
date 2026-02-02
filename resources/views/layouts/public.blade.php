@@ -224,7 +224,9 @@
             background-position: center;
             background-attachment: fixed;
             color: white;
-            padding: 8rem 0;
+            height: 450px;
+            display: flex;
+            align-items: center;
             position: relative;
             overflow: hidden;
         }
@@ -248,7 +250,6 @@
         }
 
         .hero-title {
-            font-size: 3.5rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -568,24 +569,60 @@
     @hasSection('hero')
         @yield('hero')
     @else
-        <section class="hero-section" style="{{ $siteSetting->default_hero_image ? 'background-image: linear-gradient(rgba(0, 64, 0, 0.75), rgba(0, 0, 128, 0.75)), url(' . $storageUrl($siteSetting->default_hero_image) . ');' : '' }}">
-            <div class="container">
-                <div class="hero-content animate-fade-in-up text-center">
-                    <h1 class="hero-title">{{ $siteSetting->default_hero_title ?? 'Portal Resmi PKPT IPNU IPPNU' }}</h1>
-                    <p class="hero-subtitle">
-                        {{ $siteSetting->default_hero_subtitle ?? 'Wadah Pengembangan Kader Pelajar Terpadu untuk membentuk generasi muda yang berakhlak mulia, berwawasan luas, dan berkontribusi positif bagi masyarakat dan bangsa.' }}
-                    </p>
-                    <div class="d-flex gap-3 justify-content-center flex-wrap">
-                        <a href="{{ route('profile') }}" class="btn btn-gradient">
-                            <i class="fas fa-info-circle me-2"></i> Pelajari Lebih Lanjut
-                        </a>
-                        <a href="{{ route('news.index') }}" class="btn btn-outline-light">
-                            <i class="fas fa-newspaper me-2"></i> Lihat Berita Terbaru
-                        </a>
+        @if(isset($quotes) && $quotes->isNotEmpty())
+            <section id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    @foreach($quotes as $index => $quote)
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}" aria-label="Quote {{ $index + 1 }}"></button>
+                    @endforeach
+                </div>
+                <div class="carousel-inner">
+                    @foreach($quotes as $index => $quote)
+                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}" data-bs-interval="8000">
+                        <div class="hero-section" style="background-image: linear-gradient(rgba(0, 64, 0, 0.75), rgba(0, 0, 128, 0.75)){{ $quote->image ? ", url('" . $storageUrl($quote->image) . "')" : "" }};">
+                            <div class="container">
+                                <div class="hero-content text-center px-lg-5">
+                                    <div class="mb-3 mb-md-4 animate-fade-in-up">
+                                        <i class="fas fa-quote-left fa-3x text-white opacity-50"></i>
+                                    </div>
+                                    <h2 class="fw-normal mb-4 animate-fade-in-up" style="animation-delay: 0.1s; line-height: 1.5; font-size: 1.4rem;">
+                                        {{ $quote->content }}
+                                    </h2>
+                                    @if($quote->author)
+                                    <div class="animate-fade-in-up" style="animation-delay: 0.2s">
+                                        <span class="h5 fw-normal opacity-75">—</span>
+                                        <span class="h5 fw-normal">{{ $quote->author }}</span>
+                                    </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+                @if($quotes->count() > 1)
+                <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                @endif
+            </section>
+        @else
+            <section class="hero-section" style="{{ $siteSetting->default_hero_image ? 'background-image: linear-gradient(rgba(0, 64, 0, 0.75), rgba(0, 0, 128, 0.75)), url(' . $storageUrl($siteSetting->default_hero_image) . ');' : '' }}">
+                <div class="container">
+                    <div class="hero-content text-center">
+                        <h1 class="hero-title">{{ $siteSetting->default_hero_title ?? 'Portal Resmi PKPT IPNU IPPNU' }}</h1>
+                        <p class="hero-subtitle">
+                            {{ $siteSetting->default_hero_subtitle ?? 'Wadah Pengembangan Kader Pelajar Terpadu untuk membentuk generasi muda yang berakhlak mulia, berwawasan luas, dan berkontribusi positif bagi masyarakat dan bangsa.' }}
+                        </p>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
     @endif
 
     <!-- Main Content -->

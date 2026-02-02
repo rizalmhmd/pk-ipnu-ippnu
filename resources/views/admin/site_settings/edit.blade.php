@@ -159,35 +159,32 @@
             <hr class="my-5 border-color opacity-10">
 
             <div class="row">
-                <!-- Default Hero Settings -->
                 <div class="col-12 mb-4">
                     <div class="d-flex align-items-center mb-4">
                         <div class="bg-primary bg-opacity-10 rounded-pill p-2 me-3">
                             <i class="bi bi-display text-primary"></i>
                         </div>
-                        <h5 class="mb-0 fw-bold">Default Hero Section (Global)</h5>
+                        <h5 class="mb-0 fw-bold">Hero Section (Global) / Quotes Slider</h5>
                     </div>
-                    <p class="text-secondary small mb-4">Bagian ini akan muncul di halaman yang tidak memiliki hero section khusus.</p>
                     
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <label for="default_hero_title" class="form-label fw-bold small text-uppercase opacity-75">Judul Hero Default</label>
-                            <input type="text" class="form-control form-control-premium @error('default_hero_title') is-invalid @enderror" id="default_hero_title" name="default_hero_title" value="{{ old('default_hero_title', $setting->default_hero_title) }}">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="default_hero_image" class="form-label fw-bold small text-uppercase opacity-75">Gambar Hero Default</label>
-                            <div id="hero-preview-container" class="mb-3 {{ $setting->default_hero_image ? '' : 'd-none' }}">
-                                <img id="hero-preview" src="{{ $setting->default_hero_image ? $storageUrl($setting->default_hero_image) : '#' }}" alt="Hero Preview" class="img-thumbnail bg-transparent border-color" style="max-height: 120px">
+                    <div class="card bg-primary bg-opacity-10 border-0 p-4 rounded-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <h6 class="fw-bold mb-2 text-primary">Manajemen Quotes Aktif</h6>
+                                <p class="text-secondary small mb-3 mb-md-0">Bagian Hero Section global sekarang mendukung banyak slide (quotes). Anda dapat mengelola gambar, urutan, dan teks melalui menu khusus Quotes.</p>
                             </div>
-                            <input type="file" class="form-control form-control-premium @error('default_hero_image') is-invalid @enderror" id="default_hero_image" name="default_hero_image" onchange="previewDefaultHero(this)">
-                            <div class="small text-secondary mt-2">Maksimal 5MB.</div>
+                            <div class="col-md-4 text-md-end">
+                                <a href="{{ route('admin.quotes.index') }}" class="btn-premium px-4 d-inline-block text-decoration-none">
+                                    <i class="bi bi-chat-quote me-2"></i> Kelola Quotes
+                                </a>
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="col-12">
-                            <label for="default_hero_subtitle" class="form-label fw-bold small text-uppercase opacity-75">Sub-judul Hero Default</label>
-                            <textarea class="form-control form-control-premium @error('default_hero_subtitle') is-invalid @enderror" id="default_hero_subtitle" name="default_hero_subtitle" rows="3">{{ old('default_hero_subtitle', $setting->default_hero_subtitle) }}</textarea>
-                        </div>
+                    <!-- Hidden legacy fields to maintain form compatibility if needed -->
+                    <div class="d-none">
+                        <input type="hidden" name="default_hero_title" value="{{ $setting->default_hero_title }}">
+                        <input type="hidden" name="default_hero_subtitle" value="{{ $setting->default_hero_subtitle }}">
                     </div>
                 </div>
             </div>

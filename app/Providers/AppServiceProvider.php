@@ -27,6 +27,11 @@ class AppServiceProvider extends ServiceProvider
                 \Illuminate\Support\Facades\View::share('siteSetting', $siteSetting);
             }
 
+            if (\Illuminate\Support\Facades\Schema::hasTable('quotes')) {
+                $quotes = \App\Models\Quote::where('is_active', true)->orderBy('order')->get();
+                \Illuminate\Support\Facades\View::share('quotes', $quotes);
+            }
+
             // Share counts for Admin Sidebar
             if (request()->is('admin*')) {
                 $counts = [

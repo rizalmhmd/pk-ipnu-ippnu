@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Models\PageSetting;
 use App\Models\Agenda;
+use App\Models\Quote;
 
 class PublicController extends Controller
 {

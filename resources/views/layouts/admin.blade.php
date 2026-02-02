@@ -339,6 +339,7 @@
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.galleries.*') ? 'active' : '' }}" href="{{ route('admin.galleries.index') }}"><i class="bi bi-images nav-icon"></i><span class="nav-link-text">Galeri</span><span class="badge">{{ $adminCounts->galleries ?? 0 }}</span></a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.members.*') ? 'active' : '' }}" href="{{ route('admin.members.index') }}"><i class="bi bi-people nav-icon"></i><span class="nav-link-text">Anggota</span><span class="badge">{{ $adminCounts->members ?? 0 }}</span></a></li>
                 <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.agendas.*') ? 'active' : '' }}" href="{{ route('admin.agendas.index') }}"><i class="bi bi-calendar-event nav-icon"></i><span class="nav-link-text">Agenda</span><span class="badge">{{ $adminCounts->agendas ?? 0 }}</span></a></li>
+                <li class="nav-item"><a class="nav-link {{ request()->routeIs('admin.quotes.*') ? 'active' : '' }}" href="{{ route('admin.quotes.index') }}"><i class="bi bi-chat-quote nav-icon"></i><span class="nav-link-text">Quotes</span></a></li>
 
                 <div class="sidebar-divider"><span>Pengaturan</span></div>
 
