@@ -31,18 +31,18 @@
                 <div class="row mb-4">
                     <div class="col-md-12">
                         <label for="image" class="form-label-premium">Ganti Gambar Utama</label>
-                        @if($post->image)
-                            <div class="mb-3">
-                                <div class="position-relative d-inline-block">
-                                    <img src="{{ $storageUrl($post->image) }}" alt="Current Image" class="img-thumbnail rounded-3 shadow-sm" style="max-height: 200px">
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary border border-light">Gambar Saat Ini</span>
-                                </div>
+                        <div id="post-current-container" class="mb-3 {{ $post->image ? 'd-block' : 'd-none' }}">
+                            <div class="position-relative d-inline-block">
+                                <img id="post-preview" src="{{ $post->image ? $storageUrl($post->image) : '#' }}" alt="Current Image" class="img-thumbnail rounded-3 shadow-sm" style="max-height: 200px">
+                                <span id="post-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary border border-light">{{ $post->image ? 'Gambar Saat Ini' : 'Preview Baru' }}</span>
                             </div>
-                        @endif
+                        </div>
                         <div class="card-premium bg-secondary bg-opacity-10 border-dashed p-4 text-center mb-2 rounded-3">
-                            <i class="bi bi-cloud-arrow-up fs-1 text-secondary mb-2"></i>
-                            <input type="file" class="form-control form-control-premium @error('image') is-invalid @enderror" id="image" name="image">
-                            <div class="small text-secondary mt-2">Pilih file baru jika ingin mengganti gambar sebelumnya</div>
+                            <div id="upload-placeholder" class="{{ $post->image ? 'd-none' : '' }}">
+                                <i class="bi bi-cloud-arrow-up fs-1 text-secondary mb-2"></i>
+                            </div>
+                            <input type="file" class="form-control form-control-premium @error('image') is-invalid @enderror" id="image" name="image" onchange="previewPostEdit(this)">
+                            <div class="small text-secondary mt-2">Pilih file baru jika ingin mengganti gambar sebelumnya (Max: 5MB)</div>
                         </div>
                         <div class="form-text text-secondary small">Biarkan kosong jika tidak ingin mengganti gambar. JPG, PNG, atau WEBP.</div>
                         @error('image')
@@ -50,6 +50,29 @@
                         @enderror
                     </div>
                 </div>
+
+@push('scripts')
+<script>
+    function previewPostEdit(input) {
+        const file = input.files[0];
+        const preview = document.getElementById('post-preview');
+        const container = document.getElementById('post-current-container');
+        const badge = document.getElementById('post-badge');
+        const placeholder = document.getElementById('upload-placeholder');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                container.classList.remove('d-none');
+                badge.innerText = 'Preview Baru';
+                placeholder.classList.add('d-none');
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+@endpush
 
                 <div class="mb-5">
                     <label for="content" class="form-label-premium">Konten Berita</label>

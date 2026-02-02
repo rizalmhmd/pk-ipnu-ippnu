@@ -34,23 +34,47 @@
 
             <div class="mb-5">
                 <label for="hero_image" class="form-label-premium">Gambar Latar (Background)</label>
-                @if($pageSetting->hero_image)
-                    <div class="mb-3 d-flex align-items-center gap-3">
-                        <img src="{{ $storageUrl($pageSetting->hero_image) }}" alt="Current Background" class="rounded-3 shadow-sm border border-color p-1" style="max-height: 120px; width: 200px; object-fit: cover;">
-                        <div>
-                            <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1">Background Saat Ini</span>
-                        </div>
+                <div id="hero-current-container" class="mb-3 {{ $pageSetting->hero_image ? 'd-flex' : 'd-none' }} align-items-center gap-3">
+                    <img id="hero-preview" src="{{ $pageSetting->hero_image ? $storageUrl($pageSetting->hero_image) : '#' }}" alt="Background Preview" class="rounded-3 shadow-sm border border-color p-1" style="max-height: 120px; width: 200px; object-fit: cover;">
+                    <div>
+                        <span id="hero-badge" class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-2 py-1">{{ $pageSetting->hero_image ? 'Background Saat Ini' : 'Preview' }}</span>
                     </div>
-                @endif
+                </div>
                 <div class="card-premium bg-secondary bg-opacity-10 border-dashed p-4 text-center mb-2 rounded-3">
-                    <i class="bi bi-cloud-arrow-up fs-1 text-secondary mb-2"></i>
-                    <input type="file" class="form-control form-control-premium @error('hero_image') is-invalid @enderror" id="hero_image" name="hero_image">
-                    <div class="small text-secondary mt-2">Format yang disarankan: JPG, WEBP. Ukuran besar (misal 1920x1080). Maksimal 2MB.</div>
+                    <div id="upload-placeholder" class="{{ $pageSetting->hero_image ? 'd-none' : '' }}">
+                        <i class="bi bi-cloud-arrow-up fs-1 text-secondary mb-2"></i>
+                    </div>
+                    <input type="file" class="form-control form-control-premium @error('hero_image') is-invalid @enderror" id="hero_image" name="hero_image" onchange="previewHero(this)">
+                    <div class="small text-secondary mt-2">Format yang disarankan: JPG, WEBP. Ukuran besar (misal 1920x1080). Maksimal 5MB.</div>
                 </div>
                 @error('hero_image')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
+@push('scripts')
+<script>
+    function previewHero(input) {
+        const file = input.files[0];
+        const preview = document.getElementById('hero-preview');
+        const container = document.getElementById('hero-current-container');
+        const badge = document.getElementById('hero-badge');
+        const placeholder = document.getElementById('upload-placeholder');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                container.classList.remove('d-none');
+                container.classList.add('d-flex');
+                badge.innerText = 'Preview Baru';
+                placeholder.classList.add('d-none');
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+@endpush
 
             @if($pageSetting->page_name == 'profile')
             <div class="mb-4">

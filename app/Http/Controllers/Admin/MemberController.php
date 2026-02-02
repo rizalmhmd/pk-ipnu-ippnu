@@ -26,7 +26,7 @@ class MemberController extends Controller
         $request->validate([
             'name' => 'required',
             'position' => 'required',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'instagram' => 'nullable|string',
             'type' => 'required|in:ipnu,ippnu',
             'order' => 'nullable|integer',
@@ -53,7 +53,7 @@ class MemberController extends Controller
         $request->validate([
             'name' => 'required',
             'position' => 'required',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'instagram' => 'nullable|string',
             'type' => 'required|in:ipnu,ippnu',
             'order' => 'nullable|integer',

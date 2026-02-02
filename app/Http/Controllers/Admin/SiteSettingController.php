@@ -24,7 +24,7 @@ class SiteSettingController extends Controller
 
         $validated = $request->validate([
             'site_name' => 'required|string|max:255',
-            'site_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'site_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'favicon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,ico|max:1024',
             'meta_description' => 'nullable|string',
             'footer_description' => 'nullable|string',
@@ -40,7 +40,7 @@ class SiteSettingController extends Controller
             'home_agenda_title' => 'required|string|max:255',
             'default_hero_title' => 'nullable|string|max:255',
             'default_hero_subtitle' => 'nullable|string',
-            'default_hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'default_hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
         ]);
 
         if ($request->hasFile('site_logo')) {

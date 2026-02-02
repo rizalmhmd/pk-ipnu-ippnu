@@ -26,7 +26,7 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'content' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         $data = $request->all();
@@ -52,7 +52,7 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required',
             'content' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
         $data = $request->all();

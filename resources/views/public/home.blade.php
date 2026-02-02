@@ -2,12 +2,12 @@
 
 @section('content')
 <section class="hero-section rounded-4 overflow-hidden shadow-lg mt-4 mb-5" style="{{ $pageSetting && $pageSetting->hero_image ? 'background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(' . $storageUrl($pageSetting->hero_image) . ');' : '' }}">
-    <div class="container text-center text-white py-5 px-4">
-        <h1 class="display-3 fw-bold mb-3 animate-fade-in-up">{{ optional($pageSetting)->hero_title ?? 'Selamat Datang di PKPT IPNU IPPNU' }}</h1>
-        <p class="lead mb-4 animate-fade-in-up" style="animation-delay: 0.1s">{{ optional($pageSetting)->hero_description ?? 'Belajar, Berjuang, Bertaqwa' }}</p>
-        <div class="d-flex gap-3 justify-content-center animate-fade-in-up" style="animation-delay: 0.2s">
-            <a href="{{ route('profile') }}" class="btn btn-primary btn-lg px-4">Tentang Kami</a>
-            <a href="{{ route('news.index') }}" class="btn btn-outline-light btn-lg px-4">Berita Terbaru</a>
+    <div class="container text-center text-white py-4 py-md-5 px-4">
+        <h1 class="display-4 fw-bold mb-3 animate-fade-in-up">{{ optional($pageSetting)->hero_title ?? 'Selamat Datang di PKPT IPNU IPPNU' }}</h1>
+        <p class="lead mb-3 animate-fade-in-up" style="animation-delay: 0.1s">{{ optional($pageSetting)->hero_description ?? 'Belajar, Berjuang, Bertaqwa' }}</p>
+        <div class="d-flex gap-2 gap-md-3 justify-content-center animate-fade-in-up" style="animation-delay: 0.2s">
+            <a href="{{ route('profile') }}" class="btn btn-primary px-4">Tentang Kami</a>
+            <a href="{{ route('news.index') }}" class="btn btn-outline-light px-4">Berita Terbaru</a>
         </div>
     </div>
 </section>

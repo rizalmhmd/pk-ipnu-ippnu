@@ -67,12 +67,11 @@
                     
                     <div class="mb-3">
                         <label for="site_logo" class="form-label fw-bold small text-uppercase opacity-75">Logo Situs</label>
-                        <input type="file" class="form-control form-control-premium @error('site_logo') is-invalid @enderror" id="site_logo" name="site_logo">
-                        @if($setting->site_logo)
-                            <div class="mt-3">
-                                <img src="{{ $storageUrl($setting->site_logo) }}" alt="Logo" class="img-thumbnail bg-transparent border-color" style="max-height: 80px">
-                            </div>
-                        @endif
+                        <div id="logo-preview-container" class="mb-3 {{ $setting->site_logo ? '' : 'd-none' }}">
+                            <img id="logo-preview" src="{{ $setting->site_logo ? $storageUrl($setting->site_logo) : '#' }}" alt="Logo Preview" class="img-thumbnail bg-transparent border-color" style="max-height: 80px">
+                        </div>
+                        <input type="file" class="form-control form-control-premium @error('site_logo') is-invalid @enderror" id="site_logo" name="site_logo" onchange="previewLogo(this)">
+                        <div class="small text-secondary mt-2">Maksimal 5MB.</div>
                         @error('site_logo')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -178,12 +177,11 @@
 
                         <div class="col-md-6">
                             <label for="default_hero_image" class="form-label fw-bold small text-uppercase opacity-75">Gambar Hero Default</label>
-                            <input type="file" class="form-control form-control-premium @error('default_hero_image') is-invalid @enderror" id="default_hero_image" name="default_hero_image">
-                            @if($setting->default_hero_image)
-                                <div class="mt-3">
-                                    <img src="{{ $storageUrl($setting->default_hero_image) }}" alt="Hero Default" class="img-thumbnail bg-transparent border-color" style="max-height: 120px">
-                                </div>
-                            @endif
+                            <div id="hero-preview-container" class="mb-3 {{ $setting->default_hero_image ? '' : 'd-none' }}">
+                                <img id="hero-preview" src="{{ $setting->default_hero_image ? $storageUrl($setting->default_hero_image) : '#' }}" alt="Hero Preview" class="img-thumbnail bg-transparent border-color" style="max-height: 120px">
+                            </div>
+                            <input type="file" class="form-control form-control-premium @error('default_hero_image') is-invalid @enderror" id="default_hero_image" name="default_hero_image" onchange="previewDefaultHero(this)">
+                            <div class="small text-secondary mt-2">Maksimal 5MB.</div>
                         </div>
 
                         <div class="col-12">
@@ -200,4 +198,37 @@
         </form>
     </div>
 </div>
+@push('scripts')
+<script>
+    function previewLogo(input) {
+        const file = input.files[0];
+        const preview = document.getElementById('logo-preview');
+        const container = document.getElementById('logo-preview-container');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                container.classList.remove('d-none');
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function previewDefaultHero(input) {
+        const file = input.files[0];
+        const preview = document.getElementById('hero-preview');
+        const container = document.getElementById('hero-preview-container');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                container.classList.remove('d-none');
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+@endpush
 @endsection

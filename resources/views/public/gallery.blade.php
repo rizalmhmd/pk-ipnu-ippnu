@@ -2,7 +2,7 @@
 
 @section('content')
 <section class="hero-section rounded-4 overflow-hidden shadow-lg mt-4 mb-5" style="{{ $pageSetting && $pageSetting->hero_image ? 'background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url(' . $storageUrl($pageSetting->hero_image) . ');' : '' }}">
-    <div class="container text-center text-white py-5 px-4">
+    <div class="container text-center text-white py-4 py-md-5 px-4">
         <h1 class="display-3 fw-bold mb-3 animate-fade-in-up">{{ optional($pageSetting)->hero_title ?? 'Galeri Foto' }}</h1>
         <p class="lead mb-0 animate-fade-in-up" style="animation-delay: 0.1s">{{ optional($pageSetting)->hero_description ?? 'Dokumentasi kegiatan kami' }}</p>
     </div>

@@ -26,7 +26,7 @@ class PageSettingController extends Controller
         $validated = $request->validate([
             'hero_title' => 'nullable|string|max:255',
             'hero_description' => 'nullable|string',
-            'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'content_sejarah' => 'nullable|string',
             'content_visi_misi' => 'nullable|string',
         ]);

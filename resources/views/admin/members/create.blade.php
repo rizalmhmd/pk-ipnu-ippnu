@@ -75,9 +75,14 @@
             <div class="mb-5">
                 <label for="photo" class="form-label-premium">Foto Profil</label>
                 <div class="card-premium bg-secondary bg-opacity-10 border-dashed p-4 text-center mb-2 rounded-3">
-                    <i class="bi bi-image fs-1 text-secondary mb-2"></i>
-                    <input type="file" class="form-control form-control-premium @error('photo') is-invalid @enderror" id="photo" name="photo">
-                    <div class="small text-secondary mt-2">Format yang disarankan: JPG, PNG. Maksimal 2MB.</div>
+                    <div id="photo-preview-container" class="mb-3 d-none">
+                        <img id="photo-preview" src="#" alt="Preview" class="img-fluid rounded-3 shadow-sm" style="max-height: 200px;">
+                    </div>
+                    <div id="photo-placeholder">
+                        <i class="bi bi-image fs-1 text-secondary mb-2"></i>
+                    </div>
+                    <input type="file" class="form-control form-control-premium @error('photo') is-invalid @enderror" id="photo" name="photo" onchange="previewPhoto(this)">
+                    <div class="small text-secondary mt-2">Format yang disarankan: JPG, PNG. Maksimal 5MB.</div>
                 </div>
                 @error('photo')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -85,7 +90,7 @@
             </div>
 
             <div class="d-flex justify-content-end gap-3 pt-4 border-top border-color">
-                <a href="{{ route('admin.members.index') }}" class="btn btn-link text-secondary text-decoration-none fw-bold">Batalkan</a>
+                <a href="{{ route('admin.members.index') }}" class="btn btn-link text-secondary text-decoration-none fw-bold" onclick="resetPhotoPreview()">Batalkan</a>
                 <button type="submit" class="btn-premium px-5">
                     <i class="bi bi-person-plus me-2"></i> Simpan Anggota
                 </button>
@@ -93,4 +98,31 @@
         </form>
     </div>
 </div>
+
+@push('scripts')
+<script>
+    function previewPhoto(input) {
+        const file = input.files[0];
+        const preview = document.getElementById('photo-preview');
+        const container = document.getElementById('photo-preview-container');
+        const placeholder = document.getElementById('photo-placeholder');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                container.classList.remove('d-none');
+                placeholder.classList.add('d-none');
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function resetPhotoPreview() {
+        document.getElementById('photo-preview').src = '#';
+        document.getElementById('photo-preview-container').classList.add('d-none');
+        document.getElementById('photo-placeholder').classList.remove('d-none');
+    }
+</script>
+@endpush
 @endsection

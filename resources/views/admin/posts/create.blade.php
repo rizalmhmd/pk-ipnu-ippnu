@@ -31,9 +31,14 @@
                     <div class="col-md-12">
                         <label for="image" class="form-label-premium">Gambar Utama</label>
                         <div class="card bg-secondary bg-opacity-10 border-dashed p-4 text-center mb-2 rounded-3">
-                            <i class="bi bi-cloud-arrow-up fs-1 text-secondary mb-2"></i>
-                            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
-                            <div class="small text-secondary mt-2">Seret file ke sini atau klik untuk browse (Max: 2MB)</div>
+                            <div id="post-preview-container" class="mb-3 d-none">
+                                <img id="post-preview" src="#" alt="Preview" class="img-fluid rounded-3 shadow-sm" style="max-height: 250px;">
+                            </div>
+                            <div id="upload-placeholder">
+                                <i class="bi bi-cloud-arrow-up fs-1 text-secondary mb-2"></i>
+                            </div>
+                            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" onchange="previewPostImage(this)">
+                            <div class="small text-secondary mt-2">Seret file ke sini atau klik untuk browse (Max: 5MB)</div>
                         </div>
                         <div class="form-text text-secondary small">Format: JPG, PNG, atau WEBP. Dimensi yang disarankan: 1200x800px.</div>
                         @error('image')
@@ -41,6 +46,27 @@
                         @enderror
                     </div>
                 </div>
+
+@push('scripts')
+<script>
+    function previewPostImage(input) {
+        const file = input.files[0];
+        const preview = document.getElementById('post-preview');
+        const container = document.getElementById('post-preview-container');
+        const placeholder = document.getElementById('upload-placeholder');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                container.classList.remove('d-none');
+                placeholder.classList.add('d-none');
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+@endpush
 
                 <div class="mb-5">
                     <label for="content" class="form-label-premium">Isi Berita Lengkap</label>

@@ -552,11 +552,13 @@
                             <i class="fas fa-calendar-alt me-1"></i> Agenda
                         </a>
                     </li>
+                    @auth
                     <li class="nav-item">
-                        <a class="nav-link-custom btn-admin" href="{{ Auth::check() ? route('admin.dashboard') : route('login') }}">
-                            <i class="fas fa-lock"></i> {{ Auth::check() ? 'Dashboard' : 'Admin Area' }}
+                        <a class="nav-link-custom btn-admin" href="{{ route('admin.dashboard') }}">
+                            <i class="fas fa-lock"></i> Dashboard
                         </a>
                     </li>
+                    @endauth
                 </ul>
             </div>
         </div>
@@ -633,7 +635,7 @@
                             <li><a href="#"><i class="fas fa-chevron-right"></i> Kebijakan Privasi</a></li>
                             <li><a href="#"><i class="fas fa-chevron-right"></i> Syarat & Ketentuan</a></li>
                             <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
-                            <li><a href="{{ Auth::check() ? route('admin.dashboard') : route('login') }}"><i class="fas fa-chevron-right"></i> {{ Auth::check() ? 'Dashboard' : 'Admin Area' }}</a></li>
+                            <li><a href="{{ Auth::check() ? route('admin.dashboard') : route('login') }}"><i class="fas fa-chevron-right"></i> {{ Auth::check() ? 'Dashboard' : 'Login Pengurus' }}</a></li>
                         </ul>
                     </div>
                 </div>
