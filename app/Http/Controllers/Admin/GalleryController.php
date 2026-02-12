@@ -13,12 +13,12 @@ class GalleryController extends Controller
     public function index()
     {
         $galleries = Gallery::latest()->paginate(12);
-        return view('admin.galleries.index', compact('galleries'));
+        return \Inertia\Inertia::render('Admin/Galleries/Index', compact('galleries'));
     }
 
     public function create()
     {
-        return view('admin.galleries.create');
+        return \Inertia\Inertia::render('Admin/Galleries/Create');
     }
 
     public function store(Request $request)
@@ -28,7 +28,7 @@ class GalleryController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
-        $imagePath = $request->file('image')->store('galleries');
+        $imagePath = $request->file('image')->store('galleries', 'public');
 
         Gallery::create([
             'title' => $request->title,

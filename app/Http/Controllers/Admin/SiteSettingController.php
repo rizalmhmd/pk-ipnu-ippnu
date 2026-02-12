@@ -15,7 +15,7 @@ class SiteSettingController extends Controller
     public function edit()
     {
         $setting = SiteSetting::firstOrCreate(['id' => 1]);
-        return view('admin.site_settings.edit', compact('setting'));
+        return \Inertia\Inertia::render('Admin/Settings/Site', compact('setting'));
     }
 
     public function update(Request $request)
@@ -51,7 +51,7 @@ class SiteSettingController extends Controller
                     // Ignore if not found on cloud
                 }
             }
-            $validated['site_logo'] = $request->file('site_logo')->store('site');
+            $validated['site_logo'] = $request->file('site_logo')->store('site', 'public');
         }
 
         if ($request->hasFile('favicon')) {
@@ -62,7 +62,7 @@ class SiteSettingController extends Controller
                     // Ignore if not found on cloud
                 }
             }
-            $validated['favicon'] = $request->file('favicon')->store('site');
+            $validated['favicon'] = $request->file('favicon')->store('site', 'public');
         }
 
         if ($request->hasFile('default_hero_image')) {
@@ -73,7 +73,7 @@ class SiteSettingController extends Controller
                     // Ignore if not found on cloud
                 }
             }
-            $validated['default_hero_image'] = $request->file('default_hero_image')->store('site');
+            $validated['default_hero_image'] = $request->file('default_hero_image')->store('site', 'public');
         }
 
         $setting->update($validated);

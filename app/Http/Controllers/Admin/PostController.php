@@ -13,12 +13,12 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::latest()->paginate(10);
-        return view('admin.posts.index', compact('posts'));
+        return \Inertia\Inertia::render('Admin/Posts/Index', compact('posts'));
     }
 
     public function create()
     {
-        return view('admin.posts.create');
+        return \Inertia\Inertia::render('Admin/Posts/Create');
     }
 
     public function store(Request $request)
@@ -34,7 +34,7 @@ class PostController extends Controller
         $data['published_at'] = now();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('posts');
+            $data['image'] = $request->file('image')->store('posts', 'public');
         }
 
         Post::create($data);
@@ -44,7 +44,7 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        return \Inertia\Inertia::render('Admin/Posts/Edit', compact('post'));
     }
 
     public function update(Request $request, Post $post)
@@ -56,7 +56,12 @@ class PostController extends Controller
         ]);
 
         $data = $request->all();
-        $data['slug'] = Str::slug($request->title) . '-' . time();
+        
+        if ($request->title !== $post->title) {
+            $data['slug'] = Str::slug($request->title) . '-' . time();
+        } else {
+            unset($data['slug']);
+        }
 
         if ($request->hasFile('image')) {
             if ($post->image) {
@@ -66,7 +71,7 @@ class PostController extends Controller
                     // Log or ignore if file not found on cloud
                 }
             }
-            $data['image'] = $request->file('image')->store('posts');
+            $data['image'] = $request->file('image')->store('posts', 'public');
         }
 
         $post->update($data);

@@ -26,7 +26,7 @@ class DashboardController extends Controller
                 'title' => $post->title,
                 'user' => 'Administrator',
                 'time' => $post->created_at->diffForHumans(),
-                'icon' => 'bi-newspaper',
+                'icon' => 'Newspaper',
                 'color' => 'primary'
             ];
         });
@@ -38,7 +38,7 @@ class DashboardController extends Controller
                 'title' => $agenda->title,
                 'user' => 'Administrator',
                 'time' => $agenda->created_at->diffForHumans(),
-                'icon' => 'bi-calendar-event',
+                'icon' => 'Calendar',
                 'color' => 'success'
             ];
         });
@@ -47,12 +47,14 @@ class DashboardController extends Controller
             ->sortByDesc('time')
             ->take(5);
 
-        return view('admin.dashboard', compact(
-            'postsCount', 
-            'galleriesCount', 
-            'membersCount', 
-            'agendasCount',
-            'activities'
-        ));
+        return \Inertia\Inertia::render('Admin/Dashboard', [
+            'stats' => [
+                'posts' => $postsCount,
+                'galleries' => $galleriesCount,
+                'members' => $membersCount,
+                'agendas' => $agendasCount,
+            ],
+            'activities' => $activities,
+        ]);
     }
 }

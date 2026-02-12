@@ -11,6 +11,9 @@ class PageSetting extends Model
         'hero_title',
         'hero_description',
         'hero_image',
+        'header_bg_color',
+        'header_text_color',
+        'header_bg_image',
         'content_sejarah',
         'content_visi_misi',
     ];

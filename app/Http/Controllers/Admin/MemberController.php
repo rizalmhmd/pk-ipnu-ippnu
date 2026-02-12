@@ -13,12 +13,12 @@ class MemberController extends Controller
     public function index()
     {
         $members = Member::latest()->paginate(10);
-        return view('admin.members.index', compact('members'));
+        return \Inertia\Inertia::render('Admin/Members/Index', compact('members'));
     }
 
     public function create()
     {
-        return view('admin.members.create');
+        return \Inertia\Inertia::render('Admin/Members/Create');
     }
 
     public function store(Request $request)
@@ -35,7 +35,7 @@ class MemberController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('members');
+            $data['photo'] = $request->file('photo')->store('members', 'public');
         }
 
         Member::create($data);
@@ -45,7 +45,7 @@ class MemberController extends Controller
 
     public function edit(Member $member)
     {
-        return view('admin.members.edit', compact('member'));
+        return \Inertia\Inertia::render('Admin/Members/Edit', compact('member'));
     }
 
     public function update(Request $request, Member $member)
@@ -69,7 +69,7 @@ class MemberController extends Controller
                     // Ignore if file not found on cloud
                 }
             }
-            $data['photo'] = $request->file('photo')->store('members');
+            $data['photo'] = $request->file('photo')->store('members', 'public');
         }
 
         $member->update($data);

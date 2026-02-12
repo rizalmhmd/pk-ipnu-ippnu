@@ -12,12 +12,12 @@ class QuoteController extends Controller
     public function index()
     {
         $quotes = Quote::orderBy('order')->get();
-        return view('admin.quotes.index', compact('quotes'));
+        return \Inertia\Inertia::render('Admin/Quotes/Index', compact('quotes'));
     }
 
     public function create()
     {
-        return view('admin.quotes.create');
+        return \Inertia\Inertia::render('Admin/Quotes/Create');
     }
 
     public function store(Request $request)
@@ -34,7 +34,7 @@ class QuoteController extends Controller
         $data['is_active'] = $request->has('is_active');
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('quotes');
+            $data['image'] = $request->file('image')->store('quotes', 'public');
         }
 
         Quote::create($data);
@@ -44,7 +44,7 @@ class QuoteController extends Controller
 
     public function edit(Quote $quote)
     {
-        return view('admin.quotes.edit', compact('quote'));
+        return \Inertia\Inertia::render('Admin/Quotes/Edit', compact('quote'));
     }
 
     public function update(Request $request, Quote $quote)
@@ -68,7 +68,7 @@ class QuoteController extends Controller
                     // Ignore
                 }
             }
-            $data['image'] = $request->file('image')->store('quotes');
+            $data['image'] = $request->file('image')->store('quotes', 'public');
         }
 
         $quote->update($data);

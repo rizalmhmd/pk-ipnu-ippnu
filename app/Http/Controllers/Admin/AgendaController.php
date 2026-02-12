@@ -15,7 +15,7 @@ class AgendaController extends Controller
     public function index()
     {
         $agendas = Agenda::latest('event_date')->paginate(10);
-        return view('admin.agendas.index', compact('agendas'));
+        return \Inertia\Inertia::render('Admin/Agendas/Index', compact('agendas'));
     }
 
     /**
@@ -23,7 +23,7 @@ class AgendaController extends Controller
      */
     public function create()
     {
-        return view('admin.agendas.create');
+        return \Inertia\Inertia::render('Admin/Agendas/Create');
     }
 
     /**
@@ -51,7 +51,7 @@ class AgendaController extends Controller
      */
     public function edit(Agenda $agenda)
     {
-        return view('admin.agendas.edit', compact('agenda'));
+        return \Inertia\Inertia::render('Admin/Agendas/Edit', compact('agenda'));
     }
 
     /**

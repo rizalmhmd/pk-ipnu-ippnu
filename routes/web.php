@@ -8,12 +8,18 @@ use App\Http\Controllers\Admin\AgendaController;
 use App\Http\Controllers\Admin\PageSettingController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\QuoteController;
+use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes
 Route::get('/', [PublicController::class, 'index'])->name('home');
+
+Route::get('/inertia-test', function () {
+    return inertia('Welcome');
+});
+
 Route::get('/profil', [PublicController::class, 'profile'])->name('profile');
 Route::get('/berita', [PublicController::class, 'news'])->name('news.index');
 Route::get('/berita/{slug}', [PublicController::class, 'newsDetail'])->name('news.show');
@@ -33,6 +39,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('site-settings', [SiteSettingController::class, 'edit'])->name('site-settings.edit');
     Route::put('site-settings', [SiteSettingController::class, 'update'])->name('site-settings.update');
     Route::resource('quotes', QuoteController::class);
+    Route::resource('statistics', StatisticController::class);
     
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

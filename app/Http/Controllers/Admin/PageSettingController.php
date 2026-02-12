@@ -13,12 +13,12 @@ class PageSettingController extends Controller
     public function index()
     {
         $settings = PageSetting::all();
-        return view('admin.page_settings.index', compact('settings'));
+        return \Inertia\Inertia::render('Admin/Settings/Pages/Index', compact('settings'));
     }
 
     public function edit(PageSetting $pageSetting)
     {
-        return view('admin.page_settings.edit', compact('pageSetting'));
+        return \Inertia\Inertia::render('Admin/Settings/Pages/Edit', compact('pageSetting'));
     }
 
     public function update(Request $request, PageSetting $pageSetting)
@@ -27,6 +27,9 @@ class PageSettingController extends Controller
             'hero_title' => 'nullable|string|max:255',
             'hero_description' => 'nullable|string',
             'hero_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'header_bg_color' => 'nullable|string',
+            'header_text_color' => 'nullable|string',
+            'header_bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'content_sejarah' => 'nullable|string',
             'content_visi_misi' => 'nullable|string',
         ]);
@@ -39,7 +42,18 @@ class PageSettingController extends Controller
                     // Ignore if file not found on cloud
                 }
             }
-            $validated['hero_image'] = $request->file('hero_image')->store('hero-images');
+            $validated['hero_image'] = $request->file('hero_image')->store('hero-images', 'public');
+        }
+
+        if ($request->hasFile('header_bg_image')) {
+            if ($pageSetting->header_bg_image) {
+                try {
+                    Storage::delete($pageSetting->header_bg_image);
+                } catch (\Exception $e) {
+                    // Ignore if file not found on cloud
+                }
+            }
+            $validated['header_bg_image'] = $request->file('header_bg_image')->store('header-images', 'public');
         }
 
         $pageSetting->update($validated);
