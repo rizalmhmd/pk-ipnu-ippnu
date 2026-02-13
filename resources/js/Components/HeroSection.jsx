@@ -41,7 +41,7 @@ export default function HeroSection({ bgImage }) {
                         initial={{ scale: 1.1 }}
                         animate={{ scale: 1 }}
                         transition={{ duration: 1.5, ease: "easeOut" }}
-                        src={quotesToDisplay && quotesToDisplay[currentQuote]?.image ? `/storage/${quotesToDisplay[currentQuote].image}` : bgImage}
+                        src={quotesToDisplay && quotesToDisplay[currentQuote]?.image_url ? quotesToDisplay[currentQuote].image_url : bgImage}
                         className="w-full h-full object-cover brightness-[0.4]"
                         alt="Hero BG"
                     />

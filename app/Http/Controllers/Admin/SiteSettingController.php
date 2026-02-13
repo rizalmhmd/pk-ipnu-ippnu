@@ -47,33 +47,48 @@ class SiteSettingController extends Controller
             if ($setting->site_logo) {
                 try {
                     Storage::delete($setting->site_logo);
-                } catch (\Exception $e) {
-                    // Ignore if not found on cloud
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
                 }
             }
-            $validated['site_logo'] = $request->file('site_logo')->store('site', 'public');
+            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
+                $path = Storage::disk('cloudinary')->putFile('site', $request->file('site_logo'));
+                $validated['site_logo'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                $validated['site_logo'] = $request->file('site_logo')->store('site', 'public');
+            }
         }
 
         if ($request->hasFile('favicon')) {
             if ($setting->favicon) {
                 try {
                     Storage::delete($setting->favicon);
-                } catch (\Exception $e) {
-                    // Ignore if not found on cloud
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
                 }
             }
-            $validated['favicon'] = $request->file('favicon')->store('site', 'public');
+            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
+                $path = Storage::disk('cloudinary')->putFile('site', $request->file('favicon'));
+                $validated['favicon'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                $validated['favicon'] = $request->file('favicon')->store('site', 'public');
+            }
         }
 
         if ($request->hasFile('default_hero_image')) {
             if ($setting->default_hero_image) {
                 try {
                     Storage::delete($setting->default_hero_image);
-                } catch (\Exception $e) {
-                    // Ignore if not found on cloud
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
                 }
             }
-            $validated['default_hero_image'] = $request->file('default_hero_image')->store('site', 'public');
+            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary') {
+                $path = Storage::disk('cloudinary')->putFile('site', $request->file('default_hero_image'));
+                $validated['default_hero_image'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                $validated['default_hero_image'] = $request->file('default_hero_image')->store('site', 'public');
+            }
         }
 
         $setting->update($validated);

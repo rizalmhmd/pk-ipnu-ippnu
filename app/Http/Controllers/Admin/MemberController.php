@@ -35,7 +35,12 @@ class MemberController extends Controller
         $data = $request->all();
 
         if ($request->hasFile('photo')) {
-            $data['photo'] = $request->file('photo')->store('members', 'public');
+            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
+                $path = Storage::disk('cloudinary')->putFile('members', $request->file('photo'));
+                $data['photo'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                $data['photo'] = $request->file('photo')->store('members', 'public');
+            }
         }
 
         Member::create($data);
@@ -65,11 +70,16 @@ class MemberController extends Controller
             if ($member->photo) {
                 try {
                     Storage::delete($member->photo);
-                } catch (\Exception $e) {
-                    // Ignore if file not found on cloud
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
                 }
             }
-            $data['photo'] = $request->file('photo')->store('members', 'public');
+            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
+                $path = Storage::disk('cloudinary')->putFile('members', $request->file('photo'));
+                $data['photo'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                $data['photo'] = $request->file('photo')->store('members', 'public');
+            }
         }
 
         $member->update($data);
@@ -82,8 +92,8 @@ class MemberController extends Controller
         if ($member->photo) {
             try {
                 Storage::delete($member->photo);
-            } catch (\Exception $e) {
-                // Ignore if already deleted from cloud
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
             }
         }
         $member->delete();

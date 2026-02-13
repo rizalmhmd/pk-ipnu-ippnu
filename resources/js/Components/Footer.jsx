@@ -13,7 +13,7 @@ export default function Footer() {
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center shadow-lg shadow-emerald-900/40 overflow-hidden">
                                 {siteSetting?.site_logo ? (
-                                    <img src={`/storage/${siteSetting.site_logo}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} alt="Logo" className="w-full h-full object-cover" />
+                                    <img src={siteSetting.site_logo_url} alt="Logo" className="w-full h-full object-cover" />
                                 ) : (
                                     <i className="fas fa-users text-white text-xl"></i>
                                 )}

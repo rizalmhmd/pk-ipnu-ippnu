@@ -28,7 +28,12 @@ class GalleryController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
-        $imagePath = $request->file('image')->store('galleries', 'public');
+        if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
+            $path = Storage::disk('cloudinary')->putFile('galleries', $request->file('image'));
+            $imagePath = Storage::disk('cloudinary')->url($path);
+        } else {
+            $imagePath = $request->file('image')->store('galleries', 'public');
+        }
 
         Gallery::create([
             'title' => $request->title,
@@ -40,10 +45,12 @@ class GalleryController extends Controller
 
     public function destroy(Gallery $gallery)
     {
-        try {
-            Storage::delete($gallery->image_path);
-        } catch (\Exception $e) {
-            // Ignore if already deleted from cloud
+        if ($gallery->image_path) {
+            try {
+                \Illuminate\Support\Facades\Storage::delete($gallery->image_path);
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
+            }
         }
         $gallery->delete();
 

@@ -38,22 +38,32 @@ class PageSettingController extends Controller
             if ($pageSetting->hero_image) {
                 try {
                     Storage::delete($pageSetting->hero_image);
-                } catch (\Exception $e) {
-                    // Ignore if file not found on cloud
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
                 }
             }
-            $validated['hero_image'] = $request->file('hero_image')->store('hero-images', 'public');
+            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
+                $path = Storage::disk('cloudinary')->putFile('hero-images', $request->file('hero_image'));
+                $validated['hero_image'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                $validated['hero_image'] = $request->file('hero_image')->store('hero-images', 'public');
+            }
         }
 
         if ($request->hasFile('header_bg_image')) {
             if ($pageSetting->header_bg_image) {
                 try {
                     Storage::delete($pageSetting->header_bg_image);
-                } catch (\Exception $e) {
-                    // Ignore if file not found on cloud
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
                 }
             }
-            $validated['header_bg_image'] = $request->file('header_bg_image')->store('header-images', 'public');
+            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary') {
+                $path = Storage::disk('cloudinary')->putFile('header-images', $request->file('header_bg_image'));
+                $validated['header_bg_image'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                $validated['header_bg_image'] = $request->file('header_bg_image')->store('header-images', 'public');
+            }
         }
 
         $pageSetting->update($validated);

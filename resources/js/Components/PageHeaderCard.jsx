@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 export default function PageHeaderCard({ title, subtitle, bgColor, textColor, bgImage }) {
     // Determine background style
     const bgStyle = bgImage
-        ? { backgroundImage: `url(/storage/${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }
+        ? { backgroundImage: `url(${bgImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }
         : bgColor
             ? { background: bgColor } // Can be hex or linear-gradient
             : {}; // Fallback to default CSS classes if nothing provided

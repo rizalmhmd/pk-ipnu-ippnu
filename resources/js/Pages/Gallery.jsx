@@ -23,7 +23,7 @@ export default function Gallery({ galleries, pageSetting }) {
                 subtitle="Kumpulan dokumentasi kegiatan dan momen berharga PKPT IPNU IPPNU"
                 bgColor={pageSetting?.header_bg_color}
                 textColor={pageSetting?.header_text_color}
-                bgImage={pageSetting?.header_bg_image}
+                bgImage={pageSetting?.header_bg_image_url}
             />
 
             <div className="container mx-auto px-6 md:px-12 py-20">
@@ -41,7 +41,7 @@ export default function Gallery({ galleries, pageSetting }) {
                             className="group relative aspect-square md:aspect-[4/5] bg-white rounded-[2rem] overflow-hidden shadow-xl shadow-slate-200/50 cursor-pointer hover:shadow-2xl hover:shadow-emerald-900/10 hover:-translate-y-2 transition-all duration-500 border border-slate-100"
                         >
                             <img
-                                src={`/storage/${item.image_path}?v=${new Date(item.updated_at).getTime()}`}
+                                src={item.image_url}
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                 alt={item.title}
                             />
@@ -91,7 +91,7 @@ export default function Gallery({ galleries, pageSetting }) {
                             </button>
 
                             <img
-                                src={`/storage/${selectedImage.image_path}?v=${new Date(selectedImage.updated_at).getTime()}`}
+                                src={selectedImage.image_url}
                                 className="max-w-full max-h-[80vh] object-contain rounded-3xl shadow-2xl pointer-events-auto"
                                 alt={selectedImage.title}
                             />

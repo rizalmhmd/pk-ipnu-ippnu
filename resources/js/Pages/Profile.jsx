@@ -23,7 +23,7 @@ export default function Profile({ siteSetting, sections, organizations, pageSett
                 subtitle="Sejarah, Visi, Misi, dan Struktur Organisasi PKPT IPNU IPPNU"
                 bgColor={pageSetting?.header_bg_color}
                 textColor={pageSetting?.header_text_color}
-                bgImage={pageSetting?.header_bg_image}
+                bgImage={pageSetting?.header_bg_image_url}
             />
 
             <div className="container mx-auto px-6 md:px-12 py-20">

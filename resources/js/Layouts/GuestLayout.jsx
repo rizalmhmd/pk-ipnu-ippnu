@@ -8,11 +8,11 @@ export default function GuestLayout({ children }) {
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-slate-50 selection:bg-emerald-200 selection:text-emerald-900 px-4">
             <Head>
-                {siteSetting?.favicon && (
+                {siteSetting?.favicon_url && (
                     <>
-                        <link rel="icon" type="image/x-icon" href={`/storage/${siteSetting.favicon}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} />
-                        <link rel="shortcut icon" href={`/storage/${siteSetting.favicon}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} />
-                        <link rel="apple-touch-icon" href={`/storage/${siteSetting.favicon}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} />
+                        <link rel="icon" type="image/x-icon" href={siteSetting.favicon_url} />
+                        <link rel="shortcut icon" href={siteSetting.favicon_url} />
+                        <link rel="apple-touch-icon" href={siteSetting.favicon_url} />
                     </>
                 )}
             </Head>
@@ -20,7 +20,7 @@ export default function GuestLayout({ children }) {
                 <Link href="/" className="flex flex-col items-center gap-3 sm:gap-4 group">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-600 rounded-[1.5rem] sm:rounded-[2rem] flex items-center justify-center shadow-2xl shadow-emerald-900/20 group-hover:scale-110 transition-transform duration-500 overflow-hidden">
                         {siteSetting?.site_logo ? (
-                            <img src={`/storage/${siteSetting.site_logo}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} alt="Logo" className="w-full h-full object-cover" />
+                            <img src={siteSetting.site_logo_url} alt="Logo" className="w-full h-full object-cover" />
                         ) : (
                             <i className="fas fa-users text-white text-3xl sm:text-4xl"></i>
                         )}

@@ -83,7 +83,7 @@ export default function NewsDetail({ post }) {
                             className="rounded-[3rem] overflow-hidden shadow-2xl shadow-slate-200/50 mb-16"
                         >
                             <img
-                                src={`/storage/${post.image}`}
+                                src={post.image_url}
                                 className="w-full h-auto object-cover max-h-[600px]"
                                 alt={post.title}
                             />

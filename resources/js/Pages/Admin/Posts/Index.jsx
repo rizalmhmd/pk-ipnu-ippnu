@@ -69,7 +69,7 @@ export default function Index({ posts }) {
                                         <div className="flex items-center gap-6">
                                             <div className="w-20 h-20 rounded-2xl overflow-hidden shrink-0 border border-slate-100 dark:border-slate-800 shadow-sm">
                                                 {post.image ? (
-                                                    <img src={`/storage/${post.image}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="" />
+                                                    <img src={post.image_url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="" />
                                                 ) : (
                                                     <div className="w-full h-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-300 dark:text-slate-600">
                                                         <ImageIcon size={24} />

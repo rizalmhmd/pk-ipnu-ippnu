@@ -44,6 +44,12 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Repair Tools
+    Route::get('/tools/storage-link', [\App\Http\Controllers\Admin\ToolController::class, 'storageLink'])->name('tools.storage-link');
+    Route::get('/tools/clear-cache', [\App\Http\Controllers\Admin\ToolController::class, 'clearCache'])->name('tools.clear-cache');
+    Route::get('/tools/diag', [\App\Http\Controllers\Admin\ToolController::class, 'diag'])->name('tools.diag');
+    Route::get('/tools/upload-test', [\App\Http\Controllers\Admin\ToolController::class, 'uploadTest'])->name('tools.upload-test');
 });
 
 require __DIR__.'/auth.php';

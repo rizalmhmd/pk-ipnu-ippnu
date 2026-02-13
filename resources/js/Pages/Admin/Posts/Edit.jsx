@@ -20,7 +20,7 @@ export default function Edit({ post }) {
         _method: 'PUT', // Method spoofing for file uploads in PUT requests
     });
 
-    const [imagePreview, setImagePreview] = useState(post.image ? `/storage/${post.image}` : null);
+    const [imagePreview, setImagePreview] = useState(post.image_url);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -32,7 +32,7 @@ export default function Edit({ post }) {
             };
             reader.readAsDataURL(file);
         } else {
-            setImagePreview(post.image ? `/storage/${post.image}` : null);
+            setImagePreview(post.image_url);
         }
     };
 

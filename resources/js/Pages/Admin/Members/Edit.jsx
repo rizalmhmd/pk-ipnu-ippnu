@@ -24,7 +24,7 @@ export default function Edit({ member }) {
         _method: 'PUT',
     });
 
-    const [photoPreview, setPhotoPreview] = useState(member.photo ? `/storage/${member.photo}` : null);
+    const [photoPreview, setPhotoPreview] = useState(member.photo_url);
 
     const handlePhotoChange = (e) => {
         const file = e.target.files[0];
@@ -36,7 +36,7 @@ export default function Edit({ member }) {
             };
             reader.readAsDataURL(file);
         } else {
-            setPhotoPreview(member.photo ? `/storage/${member.photo}` : null);
+            setPhotoPreview(member.photo_url);
         }
     };
 
@@ -146,8 +146,8 @@ export default function Edit({ member }) {
                                         type="button"
                                         onClick={() => setData('type', 'ipnu')}
                                         className={`flex items-center justify-center gap-3 p-5 rounded-3xl border-2 transition-all font-bold ${data.type === 'ipnu'
-                                                ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 text-emerald-600 dark:text-emerald-400'
-                                                : 'bg-slate-50 dark:bg-slate-800 border-transparent text-slate-400'
+                                            ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 text-emerald-600 dark:text-emerald-400'
+                                            : 'bg-slate-50 dark:bg-slate-800 border-transparent text-slate-400'
                                             }`}
                                     >
                                         <div className={`w-3 h-3 rounded-full ${data.type === 'ipnu' ? 'bg-emerald-500 animate-pulse' : 'bg-slate-200 dark:bg-slate-700'}`}></div>
@@ -157,8 +157,8 @@ export default function Edit({ member }) {
                                         type="button"
                                         onClick={() => setData('type', 'ippnu')}
                                         className={`flex items-center justify-center gap-3 p-5 rounded-3xl border-2 transition-all font-bold ${data.type === 'ippnu'
-                                                ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-600 dark:text-blue-400'
-                                                : 'bg-slate-50 dark:bg-slate-800 border-transparent text-slate-400'
+                                            ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-600 dark:text-blue-400'
+                                            : 'bg-slate-50 dark:bg-slate-800 border-transparent text-slate-400'
                                             }`}
                                     >
                                         <div className={`w-3 h-3 rounded-full ${data.type === 'ippnu' ? 'bg-blue-500 animate-pulse' : 'bg-slate-200 dark:bg-slate-700'}`}></div>

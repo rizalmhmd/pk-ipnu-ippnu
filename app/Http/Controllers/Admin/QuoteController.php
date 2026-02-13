@@ -34,7 +34,12 @@ class QuoteController extends Controller
         $data['is_active'] = $request->has('is_active');
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('quotes', 'public');
+            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
+                $path = Storage::disk('cloudinary')->putFile('quotes', $request->file('image'));
+                $data['image'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                $data['image'] = $request->file('image')->store('quotes', 'public');
+            }
         }
 
         Quote::create($data);
@@ -64,11 +69,16 @@ class QuoteController extends Controller
             if ($quote->image) {
                 try {
                     Storage::delete($quote->image);
-                } catch (\Exception $e) {
-                    // Ignore
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
                 }
             }
-            $data['image'] = $request->file('image')->store('quotes', 'public');
+            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
+                $path = Storage::disk('cloudinary')->putFile('quotes', $request->file('image'));
+                $data['image'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                $data['image'] = $request->file('image')->store('quotes', 'public');
+            }
         }
 
         $quote->update($data);
@@ -81,8 +91,8 @@ class QuoteController extends Controller
         if ($quote->image) {
             try {
                 Storage::delete($quote->image);
-            } catch (\Exception $e) {
-                // Ignore
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
             }
         }
         $quote->delete();

@@ -43,9 +43,9 @@ export default function Site({ setting }) {
     });
 
     const [previews, setPreviews] = useState({
-        site_logo: setting.site_logo ? `/storage/${setting.site_logo}` : null,
-        favicon: setting.favicon ? `/storage/${setting.favicon}` : null,
-        default_hero_image: setting.default_hero_image ? `/storage/${setting.default_hero_image}` : null,
+        site_logo: setting.site_logo_url,
+        favicon: setting.favicon_url,
+        default_hero_image: setting.default_hero_image_url,
     });
 
     const handleFileChange = (e, field) => {

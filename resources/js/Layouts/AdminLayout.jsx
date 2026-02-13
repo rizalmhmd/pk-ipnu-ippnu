@@ -31,11 +31,11 @@ export default function AdminLayout({ children }) {
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300">
             <Head>
-                {siteSetting?.favicon && (
+                {siteSetting?.favicon_url && (
                     <>
-                        <link rel="icon" type="image/x-icon" href={`/storage/${siteSetting.favicon}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} />
-                        <link rel="shortcut icon" href={`/storage/${siteSetting.favicon}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} />
-                        <link rel="apple-touch-icon" href={`/storage/${siteSetting.favicon}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} />
+                        <link rel="icon" type="image/x-icon" href={siteSetting.favicon_url} />
+                        <link rel="shortcut icon" href={siteSetting.favicon_url} />
+                        <link rel="apple-touch-icon" href={siteSetting.favicon_url} />
                     </>
                 )}
             </Head>

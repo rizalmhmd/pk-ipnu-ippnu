@@ -76,7 +76,7 @@ export default function Index({ quotes }) {
                             <div className="flex items-center gap-4">
                                 <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center overflow-hidden border border-slate-50 dark:border-slate-700">
                                     {quote.image ? (
-                                        <img src={`/storage/${quote.image}`} className="w-full h-full object-cover" />
+                                        <img src={quote.image_url} className="w-full h-full object-cover" />
                                     ) : (
                                         <User size={18} className="text-slate-300" />
                                     )}

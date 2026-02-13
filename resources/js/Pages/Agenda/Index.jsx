@@ -59,7 +59,7 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
                 subtitle="Temukan berbagai jadwal program kerja, agenda nasional, dan kegiatan produktif PKPT IPNU IPPNU."
                 bgColor={pageSetting?.header_bg_color}
                 textColor={pageSetting?.header_text_color}
-                bgImage={pageSetting?.header_bg_image}
+                bgImage={pageSetting?.header_bg_image_url}
             />
 
             <div className="container mx-auto px-6 md:px-12 py-12">

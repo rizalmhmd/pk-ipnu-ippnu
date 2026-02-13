@@ -24,7 +24,7 @@ export default function Edit({ quote }) {
         _method: 'PUT',
     });
 
-    const [imagePreview, setImagePreview] = useState(quote.image ? `/storage/${quote.image}` : null);
+    const [imagePreview, setImagePreview] = useState(quote.image_url);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -36,7 +36,7 @@ export default function Edit({ quote }) {
             };
             reader.readAsDataURL(file);
         } else {
-            setImagePreview(quote.image ? `/storage/${quote.image}` : null);
+            setImagePreview(quote.image_url);
         }
     };
 

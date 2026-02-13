@@ -16,7 +16,7 @@ export default function Home({ posts, pageSetting, greeting, agendas, statistics
 
             {/* Hero Section */}
             <HeroSection
-                bgImage={siteSetting?.site_hero ? `/storage/${siteSetting.site_hero}` : 'https://images.unsplash.com/photo-1541339907198-e08756ebafe3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'}
+                bgImage={siteSetting?.default_hero_image_url ? siteSetting.default_hero_image_url : 'https://images.unsplash.com/photo-1541339907198-e08756ebafe3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'}
             />
 
             {/* Statistics Section */}
@@ -37,7 +37,7 @@ export default function Home({ posts, pageSetting, greeting, agendas, statistics
                 subtitle="Mewujudkan Kader yang Berilmu, Beramal, dan Bertaqwa"
                 bgColor={pageSetting?.header_bg_color}
                 textColor={pageSetting?.header_text_color}
-                bgImage={pageSetting?.header_bg_image}
+                bgImage={pageSetting?.header_bg_image_url}
             />
 
             <div className="container mx-auto px-4 sm:px-6 md:px-12 py-12 sm:py-16 lg:py-20">
@@ -124,7 +124,7 @@ export default function Home({ posts, pageSetting, greeting, agendas, statistics
                             <div className="relative z-10 flex flex-col items-center text-center">
                                 <div className="w-24 h-24 rounded-full border-4 border-emerald-400/30 p-1 mb-6">
                                     <img
-                                        src={greeting?.hero_image ? `/storage/${greeting.hero_image}` : 'https://ui-avatars.com/api/?name=Ketua&background=059669&color=fff'}
+                                        src={greeting?.hero_image_url ? greeting.hero_image_url : 'https://ui-avatars.com/api/?name=Ketua&background=059669&color=fff'}
                                         className="w-full h-full object-cover rounded-full"
                                         alt="Ketua"
                                     />

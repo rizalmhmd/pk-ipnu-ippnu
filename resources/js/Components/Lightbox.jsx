@@ -32,7 +32,7 @@ export default function Lightbox({ isOpen, onClose, member }) {
                         <div className="relative aspect-[4/5] overflow-hidden">
                             {member.photo ? (
                                 <img
-                                    src={`/storage/${member.photo}`}
+                                    src={member.photo_url}
                                     className="w-full h-full object-cover"
                                     alt={member.name}
                                 />

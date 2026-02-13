@@ -38,7 +38,7 @@ export default function Navbar() {
                 <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
                     <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform overflow-hidden">
                         {siteSetting?.site_logo ? (
-                            <img src={`/storage/${siteSetting.site_logo}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} alt="Logo" className="w-full h-full object-cover" />
+                            <img src={siteSetting.site_logo_url} alt="Logo" className="w-full h-full object-cover" />
                         ) : (
                             <i className={`fas fa-users text-emerald-600 text-xl`}></i>
                         )}
@@ -114,7 +114,7 @@ export default function Navbar() {
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg overflow-hidden">
                                             {siteSetting?.site_logo ? (
-                                                <img src={`/storage/${siteSetting.site_logo}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} alt="Logo" className="w-full h-full object-cover" />
+                                                <img src={siteSetting.site_logo_url} alt="Logo" className="w-full h-full object-cover" />
                                             ) : (
                                                 <i className="fas fa-users text-emerald-600 text-xl"></i>
                                             )}

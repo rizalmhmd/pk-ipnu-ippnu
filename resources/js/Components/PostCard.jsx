@@ -13,7 +13,7 @@ export default function PostCard({ post, idx }) {
         >
             <div className="relative h-56 overflow-hidden">
                 <img
-                    src={post.image ? `/storage/${post.image}?v=${new Date(post.updated_at).getTime()}` : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
+                    src={post.image_url ? post.image_url : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     alt={post.title}
                 />

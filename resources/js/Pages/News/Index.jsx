@@ -13,7 +13,7 @@ export default function NewsIndex({ posts, pageSetting }) {
             <Head title="Berita Terbaru" />
 
             <HeroSection
-                bgImage={pageSetting?.hero_image ? `/storage/${pageSetting.hero_image}` : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'}
+                bgImage={pageSetting?.hero_image_url ? pageSetting.hero_image_url : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'}
             />
 
             <PageHeaderCard
@@ -21,7 +21,7 @@ export default function NewsIndex({ posts, pageSetting }) {
                 subtitle="Informasi, agenda, dan kegiatan terkini dari PKPT IPNU IPPNU"
                 bgColor={pageSetting?.header_bg_color}
                 textColor={pageSetting?.header_text_color}
-                bgImage={pageSetting?.header_bg_image}
+                bgImage={pageSetting?.header_bg_image_url}
             />
 
             <div className="container mx-auto px-6 md:px-12 py-20">

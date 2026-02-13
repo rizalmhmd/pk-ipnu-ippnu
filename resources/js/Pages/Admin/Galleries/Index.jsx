@@ -51,7 +51,7 @@ export default function Index({ galleries }) {
                     >
                         <div className="aspect-square relative overflow-hidden">
                             <img
-                                src={`/storage/${item.image_path}?v=${new Date(item.updated_at).getTime()}`}
+                                src={item.image_url}
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                 alt={item.title}
                             />

@@ -26,8 +26,8 @@ export default function Edit({ pageSetting }) {
         _method: 'PUT',
     });
 
-    const [imagePreview, setImagePreview] = useState(pageSetting.hero_image ? `/storage/${pageSetting.hero_image}` : null);
-    const [headerImagePreview, setHeaderImagePreview] = useState(pageSetting.header_bg_image ? `/storage/${pageSetting.header_bg_image}` : null);
+    const [imagePreview, setImagePreview] = useState(pageSetting.hero_image_url);
+    const [headerImagePreview, setHeaderImagePreview] = useState(pageSetting.header_bg_image_url);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -39,7 +39,7 @@ export default function Edit({ pageSetting }) {
             };
             reader.readAsDataURL(file);
         } else {
-            setImagePreview(pageSetting.hero_image ? `/storage/${pageSetting.hero_image}` : null);
+            setImagePreview(pageSetting.hero_image_url);
         }
     };
 
@@ -53,7 +53,7 @@ export default function Edit({ pageSetting }) {
             };
             reader.readAsDataURL(file);
         } else {
-            setHeaderImagePreview(pageSetting.header_bg_image ? `/storage/${pageSetting.header_bg_image}` : null);
+            setHeaderImagePreview(pageSetting.header_bg_image_url);
         }
     };
 

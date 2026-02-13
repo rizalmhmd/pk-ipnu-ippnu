@@ -34,7 +34,12 @@ class PostController extends Controller
         $data['published_at'] = now();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('posts', 'public');
+            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
+                $path = Storage::disk('cloudinary')->putFile('posts', $request->file('image'));
+                $data['image'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                $data['image'] = $request->file('image')->store('posts', 'public');
+            }
         }
 
         Post::create($data);
@@ -67,11 +72,16 @@ class PostController extends Controller
             if ($post->image) {
                 try {
                     Storage::delete($post->image);
-                } catch (\Exception $e) {
-                    // Log or ignore if file not found on cloud
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
                 }
             }
-            $data['image'] = $request->file('image')->store('posts', 'public');
+            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
+                $path = Storage::disk('cloudinary')->putFile('posts', $request->file('image'));
+                $data['image'] = Storage::disk('cloudinary')->url($path);
+            } else {
+                $data['image'] = $request->file('image')->store('posts', 'public');
+            }
         }
 
         $post->update($data);
@@ -84,8 +94,8 @@ class PostController extends Controller
         if ($post->image) {
             try {
                 Storage::delete($post->image);
-            } catch (\Exception $e) {
-                // Ignore if already deleted from cloud
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
             }
         }
         $post->delete();

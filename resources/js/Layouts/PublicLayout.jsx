@@ -11,11 +11,11 @@ export default function PublicLayout({ children }) {
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 selection:bg-emerald-200 selection:text-emerald-900">
             <Head>
-                {siteSetting?.favicon && (
+                {siteSetting?.favicon_url && (
                     <>
-                        <link rel="icon" type="image/x-icon" href={`/storage/${siteSetting.favicon}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} />
-                        <link rel="shortcut icon" href={`/storage/${siteSetting.favicon}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} />
-                        <link rel="apple-touch-icon" href={`/storage/${siteSetting.favicon}?v=${siteSetting.updated_at ? new Date(siteSetting.updated_at).getTime() : Date.now()}`} />
+                        <link rel="icon" type="image/x-icon" href={siteSetting.favicon_url} />
+                        <link rel="shortcut icon" href={siteSetting.favicon_url} />
+                        <link rel="apple-touch-icon" href={siteSetting.favicon_url} />
                     </>
                 )}
                 <meta name="description" content={siteSetting?.site_description || 'Website Resmi PKPT IPNU IPPNU'} />

@@ -65,7 +65,7 @@ export default function Index({ members }) {
                                         <div className="flex items-center gap-6">
                                             <div className="w-16 h-16 rounded-2xl overflow-hidden shrink-0 border border-slate-100 dark:border-slate-800 shadow-sm relative group/photo">
                                                 {member.photo ? (
-                                                    <img src={`/storage/${member.photo}`} className="w-full h-full object-cover group-hover/photo:scale-110 transition-transform duration-500" alt="" />
+                                                    <img src={member.photo_url} className="w-full h-full object-cover group-hover/photo:scale-110 transition-transform duration-500" alt="" />
                                                 ) : (
                                                     <div className="w-full h-full bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-300 dark:text-slate-600">
                                                         <User size={24} />
@@ -97,8 +97,8 @@ export default function Index({ members }) {
                                     </td>
                                     <td className="px-8 py-6 hidden md:table-cell text-center">
                                         <span className={`inline-flex px-3 py-1 rounded-full text-[10px] font-extrabold tracking-widest uppercase ${member.type === 'ipnu'
-                                                ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800'
-                                                : 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800'
+                                            ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800'
+                                            : 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-800'
                                             }`}>
                                             {member.type}
                                         </span>

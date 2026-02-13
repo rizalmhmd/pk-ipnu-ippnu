@@ -21,7 +21,7 @@ export default function MemberCard({ member, idx, onClick }) {
                 >
                     {member.photo ? (
                         <img
-                            src={`/storage/${member.photo}`}
+                            src={member.photo_url}
                             alt={member.name}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                         />
