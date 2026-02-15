@@ -26,9 +26,9 @@ export default function Profile({ siteSetting, sections, organizations, pageSett
                 bgImage={pageSetting?.header_bg_image_url}
             />
 
-            <div className="container mx-auto px-6 md:px-12 py-20">
+            <div className="container mx-auto px-4 sm:px-6 md:px-12 py-10 sm:py-20">
                 {/* Sections and Content */}
-                <div className="space-y-32">
+                <div className="space-y-16 sm:space-y-32">
                     {/* Vision Mission etc... (keeping the rest) */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                         <motion.div
@@ -116,7 +116,7 @@ export default function Profile({ siteSetting, sections, organizations, pageSett
                             <p className="text-slate-500">Sinergi kepemimpinan untuk mewujudkan program kerja yang berdampak dan berkelanjutan.</p>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
                             {organizations?.length > 0 ? (
                                 organizations.map((member, i) => (
                                     <MemberCard key={i} member={member} idx={i} />

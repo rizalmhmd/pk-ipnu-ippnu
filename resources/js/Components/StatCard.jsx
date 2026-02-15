@@ -27,7 +27,7 @@ export default function StatCard({ statistic, delay = 0 }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: delay * 0.1 }}
-            className="bg-white rounded-[2rem] p-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-100 relative overflow-hidden group h-full"
+            className="bg-white rounded-2xl md:rounded-[2rem] p-4 md:p-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-100 relative overflow-hidden group h-full"
         >
             <div className={`absolute top-0 right-0 w-32 h-32 ${theme.bg} rounded-full -mr-16 -mt-16 opacity-50 group-hover:scale-150 transition-transform duration-500`}></div>
 
@@ -37,25 +37,25 @@ export default function StatCard({ statistic, delay = 0 }) {
                         {title}
                     </h5>
                     {icon && (
-                        <div className={`w-10 h-10 ${theme.bg} rounded-full flex items-center justify-center ${theme.text} mb-4`}>
-                            <i className={`fas ${icon}`}></i>
+                        <div className={`w-8 h-8 md:w-10 md:h-10 ${theme.bg} rounded-full flex items-center justify-center ${theme.text} mb-2 md:mb-4`}>
+                            <i className={`fas ${icon} text-xs md:text-base`}></i>
                         </div>
                     )}
                 </div>
 
-                <div className="mb-2">
-                    <span className="text-4xl md:text-5xl font-bold text-slate-800 tracking-tight block">
+                <div className="mb-1 md:mb-2">
+                    <span className="text-xl md:text-5xl font-bold text-slate-800 tracking-tight block truncate">
                         {value}
                     </span>
                 </div>
 
                 {(subtitle || unit) && (
-                    <div className="text-xl font-medium text-slate-600 mb-6">
-                        {subtitle} {unit && <span className="text-sm text-slate-400 ml-1">{unit}</span>}
+                    <div className="text-[10px] md:text-xl font-medium text-slate-600 mb-3 md:mb-6 line-clamp-1">
+                        {subtitle} {unit && <span className="text-[8px] md:text-sm text-slate-400 ml-1">{unit}</span>}
                     </div>
                 )}
 
-                <div className="mt-auto pt-6 border-t border-slate-50">
+                <div className="mt-auto pt-3 md:pt-6 border-t border-slate-50 hidden md:block">
                     <p className="text-sm text-slate-500 leading-relaxed">
                         {description}
                     </p>

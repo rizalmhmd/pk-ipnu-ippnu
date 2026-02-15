@@ -7,7 +7,9 @@ import SectionTitle from '@/Components/SectionTitle';
 import StatCard from '@/Components/StatCard';
 import { motion } from 'framer-motion';
 
-export default function Home({ posts, pageSetting, greeting, agendas, statistics }) {
+import ArticleCard from '@/Components/ArticleCard';
+
+export default function Home({ posts, articles, pageSetting, greeting, agendas, statistics }) {
     const { siteSetting } = usePage().props;
 
     return (
@@ -22,7 +24,7 @@ export default function Home({ posts, pageSetting, greeting, agendas, statistics
             {/* Statistics Section */}
             {statistics && statistics.length > 0 && (
                 <div className="container mx-auto px-4 sm:px-6 md:px-12 -mt-20 relative z-40 mb-12">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-6">
                         {statistics.map((stat, index) => (
                             <div key={stat.id} className="h-full">
                                 <StatCard statistic={stat} delay={index} />
@@ -40,161 +42,216 @@ export default function Home({ posts, pageSetting, greeting, agendas, statistics
                 bgImage={pageSetting?.header_bg_image_url}
             />
 
+            {/* News and Articles Section */}
             <div className="container mx-auto px-4 sm:px-6 md:px-12 py-12 sm:py-16 lg:py-20">
                 <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-16">
-                    {/* Main Content: News */}
-                    <div className="lg:w-2/3">
-                        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-6 sm:mb-8">
-                            <SectionTitle className="mb-0">
-                                {siteSetting?.home_news_title || 'Berita Terkini'}
-                            </SectionTitle>
-                            <Link
-                                href="/berita"
-                                className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors flex items-center gap-2 group"
-                            >
-                                Lihat Semua
-                                <i className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
-                            </Link>
+                    <div className="lg:w-full">
+                        {/* News Section */}
+                        <div className="mb-16">
+                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
+                                <SectionTitle className="mb-0">
+                                    {siteSetting?.home_news_title || 'Berita Terkini'}
+                                </SectionTitle>
+                                <Link
+                                    href="/berita"
+                                    className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors flex items-center gap-2 group"
+                                >
+                                    Lihat Semua
+                                    <i className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                                </Link>
+                            </div>
+
+                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+                                {posts.map((post, idx) => (
+                                    <motion.div
+                                        key={post.id}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: idx * 0.05 }}
+                                        className="bg-white rounded-2xl sm:rounded-3xl shadow-lg shadow-slate-200/50 overflow-hidden border border-slate-100 group hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500"
+                                    >
+                                        <div className="relative h-40 sm:h-56 overflow-hidden">
+                                            <img
+                                                src={post.image_url ? post.image_url : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
+                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                                alt={post.title}
+                                            />
+                                        </div>
+
+                                        <div className="p-4 sm:p-6">
+                                            <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-2">
+                                                <i className="far fa-calendar-alt text-emerald-500"></i>
+                                                {new Date(post.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
+                                            </div>
+                                            <h3 className="text-sm sm:text-lg font-bold text-slate-800 mb-3 font-serif line-clamp-2 leading-tight group-hover:text-emerald-700 transition-colors">
+                                                {post.title}
+                                            </h3>
+                                            <Link
+                                                href={`/berita/${post.slug}`}
+                                                className="inline-flex items-center gap-2 text-emerald-600 font-bold text-xs"
+                                            >
+                                                Baca Selengkapnya
+                                                <i className="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                                            </Link>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-                            {posts.map((post, idx) => (
-                                <motion.div
-                                    key={post.id}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: idx * 0.05 }}
-                                    className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100 group hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500"
-                                >
-                                    <div className="relative h-56 overflow-hidden">
-                                        <img
-                                            src={post.image ? `/storage/${post.image}?v=${new Date(post.updated_at).getTime()}` : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
-                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                            alt={post.title}
-                                        />
-                                        <div className="absolute top-4 right-4">
-                                            <span className="px-4 py-1.5 bg-emerald-600/90 backdrop-blur-md text-white text-xs font-bold rounded-full shadow-lg">
-                                                News
+                        {/* Articles Section */}
+                        {articles && articles.length > 0 && (
+                            <div className="mb-16">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
+                                    <SectionTitle className="mb-0">
+                                        Artikel Terbaru
+                                    </SectionTitle>
+                                    <Link
+                                        href="/artikel"
+                                        className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors flex items-center gap-2 group"
+                                    >
+                                        Lihat Semua
+                                        <i className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                                    </Link>
+                                </div>
+
+                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+                                    {articles.map((article, idx) => (
+                                        <div key={article.id}>
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 20 }}
+                                                whileInView={{ opacity: 1, y: 0 }}
+                                                viewport={{ once: true }}
+                                                transition={{ delay: idx * 0.05 }}
+                                                className="bg-white rounded-2xl sm:rounded-3xl shadow-lg shadow-slate-200/50 overflow-hidden border border-slate-100 group hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500 h-full"
+                                            >
+                                                <div className="relative h-40 sm:h-56 overflow-hidden">
+                                                    {article.image ? (
+                                                        <img
+                                                            src={article.image_url}
+                                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                                                            alt={article.title}
+                                                        />
+                                                    ) : (
+                                                        <div className="w-full h-full bg-gradient-to-br from-emerald-800 to-blue-900 flex flex-col items-center justify-center text-white/20">
+                                                            <i className="fas fa-file-alt text-4xl group-hover:scale-110 transition-transform duration-700"></i>
+                                                        </div>
+                                                    )}
+                                                </div>
+
+                                                <div className="p-4 sm:p-6">
+                                                    <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-2">
+                                                        <i className="far fa-calendar-alt text-emerald-500"></i>
+                                                        {new Date(article.published_at || article.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
+                                                    </div>
+                                                    <h3 className="text-sm sm:text-lg font-bold text-slate-800 mb-3 font-serif line-clamp-2 leading-tight group-hover:text-emerald-700 transition-colors">
+                                                        {article.title}
+                                                    </h3>
+                                                    <Link
+                                                        href={`/artikel/${article.slug}`}
+                                                        className="inline-flex items-center gap-2 text-emerald-600 font-bold text-xs"
+                                                    >
+                                                        Baca Selengkapnya
+                                                        <i className="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                                                    </Link>
+                                                </div>
+                                            </motion.div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* Sidebar: Greeting & Agenda - Below News & Articles */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 mt-12 sm:mt-16">
+                    {/* Greeting Card */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="bg-emerald-900 rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[40px] p-8 sm:p-10 text-white relative overflow-hidden shadow-2xl shadow-emerald-900/20 h-full flex items-center"
+                    >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+                        <div className="absolute bottom-0 left-0 w-24 h-24 bg-emerald-400/10 rounded-full -ml-12 -mb-12 blur-xl"></div>
+
+                        <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 text-center md:text-left w-full">
+                            <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 border-emerald-400/30 p-1 shrink-0">
+                                <img
+                                    src={greeting?.hero_image_url ? greeting.hero_image_url : 'https://ui-avatars.com/api/?name=Ketua&background=059669&color=fff'}
+                                    className="w-full h-full object-cover rounded-full shadow-xl"
+                                    alt="Ketua"
+                                />
+                            </div>
+                            <div className="flex-grow">
+                                <h4 className="text-xl sm:text-2xl font-bold mb-3 font-serif">
+                                    {greeting?.hero_title || 'Sambutan Ketua'}
+                                </h4>
+                                <div className="w-12 h-1 bg-emerald-400 rounded-full mb-6 mx-auto md:mx-0"></div>
+                                <p className="text-emerald-100/90 text-sm sm:text-base italic leading-relaxed relative">
+                                    <i className="fas fa-quote-left absolute -left-6 -top-2 opacity-20 text-3xl"></i>
+                                    {greeting?.hero_description || 'Selamat datang di website resmi PKPT IPNU IPPNU. Semoga bermanfaat untuk kita semua.'}
+                                    <i className="fas fa-quote-right ml-2 opacity-20"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Agenda Card */}
+                    <div className="bg-white rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[40px] p-8 sm:p-10 shadow-xl shadow-slate-200/50 border border-slate-100">
+                        <div className="flex justify-between items-center mb-8">
+                            <h4 className="text-xl font-bold text-slate-800 font-serif">
+                                {siteSetting?.home_agenda_title || 'Agenda Terdekat'}
+                            </h4>
+                            <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 shadow-inner">
+                                <i className="fas fa-calendar-alt text-lg"></i>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
+                            {agendas.slice(0, 3).map((agenda) => {
+                                const date = new Date(agenda.event_date);
+                                return (
+                                    <div key={agenda.id} className="flex gap-4 group cursor-default items-start">
+                                        <div className="w-14 h-16 bg-slate-50 rounded-2xl flex flex-col items-center justify-center border border-slate-100 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-all duration-300 shadow-sm group-hover:shadow-md shrink-0">
+                                            <span className="text-[10px] font-bold uppercase text-slate-400 group-hover:text-emerald-500">
+                                                {date.toLocaleDateString('id-ID', { month: 'short' })}
+                                            </span>
+                                            <span className="text-xl font-bold text-slate-700 group-hover:text-emerald-700">
+                                                {date.getDate()}
                                             </span>
                                         </div>
-                                    </div>
-
-                                    <div className="p-6 sm:p-8">
-                                        <div className="flex items-center gap-3 text-slate-400 text-xs font-bold uppercase tracking-widest mb-4">
-                                            <i className="far fa-calendar-alt text-emerald-500"></i>
-                                            {new Date(post.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                        <div className="flex-grow pt-1">
+                                            <h5 className="font-bold text-slate-800 text-sm sm:text-base group-hover:text-emerald-600 transition-colors line-clamp-1">
+                                                {agenda.title}
+                                            </h5>
+                                            <div className="flex items-center gap-3 mt-1 text-[11px] sm:text-xs text-slate-400 font-medium">
+                                                <span className="flex items-center gap-1"><i className="far fa-clock text-emerald-500"></i> {agenda.event_time ? agenda.event_time.substring(0, 5) : '00:00'} WIB</span>
+                                                {agenda.location && (
+                                                    <span className="truncate flex items-center gap-1"><i className="fas fa-map-marker-alt text-emerald-500"></i> {agenda.location}</span>
+                                                )}
+                                            </div>
                                         </div>
-                                        <h3 className="text-xl font-bold text-slate-800 mb-4 font-serif line-clamp-2 leading-tight group-hover:text-emerald-700 transition-colors">
-                                            {post.title}
-                                        </h3>
-                                        <p className="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-3">
-                                            {post.content.replace(/<[^>]*>?/gm, '').substring(0, 120)}...
-                                        </p>
-                                        <Link
-                                            href={`/berita/${post.slug}`}
-                                            className="inline-flex items-center gap-2 text-emerald-600 font-bold text-sm group/btn"
-                                        >
-                                            Baca Selengkapnya
-                                            <div className="w-6 h-0.5 bg-emerald-600 group-hover/btn:w-10 transition-all"></div>
-                                        </Link>
                                     </div>
-                                </motion.div>
-                            ))}
+                                );
+                            })}
 
-                            {posts.length === 0 && (
-                                <div className="col-span-full py-20 text-center bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
-                                    <p className="text-slate-400 font-medium">Belum ada berita terbaru saat ini.</p>
+                            {agendas.length === 0 && (
+                                <div className="text-center py-10 col-span-full">
+                                    <i className="far fa-calendar-check text-5xl text-slate-100 mb-4 block"></i>
+                                    <p className="text-slate-400 text-sm">Belum ada agenda terdekat.</p>
                                 </div>
                             )}
                         </div>
-                    </div>
 
-                    {/* Sidebar: Greeting & Agenda */}
-                    <div className="lg:w-1/3 space-y-8 sm:space-y-10 lg:space-y-12">
-                        {/* Greeting Card */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            className="bg-emerald-900 rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[40px] p-8 sm:p-10 text-white relative overflow-hidden shadow-2xl shadow-emerald-900/20"
+                        <Link
+                            href="/agenda"
+                            className="mt-8 w-full py-4 bg-slate-50 hover:bg-emerald-600 hover:text-white text-slate-600 rounded-2xl text-center text-sm font-bold transition-all block shadow-sm hover:shadow-lg border border-slate-100 hover:border-emerald-500"
                         >
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
-
-                            <div className="relative z-10 flex flex-col items-center text-center">
-                                <div className="w-24 h-24 rounded-full border-4 border-emerald-400/30 p-1 mb-6">
-                                    <img
-                                        src={greeting?.hero_image_url ? greeting.hero_image_url : 'https://ui-avatars.com/api/?name=Ketua&background=059669&color=fff'}
-                                        className="w-full h-full object-cover rounded-full"
-                                        alt="Ketua"
-                                    />
-                                </div>
-                                <h4 className="text-xl font-bold mb-2 font-serif">
-                                    {greeting?.hero_title || 'Sambutan Ketua'}
-                                </h4>
-                                <div className="w-10 h-1 bg-emerald-400 rounded-full mb-6"></div>
-                                <p className="text-emerald-100/80 text-sm italic leading-relaxed">
-                                    <i className="fas fa-quote-left mr-2 opacity-40"></i>
-                                    {greeting?.hero_description || 'Selamat datang di website resmi PKPT IPNU IPPNU. Semoga bermanfaat untuk kita semua.'}
-                                    <i className="fas fa-quote-right ml-2 opacity-40"></i>
-                                </p>
-                            </div>
-                        </motion.div>
-
-                        {/* Agenda Card */}
-                        <div className="bg-white rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[40px] p-8 sm:p-10 shadow-xl shadow-slate-200/50 border border-slate-100">
-                            <div className="flex justify-between items-center mb-8">
-                                <h4 className="text-xl font-bold text-slate-800 font-serif">
-                                    {siteSetting?.home_agenda_title || 'Agenda Terdekat'}
-                                </h4>
-                                <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600">
-                                    <i className="fas fa-calendar-alt"></i>
-                                </div>
-                            </div>
-
-                            <div className="space-y-6">
-                                {agendas.map((agenda) => {
-                                    const date = new Date(agenda.event_date);
-                                    return (
-                                        <div key={agenda.id} className="flex gap-4 group cursor-default">
-                                            <div className="w-14 h-16 bg-slate-50 rounded-2xl flex flex-col items-center justify-center border border-slate-100 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-colors">
-                                                <span className="text-[10px] font-bold uppercase text-slate-400 group-hover:text-emerald-400">
-                                                    {date.toLocaleDateString('id-ID', { month: 'short' })}
-                                                </span>
-                                                <span className="text-xl font-bold text-slate-700 group-hover:text-emerald-700">
-                                                    {date.getDate()}
-                                                </span>
-                                            </div>
-                                            <div className="flex-grow pt-1">
-                                                <h5 className="font-bold text-slate-800 text-sm group-hover:text-emerald-600 transition-colors">
-                                                    {agenda.title}
-                                                </h5>
-                                                <div className="flex items-center gap-3 mt-1 text-[11px] text-slate-400 font-medium">
-                                                    <span><i className="far fa-clock mr-1"></i> {agenda.event_time ? agenda.event_time.substring(0, 5) : '00:00'} WIB</span>
-                                                    {agenda.location && (
-                                                        <span className="truncate"><i className="fas fa-map-marker-alt mr-1"></i> {agenda.location}</span>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-
-                                {agendas.length === 0 && (
-                                    <div className="text-center py-10">
-                                        <i className="far fa-calendar-check text-4xl text-slate-100 mb-4 block"></i>
-                                        <p className="text-slate-400 text-sm">Belum ada agenda terdekat.</p>
-                                    </div>
-                                )}
-                            </div>
-
-                            <Link
-                                href="/agenda"
-                                className="mt-10 w-full py-4 bg-slate-50 hover:bg-emerald-600 hover:text-white text-slate-600 rounded-2xl text-center text-sm font-bold transition-all block"
-                            >
-                                Lihat Semua Agenda
-                            </Link>
-                        </div>
+                            Lihat Semua Agenda
+                        </Link>
                     </div>
                 </div>
             </div>

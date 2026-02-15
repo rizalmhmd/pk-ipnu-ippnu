@@ -1,6 +1,8 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
+import HeroSection from '@/Components/HeroSection';
+import PageHeaderCard from '@/Components/PageHeaderCard';
 import { motion } from 'framer-motion';
 
 export default function NewsDetail({ post }) {
@@ -32,30 +34,20 @@ export default function NewsDetail({ post }) {
         <PublicLayout>
             <Head title={post.title} />
 
-            <div className="container mx-auto px-6 md:px-12 py-32 lg:py-40">
+            <HeroSection
+                bgImage={post.image_url ? post.image_url : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'}
+            />
+
+            <PageHeaderCard
+                title="Detail Berita"
+                subtitle={post.title}
+            />
+
+            <div className="container mx-auto px-6 md:px-12 py-20">
                 <div className="max-w-4xl mx-auto">
-                    {/* Breadcrumbs */}
-                    <nav className="mb-10">
-                        <ol className="flex items-center gap-3 text-sm font-medium">
-                            <li><Link href="/" className="text-slate-400 hover:text-emerald-600 transition-colors">Beranda</Link></li>
-                            <li className="text-slate-300"><i className="fas fa-chevron-right text-[10px]"></i></li>
-                            <li><Link href="/berita" className="text-slate-400 hover:text-emerald-600 transition-colors">Berita</Link></li>
-                            <li className="text-slate-300"><i className="fas fa-chevron-right text-[10px]"></i></li>
-                            <li className="text-emerald-600 font-bold truncate">Detail Berita</li>
-                        </ol>
-                    </nav>
-
-                    {/* Article Header */}
+                    {/* Article Header Info */}
                     <header className="mb-12">
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 font-serif leading-tight mb-8"
-                        >
-                            {post.title}
-                        </motion.h1>
-
-                        <div className="flex items-center gap-6 pb-12 border-b border-slate-100">
+                        <div className="flex flex-wrap items-center gap-6 pb-12 border-b border-slate-100">
                             <div className="flex items-center gap-3">
                                 <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600">
                                     <i className="fas fa-user"></i>
@@ -76,7 +68,7 @@ export default function NewsDetail({ post }) {
                     </header>
 
                     {/* Featured Image */}
-                    {post.image && (
+                    {post.image_url && (
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}

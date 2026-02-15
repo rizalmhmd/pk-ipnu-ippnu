@@ -21,6 +21,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
     const menuItems = [
         { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
         { name: 'Berita', href: '/admin/posts', icon: Newspaper },
+        { name: 'Artikel', href: '/admin/articles', icon: FileText },
         { name: 'Galeri', href: '/admin/galleries', icon: Image },
         { name: 'Anggota', href: '/admin/members', icon: Users },
         { name: 'Agenda', href: '/admin/agendas', icon: Calendar },

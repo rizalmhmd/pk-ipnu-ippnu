@@ -26,10 +26,10 @@ export default function Gallery({ galleries, pageSetting }) {
                 bgImage={pageSetting?.header_bg_image_url}
             />
 
-            <div className="container mx-auto px-6 md:px-12 py-20">
+            <div className="container mx-auto px-3 sm:px-6 md:px-12 py-10 sm:py-20">
                 <SectionTitle centered>Koleksi Dokumentasi</SectionTitle>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8">
                     {galleries.data.map((item, idx) => (
                         <motion.div
                             key={item.id}

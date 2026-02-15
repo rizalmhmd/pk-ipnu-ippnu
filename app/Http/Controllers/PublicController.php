@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Article;
 use App\Models\Gallery;
 use App\Models\Member;
 use Illuminate\Http\Request;
@@ -20,12 +21,13 @@ class PublicController extends Controller
 
     public function index()
     {
-        $posts = Post::latest()->take(2)->get();
+        $posts = Post::latest()->take(4)->get();
+        $articles = Article::latest()->take(4)->get();
         $pageSetting = PageSetting::where('page_name', 'home')->first();
         $greeting = PageSetting::where('page_name', 'home_greeting')->first();
         
-        // Fetch upcoming agendas
-        $agendas = Agenda::where('event_date', '>=', now()->toDateString())
+        // Fetch upcoming agendas (including those from the last 3 days)
+        $agendas = Agenda::where('event_date', '>=', now()->subDays(3)->toDateString())
                         ->orderBy('event_date', 'asc')
                         ->take(5)
                         ->get();
@@ -38,7 +40,7 @@ class PublicController extends Controller
         // Fetch active statistics
         $statistics = Statistic::active()->ordered()->get();
         
-        return Inertia::render('Welcome', compact('posts', 'pageSetting', 'greeting', 'agendas', 'activeQuotes', 'statistics'));
+        return Inertia::render('Welcome', compact('posts', 'articles', 'pageSetting', 'greeting', 'agendas', 'activeQuotes', 'statistics'));
     }
 
     public function profile()
@@ -59,6 +61,19 @@ class PublicController extends Controller
     {
         $post = Post::where('slug', $slug)->firstOrFail();
         return Inertia::render('News/Show', compact('post'));
+    }
+
+    public function articles()
+    {
+        $articles = Article::latest()->paginate(10);
+        $pageSetting = PageSetting::where('page_name', 'articles')->first();
+        return Inertia::render('Articles/Index', compact('articles', 'pageSetting'));
+    }
+
+    public function articlesDetail($slug)
+    {
+        $article = Article::where('slug', $slug)->firstOrFail();
+        return Inertia::render('Articles/Show', compact('article'));
     }
 
     public function gallery()

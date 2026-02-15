@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PageSettingController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\QuoteController;
 use App\Http\Controllers\Admin\StatisticController;
+use App\Http\Controllers\Admin\ArticleController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,8 @@ Route::get('/inertia-test', function () {
 Route::get('/profil', [PublicController::class, 'profile'])->name('profile');
 Route::get('/berita', [PublicController::class, 'news'])->name('news.index');
 Route::get('/berita/{slug}', [PublicController::class, 'newsDetail'])->name('news.show');
+Route::get('/artikel', [PublicController::class, 'articles'])->name('articles.index');
+Route::get('/artikel/{slug}', [PublicController::class, 'articlesDetail'])->name('articles.show');
 Route::get('/galeri', [PublicController::class, 'gallery'])->name('gallery.index');
 Route::get('/agenda', [PublicController::class, 'agenda'])->name('agenda.index');
 Route::get('/api/agendas', [PublicController::class, 'getAgendasJson'])->name('api.agendas');
@@ -32,6 +35,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     Route::resource('posts', PostController::class);
+    Route::resource('articles', ArticleController::class);
     Route::resource('galleries', GalleryController::class);
     Route::resource('members', MemberController::class);
     Route::resource('agendas', AgendaController::class);

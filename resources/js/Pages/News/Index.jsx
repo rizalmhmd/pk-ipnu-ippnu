@@ -24,10 +24,10 @@ export default function NewsIndex({ posts, pageSetting }) {
                 bgImage={pageSetting?.header_bg_image_url}
             />
 
-            <div className="container mx-auto px-6 md:px-12 py-20">
-                <SectionTitle centered>Warta Organisasi</SectionTitle>
+            <div className="container mx-auto px-3 sm:px-6 md:px-12 py-10 sm:py-20">
+                <SectionTitle centered className="mb-8 sm:mb-12">Warta Organisasi</SectionTitle>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-8 md:gap-10">
                     {posts.data.map((post, idx) => (
                         <PostCard key={post.id} post={post} idx={idx} />
                     ))}
