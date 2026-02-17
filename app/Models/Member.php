@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
-    protected $fillable = ['name', 'position', 'photo', 'instagram', 'type', 'order'];
+    protected $fillable = ['user_id', 'name', 'position', 'photo', 'instagram', 'type', 'order'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     protected $appends = ['photo_url'];
 

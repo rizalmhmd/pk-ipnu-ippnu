@@ -42,7 +42,12 @@ export default function Edit({ member }) {
 
     const submit = (e) => {
         e.preventDefault();
-        router.post(route('admin.members.update', member.id), data);
+        // Ensure order is a number
+        const submitData = {
+            ...data,
+            order: parseInt(data.order) || 0
+        };
+        router.post(route('admin.members.update', member.id), submitData);
     };
 
     return (

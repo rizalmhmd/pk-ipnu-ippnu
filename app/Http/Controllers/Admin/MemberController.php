@@ -64,14 +64,15 @@ class MemberController extends Controller
             'order' => 'nullable|integer',
         ]);
 
-        $data = $request->all();
+        $data = $request->only(['name', 'position', 'instagram', 'type']);
+        $data['order'] = (int) ($request->order ?? 0);
 
         if ($request->hasFile('photo')) {
             if ($member->photo) {
                 try {
                     Storage::delete($member->photo);
                 } catch (\Throwable $e) {
-                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
+                    \Illuminate\Support\Facades\Log::warning("Photo delete failed: " . $e->getMessage());
                 }
             }
             if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {

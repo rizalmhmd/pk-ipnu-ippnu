@@ -7,37 +7,40 @@
     "/build/assets/AdminLayout-dMISE7I6.js"
   ],
   "resources/js/Components/ArticleCard.jsx": [
-    "/build/assets/Index-_tXdGz8-.js"
+    "/build/assets/Index-BOraK58H.js"
   ],
   "resources/js/Components/Footer.jsx": [
-    "/build/assets/PageHeaderCard-j97nTOll.js"
+    "/build/assets/PageHeaderCard-GxA7id8Q.js"
   ],
   "resources/js/Components/HeroSection.jsx": [
-    "/build/assets/PageHeaderCard-j97nTOll.js"
+    "/build/assets/PageHeaderCard-GxA7id8Q.js"
+  ],
+  "resources/js/Components/Lightbox.jsx": [
+    "/build/assets/Profile-DYvIXlWc.js"
   ],
   "resources/js/Components/MemberCard.jsx": [
-    "/build/assets/Profile-Dhegp4Ik.js"
+    "/build/assets/Profile-DYvIXlWc.js"
   ],
   "resources/js/Components/NationalCalendar.jsx": [
-    "/build/assets/Index-CXnvWgho.js"
+    "/build/assets/Index-DON2GgPL.js"
   ],
   "resources/js/Components/Navbar.jsx": [
-    "/build/assets/PageHeaderCard-j97nTOll.js"
+    "/build/assets/PageHeaderCard-GxA7id8Q.js"
   ],
   "resources/js/Components/PageHeaderCard.jsx": [
-    "/build/assets/PageHeaderCard-j97nTOll.js"
+    "/build/assets/PageHeaderCard-GxA7id8Q.js"
   ],
   "resources/js/Components/Pagination.jsx": [
     "/build/assets/Pagination-BK520O42.js"
   ],
   "resources/js/Components/PostCard.jsx": [
-    "/build/assets/Index-DZ6ERUmz.js"
+    "/build/assets/Index-D94L9Bou.js"
   ],
   "resources/js/Components/SectionTitle.jsx": [
     "/build/assets/SectionTitle-6h1XHXt8.js"
   ],
   "resources/js/Components/StatCard.jsx": [
-    "/build/assets/Welcome-Cba0TH4C.js"
+    "/build/assets/Welcome-BkuDWC1p.js"
   ],
   "resources/js/Layouts/AdminLayout.jsx": [
     "/build/assets/AdminLayout-dMISE7I6.js"
@@ -46,7 +49,7 @@
     "/build/assets/GuestLayout-Ba0vwqSJ.js"
   ],
   "resources/js/Layouts/PublicLayout.jsx": [
-    "/build/assets/PageHeaderCard-j97nTOll.js"
+    "/build/assets/PageHeaderCard-GxA7id8Q.js"
   ],
   "resources/js/Pages/Admin/Agendas/Create.jsx": [
     "/build/assets/Create-BYigwQC_.js"
@@ -79,7 +82,7 @@
     "/build/assets/Create-DTxK4RqI.js"
   ],
   "resources/js/Pages/Admin/Members/Edit.jsx": [
-    "/build/assets/Edit-OR6JEU6e.js"
+    "/build/assets/Edit-BTGIm-pR.js"
   ],
   "resources/js/Pages/Admin/Members/Index.jsx": [
     "/build/assets/Index-DEm3aH92.js"
@@ -94,7 +97,7 @@
     "/build/assets/Index-CHPifLua.js"
   ],
   "resources/js/Pages/Admin/Profile/Edit.jsx": [
-    "/build/assets/Edit-C5Xw9Cai.js"
+    "/build/assets/Edit-DrgOyPTj.js"
   ],
   "resources/js/Pages/Admin/Quotes/Create.jsx": [
     "/build/assets/Create-BIo10nMK.js"
@@ -124,13 +127,13 @@
     "/build/assets/Index-B0YVBskp.js"
   ],
   "resources/js/Pages/Agenda/Index.jsx": [
-    "/build/assets/Index-CXnvWgho.js"
+    "/build/assets/Index-DON2GgPL.js"
   ],
   "resources/js/Pages/Articles/Index.jsx": [
-    "/build/assets/Index-_tXdGz8-.js"
+    "/build/assets/Index-BOraK58H.js"
   ],
   "resources/js/Pages/Articles/Show.jsx": [
-    "/build/assets/Show-CCK79cQT.js"
+    "/build/assets/Show-BrXPP5q4.js"
   ],
   "resources/js/Pages/Auth/ConfirmPassword.jsx": [
     "/build/assets/ConfirmPassword-BF8qN4iT.js"
@@ -151,19 +154,19 @@
     "/build/assets/VerifyEmail-DsU5k6Gd.js"
   ],
   "resources/js/Pages/Gallery.jsx": [
-    "/build/assets/Gallery-DvV-M9ZK.js"
+    "/build/assets/Gallery-DRWlhPU5.js"
   ],
   "resources/js/Pages/News/Index.jsx": [
-    "/build/assets/Index-DZ6ERUmz.js"
+    "/build/assets/Index-D94L9Bou.js"
   ],
   "resources/js/Pages/News/Show.jsx": [
-    "/build/assets/Show-D2uiLDq7.js"
+    "/build/assets/Show-BNVPhAhc.js"
   ],
   "resources/js/Pages/Profile.jsx": [
-    "/build/assets/Profile-Dhegp4Ik.js"
+    "/build/assets/Profile-DYvIXlWc.js"
   ],
   "resources/js/Pages/Welcome.jsx": [
-    "/build/assets/Welcome-Cba0TH4C.js"
+    "/build/assets/Welcome-BkuDWC1p.js"
   ],
   "resources/js/ssr.jsx": [],
   "vendor/tightenco/ziggy/dist/index.js": []

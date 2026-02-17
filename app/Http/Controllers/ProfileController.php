@@ -19,6 +19,7 @@ class ProfileController extends Controller
         return \Inertia\Inertia::render('Admin/Profile/Edit', [
             'mustVerifyEmail' => $request->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail,
             'status' => session('status'),
+            'member' => $request->user()->member,
         ]);
     }
 
@@ -27,13 +28,48 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = $request->user();
+        $user->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
         }
 
-        $request->user()->save();
+        $user->save();
+
+        // Handle Member Data
+        $memberData = $request->only(['position', 'instagram', 'type']);
+        
+        $member = $user->member;
+        if (!$member) {
+            $member = new \App\Models\Member(['user_id' => $user->id]);
+        }
+
+        if ($request->hasFile('photo')) {
+            if ($member->photo) {
+                try {
+                    \Illuminate\Support\Facades\Storage::delete($member->photo);
+                } catch (\Throwable $e) {
+                }
+            }
+            
+            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary') {
+                $path = \Illuminate\Support\Facades\Storage::disk('cloudinary')->putFile('members', $request->file('photo'));
+                $memberData['photo'] = \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($path);
+            } else {
+                $memberData['photo'] = $request->file('photo')->store('members', 'public');
+            }
+        }
+
+        // Ensure name is synced if changed in user but not in member (or just always sync)
+        $memberData['name'] = $user->name;
+
+        if ($member->exists) {
+            $member->update($memberData);
+        } else {
+            $member->fill($memberData);
+            $member->save();
+        }
 
         return Redirect::route('admin.profile.edit')->with('status', 'profile-updated');
     }

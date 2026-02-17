@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
 import { motion, AnimatePresence } from 'framer-motion';
-import { usePage, Head } from '@inertiajs/react';
+import { usePage, Head, router } from '@inertiajs/react';
 
 export default function PublicLayout({ children }) {
     const { url, props } = usePage();
     const { siteSetting } = props;
+
+    useEffect(() => {
+        if (window.Echo) {
+            console.log('Echo initialized, subscribing to public-content...');
+            const channel = window.Echo.channel('public-content')
+                .listen('.content.updated', (e) => {
+                    console.log('Real-time content update received:', e);
+                    router.reload({
+                        preserveScroll: true,
+                        preserveState: true
+                    });
+                });
+
+            return () => {
+                channel.stopListening('.content.updated');
+            };
+        }
+    }, []);
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 selection:bg-emerald-200 selection:text-emerald-900">

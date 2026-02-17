@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePage } from '@inertiajs/react';
 
-export default function HeroSection({ bgImage }) {
+export default function HeroSection({ bgImage, hideIndicators = false }) {
     const { activeQuotes } = usePage().props;
     const [currentQuote, setCurrentQuote] = useState(0);
 
@@ -13,7 +13,7 @@ export default function HeroSection({ bgImage }) {
             }, 8000);
             return () => clearInterval(timer);
         }
-    }, [activeQuotes]);
+    }, [activeQuotes, currentQuote]);
 
     const nextQuote = () => {
         setCurrentQuote((prev) => (prev + 1) % activeQuotes.length);
@@ -52,7 +52,7 @@ export default function HeroSection({ bgImage }) {
 
             {/* Centered Content Area */}
             <div className="container mx-auto px-6 relative z-20 flex flex-col items-center text-center">
-                <AnimatePresence>
+                <AnimatePresence mode="wait">
                     {quotesToDisplay ? (
                         <motion.div
                             key={`quote-${currentQuote}`}
@@ -92,7 +92,7 @@ export default function HeroSection({ bgImage }) {
 
 
             {/* Tabbed Progress Indicators at Bottom */}
-            {quotesToDisplay?.length > 1 && (
+            {quotesToDisplay?.length > 1 && !hideIndicators && (
                 <div className="absolute bottom-6 md:bottom-10 left-0 right-0 z-30 px-6 md:px-12 flex justify-center">
                     <div className="container mx-auto max-w-6xl">
                         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-8">
@@ -111,7 +111,7 @@ export default function HeroSection({ bgImage }) {
                                     <div className="relative h-px md:h-0.5 bg-white/10 w-full overflow-hidden">
                                         {idx === currentQuote && (
                                             <motion.div
-                                                layoutId="hero-progress"
+                                                key={`hero-progress-${currentQuote}`}
                                                 initial={{ scaleX: 0 }}
                                                 animate={{ scaleX: 1 }}
                                                 transition={{ duration: 8, ease: "linear" }}

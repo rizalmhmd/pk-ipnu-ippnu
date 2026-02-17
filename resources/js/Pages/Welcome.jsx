@@ -19,12 +19,13 @@ export default function Home({ posts, articles, pageSetting, greeting, agendas, 
             {/* Hero Section */}
             <HeroSection
                 bgImage={siteSetting?.default_hero_image_url ? siteSetting.default_hero_image_url : 'https://images.unsplash.com/photo-1541339907198-e08756ebafe3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'}
+                hideIndicators={true}
             />
 
             {/* Statistics Section */}
             {statistics && statistics.length > 0 && (
-                <div className="container mx-auto px-4 sm:px-6 md:px-12 -mt-20 relative z-40 mb-12">
-                    <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-6">
+                <div className="container mx-auto px-4 sm:px-6 md:px-12 -mt-12 relative z-40 mb-12">
+                    <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-4">
                         {statistics.map((stat, index) => (
                             <div key={stat.id} className="h-full">
                                 <StatCard statistic={stat} delay={index} />

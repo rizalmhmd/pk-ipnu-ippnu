@@ -45,9 +45,9 @@ class PublicController extends Controller
 
     public function profile()
     {
-        $members = Member::all();
+        $organizations = Member::orderBy('order', 'asc')->get();
         $pageSetting = PageSetting::where('page_name', 'profile')->first();
-        return Inertia::render('Profile', compact('members', 'pageSetting'));
+        return Inertia::render('Profile', compact('organizations', 'pageSetting'));
     }
 
     public function news()
