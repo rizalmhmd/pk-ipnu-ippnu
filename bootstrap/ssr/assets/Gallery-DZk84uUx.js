@@ -1,7 +1,7 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { useState } from "react";
 import { Head } from "@inertiajs/react";
-import { P as PublicLayout, H as HeroSection, a as PageHeaderCard } from "./PageHeaderCard-GxA7id8Q.js";
+import { P as PublicLayout, H as HeroSection, a as PageHeaderCard } from "./PageHeaderCard-DT4379pO.js";
 import { S as SectionTitle } from "./SectionTitle-6h1XHXt8.js";
 import { P as Pagination } from "./Pagination-BK520O42.js";
 import { motion, AnimatePresence } from "framer-motion";

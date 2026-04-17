@@ -47,10 +47,10 @@ export default function NationalCalendar({ agendas = [], nationalHolidays = [] }
     }
 
     return (
-        <div className="bg-white rounded-[3rem] shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden relative z-0 isolate">
+        <div className="bg-white rounded-lg shadow-2xl shadow-slate-200/50 border border-slate-100 overflow-hidden relative z-0 isolate">
             <motion.div
                 animate={{ filter: selectedEvent ? 'blur(10px) brightness(0.95)' : 'blur(0px) brightness(1)' }}
-                className="transition-all duration-500 relative h-full w-full overflow-hidden rounded-[3rem]"
+                className="transition-all duration-500 relative h-full w-full overflow-hidden rounded-lg"
             >
                 {/* Calendar Header */}
                 <div className="bg-slate-50 p-8 border-b border-slate-100 flex items-center justify-between">
@@ -58,10 +58,10 @@ export default function NationalCalendar({ agendas = [], nationalHolidays = [] }
                         {monthNames[month]} {year}
                     </h3>
                     <div className="flex gap-2">
-                        <button onClick={prevMonth} className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-100 transition-all">
+                        <button onClick={prevMonth} className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-100 transition-all">
                             <i className="fas fa-chevron-left"></i>
                         </button>
-                        <button onClick={nextMonth} className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-100 transition-all">
+                        <button onClick={nextMonth} className="w-10 h-10 rounded-lg bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-100 transition-all">
                             <i className="fas fa-chevron-right"></i>
                         </button>
                     </div>
@@ -69,7 +69,7 @@ export default function NationalCalendar({ agendas = [], nationalHolidays = [] }
 
                 {/* Grid */}
                 <div className="p-4 md:p-8">
-                    <div className="grid grid-cols-7 gap-px bg-slate-100 rounded-2xl overflow-hidden border border-slate-100">
+                    <div className="grid grid-cols-7 gap-px bg-slate-100 rounded-lg overflow-hidden border border-slate-100">
                         {dayLabels.map((day, idx) => (
                             <div key={idx} className={`bg-slate-50 p-4 text-center text-xs font-bold uppercase tracking-widest ${idx === 0 ? 'text-red-500' : 'text-slate-400'}`}>
                                 {day}
@@ -150,7 +150,7 @@ export default function NationalCalendar({ agendas = [], nationalHolidays = [] }
                             exit={{ opacity: 0, scale: 0.9, y: 20 }}
                             className="absolute inset-0 z-[70] flex items-center justify-center p-4 pointer-events-none"
                         >
-                            <div className="w-[95%] max-w-md bg-white rounded-[3rem] shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] p-8 md:p-10 border border-white relative pointer-events-auto">
+                            <div className="w-[95%] max-w-md bg-white rounded-lg shadow-[0_32px_64px_-16px_rgba(0,0,0,0.3)] p-8 md:p-10 border border-white relative pointer-events-auto">
                                 <button
                                     onClick={() => setSelectedEvent(null)}
                                     className="absolute top-6 right-6 w-10 h-10 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition-all"
@@ -160,7 +160,7 @@ export default function NationalCalendar({ agendas = [], nationalHolidays = [] }
 
                                 <div className="space-y-6">
                                     <div className="flex gap-4 items-center">
-                                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-xl ${selectedEvent.type === 'holiday'
+                                        <div className={`w-14 h-14 rounded-lg flex items-center justify-center text-xl ${selectedEvent.type === 'holiday'
                                             ? (selectedEvent.cat === 'nasional' ? 'bg-red-50 text-red-500' : 'bg-blue-50 text-blue-500')
                                             : 'bg-emerald-50 text-emerald-500'
                                             }`}>
@@ -214,7 +214,7 @@ export default function NationalCalendar({ agendas = [], nationalHolidays = [] }
 
                                     <button
                                         onClick={() => setSelectedEvent(null)}
-                                        className="w-full py-4 rounded-2xl bg-slate-900 text-white font-bold text-sm tracking-widest hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/10"
+                                        className="w-full py-4 rounded-lg bg-slate-900 text-white font-bold text-sm tracking-widest hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/10"
                                     >
                                         TUTUP
                                     </button>

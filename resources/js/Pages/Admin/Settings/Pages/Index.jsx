@@ -46,7 +46,7 @@ export default function Index({ settings }) {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+            <div className="flex flex-wrap gap-8">
                 {settings.map((page, idx) => {
                     const Icon = pageIcons[page.page_name] || Layout;
                     return (
@@ -55,13 +55,13 @@ export default function Index({ settings }) {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none p-10 relative group overflow-hidden flex flex-col h-full"
+                            className="flex-grow min-w-[320px] max-w-[450px] bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none p-10 relative group overflow-hidden flex flex-col h-full"
                         >
                             {/* Accent Background */}
                             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full -mr-16 -mt-16 group-hover:bg-emerald-500/10 transition-colors"></div>
 
                             <div className="relative z-10 flex flex-col h-full">
-                                <div className="mb-8 p-4 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-3xl w-fit group-hover:scale-110 transition-transform duration-500">
+                                <div className="mb-8 p-4 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-lg w-fit group-hover:scale-110 transition-transform duration-500">
                                     <Icon size={28} />
                                 </div>
 
@@ -85,7 +85,7 @@ export default function Index({ settings }) {
 
                                 <Link
                                     href={route('admin.page-settings.edit', page.id)}
-                                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-[2rem] font-bold text-xs uppercase tracking-widest hover:shadow-lg hover:shadow-emerald-900/20 transition-all"
+                                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-lg font-bold text-xs uppercase tracking-widest hover:shadow-lg hover:shadow-emerald-900/20 transition-all"
                                 >
                                     Konfigurasi
                                     <ChevronRight size={14} />

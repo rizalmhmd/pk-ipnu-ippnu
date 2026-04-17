@@ -38,7 +38,7 @@ export default function Gallery({ galleries, pageSetting }) {
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.05 }}
                             onClick={() => setSelectedImage(item)}
-                            className="group relative aspect-square md:aspect-[4/5] bg-white rounded-[2rem] overflow-hidden shadow-xl shadow-slate-200/50 cursor-pointer hover:shadow-2xl hover:shadow-emerald-900/10 hover:-translate-y-2 transition-all duration-500 border border-slate-100"
+                            className="group relative aspect-square md:aspect-[4/5] bg-white rounded-lg overflow-hidden shadow-xl shadow-slate-200/50 cursor-pointer hover:shadow-2xl hover:shadow-emerald-900/10 hover:-translate-y-2 transition-all duration-500 border border-slate-100"
                         >
                             <img
                                 src={item.image_url}
@@ -56,7 +56,7 @@ export default function Gallery({ galleries, pageSetting }) {
                 </div>
 
                 {galleries.data.length === 0 && (
-                    <div className="py-20 text-center bg-white rounded-[3rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                    <div className="py-20 text-center bg-white rounded-lg shadow-xl shadow-slate-200/50 border border-slate-100">
                         <i className="far fa-images text-6xl text-slate-100 mb-6 block"></i>
                         <p className="text-slate-500 font-medium">Galeri foto belum memiliki koleksi saat ini.</p>
                     </div>
@@ -85,18 +85,18 @@ export default function Gallery({ galleries, pageSetting }) {
                         >
                             <button
                                 onClick={() => setSelectedImage(null)}
-                                className="absolute top-0 right-0 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-2xl flex items-center justify-center text-white transition-all pointer-events-auto z-10"
+                                className="absolute top-0 right-0 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center text-white transition-all pointer-events-auto z-10"
                             >
                                 <i className="fas fa-times text-xl"></i>
                             </button>
 
                             <img
                                 src={selectedImage.image_url}
-                                className="max-w-full max-h-[80vh] object-contain rounded-3xl shadow-2xl pointer-events-auto"
+                                className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl pointer-events-auto"
                                 alt={selectedImage.title}
                             />
 
-                            <div className="mt-8 px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl text-white text-center pointer-events-auto">
+                            <div className="mt-8 px-8 py-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg text-white text-center pointer-events-auto">
                                 <h4 className="text-lg font-bold font-serif">{selectedImage.title}</h4>
                             </div>
                         </motion.div>

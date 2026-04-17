@@ -20,7 +20,7 @@ export default function VerifyEmail({ status }) {
             </div>
 
             {status === 'verification-link-sent' && (
-                <div className="mb-6 font-bold text-sm text-emerald-600 bg-emerald-50 p-4 rounded-2xl border border-emerald-100 italic">
+                <div className="mb-6 font-bold text-sm text-emerald-600 bg-emerald-50 p-4 rounded-lg border border-emerald-100 italic">
                     Tautan verifikasi baru telah dikirim ke alamat email yang Anda berikan saat pendaftaran.
                 </div>
             )}
@@ -28,7 +28,7 @@ export default function VerifyEmail({ status }) {
             <form onSubmit={submit} className="space-y-6">
                 <button
                     disabled={processing}
-                    className={`w-full py-4 rounded-[1.5rem] bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-xl shadow-emerald-900/20 hover:shadow-emerald-900/30 transition-all flex items-center justify-center gap-3 active:scale-[0.98] ${processing ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`w-full py-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-xl shadow-emerald-900/20 hover:shadow-emerald-900/30 transition-all flex items-center justify-center gap-3 active:scale-[0.98] ${processing ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                     {processing ? (
                         <i className="fas fa-circle-notch animate-spin"></i>

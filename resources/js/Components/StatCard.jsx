@@ -27,7 +27,7 @@ export default function StatCard({ statistic, delay = 0 }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: delay * 0.1 }}
-            className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-100 relative overflow-hidden group h-full"
+            className="bg-white rounded-lg md:rounded-lg p-4 md:p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-100 relative overflow-hidden group h-full"
         >
             <div className={`absolute top-0 right-0 w-24 h-24 ${theme.bg} rounded-full -mr-12 -mt-12 opacity-50 group-hover:scale-150 transition-transform duration-500`}></div>
 
@@ -37,7 +37,7 @@ export default function StatCard({ statistic, delay = 0 }) {
                         {title}
                     </h5>
                     {icon && (
-                        <div className={`w-7 h-7 md:w-9 md:h-9 ${theme.bg} rounded-xl flex items-center justify-center ${theme.text} mb-2`}>
+                        <div className={`w-7 h-7 md:w-9 md:h-9 ${theme.bg} rounded-lg flex items-center justify-center ${theme.text} mb-2`}>
                             <i className={`fas ${icon} text-[10px] md:text-sm`}></i>
                         </div>
                     )}

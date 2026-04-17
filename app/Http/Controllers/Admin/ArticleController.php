@@ -83,6 +83,17 @@ class ArticleController extends Controller
             } else {
                 $data['image'] = $request->file('image')->store('articles', 'public');
             }
+        } elseif ($request->remove_image == 'true' || $request->remove_image === true) {
+            if ($article->image) {
+                try {
+                    Storage::delete($article->image);
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Storage delete failed: " . $e->getMessage());
+                }
+            }
+            $data['image'] = null;
+        } else {
+            unset($data['image']);
         }
 
         $article->update($data);

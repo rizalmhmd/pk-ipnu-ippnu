@@ -39,7 +39,7 @@ export default function Index({ posts }) {
                 </div>
                 <Link
                     href={route('admin.posts.create')}
-                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-lg font-bold shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm"
                 >
                     <Plus size={18} />
                     Tambah Berita
@@ -47,7 +47,7 @@ export default function Index({ posts }) {
             </div>
 
             {/* Data Table */}
-            <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none overflow-hidden">
+            <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
@@ -67,7 +67,7 @@ export default function Index({ posts }) {
                                 >
                                     <td className="px-8 py-6">
                                         <div className="flex items-center gap-6">
-                                            <div className="w-20 h-20 rounded-2xl overflow-hidden shrink-0 border border-slate-100 dark:border-slate-800 shadow-sm">
+                                            <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0 border border-slate-100 dark:border-slate-800 shadow-sm">
                                                 {post.image ? (
                                                     <img src={post.image_url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="" />
                                                 ) : (
@@ -104,21 +104,21 @@ export default function Index({ posts }) {
                                             <Link
                                                 href={route('news.show', post.slug)}
                                                 target="_blank"
-                                                className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-xl transition-all"
+                                                className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-emerald-500 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 rounded-lg transition-all"
                                                 title="Lihat"
                                             >
                                                 <Eye size={18} />
                                             </Link>
                                             <Link
                                                 href={route('admin.posts.edit', post.id)}
-                                                className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-all"
+                                                className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all"
                                                 title="Edit"
                                             >
                                                 <Edit size={18} />
                                             </Link>
                                             <button
                                                 onClick={() => handleDelete(post.id)}
-                                                className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
+                                                className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all"
                                                 title="Hapus"
                                             >
                                                 <Trash2 size={18} />
@@ -133,7 +133,7 @@ export default function Index({ posts }) {
 
                 {posts.data.length === 0 && (
                     <div className="py-20 text-center">
-                        <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-[2rem] flex items-center justify-center text-slate-200 dark:text-slate-700 mx-auto mb-6">
+                        <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-lg flex items-center justify-center text-slate-200 dark:text-slate-700 mx-auto mb-6">
                             <FileText size={40} />
                         </div>
                         <h5 className="text-lg font-bold text-slate-400">Belum Ada Berita</h5>

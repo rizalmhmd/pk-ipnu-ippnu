@@ -12,30 +12,49 @@ import {
     User,
     LogOut,
     Globe,
-    BarChart
+    BarChart,
+    UserCog
 } from 'lucide-react';
 
 export default function Sidebar({ isOpen, setIsOpen }) {
     const { url } = usePage();
+    const { auth } = usePage().props;
+    const userRole = auth?.user?.role || 'admin';
 
-    const menuItems = [
-        { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
-        { name: 'Berita', href: '/admin/posts', icon: Newspaper },
-        { name: 'Artikel', href: '/admin/articles', icon: FileText },
-        { name: 'Galeri', href: '/admin/galleries', icon: Image },
-        { name: 'Anggota', href: '/admin/members', icon: Users },
-        { name: 'Agenda', href: '/admin/agendas', icon: Calendar },
-        { name: 'Statistik', href: '/admin/statistics', icon: BarChart },
-        { name: 'Quotes', href: '/admin/quotes', icon: Quote },
+    // ─── Build menu based on role ──────────────────────────────────────────
+
+    const allMenuItems = [
+        { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard, roles: ['admin', 'ketua', 'departemen'] },
+        { name: 'Berita', href: '/admin/posts', icon: Newspaper, roles: ['admin', 'departemen'] },
+        { name: 'Artikel', href: '/admin/articles', icon: FileText, roles: ['admin', 'departemen'] },
+        { name: 'Quotes', href: '/admin/quotes', icon: Quote, roles: ['admin', 'departemen'] },
+        { name: 'Galeri', href: '/admin/galleries', icon: Image, roles: ['admin', 'ketua'] },
+        { name: 'Anggota', href: '/admin/members', icon: Users, roles: ['admin', 'ketua'] },
+        { name: 'Agenda', href: '/admin/agendas', icon: Calendar, roles: ['admin', 'ketua'] },
+        { name: 'Statistik', href: '/admin/statistics', icon: BarChart, roles: ['admin', 'ketua'] },
     ];
 
-    const settingItems = [
-        { name: 'Pengaturan', href: '/admin/site-settings', icon: Settings },
-        { name: 'Halaman', href: '/admin/page-settings', icon: FileText },
-        { name: 'Profil', href: '/admin/profile', icon: User },
+    const menuItems = allMenuItems.filter(item => item.roles.includes(userRole));
+
+    const allSettingItems = [
+        { name: 'Manajemen User', href: '/admin/users', icon: UserCog, roles: ['admin'] },
+        { name: 'Pengaturan', href: '/admin/site-settings', icon: Settings, roles: ['admin'] },
+        { name: 'Halaman', href: '/admin/page-settings', icon: FileText, roles: ['admin'] },
+        { name: 'Profil', href: '/admin/profile', icon: User, roles: ['admin', 'ketua', 'departemen'] },
     ];
+
+    const settingItems = allSettingItems.filter(item => item.roles.includes(userRole));
 
     const isActive = (path) => url.startsWith(path);
+
+    // ─── Role badge colors ─────────────────────────────────────────────────
+    const roleBadge = {
+        admin:      { bg: 'bg-red-100 dark:bg-red-900/30', text: 'text-red-600 dark:text-red-400', label: 'Admin' },
+        ketua:      { bg: 'bg-blue-100 dark:bg-blue-900/30', text: 'text-blue-600 dark:text-blue-400', label: 'Ketua' },
+        departemen: { bg: 'bg-amber-100 dark:bg-amber-900/30', text: 'text-amber-600 dark:text-amber-400', label: 'Dept' },
+    };
+
+    const badge = roleBadge[userRole] || roleBadge.admin;
 
     const NavLink = ({ item }) => (
         <Link
@@ -46,7 +65,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                     setIsOpen(false);
                 }
             }}
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${isActive(item.href)
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${isActive(item.href)
                 ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
                 : 'text-slate-500 hover:bg-emerald-50 hover:text-emerald-600 dark:text-slate-400 dark:hover:bg-slate-800'
                 }`}
@@ -79,14 +98,19 @@ export default function Sidebar({ isOpen, setIsOpen }) {
             <aside className={`fixed top-0 left-0 z-40 h-screen bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transition-all duration-300 ${isOpen ? 'w-64' : 'w-64 -translate-x-full lg:translate-x-0 lg:w-20'
                 }`}>
                 <div className="flex flex-col h-full">
-                    {/* Logo */}
+                    {/* Logo + Role Badge */}
                     <div className="h-20 flex items-center justify-center border-b border-slate-100 dark:border-slate-800">
                         <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-emerald-600/20">
                             IP
                         </div>
-                        <span className={`ml-3 font-bold text-slate-800 dark:text-white text-lg transition-all duration-300 ${isOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0 overflow-hidden'}`}>
-                            AdminPanel
-                        </span>
+                        <div className={`ml-3 transition-all duration-300 ${isOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0 overflow-hidden'}`}>
+                            <span className="font-bold text-slate-800 dark:text-white text-lg block leading-tight">
+                                AdminPanel
+                            </span>
+                            <span className={`text-[9px] font-black uppercase tracking-widest px-1.5 py-0.5 rounded ${badge.bg} ${badge.text}`}>
+                                {badge.label}
+                            </span>
+                        </div>
                     </div>
 
                     {/* Navigation */}
@@ -119,7 +143,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                         <a
                             href="/"
                             target="_blank"
-                            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all`}
+                            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all`}
                         >
                             <Globe size={20} />
                             <span className={`font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
@@ -130,7 +154,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                             href="/logout"
                             method="post"
                             as="button"
-                            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all`}
+                            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all`}
                         >
                             <LogOut size={20} />
                             <span className={`font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>

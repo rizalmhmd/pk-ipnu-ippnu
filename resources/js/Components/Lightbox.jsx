@@ -20,7 +20,7 @@ export default function Lightbox({ isOpen, onClose, member }) {
                         initial={{ opacity: 0, scale: 0.9, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="relative max-w-lg w-full bg-white rounded-[2.5rem] overflow-hidden shadow-2xl"
+                        className="relative max-w-lg w-full bg-white rounded-lg overflow-hidden shadow-2xl"
                     >
                         <button
                             onClick={onClose}

@@ -82,6 +82,17 @@ class PostController extends Controller
             } else {
                 $data['image'] = $request->file('image')->store('posts', 'public');
             }
+        } elseif ($request->remove_image == 'true' || $request->remove_image === true) {
+            if ($post->image) {
+                try {
+                    Storage::delete($post->image);
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
+                }
+            }
+            $data['image'] = null;
+        } else {
+            unset($data['image']);
         }
 
         $post->update($data);

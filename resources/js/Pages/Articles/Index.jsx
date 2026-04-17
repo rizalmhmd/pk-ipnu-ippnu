@@ -34,7 +34,7 @@ export default function ArticlesIndex({ articles, pageSetting }) {
                 </div>
 
                 {articles.data.length === 0 && (
-                    <div className="py-20 text-center bg-white rounded-[3rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                    <div className="py-20 text-center bg-white rounded-lg shadow-xl shadow-slate-200/50 border border-slate-100">
                         <i className="far fa-file-alt text-6xl text-slate-100 mb-6 block"></i>
                         <p className="text-slate-500 font-medium">Belum ada artikel yang diterbitkan saat ini.</p>
                     </div>

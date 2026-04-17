@@ -10,7 +10,7 @@ export default function Footer() {
                 {/* Centered Brand & Social Section */}
                 <div className="flex flex-col items-center text-center mb-16 space-y-8">
                     <Link href="/" className="flex flex-col items-center gap-4 group">
-                        <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-2xl group-hover:scale-105 transition-all duration-500 overflow-hidden">
+                        <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center shadow-2xl group-hover:scale-105 transition-all duration-500 overflow-hidden">
                             {siteSetting?.site_logo ? (
                                 <img src={siteSetting.site_logo_url} alt="Logo" className="w-full h-full object-cover" />
                             ) : (
@@ -40,7 +40,7 @@ export default function Footer() {
                                 key={idx}
                                 href={social.link}
                                 target="_blank"
-                                className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-emerald-600 hover:border-emerald-500 hover:-translate-y-1 transition-all duration-300"
+                                className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-emerald-600 hover:border-emerald-500 hover:-translate-y-1 transition-all duration-300"
                             >
                                 <i className={`fab fa-${social.icon}`}></i>
                             </a>

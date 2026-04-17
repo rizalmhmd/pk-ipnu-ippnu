@@ -34,7 +34,7 @@ export default function Index({ quotes }) {
                 </div>
                 <Link
                     href={route('admin.quotes.create')}
-                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm"
+                    className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-lg font-bold shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm"
                 >
                     <Plus size={18} />
                     Tambah Quote
@@ -42,14 +42,14 @@ export default function Index({ quotes }) {
             </div>
 
             {/* Quotes Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="flex flex-wrap gap-8">
                 {quotes.map((quote, idx) => (
                     <motion.div
                         key={quote.id}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: idx * 0.1 }}
-                        className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none p-10 relative group"
+                        className="flex-grow min-w-[320px] max-w-[500px] bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none p-10 relative group"
                     >
                         {/* Status Badge */}
                         <div className="absolute top-8 right-8">
@@ -64,7 +64,7 @@ export default function Index({ quotes }) {
                             )}
                         </div>
 
-                        <div className="mb-8 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl w-fit text-emerald-600 dark:text-emerald-400">
+                        <div className="mb-8 p-3 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg w-fit text-emerald-600 dark:text-emerald-400">
                             <QuoteIcon size={24} />
                         </div>
 
@@ -74,7 +74,7 @@ export default function Index({ quotes }) {
 
                         <div className="flex items-center justify-between pt-8 border-t border-slate-50 dark:border-slate-800">
                             <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center overflow-hidden border border-slate-50 dark:border-slate-700">
+                                <div className="w-10 h-10 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center overflow-hidden border border-slate-50 dark:border-slate-700">
                                     {quote.image ? (
                                         <img src={quote.image_url} className="w-full h-full object-cover" />
                                     ) : (
@@ -90,13 +90,13 @@ export default function Index({ quotes }) {
                             <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <Link
                                     href={route('admin.quotes.edit', quote.id)}
-                                    className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-all"
+                                    className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all"
                                 >
                                     <Edit size={16} />
                                 </Link>
                                 <button
                                     onClick={() => handleDelete(quote.id)}
-                                    className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all"
+                                    className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all"
                                 >
                                     <Trash2 size={16} />
                                 </button>
@@ -107,8 +107,8 @@ export default function Index({ quotes }) {
             </div>
 
             {quotes.length === 0 && (
-                <div className="bg-white dark:bg-slate-900 rounded-[3rem] border border-slate-100 dark:border-slate-800 p-20 text-center shadow-xl shadow-slate-200/50 dark:shadow-none mt-10">
-                    <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-[2rem] flex items-center justify-center text-slate-200 dark:text-slate-700 mx-auto mb-6">
+                <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800 p-20 text-center shadow-xl shadow-slate-200/50 dark:shadow-none mt-10">
+                    <div className="w-20 h-20 bg-slate-50 dark:bg-slate-800 rounded-lg flex items-center justify-center text-slate-200 dark:text-slate-700 mx-auto mb-6">
                         <QuoteIcon size={40} />
                     </div>
                     <h5 className="text-lg font-bold text-slate-400">Belum Ada Quote</h5>

@@ -33,7 +33,7 @@ export default function ResetPassword({ token, email }) {
                             type="email"
                             name="email"
                             value={data.email}
-                            className="block w-full pl-11 pr-4 py-4 bg-slate-50 border-none rounded-2xl text-slate-900 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all outline-none font-medium"
+                            className="block w-full pl-11 pr-4 py-4 bg-slate-50 border-none rounded-lg text-slate-900 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all outline-none font-medium"
                             autoComplete="username"
                             onChange={(e) => setData('email', e.target.value)}
                         />
@@ -52,7 +52,7 @@ export default function ResetPassword({ token, email }) {
                             type="password"
                             name="password"
                             value={data.password}
-                            className="block w-full pl-11 pr-4 py-4 bg-slate-50 border-none rounded-2xl text-slate-900 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all outline-none font-medium"
+                            className="block w-full pl-11 pr-4 py-4 bg-slate-50 border-none rounded-lg text-slate-900 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all outline-none font-medium"
                             autoComplete="new-password"
                             isFocused={true}
                             onChange={(e) => setData('password', e.target.value)}
@@ -72,7 +72,7 @@ export default function ResetPassword({ token, email }) {
                             type="password"
                             name="password_confirmation"
                             value={data.password_confirmation}
-                            className="block w-full pl-11 pr-4 py-4 bg-slate-50 border-none rounded-2xl text-slate-900 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all outline-none font-medium"
+                            className="block w-full pl-11 pr-4 py-4 bg-slate-50 border-none rounded-lg text-slate-900 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all outline-none font-medium"
                             autoComplete="new-password"
                             onChange={(e) => setData('password_confirmation', e.target.value)}
                         />
@@ -84,7 +84,7 @@ export default function ResetPassword({ token, email }) {
 
                 <button
                     disabled={processing}
-                    className={`w-full py-4 rounded-[1.5rem] bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-xl shadow-emerald-900/20 hover:shadow-emerald-900/30 transition-all flex items-center justify-center gap-3 active:scale-[0.98] ${processing ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`w-full py-4 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-xl shadow-emerald-900/20 hover:shadow-emerald-900/30 transition-all flex items-center justify-center gap-3 active:scale-[0.98] ${processing ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                     {processing ? (
                         <i className="fas fa-circle-notch animate-spin"></i>

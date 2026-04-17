@@ -65,16 +65,16 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
             <div className="container mx-auto px-6 md:px-12 py-12">
                 {/* View Selector */}
                 <div className="flex justify-center mb-16">
-                    <div className="bg-slate-100 p-2 rounded-2xl flex gap-2">
+                    <div className="bg-slate-100 p-2 rounded-lg flex gap-2">
                         <button
                             onClick={() => setViewMode('list')}
-                            className={`px-8 py-3 rounded-xl text-sm font-bold transition-all ${viewMode === 'list' ? 'bg-white text-emerald-600 shadow-md' : 'text-slate-500 hover:text-slate-700'}`}
+                            className={`px-8 py-3 rounded-lg text-sm font-bold transition-all ${viewMode === 'list' ? 'bg-white text-emerald-600 shadow-md' : 'text-slate-500 hover:text-slate-700'}`}
                         >
                             <i className="fas fa-list-ul mr-2"></i> List Agenda
                         </button>
                         <button
                             onClick={() => setViewMode('calendar')}
-                            className={`px-8 py-3 rounded-xl text-sm font-bold transition-all ${viewMode === 'calendar' ? 'bg-white text-emerald-600 shadow-md' : 'text-slate-500 hover:text-slate-700'}`}
+                            className={`px-8 py-3 rounded-lg text-sm font-bold transition-all ${viewMode === 'calendar' ? 'bg-white text-emerald-600 shadow-md' : 'text-slate-500 hover:text-slate-700'}`}
                         >
                             <i className="fas fa-calendar-alt mr-2"></i> Kalender Nasional
                         </button>
@@ -90,14 +90,14 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
-                                className="bg-gradient-to-br from-emerald-900 via-emerald-800 to-slate-900 rounded-[3rem] p-8 md:p-10 text-white relative overflow-hidden shadow-2xl shadow-emerald-950/20 group"
+                                className="bg-gradient-to-br from-emerald-900 via-emerald-800 to-slate-900 rounded-lg p-8 md:p-10 text-white relative overflow-hidden shadow-2xl shadow-emerald-950/20 group"
                             >
                                 <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full -mr-32 -mt-32 blur-3xl transition-transform duration-1000 group-hover:scale-110"></div>
                                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full -ml-24 -mb-24 blur-2xl"></div>
 
                                 <div className="relative z-10">
                                     <div className="flex items-center gap-5 mb-10">
-                                        <div className="w-14 h-14 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl flex items-center justify-center text-emerald-400 shadow-inner">
+                                        <div className="w-14 h-14 bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg flex items-center justify-center text-emerald-400 shadow-inner">
                                             <i className="fas fa-calendar-check text-2xl"></i>
                                         </div>
                                         <div>
@@ -121,7 +121,7 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
                                             </div>
                                         ))}
                                         {todayAgendas.length === 0 && (
-                                            <div className="py-4 px-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                                            <div className="py-4 px-6 rounded-lg bg-white/5 border border-white/10 backdrop-blur-sm">
                                                 <p className="text-emerald-100/40 text-sm italic font-medium">✨ Menunggu agenda selanjutnya...</p>
                                             </div>
                                         )}
@@ -130,7 +130,7 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
                             </motion.div>
 
                             {/* Filters */}
-                            <div className="bg-white rounded-[3rem] p-8 md:p-10 shadow-2xl shadow-slate-200/40 border border-slate-100 relative overflow-hidden">
+                            <div className="bg-white rounded-lg p-8 md:p-10 shadow-2xl shadow-slate-200/40 border border-slate-100 relative overflow-hidden">
                                 <div className="absolute top-0 left-0 w-full h-2 bg-emerald-600"></div>
                                 <h4 className="text-2xl font-bold text-slate-800 font-serif mb-10">Kategori</h4>
                                 <div className="space-y-3">
@@ -138,13 +138,13 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
                                         <button
                                             key={cat.id}
                                             onClick={() => setActiveFilter(cat.id)}
-                                            className={`w-full flex items-center justify-between px-5 py-4 rounded-[1.25rem] transition-all duration-300 font-bold text-sm group/btn ${activeFilter === cat.id
+                                            className={`w-full flex items-center justify-between px-5 py-4 rounded-lg transition-all duration-300 font-bold text-sm group/btn ${activeFilter === cat.id
                                                 ? 'bg-emerald-600 text-white shadow-xl shadow-emerald-900/30 -translate-y-1'
                                                 : 'bg-slate-50 text-slate-500 hover:bg-white hover:shadow-lg hover:shadow-slate-200/50 hover:-translate-y-0.5 border border-transparent hover:border-slate-100'
                                                 }`}
                                         >
                                             <div className="flex items-center gap-4">
-                                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${activeFilter === cat.id ? 'bg-white/20' : 'bg-slate-200/50 text-slate-400 group-hover/btn:bg-emerald-50 group-hover/btn:text-emerald-600'}`}>
+                                                <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors ${activeFilter === cat.id ? 'bg-white/20' : 'bg-slate-200/50 text-slate-400 group-hover/btn:bg-emerald-50 group-hover/btn:text-emerald-600'}`}>
                                                     <i className={`fas ${cat.icon}`}></i>
                                                 </div>
                                                 {cat.name}
@@ -190,11 +190,11 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
                                                                 whileInView={{ opacity: 1, y: 0 }}
                                                                 viewport={{ once: true }}
                                                                 transition={{ delay: idx * 0.05 }}
-                                                                className={`flex flex-col md:flex-row gap-6 p-8 bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100 transition-all duration-500 group ${isHoliday ? 'hover:shadow-blue-900/10' : 'hover:shadow-emerald-900/10'}`}
+                                                                className={`flex flex-col md:flex-row gap-6 p-8 bg-white rounded-lg shadow-xl shadow-slate-200/50 border border-slate-100 transition-all duration-500 group ${isHoliday ? 'hover:shadow-blue-900/10' : 'hover:shadow-emerald-900/10'}`}
                                                             >
                                                                 {/* Date Badge */}
-                                                                <div className="flex items-center gap-4 md:flex-col md:w-24 md:h-24 md:bg-slate-50 md:rounded-3xl md:justify-center md:border md:border-slate-100 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-colors shrink-0">
-                                                                    <div className={`${isHoliday ? (item.cat === 'nasional' ? 'bg-red-600' : 'bg-blue-600') : 'bg-emerald-600'} text-white w-14 h-14 rounded-2xl flex flex-col items-center justify-center md:bg-transparent ${isHoliday ? (item.cat === 'nasional' ? 'md:text-red-600' : 'md:text-blue-600') : 'md:text-emerald-600'}`}>
+                                                                <div className="flex items-center gap-4 md:flex-col md:w-24 md:h-24 md:bg-slate-50 md:rounded-lg md:justify-center md:border md:border-slate-100 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-colors shrink-0">
+                                                                    <div className={`${isHoliday ? (item.cat === 'nasional' ? 'bg-red-600' : 'bg-blue-600') : 'bg-emerald-600'} text-white w-14 h-14 rounded-lg flex flex-col items-center justify-center md:bg-transparent ${isHoliday ? (item.cat === 'nasional' ? 'md:text-red-600' : 'md:text-blue-600') : 'md:text-emerald-600'}`}>
                                                                         <span className="text-[10px] font-bold uppercase md:mb-1">
                                                                             {date.toLocaleDateString('id-ID', { month: 'short' })}
                                                                         </span>
@@ -244,7 +244,7 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="py-20 text-center bg-white rounded-[3rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                                        <div className="py-20 text-center bg-white rounded-lg shadow-xl shadow-slate-200/50 border border-slate-100">
                                             <i className="far fa-calendar-times text-6xl text-slate-100 mb-6 block"></i>
                                             <p className="text-slate-500 font-medium">Tidak ada agenda untuk kategori ini.</p>
                                         </div>

@@ -23,7 +23,7 @@ class QuoteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'content' => 'required|string',
+            'content' => 'required|string|max:200',
             'author' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'order' => 'nullable|integer',
@@ -55,14 +55,14 @@ class QuoteController extends Controller
     public function update(Request $request, Quote $quote)
     {
         $request->validate([
-            'content' => 'required|string',
+            'content' => 'required|string|max:200',
             'author' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
             'order' => 'nullable|integer',
             'is_active' => 'boolean',
         ]);
 
-        $data = $request->all();
+        $data = $request->except(['image']);
         $data['is_active'] = $request->has('is_active');
 
         if ($request->hasFile('image')) {

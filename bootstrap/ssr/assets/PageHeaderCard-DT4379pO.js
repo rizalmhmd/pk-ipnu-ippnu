@@ -316,7 +316,7 @@ function HeroSection({ bgImage, hideIndicators = false }) {
     setCurrentQuote((prev) => (prev + 1) % activeQuotes.length);
   };
   const quotesToDisplay = activeQuotes?.length > 0 ? activeQuotes : null;
-  return /* @__PURE__ */ jsxs("section", { className: "relative h-[350px] md:h-[450px] w-full overflow-hidden flex flex-col items-center justify-center shadow-2xl group bg-neutral-950", children: [
+  return /* @__PURE__ */ jsxs("section", { className: "relative h-[500px] md:h-[600px] w-full overflow-hidden flex flex-col items-center justify-center shadow-2xl group bg-neutral-950 py-20", children: [
     /* @__PURE__ */ jsx(AnimatePresence, { children: /* @__PURE__ */ jsxs(
       motion.div,
       {
@@ -342,7 +342,7 @@ function HeroSection({ bgImage, hideIndicators = false }) {
       },
       quotesToDisplay && quotesToDisplay[currentQuote]?.image ? quotesToDisplay[currentQuote].image : "default-bg"
     ) }),
-    /* @__PURE__ */ jsx("div", { className: "container mx-auto px-6 relative z-20 flex flex-col items-center text-center", children: /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: quotesToDisplay ? /* @__PURE__ */ jsxs(
+    /* @__PURE__ */ jsx("div", { className: "container mx-auto px-6 relative z-20 flex flex-col items-center text-center pt-24 md:pt-32", children: /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: quotesToDisplay ? /* @__PURE__ */ jsxs(
       motion.div,
       {
         initial: { y: 20, opacity: 0 },
@@ -351,8 +351,8 @@ function HeroSection({ bgImage, hideIndicators = false }) {
         transition: { duration: 0.6, ease: "easeOut" },
         className: "max-w-3xl",
         children: [
-          /* @__PURE__ */ jsx("div", { className: "inline-flex items-center justify-center mb-8", children: /* @__PURE__ */ jsx("i", { className: "fas fa-quote-left text-white/40 text-4xl md:text-5xl" }) }),
-          /* @__PURE__ */ jsx("h1", { className: "text-2xl md:text-4xl lg:text-5xl font-medium text-white mb-6 leading-relaxed font-serif tracking-wide drop-shadow-xl italic", children: quotesToDisplay[currentQuote].content }),
+          /* @__PURE__ */ jsx("div", { className: "inline-flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx("i", { className: "fas fa-quote-left text-white/40 text-2xl md:text-3xl" }) }),
+          /* @__PURE__ */ jsx("h1", { className: "text-lg md:text-2xl lg:text-3xl font-medium text-white mb-6 leading-relaxed font-serif tracking-wide drop-shadow-xl italic", children: quotesToDisplay[currentQuote].content }),
           quotesToDisplay[currentQuote].author && /* @__PURE__ */ jsxs("p", { className: "text-white/70 font-medium uppercase tracking-[0.3em] text-sm md:text-base", children: [
             "— ",
             quotesToDisplay[currentQuote].author

@@ -1,7 +1,7 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import "react";
 import { Head, Link } from "@inertiajs/react";
-import { P as PublicLayout, H as HeroSection, a as PageHeaderCard } from "./PageHeaderCard-GxA7id8Q.js";
+import { P as PublicLayout, H as HeroSection, a as PageHeaderCard } from "./PageHeaderCard-DT4379pO.js";
 import { motion } from "framer-motion";
 function ArticleDetail({ article }) {
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
@@ -75,7 +75,7 @@ function ArticleDetail({ article }) {
       /* @__PURE__ */ jsx(
         "article",
         {
-          className: "prose prose-lg prose-emerald max-w-none text-slate-600 leading-relaxed mb-20 px-2 lg:px-0",
+          className: "prose prose-lg prose-emerald max-w-none text-slate-600 leading-relaxed mb-20 px-2 lg:px-0 text-justify",
           dangerouslySetInnerHTML: { __html: article.content }
         }
       ),

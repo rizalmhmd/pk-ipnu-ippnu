@@ -70,7 +70,7 @@ export default function Home({ posts, articles, pageSetting, greeting, agendas, 
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: idx * 0.05 }}
-                                        className="bg-white rounded-2xl sm:rounded-3xl shadow-lg shadow-slate-200/50 overflow-hidden border border-slate-100 group hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500"
+                                        className="bg-white rounded-lg shadow-lg shadow-slate-200/50 overflow-hidden border border-slate-100 group hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500"
                                     >
                                         <div className="relative h-40 sm:h-56 overflow-hidden">
                                             <img
@@ -125,7 +125,7 @@ export default function Home({ posts, articles, pageSetting, greeting, agendas, 
                                                 whileInView={{ opacity: 1, y: 0 }}
                                                 viewport={{ once: true }}
                                                 transition={{ delay: idx * 0.05 }}
-                                                className="bg-white rounded-2xl sm:rounded-3xl shadow-lg shadow-slate-200/50 overflow-hidden border border-slate-100 group hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500 h-full"
+                                                className="bg-white rounded-lg shadow-lg shadow-slate-200/50 overflow-hidden border border-slate-100 group hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500 h-full"
                                             >
                                                 <div className="relative h-40 sm:h-56 overflow-hidden">
                                                     {article.image ? (
@@ -173,7 +173,7 @@ export default function Home({ posts, articles, pageSetting, greeting, agendas, 
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        className="bg-emerald-900 rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[40px] p-8 sm:p-10 text-white relative overflow-hidden shadow-2xl shadow-emerald-900/20 h-full flex items-center"
+                        className="bg-emerald-900 rounded-lg p-8 sm:p-10 text-white relative overflow-hidden shadow-2xl shadow-emerald-900/20 h-full flex items-center"
                     >
                         <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 blur-2xl"></div>
                         <div className="absolute bottom-0 left-0 w-24 h-24 bg-emerald-400/10 rounded-full -ml-12 -mb-12 blur-xl"></div>
@@ -201,12 +201,12 @@ export default function Home({ posts, articles, pageSetting, greeting, agendas, 
                     </motion.div>
 
                     {/* Agenda Card */}
-                    <div className="bg-white rounded-[2rem] sm:rounded-[2.5rem] lg:rounded-[40px] p-8 sm:p-10 shadow-xl shadow-slate-200/50 border border-slate-100">
+                    <div className="bg-white rounded-lg p-8 sm:p-10 shadow-xl shadow-slate-200/50 border border-slate-100">
                         <div className="flex justify-between items-center mb-8">
                             <h4 className="text-xl font-bold text-slate-800 font-serif">
                                 {siteSetting?.home_agenda_title || 'Agenda Terdekat'}
                             </h4>
-                            <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 shadow-inner">
+                            <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600 shadow-inner">
                                 <i className="fas fa-calendar-alt text-lg"></i>
                             </div>
                         </div>
@@ -216,7 +216,7 @@ export default function Home({ posts, articles, pageSetting, greeting, agendas, 
                                 const date = new Date(agenda.event_date);
                                 return (
                                     <div key={agenda.id} className="flex gap-4 group cursor-default items-start">
-                                        <div className="w-14 h-16 bg-slate-50 rounded-2xl flex flex-col items-center justify-center border border-slate-100 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-all duration-300 shadow-sm group-hover:shadow-md shrink-0">
+                                        <div className="w-14 h-16 bg-slate-50 rounded-lg flex flex-col items-center justify-center border border-slate-100 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-all duration-300 shadow-sm group-hover:shadow-md shrink-0">
                                             <span className="text-[10px] font-bold uppercase text-slate-400 group-hover:text-emerald-500">
                                                 {date.toLocaleDateString('id-ID', { month: 'short' })}
                                             </span>
@@ -249,7 +249,7 @@ export default function Home({ posts, articles, pageSetting, greeting, agendas, 
 
                         <Link
                             href="/agenda"
-                            className="mt-8 w-full py-4 bg-slate-50 hover:bg-emerald-600 hover:text-white text-slate-600 rounded-2xl text-center text-sm font-bold transition-all block shadow-sm hover:shadow-lg border border-slate-100 hover:border-emerald-500"
+                            className="mt-8 w-full py-4 bg-slate-50 hover:bg-emerald-600 hover:text-white text-slate-600 rounded-lg text-center text-sm font-bold transition-all block shadow-sm hover:shadow-lg border border-slate-100 hover:border-emerald-500"
                         >
                             Lihat Semua Agenda
                         </Link>

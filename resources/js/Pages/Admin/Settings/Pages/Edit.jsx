@@ -73,7 +73,7 @@ export default function Edit({ pageSetting }) {
                     <div className="flex items-center gap-3 mb-2">
                         <Link
                             href={route('admin.page-settings.index')}
-                            className="p-2 bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-emerald-500 rounded-xl transition-colors"
+                            className="p-2 bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-emerald-500 rounded-lg transition-colors"
                         >
                             <ArrowLeft size={16} />
                         </Link>
@@ -86,9 +86,9 @@ export default function Edit({ pageSetting }) {
             <form onSubmit={submit} className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                 <div className="lg:col-span-8 space-y-10">
                     {/* Hero Settings */}
-                    <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                    <div className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                         <div className="flex items-center gap-4 mb-10">
-                            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-2xl">
+                            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-lg">
                                 <Layout size={20} />
                             </div>
                             <div>
@@ -104,7 +104,7 @@ export default function Edit({ pageSetting }) {
                                     type="text"
                                     value={data.hero_title}
                                     onChange={e => setData('hero_title', e.target.value)}
-                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold placeholder:text-slate-300"
+                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold placeholder:text-slate-300"
                                     placeholder="Nama atau Judul Halaman..."
                                 />
                             </div>
@@ -115,7 +115,7 @@ export default function Edit({ pageSetting }) {
                                     value={data.hero_description}
                                     onChange={e => setData('hero_description', e.target.value)}
                                     rows="3"
-                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-medium leading-relaxed"
+                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-medium leading-relaxed"
                                     placeholder="Jelaskan tentang halaman ini dalam 1-2 kalimat..."
                                 />
                             </div>
@@ -123,9 +123,9 @@ export default function Edit({ pageSetting }) {
                     </div>
 
                     {/* Header Card Customization */}
-                    <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                    <div className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                         <div className="flex items-center gap-4 mb-10">
-                            <div className="p-3 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-2xl">
+                            <div className="p-3 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400 rounded-lg">
                                 <Settings2 size={20} />
                             </div>
                             <div>
@@ -142,13 +142,13 @@ export default function Edit({ pageSetting }) {
                                         type="color"
                                         value={data.header_bg_color?.startsWith('linear') ? '#4f46e5' : data.header_bg_color || '#4f46e5'}
                                         onChange={e => setData('header_bg_color', e.target.value)}
-                                        className="h-14 w-14 p-1 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-xl focus:outline-none transition-all cursor-pointer"
+                                        className="h-14 w-14 p-1 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all cursor-pointer"
                                     />
                                     <input
                                         type="text"
                                         value={data.header_bg_color}
                                         onChange={e => setData('header_bg_color', e.target.value)}
-                                        className="flex-grow px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-mono text-sm"
+                                        className="flex-grow px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-mono text-sm"
                                         placeholder="e.g., #4f46e5 or linear-gradient(...)"
                                     />
                                 </div>
@@ -162,13 +162,13 @@ export default function Edit({ pageSetting }) {
                                         type="color"
                                         value={data.header_text_color || '#ffffff'}
                                         onChange={e => setData('header_text_color', e.target.value)}
-                                        className="h-14 w-14 p-1 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-xl focus:outline-none transition-all cursor-pointer"
+                                        className="h-14 w-14 p-1 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all cursor-pointer"
                                     />
                                     <input
                                         type="text"
                                         value={data.header_text_color}
                                         onChange={e => setData('header_text_color', e.target.value)}
-                                        className="flex-grow px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-mono text-sm"
+                                        className="flex-grow px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-mono text-sm"
                                         placeholder="#ffffff"
                                     />
                                 </div>
@@ -178,9 +178,9 @@ export default function Edit({ pageSetting }) {
 
                     {/* About Specific Content */}
                     {isAboutPage && (
-                        <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                        <div className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                             <div className="flex items-center gap-4 mb-10">
-                                <div className="p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-2xl">
+                                <div className="p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg">
                                     <FileText size={20} />
                                 </div>
                                 <div>
@@ -199,7 +199,7 @@ export default function Edit({ pageSetting }) {
                                         value={data.content_sejarah}
                                         onChange={e => setData('content_sejarah', e.target.value)}
                                         rows="8"
-                                        className="w-full px-8 py-6 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-blue-500 rounded-[2rem] focus:outline-none transition-all font-medium leading-relaxed"
+                                        className="w-full px-8 py-6 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-blue-500 rounded-lg focus:outline-none transition-all font-medium leading-relaxed"
                                         placeholder="Tuliskan sejarah organisasi di sini..."
                                     />
                                 </div>
@@ -213,7 +213,7 @@ export default function Edit({ pageSetting }) {
                                         value={data.content_visi_misi}
                                         onChange={e => setData('content_visi_misi', e.target.value)}
                                         rows="8"
-                                        className="w-full px-8 py-6 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-blue-500 rounded-[2rem] focus:outline-none transition-all font-medium leading-relaxed"
+                                        className="w-full px-8 py-6 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-blue-500 rounded-lg focus:outline-none transition-all font-medium leading-relaxed"
                                         placeholder="Tuliskan visi dan misi organisasi..."
                                     />
                                 </div>
@@ -224,13 +224,13 @@ export default function Edit({ pageSetting }) {
 
                 <div className="lg:col-span-4 space-y-10">
                     {/* Hero Image Card */}
-                    <div className="bg-white dark:bg-slate-900 p-8 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                    <div className="bg-white dark:bg-slate-900 p-8 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                         <h5 className="text-sm font-extrabold text-slate-900 dark:text-white mb-6 uppercase tracking-[0.2em] flex items-center gap-2">
                             <LucidImage size={16} className="text-emerald-500" />
                             Hero Banner
                         </h5>
 
-                        <div className={`relative group aspect-video border-2 border-dashed rounded-[2rem] overflow-hidden flex items-center justify-center transition-all ${imagePreview ? 'border-emerald-500' : 'border-slate-100 dark:border-slate-800 hover:border-emerald-400'
+                        <div className={`relative group aspect-video border-2 border-dashed rounded-lg overflow-hidden flex items-center justify-center transition-all ${imagePreview ? 'border-emerald-500' : 'border-slate-100 dark:border-slate-800 hover:border-emerald-400'
                             }`}>
                             <input
                                 type="file"
@@ -258,13 +258,13 @@ export default function Edit({ pageSetting }) {
                     </div>
 
                     {/* Header Card Image Card */}
-                    <div className="bg-white dark:bg-slate-900 p-8 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                    <div className="bg-white dark:bg-slate-900 p-8 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                         <h5 className="text-sm font-extrabold text-slate-900 dark:text-white mb-6 uppercase tracking-[0.2em] flex items-center gap-2">
                             <LucidImage size={16} className="text-indigo-500" />
                             Header Card BG Image
                         </h5>
 
-                        <div className={`relative group aspect-video border-2 border-dashed rounded-[2rem] overflow-hidden flex items-center justify-center transition-all ${headerImagePreview ? 'border-indigo-500' : 'border-slate-100 dark:border-slate-800 hover:border-indigo-400'
+                        <div className={`relative group aspect-video border-2 border-dashed rounded-lg overflow-hidden flex items-center justify-center transition-all ${headerImagePreview ? 'border-indigo-500' : 'border-slate-100 dark:border-slate-800 hover:border-indigo-400'
                             }`}>
                             <input
                                 type="file"
@@ -294,7 +294,7 @@ export default function Edit({ pageSetting }) {
                     <button
                         type="submit"
                         disabled={processing}
-                        className="w-full inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-[2rem] font-black shadow-xl shadow-emerald-900/40 hover:shadow-2xl hover:-translate-y-1 transition-all disabled:opacity-50 tracking-[0.2em] uppercase text-sm"
+                        className="w-full inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-lg font-black shadow-xl shadow-emerald-900/40 hover:shadow-2xl hover:-translate-y-1 transition-all disabled:opacity-50 tracking-[0.2em] uppercase text-sm"
                     >
                         <Save size={20} />
                         Simpan Perubahan

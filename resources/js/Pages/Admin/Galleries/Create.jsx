@@ -59,7 +59,7 @@ export default function Create() {
             </div>
 
             <div className="max-w-4xl">
-                <form onSubmit={submit} className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                <form onSubmit={submit} className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                     <div className="space-y-8">
                         {/* Title */}
                         <div>
@@ -68,7 +68,7 @@ export default function Create() {
                                 type="text"
                                 value={data.title}
                                 onChange={e => setData('title', e.target.value)}
-                                className={`w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 rounded-2xl focus:outline-none transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600 font-bold ${errors.title ? 'border-red-500 bg-red-50 dark:bg-red-900/10' : 'border-transparent focus:border-emerald-500 dark:focus:border-emerald-500'
+                                className={`w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 rounded-lg focus:outline-none transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600 font-bold ${errors.title ? 'border-red-500 bg-red-50 dark:bg-red-900/10' : 'border-transparent focus:border-emerald-500 dark:focus:border-emerald-500'
                                     }`}
                                 placeholder="Contoh: Rapat Koordinasi Wilayah 2026"
                                 required
@@ -79,7 +79,7 @@ export default function Create() {
                         {/* Image Upload */}
                         <div>
                             <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3">Pilih Foto</label>
-                            <div className={`relative group border-2 border-dashed rounded-[2.5rem] p-10 text-center transition-all ${imagePreview ? 'border-emerald-500 bg-emerald-50/30 dark:bg-emerald-900/10' : 'border-slate-100 dark:border-slate-800 hover:border-emerald-400 dark:hover:border-emerald-600'
+                            <div className={`relative group border-2 border-dashed rounded-lg p-10 text-center transition-all ${imagePreview ? 'border-emerald-500 bg-emerald-50/30 dark:bg-emerald-900/10' : 'border-slate-100 dark:border-slate-800 hover:border-emerald-400 dark:hover:border-emerald-600'
                                 }`}>
                                 <input
                                     type="file"
@@ -91,18 +91,18 @@ export default function Create() {
 
                                 {imagePreview ? (
                                     <div className="relative inline-block">
-                                        <img src={imagePreview} className="max-h-80 rounded-3xl shadow-2xl " alt="Preview" />
+                                        <img src={imagePreview} className="max-h-80 rounded-lg shadow-2xl " alt="Preview" />
                                         <button
                                             type="button"
                                             onClick={() => { setImagePreview(null); setData('image', null); }}
-                                            className="absolute -top-4 -right-4 w-10 h-10 bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-700 flex items-center justify-center text-red-500 hover:scale-110 transition-transform z-20"
+                                            className="absolute -top-4 -right-4 w-10 h-10 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-100 dark:border-slate-700 flex items-center justify-center text-red-500 hover:scale-110 transition-transform z-20"
                                         >
                                             <X size={20} />
                                         </button>
                                     </div>
                                 ) : (
                                     <div className="flex flex-col items-center py-10">
-                                        <div className="w-20 h-20 bg-emerald-50 dark:bg-emerald-900/20 rounded-3xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+                                        <div className="w-20 h-20 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6 group-hover:scale-110 transition-transform duration-300">
                                             <CloudUpload size={32} />
                                         </div>
                                         <h5 className="font-bold text-slate-900 dark:text-white mb-2 text-lg">Unggah Foto Momen</h5>
@@ -118,7 +118,7 @@ export default function Create() {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm disabled:opacity-50 disabled:translate-y-0 tracking-widest uppercase"
+                                className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-lg font-bold shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm disabled:opacity-50 disabled:translate-y-0 tracking-widest uppercase"
                             >
                                 <Send size={18} />
                                 Tambah ke Galeri

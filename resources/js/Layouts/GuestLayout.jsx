@@ -18,7 +18,7 @@ export default function GuestLayout({ children }) {
             </Head>
             <div className="mb-6 sm:mb-10">
                 <Link href="/" className="flex flex-col items-center gap-3 sm:gap-4 group">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-600 rounded-[1.5rem] sm:rounded-[2rem] flex items-center justify-center shadow-2xl shadow-emerald-900/20 group-hover:scale-110 transition-transform duration-500 overflow-hidden">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-emerald-600 rounded-lg sm:rounded-lg flex items-center justify-center shadow-2xl shadow-emerald-900/20 group-hover:scale-110 transition-transform duration-500 overflow-hidden">
                         {siteSetting?.site_logo ? (
                             <img src={siteSetting.site_logo_url} alt="Logo" className="w-full h-full object-cover" />
                         ) : (
@@ -37,7 +37,7 @@ export default function GuestLayout({ children }) {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="w-full sm:max-w-md mt-6 px-6 sm:px-10 py-8 sm:py-12 bg-white shadow-2xl shadow-slate-200/50 overflow-hidden rounded-[2rem] sm:rounded-[3rem] border border-slate-100"
+                className="w-full sm:max-w-md mt-6 px-6 sm:px-10 py-8 sm:py-12 bg-white shadow-2xl shadow-slate-200/50 overflow-hidden rounded-lg sm:rounded-lg border border-slate-100"
             >
                 {children}
             </motion.div>

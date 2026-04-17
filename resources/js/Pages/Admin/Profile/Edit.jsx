@@ -84,9 +84,9 @@ export default function Edit({ mustVerifyEmail, status, member }) {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                 {/* Profile Information */}
                 <div className="lg:col-span-12 xl:col-span-8">
-                    <form onSubmit={updateProfile} className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                    <form onSubmit={updateProfile} className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                         <div className="flex items-center gap-4 mb-10">
-                            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-2xl">
+                            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-lg">
                                 <User size={20} />
                             </div>
                             <div>
@@ -99,7 +99,7 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                             <motion.div
                                 initial={{ opacity: 0, y: -10 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                className="mb-8 p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800 rounded-2xl text-emerald-600 dark:text-emerald-400 flex items-center gap-3 text-sm font-bold"
+                                className="mb-8 p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800 rounded-lg text-emerald-600 dark:text-emerald-400 flex items-center gap-3 text-sm font-bold"
                             >
                                 <CheckCircle2 size={18} />
                                 Profil berhasil diperbarui.
@@ -108,9 +108,9 @@ export default function Edit({ mustVerifyEmail, status, member }) {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             {/* Photo Upload Sidebar */}
-                            <div className="md:col-span-2 flex flex-col items-center justify-center p-8 bg-slate-50 dark:bg-slate-800/50 rounded-[2rem] border-2 border-dashed border-slate-200 dark:border-slate-700 mb-4 text-center">
+                            <div className="md:col-span-2 flex flex-col items-center justify-center p-8 bg-slate-50 dark:bg-slate-800/50 rounded-lg border-2 border-dashed border-slate-200 dark:border-slate-700 mb-4 text-center">
                                 <div className="relative group">
-                                    <div className="w-32 h-32 rounded-[2rem] overflow-hidden bg-slate-200 dark:bg-slate-700 shadow-xl border-4 border-white dark:border-slate-900 ring-4 ring-emerald-500/10">
+                                    <div className="w-32 h-32 rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-700 shadow-xl border-4 border-white dark:border-slate-900 ring-4 ring-emerald-500/10">
                                         {photoPreview ? (
                                             <img src={photoPreview} alt="Preview" className="w-full h-full object-cover" />
                                         ) : (
@@ -119,7 +119,7 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                                             </div>
                                         )}
                                     </div>
-                                    <label className="absolute -bottom-2 -right-2 p-3 bg-emerald-600 text-white rounded-2xl shadow-lg cursor-pointer hover:bg-emerald-700 transition-all hover:scale-110">
+                                    <label className="absolute -bottom-2 -right-2 p-3 bg-emerald-600 text-white rounded-lg shadow-lg cursor-pointer hover:bg-emerald-700 transition-all hover:scale-110">
                                         <Save size={18} />
                                         <input type="file" className="hidden" onChange={handlePhotoChange} accept="image/*" />
                                     </label>
@@ -140,7 +140,7 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                                             type="text"
                                             value={profileForm.data.name}
                                             onChange={e => profileForm.setData('name', e.target.value)}
-                                            className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold"
+                                            className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
                                             required
                                         />
                                     </div>
@@ -155,7 +155,7 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                                             type="email"
                                             value={profileForm.data.email}
                                             onChange={e => profileForm.setData('email', e.target.value)}
-                                            className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold"
+                                            className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
                                             required
                                         />
                                     </div>
@@ -173,7 +173,7 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                                                 key={type}
                                                 type="button"
                                                 onClick={() => profileForm.setData('type', type)}
-                                                className={`flex-1 py-4 rounded-2xl border-2 font-bold uppercase tracking-widest text-xs transition-all ${profileForm.data.type === type
+                                                className={`flex-1 py-4 rounded-lg border-2 font-bold uppercase tracking-widest text-xs transition-all ${profileForm.data.type === type
                                                         ? 'bg-emerald-600 border-emerald-600 text-white shadow-lg shadow-emerald-600/20'
                                                         : 'bg-transparent border-slate-100 dark:border-slate-800 text-slate-400 hover:border-emerald-500/50'
                                                     }`}
@@ -193,7 +193,7 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                                             value={profileForm.data.position}
                                             onChange={e => profileForm.setData('position', e.target.value)}
                                             placeholder="Contoh: Ketua Departemen Kaderisasi"
-                                            className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold text-sm"
+                                            className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-sm"
                                         />
                                     </div>
                                     {profileForm.errors.position && <p className="mt-2 text-xs font-bold text-red-500 uppercase tracking-wider">{profileForm.errors.position}</p>}
@@ -208,7 +208,7 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                                             value={profileForm.data.instagram}
                                             onChange={e => profileForm.setData('instagram', e.target.value)}
                                             placeholder="username"
-                                            className="w-full pl-12 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold text-sm"
+                                            className="w-full pl-12 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-sm"
                                         />
                                     </div>
                                 </div>
@@ -218,7 +218,7 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                                 <button
                                     type="submit"
                                     disabled={profileForm.processing}
-                                    className="inline-flex items-center gap-3 px-10 py-4 bg-emerald-600 text-white rounded-2xl font-bold shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm disabled:opacity-50"
+                                    className="inline-flex items-center gap-3 px-10 py-4 bg-emerald-600 text-white rounded-lg font-bold shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm disabled:opacity-50"
                                 >
                                     <Save size={18} />
                                     Simpan Perubahan
@@ -229,15 +229,15 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                 </div>
 
                 {/* Password Management */}
-                <div className="lg:col-span-12 xl:col-span-5">
-                    <form onSubmit={updatePassword} className="bg-slate-900 p-10 rounded-[3rem] border border-slate-800 shadow-2xl shadow-emerald-900/10 text-white h-full">
+                <div className="lg:col-span-12 xl:col-span-4">
+                    <form onSubmit={updatePassword} className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none h-full">
                         <div className="flex items-center gap-4 mb-10">
-                            <div className="p-3 bg-emerald-500/10 text-emerald-400 rounded-2xl border border-emerald-500/20">
+                            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-lg">
                                 <Fingerprint size={20} />
                             </div>
                             <div>
-                                <h3 className="text-lg font-bold text-white leading-none">Keamanan Akun</h3>
-                                <p className="text-xs text-slate-500 font-bold uppercase tracking-widest mt-1">Perbarui kata sandi secara berkala</p>
+                                <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-none">Keamanan Akun</h3>
+                                <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Perbarui kata sandi secara berkala</p>
                             </div>
                         </div>
 
@@ -245,7 +245,7 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                             <motion.div
                                 initial={{ opacity: 0, x: 10 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                className="mb-8 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-emerald-400 flex items-center gap-3 text-sm font-bold"
+                                className="mb-8 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-emerald-400 flex items-center gap-3 text-sm font-bold"
                             >
                                 <ShieldCheck size={18} />
                                 Sandi berhasil diubah.
@@ -254,54 +254,54 @@ export default function Edit({ mustVerifyEmail, status, member }) {
 
                         <div className="space-y-8">
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Sandi Saat Ini</label>
+                                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Sandi Saat Ini</label>
                                 <div className="relative">
-                                    <Lock size={14} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-600" />
+                                    <Lock size={14} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" />
                                     <input
                                         type="password"
                                         value={passwordForm.data.current_password}
                                         onChange={e => passwordForm.setData('current_password', e.target.value)}
-                                        className="w-full pl-14 pr-6 py-4 bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold text-white"
+                                        className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-slate-900 dark:text-white"
                                         required
                                     />
                                 </div>
-                                {passwordForm.errors.current_password && <p className="mt-2 text-[10px] font-bold text-red-400 uppercase tracking-widest">{passwordForm.errors.current_password}</p>}
+                                {passwordForm.errors.current_password && <p className="mt-2 text-[10px] font-bold text-red-500 uppercase tracking-widest">{passwordForm.errors.current_password}</p>}
                             </div>
 
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Sandi Baru</label>
+                                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Sandi Baru</label>
                                 <div className="relative">
-                                    <Lock size={14} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-600" />
+                                    <Lock size={14} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" />
                                     <input
                                         type="password"
                                         value={passwordForm.data.password}
                                         onChange={e => passwordForm.setData('password', e.target.value)}
-                                        className="w-full pl-14 pr-6 py-4 bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold text-white"
+                                        className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-slate-900 dark:text-white"
                                         required
                                     />
                                 </div>
-                                {passwordForm.errors.password && <p className="mt-2 text-[10px] font-bold text-red-400 uppercase tracking-widest">{passwordForm.errors.password}</p>}
+                                {passwordForm.errors.password && <p className="mt-2 text-[10px] font-bold text-red-500 uppercase tracking-widest">{passwordForm.errors.password}</p>}
                             </div>
 
                             <div>
-                                <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Konfirmasi Sandi Baru</label>
+                                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-3">Konfirmasi Sandi Baru</label>
                                 <div className="relative">
-                                    <Lock size={14} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-600" />
+                                    <Lock size={14} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" />
                                     <input
                                         type="password"
                                         value={passwordForm.data.password_confirmation}
                                         onChange={e => passwordForm.setData('password_confirmation', e.target.value)}
-                                        className="w-full pl-14 pr-6 py-4 bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold text-white"
+                                        className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-slate-900 dark:text-white"
                                         required
                                     />
                                 </div>
-                                {passwordForm.errors.password_confirmation && <p className="mt-2 text-[10px] font-bold text-red-400 uppercase tracking-widest">{passwordForm.errors.password_confirmation}</p>}
+                                {passwordForm.errors.password_confirmation && <p className="mt-2 text-[10px] font-bold text-red-500 uppercase tracking-widest">{passwordForm.errors.password_confirmation}</p>}
                             </div>
 
                             <button
                                 type="submit"
                                 disabled={passwordForm.processing}
-                                className="w-full inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-2xl font-black shadow-xl shadow-emerald-900/40 hover:shadow-2xl hover:-translate-y-1 transition-all disabled:opacity-50 uppercase text-xs tracking-widest"
+                                className="w-full inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-lg font-black shadow-xl shadow-emerald-900/40 hover:shadow-2xl hover:-translate-y-1 transition-all disabled:opacity-50 uppercase text-xs tracking-widest"
                             >
                                 <ShieldCheck size={20} />
                                 Ganti Kata Sandi

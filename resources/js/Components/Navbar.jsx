@@ -39,7 +39,7 @@ export default function Navbar() {
                 <div className="flex justify-between items-center lg:justify-center lg:gap-10">
                     {/* Branding */}
                     <Link href="/" className="flex flex-row items-center gap-3 sm:gap-4 group">
-                        <div className="w-10 h-10 lg:w-14 lg:h-14 bg-white rounded-xl flex items-center justify-center shadow-xl group-hover:scale-105 transition-all duration-500 overflow-hidden">
+                        <div className="w-10 h-10 lg:w-14 lg:h-14 bg-white rounded-lg flex items-center justify-center shadow-xl group-hover:scale-105 transition-all duration-500 overflow-hidden">
                             {siteSetting?.site_logo ? (
                                 <img src={siteSetting.site_logo_url} alt="Logo" className="w-full h-full object-cover" />
                             ) : (
@@ -60,7 +60,7 @@ export default function Navbar() {
                             <Link
                                 key={link.path}
                                 href={link.path}
-                                className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-2 ${isActive(link.path)
+                                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${isActive(link.path)
                                     ? 'bg-white/20 text-white border border-white/30'
                                     : 'text-emerald-50 hover:text-white hover:bg-white/10'
                                     }`}
@@ -73,7 +73,7 @@ export default function Navbar() {
                         {auth?.user && (
                             <Link
                                 href="/admin/dashboard"
-                                className="ml-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-black uppercase tracking-wider transition-all shadow-lg flex items-center gap-2"
+                                className="ml-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-black uppercase tracking-wider transition-all shadow-lg flex items-center gap-2"
                             >
                                 <i className="fas fa-lock"></i> Dashboard
                             </Link>
@@ -116,7 +116,7 @@ export default function Navbar() {
                                 {/* Menu Header */}
                                 <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg overflow-hidden">
+                                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
                                             {siteSetting?.site_logo ? (
                                                 <img src={siteSetting.site_logo_url} alt="Logo" className="w-full h-full object-cover" />
                                             ) : (
@@ -150,7 +150,7 @@ export default function Navbar() {
                                             <Link
                                                 href={link.path}
                                                 onClick={() => setIsMobileMenuOpen(false)}
-                                                className={`flex items-center gap-4 px-5 py-4 rounded-xl text-base font-semibold transition-all relative overflow-hidden group ${isActive(link.path)
+                                                className={`flex items-center gap-4 px-5 py-4 rounded-lg text-base font-semibold transition-all relative overflow-hidden group ${isActive(link.path)
                                                     ? 'bg-white/15 text-white shadow-lg border border-white/20'
                                                     : 'text-emerald-50 hover:bg-white/10 border border-transparent'
                                                     }`}
@@ -176,7 +176,7 @@ export default function Navbar() {
                                             <Link
                                                 href="/admin/dashboard"
                                                 onClick={() => setIsMobileMenuOpen(false)}
-                                                className="flex items-center gap-4 px-5 py-4 rounded-xl text-base font-bold bg-blue-600 text-white border border-blue-500/30 shadow-lg hover:shadow-xl transition-all"
+                                                className="flex items-center gap-4 px-5 py-4 rounded-lg text-base font-bold bg-blue-600 text-white border border-blue-500/30 shadow-lg hover:shadow-xl transition-all"
                                             >
                                                 <i className="fas fa-lock w-5 text-center"></i>
                                                 <span className="flex-1">Dashboard Admin</span>

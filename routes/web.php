@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\QuoteController;
 use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\ArticleController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -30,30 +31,44 @@ Route::get('/galeri', [PublicController::class, 'gallery'])->name('gallery.index
 Route::get('/agenda', [PublicController::class, 'agenda'])->name('agenda.index');
 Route::get('/api/agendas', [PublicController::class, 'getAgendasJson'])->name('api.agendas');
 
-// Admin Routes (Protected)
+// Admin Routes (Protected) - All authenticated users can access dashboard & profile
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    // ── Dashboard: accessible by ALL roles ──────────────────────────────────
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    
-    Route::resource('posts', PostController::class);
-    Route::resource('articles', ArticleController::class);
-    Route::resource('galleries', GalleryController::class);
-    Route::resource('members', MemberController::class);
-    Route::resource('agendas', AgendaController::class);
-    Route::resource('page-settings', PageSettingController::class)->only(['index', 'edit', 'update']);
-    Route::get('site-settings', [SiteSettingController::class, 'edit'])->name('site-settings.edit');
-    Route::put('site-settings', [SiteSettingController::class, 'update'])->name('site-settings.update');
-    Route::resource('quotes', QuoteController::class);
-    Route::resource('statistics', StatisticController::class);
-    
+
+    // ── Profile: accessible by ALL roles ────────────────────────────────────
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Repair Tools
-    Route::get('/tools/storage-link', [\App\Http\Controllers\Admin\ToolController::class, 'storageLink'])->name('tools.storage-link');
-    Route::get('/tools/clear-cache', [\App\Http\Controllers\Admin\ToolController::class, 'clearCache'])->name('tools.clear-cache');
-    Route::get('/tools/diag', [\App\Http\Controllers\Admin\ToolController::class, 'diag'])->name('tools.diag');
-    Route::get('/tools/upload-test', [\App\Http\Controllers\Admin\ToolController::class, 'uploadTest'])->name('tools.upload-test');
+    // ── Admin only: user management, settings ───────────────────────────────
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('users', UserController::class);
+        Route::resource('page-settings', PageSettingController::class)->only(['index', 'edit', 'update']);
+        Route::get('site-settings', [SiteSettingController::class, 'edit'])->name('site-settings.edit');
+        Route::put('site-settings', [SiteSettingController::class, 'update'])->name('site-settings.update');
+
+        // Repair Tools
+        Route::get('/tools/storage-link', [\App\Http\Controllers\Admin\ToolController::class, 'storageLink'])->name('tools.storage-link');
+        Route::get('/tools/clear-cache', [\App\Http\Controllers\Admin\ToolController::class, 'clearCache'])->name('tools.clear-cache');
+        Route::get('/tools/diag', [\App\Http\Controllers\Admin\ToolController::class, 'diag'])->name('tools.diag');
+        Route::get('/tools/upload-test', [\App\Http\Controllers\Admin\ToolController::class, 'uploadTest'])->name('tools.upload-test');
+    });
+
+    // ── Ketua IPNU/IPPNU: agenda, galeri, anggota, statistik ────────────────
+    Route::middleware('role:admin,ketua')->group(function () {
+        Route::resource('agendas', AgendaController::class);
+        Route::resource('galleries', GalleryController::class);
+        Route::resource('members', MemberController::class);
+        Route::resource('statistics', StatisticController::class);
+    });
+
+    // ── Ketua Departemen: quotes, artikel, berita ───────────────────────────
+    Route::middleware('role:admin,departemen')->group(function () {
+        Route::resource('posts', PostController::class);
+        Route::resource('articles', ArticleController::class);
+        Route::resource('quotes', QuoteController::class);
+    });
 });
 
 require __DIR__.'/auth.php';

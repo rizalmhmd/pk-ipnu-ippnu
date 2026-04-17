@@ -68,7 +68,7 @@ export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
                                     className="fixed inset-0 z-0 cursor-default"
                                     onClick={() => setIsProfileOpen(false)}
                                 ></div>
-                                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-100 dark:border-slate-800 overflow-hidden z-50">
+                                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-slate-100 dark:border-slate-800 overflow-hidden z-50">
                                     <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800">
                                         <p className="text-xs text-slate-500 uppercase tracking-wider font-bold">Terdaftar sebagai</p>
                                         <p className="text-sm font-medium text-slate-900 dark:text-white truncate">

@@ -49,7 +49,7 @@ export default function Edit({ statistic }) {
                 <div className="flex items-center gap-4 mb-6">
                     <Link
                         href={route('admin.statistics.index')}
-                        className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-emerald-600 transition-colors"
+                        className="w-10 h-10 flex items-center justify-center bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-emerald-600 transition-colors"
                     >
                         <ArrowLeft size={20} />
                     </Link>
@@ -59,7 +59,7 @@ export default function Edit({ statistic }) {
                     </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-8 space-y-6">
+                <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 p-6 sm:p-8 space-y-6">
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Title */}
@@ -71,7 +71,7 @@ export default function Edit({ statistic }) {
                                 type="text"
                                 value={data.title}
                                 onChange={e => setData('title', e.target.value)}
-                                className="w-full rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 focus:ring-emerald-500 transition-colors"
+                                className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 focus:ring-emerald-500 transition-colors"
                                 placeholder="Contoh: PENDAPATAN (2024)"
                             />
                             {errors.title && <p className="mt-1 text-sm text-red-500">{errors.title}</p>}
@@ -86,7 +86,7 @@ export default function Edit({ statistic }) {
                                 type="text"
                                 value={data.subtitle}
                                 onChange={e => setData('subtitle', e.target.value)}
-                                className="w-full rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 focus:ring-emerald-500 transition-colors"
+                                className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 focus:ring-emerald-500 transition-colors"
                                 placeholder="Contoh: Miliar"
                             />
                             {errors.subtitle && <p className="mt-1 text-sm text-red-500">{errors.subtitle}</p>}
@@ -101,7 +101,7 @@ export default function Edit({ statistic }) {
                                 type="text"
                                 value={data.value}
                                 onChange={e => setData('value', e.target.value)}
-                                className="w-full rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 focus:ring-emerald-500 transition-colors font-mono"
+                                className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 focus:ring-emerald-500 transition-colors font-mono"
                                 placeholder="Contoh: 75,33"
                             />
                             {errors.value && <p className="mt-1 text-sm text-red-500">{errors.value}</p>}
@@ -116,7 +116,7 @@ export default function Edit({ statistic }) {
                                 type="text"
                                 value={data.unit}
                                 onChange={e => setData('unit', e.target.value)}
-                                className="w-full rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 focus:ring-emerald-500 transition-colors"
+                                className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 focus:ring-emerald-500 transition-colors"
                                 placeholder="Contoh: USD, %, Jiwa"
                             />
                             {errors.unit && <p className="mt-1 text-sm text-red-500">{errors.unit}</p>}
@@ -131,7 +131,7 @@ export default function Edit({ statistic }) {
                                 value={data.description}
                                 onChange={e => setData('description', e.target.value)}
                                 rows="3"
-                                className="w-full rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 focus:ring-emerald-500 transition-colors"
+                                className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 focus:ring-emerald-500 transition-colors"
                                 placeholder="Penjelasan singkat tentang statistik ini..."
                             ></textarea>
                             {errors.description && <p className="mt-1 text-sm text-red-500">{errors.description}</p>}
@@ -148,7 +148,7 @@ export default function Edit({ statistic }) {
                                         key={icon}
                                         type="button"
                                         onClick={() => setData('icon', icon)}
-                                        className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${data.icon === icon
+                                        className={`w-12 h-12 rounded-lg flex items-center justify-center transition-all ${data.icon === icon
                                             ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30 scale-110'
                                             : 'bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-slate-100 hover:text-slate-600'
                                             }`}
@@ -171,7 +171,7 @@ export default function Edit({ statistic }) {
                                         key={color.id}
                                         type="button"
                                         onClick={() => setData('color', color.id)}
-                                        className={`flex items-center gap-3 p-2 rounded-xl border transition-all ${data.color === color.id
+                                        className={`flex items-center gap-3 p-2 rounded-lg border transition-all ${data.color === color.id
                                             ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/10 ring-1 ring-emerald-500'
                                             : 'border-slate-200 dark:border-slate-700 hover:border-slate-300'
                                             }`}
@@ -193,7 +193,7 @@ export default function Edit({ statistic }) {
                                 type="number"
                                 value={data.order}
                                 onChange={e => setData('order', e.target.value)}
-                                className="w-full rounded-xl border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 focus:ring-emerald-500 transition-colors"
+                                className="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:border-emerald-500 focus:ring-emerald-500 transition-colors"
                             />
                         </div>
 
@@ -230,7 +230,7 @@ export default function Edit({ statistic }) {
                         <button
                             type="submit"
                             disabled={processing}
-                            className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all shadow-lg shadow-emerald-600/20 disabled:opacity-70 disabled:cursor-not-allowed font-medium"
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-all shadow-lg shadow-emerald-600/20 disabled:opacity-70 disabled:cursor-not-allowed font-medium"
                         >
                             {processing ? (
                                 <>

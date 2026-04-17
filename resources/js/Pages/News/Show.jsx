@@ -49,7 +49,7 @@ export default function NewsDetail({ post }) {
                     <header className="mb-12">
                         <div className="flex flex-wrap items-center gap-6 pb-12 border-b border-slate-100">
                             <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600">
+                                <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-600">
                                     <i className="fas fa-user"></i>
                                 </div>
                                 <div>
@@ -72,7 +72,7 @@ export default function NewsDetail({ post }) {
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
-                            className="rounded-[3rem] overflow-hidden shadow-2xl shadow-slate-200/50 mb-16"
+                            className="rounded-lg overflow-hidden shadow-2xl shadow-slate-200/50 mb-16"
                         >
                             <img
                                 src={post.image_url}
@@ -84,7 +84,7 @@ export default function NewsDetail({ post }) {
 
                     {/* Article Content */}
                     <article
-                        className="prose prose-lg prose-emerald max-w-none text-slate-600 leading-relaxed mb-20 px-2 lg:px-0"
+                        className="prose prose-lg prose-emerald max-w-none text-slate-600 leading-relaxed mb-20 px-2 lg:px-0 text-justify"
                         dangerouslySetInnerHTML={{ __html: post.content }}
                     />
 
@@ -92,7 +92,7 @@ export default function NewsDetail({ post }) {
                     <div className="flex flex-col md:flex-row justify-between items-center gap-8 py-10 border-t border-slate-100">
                         <Link
                             href="/berita"
-                            className="flex items-center gap-3 px-8 py-4 bg-slate-100 hover:bg-emerald-600 hover:text-white rounded-2xl font-bold transition-all"
+                            className="flex items-center gap-3 px-8 py-4 bg-slate-100 hover:bg-emerald-600 hover:text-white rounded-lg font-bold transition-all"
                         >
                             <i className="fas fa-arrow-left"></i>
                             Kembali ke Berita
@@ -105,7 +105,7 @@ export default function NewsDetail({ post }) {
                                     key={social.name}
                                     href={social.link}
                                     target="_blank"
-                                    className={`w-12 h-12 rounded-2xl ${social.color} text-white flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-lg`}
+                                    className={`w-12 h-12 rounded-lg ${social.color} text-white flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-lg`}
                                     title={`Bagikan ke ${social.name}`}
                                 >
                                     <i className={social.icon}></i>

@@ -67,7 +67,7 @@ export default function Site({ setting }) {
 
     const SectionHeader = ({ icon: Icon, title, subtitle }) => (
         <div className="flex items-center gap-4 mb-8">
-            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-2xl">
+            <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-lg">
                 <Icon size={20} />
             </div>
             <div>
@@ -89,7 +89,7 @@ export default function Site({ setting }) {
             <form onSubmit={submit} className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                 <div className="lg:col-span-8 space-y-10">
                     {/* General Settings */}
-                    <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                    <div className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                         <SectionHeader icon={Globe} title="Identitas Utama" subtitle="Informasi publik yang muncul di seluruh bagian situs." />
 
                         <div className="space-y-6">
@@ -99,7 +99,7 @@ export default function Site({ setting }) {
                                     type="text"
                                     value={data.site_name}
                                     onChange={e => setData('site_name', e.target.value)}
-                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold placeholder:text-slate-300"
+                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold placeholder:text-slate-300"
                                     placeholder="Contoh: PKPT IPNU IPPNU UNEJ"
                                     required
                                 />
@@ -112,7 +112,7 @@ export default function Site({ setting }) {
                                     value={data.meta_description}
                                     onChange={e => setData('meta_description', e.target.value)}
                                     rows="3"
-                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-medium leading-relaxed"
+                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-medium leading-relaxed"
                                     placeholder="Deskripsi singkat untuk mesin pencari..."
                                 />
                             </div>
@@ -123,7 +123,7 @@ export default function Site({ setting }) {
                                     type="text"
                                     value={data.copyright_text}
                                     onChange={e => setData('copyright_text', e.target.value)}
-                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold"
+                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
                                     placeholder="© 2026 IPNU IPPNU"
                                 />
                             </div>
@@ -131,7 +131,7 @@ export default function Site({ setting }) {
                     </div>
 
                     {/* Content Section Titles */}
-                    <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                    <div className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                         <SectionHeader icon={Settings} title="Pengaturan Beranda" subtitle="Judul seksi yang ditampilkan di halaman depan." />
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -141,7 +141,7 @@ export default function Site({ setting }) {
                                     type="text"
                                     value={data.home_news_title}
                                     onChange={e => setData('home_news_title', e.target.value)}
-                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold"
+                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
                                     required
                                 />
                             </div>
@@ -151,7 +151,7 @@ export default function Site({ setting }) {
                                     type="text"
                                     value={data.home_agenda_title}
                                     onChange={e => setData('home_agenda_title', e.target.value)}
-                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold"
+                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
                                     required
                                 />
                             </div>
@@ -159,7 +159,7 @@ export default function Site({ setting }) {
                     </div>
 
                     {/* Hero Section Default */}
-                    <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                    <div className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                         <SectionHeader icon={Layout} title="Default Hero Header" subtitle="Digunakan untuk halaman yang tidak memiliki pengaturan hero khusus." />
 
                         <div className="space-y-6">
@@ -170,12 +170,12 @@ export default function Site({ setting }) {
                                         type="text"
                                         value={data.default_hero_title}
                                         onChange={e => setData('default_hero_title', e.target.value)}
-                                        className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold"
+                                        className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
                                     />
                                 </div>
                                 <div className="md:row-span-2">
                                     <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3">Hero Image</label>
-                                    <div className={`relative group aspect-video border-2 border-dashed rounded-3xl overflow-hidden flex items-center justify-center transition-all ${previews.default_hero_image ? 'border-emerald-500' : 'border-slate-100 dark:border-slate-800'}`}>
+                                    <div className={`relative group aspect-video border-2 border-dashed rounded-lg overflow-hidden flex items-center justify-center transition-all ${previews.default_hero_image ? 'border-emerald-500' : 'border-slate-100 dark:border-slate-800'}`}>
                                         <input type="file" onChange={e => handleFileChange(e, 'default_hero_image')} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" />
                                         {previews.default_hero_image ? (
                                             <img src={previews.default_hero_image} className="w-full h-full object-cover" />
@@ -193,7 +193,7 @@ export default function Site({ setting }) {
                                         value={data.default_hero_subtitle}
                                         onChange={e => setData('default_hero_subtitle', e.target.value)}
                                         rows="3"
-                                        className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-medium leading-relaxed"
+                                        className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-medium leading-relaxed"
                                     />
                                 </div>
                             </div>
@@ -203,13 +203,13 @@ export default function Site({ setting }) {
 
                 <div className="lg:col-span-4 space-y-10">
                     {/* Visual Assets */}
-                    <div className="bg-white dark:bg-slate-900 p-8 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                    <div className="bg-white dark:bg-slate-900 p-8 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                         <SectionHeader icon={LucidImage} title="Aset Visual" subtitle="Logo & Favicon" />
 
                         <div className="space-y-8">
                             <div>
                                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Logo Situs</label>
-                                <div className={`relative group p-6 border-2 border-dashed rounded-3xl flex items-center justify-center transition-all ${previews.site_logo ? 'border-emerald-500 bg-emerald-50/20' : 'border-slate-50 dark:border-slate-800'}`}>
+                                <div className={`relative group p-6 border-2 border-dashed rounded-lg flex items-center justify-center transition-all ${previews.site_logo ? 'border-emerald-500 bg-emerald-50/20' : 'border-slate-50 dark:border-slate-800'}`}>
                                     <input type="file" onChange={e => handleFileChange(e, 'site_logo')} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
                                     {previews.site_logo ? (
                                         <img src={previews.site_logo} className="max-h-20 object-contain" />
@@ -221,7 +221,7 @@ export default function Site({ setting }) {
 
                             <div>
                                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Favicon (32x32)</label>
-                                <div className={`relative group p-6 border-2 border-dashed rounded-3xl flex items-center justify-center transition-all ${previews.favicon ? 'border-emerald-500 bg-emerald-50/20' : 'border-slate-50 dark:border-slate-800'}`}>
+                                <div className={`relative group p-6 border-2 border-dashed rounded-lg flex items-center justify-center transition-all ${previews.favicon ? 'border-emerald-500 bg-emerald-50/20' : 'border-slate-50 dark:border-slate-800'}`}>
                                     <input type="file" onChange={e => handleFileChange(e, 'favicon')} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
                                     {previews.favicon ? (
                                         <img src={previews.favicon} className="w-10 h-10 object-contain shadow-lg" />
@@ -234,25 +234,25 @@ export default function Site({ setting }) {
                     </div>
 
                     {/* Contact & Social */}
-                    <div className="bg-white dark:bg-slate-900 p-8 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                    <div className="bg-white dark:bg-slate-900 p-8 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                         <SectionHeader icon={Mail} title="Kontak & Sosial" subtitle="Update cara audiens menemukan Anda." />
 
                         <div className="space-y-6">
                             <div className="relative">
                                 <Mail size={16} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
-                                <input type="email" value={data.email} onChange={e => setData('email', e.target.value)} className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold text-sm" placeholder="Email Organisasi" />
+                                <input type="email" value={data.email} onChange={e => setData('email', e.target.value)} className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-sm" placeholder="Email Organisasi" />
                             </div>
                             <div className="relative">
                                 <Phone size={16} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
-                                <input type="text" value={data.phone} onChange={e => setData('phone', e.target.value)} className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold text-sm" placeholder="Nomor Telepon/WA" />
+                                <input type="text" value={data.phone} onChange={e => setData('phone', e.target.value)} className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-sm" placeholder="Nomor Telepon/WA" />
                             </div>
                             <div className="relative">
                                 <Instagram size={16} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
-                                <input type="text" value={data.instagram} onChange={e => setData('instagram', e.target.value)} className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold text-sm" placeholder="Instagram Username" />
+                                <input type="text" value={data.instagram} onChange={e => setData('instagram', e.target.value)} className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-sm" placeholder="Instagram Username" />
                             </div>
                             <div className="relative">
                                 <Youtube size={16} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
-                                <input type="text" value={data.youtube} onChange={e => setData('youtube', e.target.value)} className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold text-sm" placeholder="URL Channel Youtube" />
+                                <input type="text" value={data.youtube} onChange={e => setData('youtube', e.target.value)} className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-sm" placeholder="URL Channel Youtube" />
                             </div>
                         </div>
                     </div>
@@ -260,7 +260,7 @@ export default function Site({ setting }) {
                     <button
                         type="submit"
                         disabled={processing}
-                        className="w-full inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-[2rem] font-black shadow-xl shadow-emerald-900/40 hover:shadow-2xl hover:-translate-y-1 transition-all disabled:opacity-50 tracking-[0.2em] uppercase text-sm"
+                        className="w-full inline-flex items-center justify-center gap-3 px-10 py-5 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-lg font-black shadow-xl shadow-emerald-900/40 hover:shadow-2xl hover:-translate-y-1 transition-all disabled:opacity-50 tracking-[0.2em] uppercase text-sm"
                     >
                         <Save size={20} />
                         Simpan Perubahan

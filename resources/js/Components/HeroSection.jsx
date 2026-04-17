@@ -26,7 +26,7 @@ export default function HeroSection({ bgImage, hideIndicators = false }) {
     const quotesToDisplay = activeQuotes?.length > 0 ? activeQuotes : null;
 
     return (
-        <section className="relative h-[350px] md:h-[450px] w-full overflow-hidden flex flex-col items-center justify-center shadow-2xl group bg-neutral-950">
+        <section className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center shadow-2xl group bg-neutral-950">
             {/* Background Image with Cross-fade Effect */}
             <AnimatePresence>
                 <motion.div
@@ -50,8 +50,8 @@ export default function HeroSection({ bgImage, hideIndicators = false }) {
                 </motion.div>
             </AnimatePresence>
 
-            {/* Centered Content Area */}
-            <div className="container mx-auto px-6 relative z-20 flex flex-col items-center text-center">
+            {/* Centered Content Area — vertically & horizontally centered */}
+            <div className="container mx-auto px-6 sm:px-10 relative z-20 flex flex-col items-center justify-center text-center flex-1 w-full">
                 <AnimatePresence mode="wait">
                     {quotesToDisplay ? (
                         <motion.div
@@ -60,19 +60,19 @@ export default function HeroSection({ bgImage, hideIndicators = false }) {
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -20, opacity: 0 }}
                             transition={{ duration: 0.6, ease: "easeOut" }}
-                            className="max-w-3xl"
+                            className="max-w-4xl px-4"
                         >
                             {/* Quote Icon Centered */}
-                            <div className="inline-flex items-center justify-center mb-8">
-                                <i className="fas fa-quote-left text-white/40 text-4xl md:text-5xl"></i>
+                            <div className="inline-flex items-center justify-center mb-6">
+                                <i className="fas fa-quote-left text-white/40 text-3xl md:text-5xl"></i>
                             </div>
 
-                            <h1 className="text-2xl md:text-4xl lg:text-5xl font-medium text-white mb-6 leading-relaxed font-serif tracking-wide drop-shadow-xl italic">
+                            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-medium text-white mb-6 sm:mb-8 leading-relaxed font-serif tracking-wide drop-shadow-xl italic">
                                 {quotesToDisplay[currentQuote].content}
                             </h1>
 
                             {quotesToDisplay[currentQuote].author && (
-                                <p className="text-white/70 font-medium uppercase tracking-[0.3em] text-sm md:text-base">
+                                <p className="text-white/70 font-medium uppercase tracking-[0.25em] sm:tracking-[0.3em] text-xs sm:text-sm md:text-base mt-2">
                                     — {quotesToDisplay[currentQuote].author}
                                 </p>
                             )}

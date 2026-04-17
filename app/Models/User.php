@@ -21,11 +21,50 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     public function member()
     {
         return $this->hasOne(Member::class);
+    }
+
+    // ─── Role helpers ─────────────────────────────────────────────────────────
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isKetua(): bool
+    {
+        return $this->role === 'ketua';
+    }
+
+    public function isDepartemen(): bool
+    {
+        return $this->role === 'departemen';
+    }
+
+    /**
+     * Check if user has any of the given roles.
+     */
+    public function hasRole(string|array $roles): bool
+    {
+        return in_array($this->role, (array) $roles);
+    }
+
+    /**
+     * Role label for display purposes.
+     */
+    public function getRoleLabelAttribute(): string
+    {
+        return match ($this->role) {
+            'admin'      => 'Administrator',
+            'ketua'      => 'Ketua IPNU/IPPNU',
+            'departemen' => 'Ketua Departemen',
+            default      => 'Unknown',
+        };
     }
 
     /**
@@ -47,7 +86,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 }

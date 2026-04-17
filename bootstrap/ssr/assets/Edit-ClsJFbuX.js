@@ -57,18 +57,28 @@ function Edit({ quote }) {
     ] }),
     /* @__PURE__ */ jsx("div", { className: "max-w-4xl", children: /* @__PURE__ */ jsx("form", { onSubmit: submit, className: "bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none", children: /* @__PURE__ */ jsxs("div", { className: "space-y-8", children: [
       /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsxs("label", { className: "block text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2", children: [
-          /* @__PURE__ */ jsx(Quote, { size: 16, className: "text-emerald-500" }),
-          "Isi Kutipan"
+        /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-3", children: [
+          /* @__PURE__ */ jsxs("label", { className: "block text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-0", children: [
+            /* @__PURE__ */ jsx(Quote, { size: 16, className: "text-emerald-500" }),
+            "Isi Kutipan"
+          ] }),
+          /* @__PURE__ */ jsxs("span", { className: `text-[10px] font-bold uppercase tracking-widest ${data.content.length > 180 ? "text-red-500" : "text-slate-400"}`, children: [
+            data.content.length,
+            " / 200 Karakter"
+          ] })
         ] }),
         /* @__PURE__ */ jsx(
           "textarea",
           {
             value: data.content,
-            onChange: (e) => setData("content", e.target.value),
+            onChange: (e) => {
+              if (e.target.value.length <= 200) {
+                setData("content", e.target.value);
+              }
+            },
             rows: "5",
             className: `w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 rounded-[2rem] focus:outline-none transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600 font-medium italic ${errors.content ? "border-red-500 bg-red-50 dark:bg-red-900/10" : "border-transparent focus:border-emerald-500"}`,
-            placeholder: "Tuliskan kata-kata inspiratif di sini...",
+            placeholder: "Tuliskan kata-kata inspiratif di sini (Maksimal 200 karakter)...",
             required: true
           }
         ),

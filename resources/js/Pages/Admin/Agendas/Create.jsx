@@ -54,7 +54,7 @@ export default function Create() {
             </div>
 
             <form onSubmit={submit} className="max-w-4xl">
-                <div className="bg-white dark:bg-slate-900 p-10 rounded-[3rem] border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                <div className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                     <div className="space-y-8">
                         {/* Title */}
                         <div>
@@ -63,7 +63,7 @@ export default function Create() {
                                 type="text"
                                 value={data.title}
                                 onChange={e => setData('title', e.target.value)}
-                                className={`w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 rounded-2xl focus:outline-none transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600 font-bold ${errors.title ? 'border-red-500 bg-red-50 dark:bg-red-900/10' : 'border-transparent focus:border-emerald-500'
+                                className={`w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 rounded-lg focus:outline-none transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600 font-bold ${errors.title ? 'border-red-500 bg-red-50 dark:bg-red-900/10' : 'border-transparent focus:border-emerald-500'
                                     }`}
                                 placeholder="Contoh: Rapat Pleno I Kepengurusan"
                                 required
@@ -83,7 +83,7 @@ export default function Create() {
                                         key={cat.id}
                                         type="button"
                                         onClick={() => setData('category', cat.id)}
-                                        className={`p-4 rounded-2xl border-2 transition-all font-bold text-xs uppercase tracking-widest ${data.category === cat.id
+                                        className={`p-4 rounded-lg border-2 transition-all font-bold text-xs uppercase tracking-widest ${data.category === cat.id
                                                 ? `bg-${cat.color}-50 dark:bg-${cat.color}-900/20 border-${cat.color}-500 text-${cat.color}-600 dark:text-${cat.color}-400`
                                                 : 'bg-slate-50 dark:bg-slate-800 border-transparent text-slate-400'
                                             }`}
@@ -106,7 +106,7 @@ export default function Create() {
                                     type="date"
                                     value={data.event_date}
                                     onChange={e => setData('event_date', e.target.value)}
-                                    className={`w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 rounded-2xl focus:outline-none transition-all font-bold ${errors.event_date ? 'border-red-500 bg-red-50 dark:bg-red-900/10' : 'border-transparent focus:border-emerald-500'
+                                    className={`w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 rounded-lg focus:outline-none transition-all font-bold ${errors.event_date ? 'border-red-500 bg-red-50 dark:bg-red-900/10' : 'border-transparent focus:border-emerald-500'
                                         }`}
                                     required
                                 />
@@ -121,7 +121,7 @@ export default function Create() {
                                     type="time"
                                     value={data.event_time}
                                     onChange={e => setData('event_time', e.target.value)}
-                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all font-bold"
+                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
                                 />
                             </div>
                         </div>
@@ -136,7 +136,7 @@ export default function Create() {
                                 type="text"
                                 value={data.location}
                                 onChange={e => setData('location', e.target.value)}
-                                className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all placeholder:text-slate-300 font-bold"
+                                className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all placeholder:text-slate-300 font-bold"
                                 placeholder="Contoh: Gedung Serbaguna Kampus"
                             />
                         </div>
@@ -151,7 +151,7 @@ export default function Create() {
                                 value={data.description}
                                 onChange={e => setData('description', e.target.value)}
                                 rows="5"
-                                className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-2xl focus:outline-none transition-all placeholder:text-slate-300 font-medium leading-relaxed"
+                                className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all placeholder:text-slate-300 font-medium leading-relaxed"
                                 placeholder="Berikan detail tambahan tentang agenda ini..."
                             ></textarea>
                         </div>
@@ -161,7 +161,7 @@ export default function Create() {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-2xl font-bold shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm disabled:opacity-50 tracking-widest uppercase"
+                                className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-lg font-bold shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm disabled:opacity-50 tracking-widest uppercase"
                             >
                                 <Send size={18} />
                                 Publikasikan Agenda

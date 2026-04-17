@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
@@ -12,10 +13,34 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::create([
-            'name' => 'Admin PKPT',
-            'email' => 'admin@pkpt.org',
-            'password' => \Illuminate\Support\Facades\Hash::make('admin123'),
-        ]);
+        // Admin - Full access
+        User::updateOrCreate(
+            ['email' => 'admin@pkpt.org'],
+            [
+                'name' => 'Administrator',
+                'password' => Hash::make('admin123'),
+                'role' => 'admin',
+            ]
+        );
+
+        // Ketua - Agenda, Gallery, Members, Stats
+        User::updateOrCreate(
+            ['email' => 'ketua@pkpt.org'],
+            [
+                'name' => 'Ketua PKPT',
+                'password' => Hash::make('ketua123'),
+                'role' => 'ketua',
+            ]
+        );
+
+        // Departemen - Quotes, Articles, News
+        User::updateOrCreate(
+            ['email' => 'departemen@pkpt.org'],
+            [
+                'name' => 'Ketua Departemen',
+                'password' => Hash::make('dept123'),
+                'role' => 'departemen',
+            ]
+        );
     }
 }

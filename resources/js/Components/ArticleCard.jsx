@@ -9,7 +9,7 @@ export default function ArticleCard({ article, idx }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: idx * 0.05 }}
-            className="bg-white rounded-2xl sm:rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100 group hover:shadow-2xl hover:shadow-emerald-900/10 hover:-translate-y-2 transition-all duration-500 h-full"
+            className="bg-white rounded-lg sm:rounded-lg shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100 group hover:shadow-2xl hover:shadow-emerald-900/10 hover:-translate-y-2 transition-all duration-500 h-full"
         >
             <div className="relative h-32 sm:h-56 overflow-hidden">
                 {article.image ? (
@@ -24,7 +24,7 @@ export default function ArticleCard({ article, idx }) {
                     </div>
                 )}
                 <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4">
-                    <span className="px-3 py-1 sm:px-4 sm:py-1.5 bg-white/90 backdrop-blur-md text-emerald-600 text-[8px] sm:text-[10px] font-bold uppercase tracking-wider rounded-lg sm:rounded-xl shadow-lg border border-white/20">
+                    <span className="px-3 py-1 sm:px-4 sm:py-1.5 bg-white/90 backdrop-blur-md text-emerald-600 text-[8px] sm:text-[10px] font-bold uppercase tracking-wider rounded-lg sm:rounded-lg shadow-lg border border-white/20">
                         Artikel
                     </span>
                 </div>

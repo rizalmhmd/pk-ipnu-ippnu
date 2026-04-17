@@ -38,7 +38,13 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'auth' => [
-                'user' => $request->user(),
+                'user' => $request->user() ? [
+                    'id'         => $request->user()->id,
+                    'name'       => $request->user()->name,
+                    'email'      => $request->user()->email,
+                    'role'       => $request->user()->role,
+                    'role_label' => $request->user()->role_label,
+                ] : null,
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new \Tighten\Ziggy\Ziggy)->toArray(), [
@@ -53,6 +59,10 @@ class HandleInertiaRequests extends Middleware
                 'members' => \App\Models\Member::count(),
                 'agendas' => \App\Models\Agenda::count(),
             ] : null,
+            'flash' => [
+                'success' => fn () => $request->session()->get('success'),
+                'error'   => fn () => $request->session()->get('error'),
+            ],
         ]);
     }
 }
