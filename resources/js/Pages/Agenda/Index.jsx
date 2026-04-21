@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Head } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import HeroSection from '@/Components/HeroSection';
-import PageHeaderCard from '@/Components/PageHeaderCard';
 import SectionTitle from '@/Components/SectionTitle';
 import NationalCalendar from '@/Components/NationalCalendar';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -54,13 +53,7 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
                 bgImage="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
             />
 
-            <PageHeaderCard
-                title="Agenda & Kegiatan"
-                subtitle="Temukan berbagai jadwal program kerja, agenda nasional, dan kegiatan produktif PKPT IPNU IPPNU."
-                bgColor={pageSetting?.header_bg_color}
-                textColor={pageSetting?.header_text_color}
-                bgImage={pageSetting?.header_bg_image_url}
-            />
+
 
             <div className="container mx-auto px-6 md:px-12 py-12">
                 {/* View Selector */}

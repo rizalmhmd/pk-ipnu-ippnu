@@ -30,6 +30,8 @@ class MemberController extends Controller
             'instagram' => 'nullable|string',
             'type' => 'required|in:ipnu,ippnu',
             'order' => 'nullable|integer',
+            'level' => 'required|integer|min:1|max:3',
+            'department' => 'nullable|string|max:255',
         ]);
 
         $data = $request->all();
@@ -62,9 +64,11 @@ class MemberController extends Controller
             'instagram' => 'nullable|string',
             'type' => 'required|in:ipnu,ippnu',
             'order' => 'nullable|integer',
+            'level' => 'required|integer|min:1|max:3',
+            'department' => 'nullable|string|max:255',
         ]);
 
-        $data = $request->only(['name', 'position', 'instagram', 'type']);
+        $data = $request->only(['name', 'position', 'instagram', 'type', 'level', 'department']);
         $data['order'] = (int) ($request->order ?? 0);
 
         if ($request->hasFile('photo')) {
@@ -81,6 +85,15 @@ class MemberController extends Controller
             } else {
                 $data['photo'] = $request->file('photo')->store('members', 'public');
             }
+        } elseif ($request->remove_photo == 'true' || $request->remove_photo === true) {
+            if ($member->photo) {
+                try {
+                    Storage::delete($member->photo);
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Photo delete failed: " . $e->getMessage());
+                }
+            }
+            $data['photo'] = null;
         }
 
         $member->update($data);

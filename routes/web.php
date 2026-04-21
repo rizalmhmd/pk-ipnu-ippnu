@@ -18,10 +18,6 @@ use Illuminate\Support\Facades\Route;
 // Public Routes
 Route::get('/', [PublicController::class, 'index'])->name('home');
 
-Route::get('/inertia-test', function () {
-    return inertia('Welcome');
-});
-
 Route::get('/profil', [PublicController::class, 'profile'])->name('profile');
 Route::get('/berita', [PublicController::class, 'news'])->name('news.index');
 Route::get('/berita/{slug}', [PublicController::class, 'newsDetail'])->name('news.show');
@@ -48,11 +44,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         Route::get('site-settings', [SiteSettingController::class, 'edit'])->name('site-settings.edit');
         Route::put('site-settings', [SiteSettingController::class, 'update'])->name('site-settings.update');
 
-        // Repair Tools
-        Route::get('/tools/storage-link', [\App\Http\Controllers\Admin\ToolController::class, 'storageLink'])->name('tools.storage-link');
-        Route::get('/tools/clear-cache', [\App\Http\Controllers\Admin\ToolController::class, 'clearCache'])->name('tools.clear-cache');
-        Route::get('/tools/diag', [\App\Http\Controllers\Admin\ToolController::class, 'diag'])->name('tools.diag');
-        Route::get('/tools/upload-test', [\App\Http\Controllers\Admin\ToolController::class, 'uploadTest'])->name('tools.upload-test');
+
     });
 
     // ── Ketua IPNU/IPPNU: agenda, galeri, anggota, statistik ────────────────

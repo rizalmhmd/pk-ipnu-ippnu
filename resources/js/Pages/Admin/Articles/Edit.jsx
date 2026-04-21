@@ -16,6 +16,7 @@ import { motion } from 'framer-motion';
 export default function Edit({ article }) {
     const { data, setData, processing, errors } = useForm({
         title: article.title || '',
+        author: article.author || '',
         content: article.content || '',
         image: null,
         remove_image: false,
@@ -111,6 +112,23 @@ export default function Edit({ article }) {
                                     required
                                 />
                                 {errors.title && <p className="mt-2 text-xs font-bold text-red-500 uppercase tracking-wider">{errors.title}</p>}
+                            </div>
+
+                            {/* Author */}
+                            <div>
+                                <div className="flex items-center justify-between mb-3">
+                                    <label className="block text-sm font-bold text-slate-900 dark:text-white">Penulis</label>
+                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">Opsional</span>
+                                </div>
+                                <input
+                                    type="text"
+                                    value={data.author}
+                                    onChange={e => setData('author', e.target.value)}
+                                    className={`w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 rounded-lg focus:outline-none transition-all placeholder:text-slate-300 dark:placeholder:text-slate-600 font-bold ${errors.author ? 'border-red-500 bg-red-50 dark:bg-red-900/10' : 'border-transparent focus:border-emerald-500 dark:focus:border-emerald-500'
+                                        }`}
+                                    placeholder="Contoh: Admin PK IPNU IPPNU"
+                                />
+                                {errors.author && <p className="mt-2 text-xs font-bold text-red-500 uppercase tracking-wider">{errors.author}</p>}
                             </div>
 
                             {/* Image Upload */}

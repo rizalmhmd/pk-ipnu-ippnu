@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Head } from '@inertiajs/react';
-import PublicLayout from '@/Layouts/PublicLayout';
 import HeroSection from '@/Components/HeroSection';
-import PageHeaderCard from '@/Components/PageHeaderCard';
 import SectionTitle from '@/Components/SectionTitle';
 import Pagination from '@/Components/Pagination';
+import PublicLayout from '@/Layouts/PublicLayout';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Gallery({ galleries, pageSetting }) {
@@ -15,18 +14,12 @@ export default function Gallery({ galleries, pageSetting }) {
             <Head title="Galeri Foto" />
 
             <HeroSection
-                bgImage="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3"
+                bgImage={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3"}
             />
 
-            <PageHeaderCard
-                title="Galeri Foto"
-                subtitle="Kumpulan dokumentasi kegiatan dan momen berharga PKPT IPNU IPPNU"
-                bgColor={pageSetting?.header_bg_color}
-                textColor={pageSetting?.header_text_color}
-                bgImage={pageSetting?.header_bg_image_url}
-            />
 
-            <div className="container mx-auto px-3 sm:px-6 md:px-12 py-10 sm:py-20">
+
+            <div className="container mx-auto px-6 md:px-12 py-12 md:py-20">
                 <SectionTitle centered>Koleksi Dokumentasi</SectionTitle>
 
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8">

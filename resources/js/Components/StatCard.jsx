@@ -1,66 +1,46 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 
 export default function StatCard({ statistic, delay = 0 }) {
-    const { title, subtitle, value, unit, description, icon, color } = statistic;
-
-    // Map color names to Tailwind classes
-    const colorClasses = {
-        emerald: { text: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' },
-        blue: { text: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100' },
-        amber: { text: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-100' },
-        red: { text: 'text-red-600', bg: 'bg-red-50', border: 'border-red-100' },
-        purple: { text: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-100' },
-        pink: { text: 'text-pink-600', bg: 'bg-pink-50', border: 'border-pink-100' },
-        indigo: { text: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-100' },
-        cyan: { text: 'text-cyan-600', bg: 'bg-cyan-50', border: 'border-cyan-100' },
-        teal: { text: 'text-teal-600', bg: 'bg-teal-50', border: 'border-teal-100' },
-        orange: { text: 'text-orange-600', bg: 'bg-orange-50', border: 'border-orange-100' },
-    };
-
-    const theme = colorClasses[color] || colorClasses.emerald;
+    const { title, subtitle, value, unit, description } = statistic;
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: delay * 0.1 }}
-            className="bg-white rounded-lg md:rounded-lg p-4 md:p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-100 relative overflow-hidden group h-full"
+            transition={{ duration: 0.8, delay: delay * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col h-full space-y-4 text-center items-center"
         >
-            <div className={`absolute top-0 right-0 w-24 h-24 ${theme.bg} rounded-full -mr-12 -mt-12 opacity-50 group-hover:scale-150 transition-transform duration-500`}></div>
+            {/* Category / Eyebrow Title */}
+            <div className="space-y-1">
+                <h5 className="text-[10px] md:text-xs font-black text-blue-600 uppercase tracking-[0.3em]">
+                    {title}
+                </h5>
+            </div>
 
-            <div className="relative z-10 flex flex-col h-full">
-                <div className="flex items-start justify-between mb-4">
-                    <h5 className={`font-bold text-[10px] md:text-xs tracking-wider uppercase ${theme.text}`}>
-                        {title}
-                    </h5>
-                    {icon && (
-                        <div className={`w-7 h-7 md:w-9 md:h-9 ${theme.bg} rounded-lg flex items-center justify-center ${theme.text} mb-2`}>
-                            <i className={`fas ${icon} text-[10px] md:text-sm`}></i>
-                        </div>
-                    )}
-                </div>
-
-                <div className="mb-1">
-                    <span className="text-xl md:text-3xl font-extrabold text-slate-800 tracking-tight block truncate">
+            {/* Main Value & Subtitle Area */}
+            <div className="space-y-1 flex flex-col items-center">
+                <div className="flex items-baseline gap-2">
+                    <span className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-none tracking-tighter">
                         {value}
                     </span>
                 </div>
-
                 {(subtitle || unit) && (
-                    <div className="text-[10px] md:text-sm font-bold text-slate-600 mb-2 md:mb-4 line-clamp-1">
-                        {subtitle} {unit && <span className="text-[8px] md:text-xs text-slate-400 ml-1 font-medium">{unit}</span>}
+                    <div className="text-lg md:text-2xl font-bold text-slate-800 leading-tight">
+                        {subtitle} {unit && <span className="text-slate-500 font-medium ml-1">{unit}</span>}
                     </div>
                 )}
+            </div>
 
-                <div className="mt-auto pt-3 md:pt-4 border-t border-slate-50 hidden md:block">
-                    <p className="text-xs text-slate-500 leading-relaxed font-medium">
+            {/* Description Paragraph */}
+            {description && (
+                <div className="pt-2 md:pt-4 border-t border-slate-100 max-w-xs mx-auto">
+                    <p className="text-xs md:text-sm text-slate-500 leading-relaxed font-medium">
                         {description}
                     </p>
                 </div>
-            </div>
+            )}
         </motion.div>
     );
 }

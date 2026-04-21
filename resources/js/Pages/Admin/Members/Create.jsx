@@ -20,6 +20,8 @@ export default function Create() {
         instagram: '',
         type: 'ipnu',
         order: 0,
+        level: 3,
+        department: '',
     });
 
     const [photoPreview, setPhotoPreview] = useState(null);
@@ -93,6 +95,34 @@ export default function Create() {
                                     required
                                 />
                                 {errors.position && <p className="mt-2 text-xs font-bold text-red-500 uppercase tracking-wider">{errors.position}</p>}
+                            </div>
+
+                            {/* Hierarchical Level */}
+                            <div>
+                                <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3">Tingkatan (Level Hierarchy)</label>
+                                <select
+                                    value={data.level}
+                                    onChange={e => setData('level', e.target.value)}
+                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
+                                >
+                                    <option value="1">Level 1: Ketua PKPT</option>
+                                    <option value="2">Level 2: Ketua Departemen / Inti</option>
+                                    <option value="3">Level 3: Anggota Departemen / Staff</option>
+                                </select>
+                                <p className="mt-2 text-[10px] text-slate-400 italic">Level menentukan posisi dalam pohon organisasi.</p>
+                            </div>
+
+                            {/* Department Grouping */}
+                            <div>
+                                <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3">Departemen / Bidang</label>
+                                <input
+                                    type="text"
+                                    value={data.department}
+                                    onChange={e => setData('department', e.target.value)}
+                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
+                                    placeholder="Contoh: Kaderisasi, Dakwah, dll"
+                                />
+                                <p className="mt-2 text-[10px] text-slate-400 italic">Gunakan nama yang sama untuk mengelompokkan anggota.</p>
                             </div>
 
                             {/* Instagram */}

@@ -21,6 +21,9 @@ export default function Edit({ member }) {
         instagram: member.instagram || '',
         type: member.type || 'ipnu',
         order: member.order || 0,
+        level: member.level || 3,
+        department: member.department || '',
+        remove_photo: false,
         _method: 'PUT',
     });
 
@@ -28,7 +31,11 @@ export default function Edit({ member }) {
 
     const handlePhotoChange = (e) => {
         const file = e.target.files[0];
-        setData('photo', file);
+        setData(prev => ({
+            ...prev,
+            photo: file,
+            remove_photo: false
+        }));
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -38,6 +45,17 @@ export default function Edit({ member }) {
         } else {
             setPhotoPreview(member.photo_url);
         }
+    };
+
+    const handleRemovePhoto = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setData(prev => ({
+            ...prev,
+            photo: null,
+            remove_photo: true
+        }));
+        setPhotoPreview(null);
     };
 
     const submit = (e) => {
@@ -112,6 +130,34 @@ export default function Edit({ member }) {
                                     required
                                 />
                                 {errors.position && <p className="mt-2 text-xs font-bold text-red-500 uppercase tracking-wider">{errors.position}</p>}
+                            </div>
+
+                            {/* Hierarchical Level */}
+                            <div>
+                                <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3">Tingkatan (Level Hierarchy)</label>
+                                <select
+                                    value={data.level}
+                                    onChange={e => setData('level', e.target.value)}
+                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
+                                >
+                                    <option value="1">Level 1: Ketua PKPT</option>
+                                    <option value="2">Level 2: Ketua Departemen / Inti</option>
+                                    <option value="3">Level 3: Anggota Departemen / Staff</option>
+                                </select>
+                                <p className="mt-2 text-[10px] text-slate-400 italic">Level menentukan posisi dalam pohon organisasi.</p>
+                            </div>
+
+                            {/* Department Grouping */}
+                            <div>
+                                <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3">Departemen / Bidang</label>
+                                <input
+                                    type="text"
+                                    value={data.department}
+                                    onChange={e => setData('department', e.target.value)}
+                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
+                                    placeholder="Contoh: Kaderisasi, Dakwah, dll"
+                                />
+                                <p className="mt-2 text-[10px] text-slate-400 italic">Gunakan nama yang sama untuk mengelompokkan anggota.</p>
                             </div>
 
                             {/* Instagram */}
@@ -213,8 +259,20 @@ export default function Edit({ member }) {
                                 <div className="w-full h-full relative">
                                     <img src={photoPreview} className="w-full h-full object-cover" alt="Preview" />
                                     <div className="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-all duration-300">
-                                        <CloudUpload size={32} className="text-white mb-2" />
-                                        <p className="text-white font-bold text-xs uppercase tracking-widest">Ganti Foto</p>
+                                        <div className="flex gap-4">
+                                            <div className="flex flex-col items-center">
+                                                <CloudUpload size={32} className="text-white mb-2" />
+                                                <p className="text-white font-bold text-[10px] uppercase tracking-widest leading-none">Ganti</p>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={handleRemovePhoto}
+                                                className="flex flex-col items-center text-red-100 hover:text-red-400 transition-colors"
+                                            >
+                                                <X size={32} className="mb-2" />
+                                                <p className="text-white font-bold text-[10px] uppercase tracking-widest leading-none">Hapus</p>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             ) : (

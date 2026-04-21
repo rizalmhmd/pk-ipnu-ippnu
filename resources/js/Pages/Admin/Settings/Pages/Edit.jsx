@@ -9,7 +9,10 @@ import {
     FileText,
     History,
     Target,
-    Settings2
+    Settings2,
+    Sparkles,
+    MousePointerClick,
+    X
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -21,17 +24,31 @@ export default function Edit({ pageSetting }) {
         header_text_color: pageSetting.header_text_color || '',
         content_sejarah: pageSetting.content_sejarah || '',
         content_visi_misi: pageSetting.content_visi_misi || '',
+        feature_subtitle: pageSetting.feature_subtitle || '',
+        feature_title: pageSetting.feature_title || '',
+        feature_description: pageSetting.feature_description || '',
+        feature_button_text: pageSetting.feature_button_text || '',
+        feature_button_url: pageSetting.feature_button_url || '',
         hero_image: null,
         header_bg_image: null,
+        feature_image: null,
+        remove_hero_image: false,
+        remove_header_bg_image: false,
+        remove_feature_image: false,
         _method: 'PUT',
     });
 
     const [imagePreview, setImagePreview] = useState(pageSetting.hero_image_url);
     const [headerImagePreview, setHeaderImagePreview] = useState(pageSetting.header_bg_image_url);
+    const [featureImagePreview, setFeatureImagePreview] = useState(pageSetting.feature_image_url);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        setData('hero_image', file);
+        setData(prev => ({
+            ...prev,
+            hero_image: file,
+            remove_hero_image: false
+        }));
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -43,9 +60,24 @@ export default function Edit({ pageSetting }) {
         }
     };
 
+    const handleRemoveHeroImage = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setData(prev => ({
+            ...prev,
+            hero_image: null,
+            remove_hero_image: true
+        }));
+        setImagePreview(null);
+    };
+
     const handleHeaderImageChange = (e) => {
         const file = e.target.files[0];
-        setData('header_bg_image', file);
+        setData(prev => ({
+            ...prev,
+            header_bg_image: file,
+            remove_header_bg_image: false
+        }));
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -56,13 +88,52 @@ export default function Edit({ pageSetting }) {
             setHeaderImagePreview(pageSetting.header_bg_image_url);
         }
     };
+    
+    const handleRemoveHeaderImage = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setData(prev => ({
+            ...prev,
+            header_bg_image: null,
+            remove_header_bg_image: true
+        }));
+        setHeaderImagePreview(null);
+    };
+    const handleFeatureImageChange = (e) => {
+        const file = e.target.files[0];
+        setData(prev => ({
+            ...prev,
+            feature_image: file,
+            remove_feature_image: false
+        }));
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setFeatureImagePreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            setFeatureImagePreview(pageSetting.feature_image_url);
+        }
+    };
 
+    const handleRemoveFeatureImage = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setData(prev => ({
+            ...prev,
+            feature_image: null,
+            remove_feature_image: true
+        }));
+        setFeatureImagePreview(null);
+    };
     const submit = (e) => {
         e.preventDefault();
         router.post(route('admin.page-settings.update', pageSetting.id), data);
     };
 
     const isAboutPage = pageSetting.page_name === 'about';
+    const isHomePage = pageSetting.page_name === 'home';
 
     return (
         <AdminLayout>
@@ -176,6 +247,86 @@ export default function Edit({ pageSetting }) {
                         </div>
                     </div>
 
+                    {/* Feature Section Settings (Home Only) */}
+                    {isHomePage && (
+                        <div className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                            <div className="flex items-center gap-4 mb-10">
+                                <div className="p-3 bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 rounded-lg">
+                                    <Sparkles size={20} />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-none">Feature Section (New Intro)</h3>
+                                    <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mt-1">Bagian perkenalan organisasi di beranda</p>
+                                </div>
+                            </div>
+
+                            <div className="space-y-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div>
+                                        <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3 tracking-tight">Kategori / Eyebrow (Subtitle)</label>
+                                        <input
+                                            type="text"
+                                            value={data.feature_subtitle}
+                                            onChange={e => setData('feature_subtitle', e.target.value)}
+                                            className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-amber-500 rounded-lg focus:outline-none transition-all font-bold"
+                                            placeholder="Contoh: ENERGIZING YOU atau PROFIL KAMI"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3 tracking-tight">Judul Seksi</label>
+                                        <input
+                                            type="text"
+                                            value={data.feature_title}
+                                            onChange={e => setData('feature_title', e.target.value)}
+                                            className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-amber-500 rounded-lg focus:outline-none transition-all font-black"
+                                            placeholder="Judul besar menarik..."
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3 tracking-tight">Deskripsi Panjang</label>
+                                    <textarea
+                                        value={data.feature_description}
+                                        onChange={e => setData('feature_description', e.target.value)}
+                                        rows="4"
+                                        className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-amber-500 rounded-lg focus:outline-none transition-all font-medium leading-relaxed"
+                                        placeholder="Jelaskan lebih detail tentang nilai atau visi organisasi..."
+                                    />
+                                </div>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div>
+                                        <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3 tracking-tight flex items-center gap-2">
+                                            <FileText size={16} className="text-slate-400" />
+                                            Teks Tombol
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={data.feature_button_text}
+                                            onChange={e => setData('feature_button_text', e.target.value)}
+                                            className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-amber-500 rounded-lg focus:outline-none transition-all font-bold"
+                                            placeholder="Contoh: Selengkapnya..."
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3 tracking-tight flex items-center gap-2">
+                                            <MousePointerClick size={16} className="text-slate-400" />
+                                            URL / Route Tujuan
+                                        </label>
+                                        <input
+                                            type="text"
+                                            value={data.feature_button_url}
+                                            onChange={e => setData('feature_button_url', e.target.value)}
+                                            className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-amber-500 rounded-lg focus:outline-none transition-all font-mono text-sm"
+                                            placeholder="Contoh: /profile atau https://..."
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     {/* About Specific Content */}
                     {isAboutPage && (
                         <div className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
@@ -243,7 +394,20 @@ export default function Edit({ pageSetting }) {
                                 <div className="w-full h-full relative">
                                     <img src={imagePreview} className="w-full h-full object-cover" alt="Preview" />
                                     <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-all duration-300">
-                                        <p className="text-white font-black text-[10px] uppercase tracking-[0.3em]">Ganti Banner</p>
+                                        <div className="flex gap-4">
+                                            <div className="flex flex-col items-center">
+                                                <LucidImage size={32} className="text-white mb-2" />
+                                                <p className="text-white font-black text-[10px] uppercase tracking-[0.3em]">Ganti</p>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={handleRemoveHeroImage}
+                                                className="flex flex-col items-center text-red-200 hover:text-red-400 transition-colors"
+                                            >
+                                                <X size={32} className="mb-2" />
+                                                <p className="text-white font-bold text-[10px] uppercase tracking-widest leading-none">Hapus</p>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -277,7 +441,20 @@ export default function Edit({ pageSetting }) {
                                 <div className="w-full h-full relative">
                                     <img src={headerImagePreview} className="w-full h-full object-cover" alt="Preview Header" />
                                     <div className="absolute inset-0 bg-indigo-900/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-all duration-300">
-                                        <p className="text-white font-black text-[10px] uppercase tracking-[0.3em]">Ganti BG Image</p>
+                                        <div className="flex gap-4">
+                                            <div className="flex flex-col items-center">
+                                                <LucidImage size={32} className="text-white mb-2" />
+                                                <p className="text-white font-black text-[10px] uppercase tracking-[0.3em]">Ganti</p>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={handleRemoveHeaderImage}
+                                                className="flex flex-col items-center text-indigo-200 hover:text-red-400 transition-colors"
+                                            >
+                                                <X size={32} className="mb-2" />
+                                                <p className="text-white font-bold text-[10px] uppercase tracking-widest leading-none">Hapus</p>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -290,6 +467,55 @@ export default function Edit({ pageSetting }) {
                         </div>
                         <p className="mt-6 text-[10px] text-slate-400 font-bold uppercase tracking-widest text-center leading-relaxed italic">Opsional: Gambar akan menimpa warna background jika disertakan.</p>
                     </div>
+
+                    {/* Feature Image Card (Home Only) */}
+                    {isHomePage && (
+                        <div className="bg-white dark:bg-slate-900 p-8 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                            <h5 className="text-sm font-extrabold text-slate-900 dark:text-white mb-6 uppercase tracking-[0.2em] flex items-center gap-2">
+                                <LucidImage size={16} className="text-amber-500" />
+                                Feature Logos / Graphic
+                            </h5>
+
+                            <div className={`relative group aspect-square border-2 border-dashed rounded-lg overflow-hidden flex items-center justify-center transition-all ${featureImagePreview ? 'border-amber-500' : 'border-slate-100 dark:border-slate-800 hover:border-amber-400'
+                                }`}>
+                                <input
+                                    type="file"
+                                    onChange={handleFeatureImageChange}
+                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                    accept="image/*"
+                                />
+
+                                {featureImagePreview ? (
+                                    <div className="w-full h-full relative">
+                                        <img src={featureImagePreview} className="w-full h-full object-contain p-4" alt="Preview Feature" />
+                                        <div className="absolute inset-0 bg-amber-900/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-all duration-300">
+                                            <div className="flex gap-4">
+                                                <div className="flex flex-col items-center">
+                                                    <LucidImage size={32} className="text-white mb-2" />
+                                                    <p className="text-white font-black text-[10px] uppercase tracking-[0.3em]">Ganti</p>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={handleRemoveFeatureImage}
+                                                    className="flex flex-col items-center text-amber-200 hover:text-red-400 transition-colors"
+                                                >
+                                                    <X size={32} className="mb-2" />
+                                                    <p className="text-white font-bold text-[10px] uppercase tracking-widest leading-none">Hapus</p>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                ) : (
+                                    <div className="text-center p-6">
+                                        <LucidImage size={32} className="text-slate-200 mx-auto mb-2" />
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Select Image/Logos</p>
+                                    </div>
+                                )}
+                            </div>
+                            <p className="mt-6 text-[10px] text-slate-400 font-bold uppercase tracking-widest text-center leading-relaxed italic">Gunakan gambar transparan (PNG) <br /> untuk hasil terbaik (Logo IPNU IPPNU).</p>
+                        </div>
+                    )}
 
                     <button
                         type="submit"

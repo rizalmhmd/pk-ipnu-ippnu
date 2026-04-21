@@ -21,6 +21,7 @@ export default function Edit({ quote }) {
         image: null,
         order: quote.order || 0,
         is_active: !!quote.is_active,
+        remove_image: false,
         _method: 'PUT',
     });
 
@@ -28,7 +29,11 @@ export default function Edit({ quote }) {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-        setData('image', file);
+        setData(prev => ({
+            ...prev,
+            image: file,
+            remove_image: false
+        }));
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -38,6 +43,17 @@ export default function Edit({ quote }) {
         } else {
             setImagePreview(quote.image_url);
         }
+    };
+
+    const handleRemoveImage = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setData(prev => ({
+            ...prev,
+            image: null,
+            remove_image: true
+        }));
+        setImagePreview(null);
     };
 
     const submit = (e) => {
@@ -163,11 +179,23 @@ export default function Edit({ quote }) {
                                 />
 
                                 {imagePreview ? (
-                                    <div className="relative inline-block">
+                                    <div className="relative inline-block w-full">
                                         <img src={imagePreview} className="w-full h-48 object-cover rounded-lg shadow-2xl " alt="Preview" />
-                                        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center rounded-lg transition-all duration-300">
-                                            <CloudUpload size={32} className="text-white mb-2" />
-                                            <p className="text-white font-bold text-xs uppercase tracking-widest">Ganti Background</p>
+                                        <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center rounded-lg transition-all duration-300">
+                                            <div className="flex gap-6">
+                                                <div className="flex flex-col items-center">
+                                                    <CloudUpload size={32} className="text-white mb-2" />
+                                                    <p className="text-white font-bold text-[10px] uppercase tracking-widest leading-none">Ganti</p>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    onClick={handleRemoveImage}
+                                                    className="flex flex-col items-center text-red-100 hover:text-red-400 transition-colors"
+                                                >
+                                                    <X size={32} className="mb-2" />
+                                                    <p className="text-white font-bold text-[10px] uppercase tracking-widest leading-none">Hapus</p>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 ) : (

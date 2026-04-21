@@ -91,7 +91,7 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Menu */}
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                 {isMobileMenuOpen && (
                     <>
                         {/* Backdrop Overlay */}
@@ -99,91 +99,106 @@ export default function Navbar() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 lg:hidden"
+                            transition={{ duration: 0.3 }}
+                            className="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-[55] lg:hidden"
                             onClick={() => setIsMobileMenuOpen(false)}
                         />
 
-                        {/* Menu Panel */}
+                        {/* Side Drawer Panel */}
                         <motion.div
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                            className="fixed top-0 left-0 right-0 z-50 lg:hidden"
+                            initial={{ x: '100%' }}
+                            animate={{ x: 0 }}
+                            exit={{ x: '100%' }}
+                            transition={{ type: "spring", damping: 30, stiffness: 350 }}
+                            className="fixed top-0 right-0 bottom-0 w-[85%] max-w-[320px] z-[60] lg:hidden h-screen bg-emerald-900/90 backdrop-blur-2xl border-l border-white/10 shadow-[-20px_0_40px_-15px_rgba(0,0,0,0.5)] flex flex-col"
                         >
-                            <div className="bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-900 shadow-2xl border-b border-emerald-700/50">
-                                {/* Menu Header */}
-                                <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-lg overflow-hidden">
-                                            {siteSetting?.site_logo ? (
-                                                <img src={siteSetting.site_logo_url} alt="Logo" className="w-full h-full object-cover" />
-                                            ) : (
-                                                <i className="fas fa-users text-emerald-600 text-xl"></i>
-                                            )}
-                                        </div>
-                                        <div className="flex flex-col">
-                                            <span className="text-base font-bold text-white font-serif leading-none">
-                                                {siteSetting?.site_name || 'PKPT IPNU IPPNU'}
-                                            </span>
-                                            <span className="text-[9px] text-emerald-200 font-bold uppercase tracking-widest mt-1">Portal Resmi</span>
-                                        </div>
+                            {/* Menu Header / Branding */}
+                            <div className="p-8 pb-6 border-b border-white/5">
+                                <div className="flex items-center justify-between mb-8">
+                                    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg overflow-hidden ring-4 ring-white/10">
+                                        {siteSetting?.site_logo ? (
+                                            <img src={siteSetting.site_logo_url} alt="Logo" className="w-full h-full object-cover" />
+                                        ) : (
+                                            <i className="fas fa-users text-emerald-600 text-xl"></i>
+                                        )}
                                     </div>
                                     <button
                                         onClick={() => setIsMobileMenuOpen(false)}
-                                        className="w-10 h-10 flex items-center justify-center text-white hover:bg-white/10 rounded-lg transition-colors"
+                                        className="w-10 h-10 flex items-center justify-center text-emerald-100 hover:text-white bg-white/5 hover:bg-white/10 rounded-full transition-all"
                                     >
-                                        <i className="fas fa-times text-xl"></i>
+                                        <i className="fas fa-times text-lg"></i>
                                     </button>
                                 </div>
+                                <div className="space-y-1">
+                                    <h2 className="text-xl font-bold text-white font-serif leading-tight">
+                                        {siteSetting?.site_name || 'PKPT IPNU IPPNU'}
+                                    </h2>
+                                    <div className="flex items-center gap-2">
+                                        <div className="h-[1px] w-4 bg-emerald-400"></div>
+                                        <span className="text-[10px] text-emerald-300 font-bold uppercase tracking-[0.2em]">Official Portal</span>
+                                    </div>
+                                </div>
+                            </div>
 
-                                {/* Menu Items */}
-                                <div className="px-4 py-6 space-y-2 max-h-[calc(100vh-140px)] overflow-y-auto">
-                                    {navLinks.map((link, idx) => (
-                                        <motion.div
-                                            key={link.path}
-                                            initial={{ opacity: 0, x: -20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: idx * 0.05 }}
+                            {/* Menu Links */}
+                            <div className="flex-1 px-4 py-8 overflow-y-auto space-y-1 custom-scrollbar">
+                                {navLinks.map((link, idx) => (
+                                    <motion.div
+                                        key={link.path}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: idx * 0.05 + 0.1 }}
+                                    >
+                                        <Link
+                                            href={link.path}
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className={`flex items-center gap-4 px-6 py-4 rounded-2xl text-sm font-bold transition-all relative group ${isActive(link.path)
+                                                ? 'bg-gradient-to-r from-white/15 to-white/5 text-white shadow-xl shadow-emerald-950/20 ring-1 ring-white/20'
+                                                : 'text-emerald-50/70 hover:text-white hover:bg-white/5'
+                                                }`}
                                         >
-                                            <Link
-                                                href={link.path}
-                                                onClick={() => setIsMobileMenuOpen(false)}
-                                                className={`flex items-center gap-4 px-5 py-4 rounded-lg text-base font-semibold transition-all relative overflow-hidden group ${isActive(link.path)
-                                                    ? 'bg-white/15 text-white shadow-lg border border-white/20'
-                                                    : 'text-emerald-50 hover:bg-white/10 border border-transparent'
-                                                    }`}
-                                            >
-                                                <i className={`fas fa-${link.icon} w-5 text-center ${isActive(link.path) ? 'text-emerald-300' : 'text-emerald-400'}`}></i>
-                                                <span className="flex-1">{link.name}</span>
-                                                {isActive(link.path) && (
-                                                    <i className="fas fa-check-circle text-emerald-300 text-sm"></i>
-                                                )}
-                                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                                            </Link>
-                                        </motion.div>
+                                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isActive(link.path) ? 'bg-emerald-500 text-white' : 'bg-white/5 text-emerald-400 group-hover:text-emerald-300'}`}>
+                                                <i className={`fas fa-${link.icon} text-xs`}></i>
+                                            </div>
+                                            <span className="flex-1">{link.name}</span>
+                                            {isActive(link.path) && (
+                                                <motion.div
+                                                    layoutId="activeIndicator"
+                                                    className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]"
+                                                />
+                                            )}
+                                        </Link>
+                                    </motion.div>
+                                ))}
+
+                                {auth?.user && (
+                                    <div className="pt-6 mt-6 border-t border-white/5 px-2">
+                                        <Link
+                                            href="/admin/dashboard"
+                                            onClick={() => setIsMobileMenuOpen(false)}
+                                            className="w-full flex items-center justify-center gap-3 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl text-sm font-black uppercase tracking-widest shadow-lg shadow-blue-900/20 transition-all active:scale-[0.98]"
+                                        >
+                                            <i className="fas fa-lock"></i>
+                                            Dashboard Admin
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Footer / Contact */}
+                            <div className="p-8 border-t border-white/5 bg-black/10">
+                                <p className="text-[10px] text-emerald-500/50 font-bold uppercase tracking-[0.2em] mb-4">Get in Touch</p>
+                                <div className="flex gap-4">
+                                    {['instagram', 'whatsapp', 'envelope'].map((social) => (
+                                        <a
+                                            key={social}
+                                            href={social === 'whatsapp' ? siteSetting?.youtube : (social === 'instagram' ? siteSetting?.instagram : `mailto:${siteSetting?.email}`)}
+                                            target="_blank"
+                                            className="w-10 h-10 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-emerald-400/60 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+                                        >
+                                            <i className={`fab fa-${social === 'envelope' ? '' : social}${social === 'envelope' ? 'fas fa-envelope' : ''} text-sm`}></i>
+                                        </a>
                                     ))}
-
-                                    {/* Dashboard Admin Link (if authenticated) */}
-                                    {auth?.user && (
-                                        <motion.div
-                                            initial={{ opacity: 0, x: -20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: navLinks.length * 0.05 }}
-                                            className="pt-4 mt-4 border-t border-white/10"
-                                        >
-                                            <Link
-                                                href="/admin/dashboard"
-                                                onClick={() => setIsMobileMenuOpen(false)}
-                                                className="flex items-center gap-4 px-5 py-4 rounded-lg text-base font-bold bg-blue-600 text-white border border-blue-500/30 shadow-lg hover:shadow-xl transition-all"
-                                            >
-                                                <i className="fas fa-lock w-5 text-center"></i>
-                                                <span className="flex-1">Dashboard Admin</span>
-                                                <i className="fas fa-arrow-right text-sm"></i>
-                                            </Link>
-                                        </motion.div>
-                                    )}
                                 </div>
                             </div>
                         </motion.div>

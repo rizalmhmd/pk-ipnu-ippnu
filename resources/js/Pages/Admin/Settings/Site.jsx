@@ -11,16 +11,17 @@ import {
     Instagram,
     Facebook,
     Twitter,
-    Youtube,
+    MessageCircle,
     ImageIcon,
     Shield,
     Image as LucidImage,
-    Layout
+    Layout,
+    X
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function Site({ setting }) {
-    const { data, setData, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         site_name: setting.site_name || '',
         meta_description: setting.meta_description || '',
         footer_description: setting.footer_description || '',
@@ -39,6 +40,9 @@ export default function Site({ setting }) {
         site_logo: null,
         favicon: null,
         default_hero_image: null,
+        remove_site_logo: false,
+        remove_favicon: false,
+        remove_default_hero_image: false,
         _method: 'PUT',
     });
 
@@ -50,7 +54,11 @@ export default function Site({ setting }) {
 
     const handleFileChange = (e, field) => {
         const file = e.target.files[0];
-        setData(field, file);
+        setData(prev => ({
+            ...prev,
+            [field]: file,
+            [`remove_${field}`]: false
+        }));
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -60,9 +68,20 @@ export default function Site({ setting }) {
         }
     };
 
+    const handleRemoveFile = (e, field) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setData(prev => ({
+            ...prev,
+            [field]: null,
+            [`remove_${field}`]: true
+        }));
+        setPreviews(prev => ({ ...prev, [field]: null }));
+    };
+
     const submit = (e) => {
         e.preventDefault();
-        router.post(route('admin.site-settings.update'), data);
+        post(route('admin.site-settings.update'));
     };
 
     const SectionHeader = ({ icon: Icon, title, subtitle }) => (
@@ -178,7 +197,25 @@ export default function Site({ setting }) {
                                     <div className={`relative group aspect-video border-2 border-dashed rounded-lg overflow-hidden flex items-center justify-center transition-all ${previews.default_hero_image ? 'border-emerald-500' : 'border-slate-100 dark:border-slate-800'}`}>
                                         <input type="file" onChange={e => handleFileChange(e, 'default_hero_image')} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" />
                                         {previews.default_hero_image ? (
+                                        <div className="w-full h-full relative">
                                             <img src={previews.default_hero_image} className="w-full h-full object-cover" />
+                                            <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-all duration-300">
+                                                <div className="flex gap-4">
+                                                    <div className="flex flex-col items-center">
+                                                        <LucidImage size={32} className="text-white mb-2" />
+                                                        <p className="text-white font-bold text-[10px] uppercase tracking-widest leading-none">Ganti</p>
+                                                    </div>
+                                                    <button
+                                                        type="button"
+                                                        onClick={(e) => handleRemoveFile(e, 'default_hero_image')}
+                                                        className="flex flex-col items-center text-red-100 hover:text-red-400 transition-colors"
+                                                    >
+                                                        <X size={32} className="mb-2" />
+                                                        <p className="text-white font-bold text-[10px] uppercase tracking-widest leading-none">Hapus</p>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                         ) : (
                                             <div className="text-center">
                                                 <LucidImage size={32} className="text-slate-200 mx-auto mb-2" />
@@ -212,7 +249,19 @@ export default function Site({ setting }) {
                                 <div className={`relative group p-6 border-2 border-dashed rounded-lg flex items-center justify-center transition-all ${previews.site_logo ? 'border-emerald-500 bg-emerald-50/20' : 'border-slate-50 dark:border-slate-800'}`}>
                                     <input type="file" onChange={e => handleFileChange(e, 'site_logo')} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
                                     {previews.site_logo ? (
-                                        <img src={previews.site_logo} className="max-h-20 object-contain" />
+                                        <div className="relative group/logo">
+                                            <img src={previews.site_logo} className="max-h-20 object-contain" />
+                                            <div className="absolute inset-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm opacity-0 group-hover/logo:opacity-100 flex items-center justify-center gap-4 transition-all duration-300 rounded-lg">
+                                                <LucidImage size={20} className="text-slate-400" />
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => handleRemoveFile(e, 'site_logo')}
+                                                    className="p-1.5 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-md transition-all shadow-sm"
+                                                >
+                                                    <X size={16} />
+                                                </button>
+                                            </div>
+                                        </div>
                                     ) : (
                                         <ImageIcon size={24} className="text-slate-200" />
                                     )}
@@ -224,7 +273,18 @@ export default function Site({ setting }) {
                                 <div className={`relative group p-6 border-2 border-dashed rounded-lg flex items-center justify-center transition-all ${previews.favicon ? 'border-emerald-500 bg-emerald-50/20' : 'border-slate-50 dark:border-slate-800'}`}>
                                     <input type="file" onChange={e => handleFileChange(e, 'favicon')} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
                                     {previews.favicon ? (
-                                        <img src={previews.favicon} className="w-10 h-10 object-contain shadow-lg" />
+                                        <div className="relative group/favicon">
+                                            <img src={previews.favicon} className="w-10 h-10 object-contain shadow-lg" />
+                                            <div className="absolute -top-2 -right-2 opacity-0 group-hover/favicon:opacity-100 transition-all">
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => handleRemoveFile(e, 'favicon')}
+                                                    className="p-1 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 transition-all"
+                                                >
+                                                    <X size={10} />
+                                                </button>
+                                            </div>
+                                        </div>
                                     ) : (
                                         <ImageIcon size={20} className="text-slate-200" />
                                     )}
@@ -251,8 +311,8 @@ export default function Site({ setting }) {
                                 <input type="text" value={data.instagram} onChange={e => setData('instagram', e.target.value)} className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-sm" placeholder="Instagram Username" />
                             </div>
                             <div className="relative">
-                                <Youtube size={16} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
-                                <input type="text" value={data.youtube} onChange={e => setData('youtube', e.target.value)} className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-sm" placeholder="URL Channel Youtube" />
+                                <MessageCircle size={16} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400" />
+                                <input type="text" value={data.youtube} onChange={e => setData('youtube', e.target.value)} className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-sm" placeholder="URL Channel WhatsApp" />
                             </div>
                         </div>
                     </div>

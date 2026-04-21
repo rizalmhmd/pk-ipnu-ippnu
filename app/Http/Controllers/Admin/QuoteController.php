@@ -79,6 +79,15 @@ class QuoteController extends Controller
             } else {
                 $data['image'] = $request->file('image')->store('quotes', 'public');
             }
+        } elseif ($request->remove_image == 'true' || $request->remove_image === true) {
+            if ($quote->image) {
+                try {
+                    Storage::delete($quote->image);
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
+                }
+            }
+            $data['image'] = null;
         }
 
         $quote->update($data);

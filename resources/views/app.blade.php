@@ -7,9 +7,9 @@
     
     <!-- Favicon -->
     @if(isset($siteSetting) && $siteSetting->favicon)
-        <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . $siteSetting->favicon) }}?v={{ $siteSetting->updated_at->timestamp }}">
-        <link rel="shortcut icon" href="{{ asset('storage/' . $siteSetting->favicon) }}?v={{ $siteSetting->updated_at->timestamp }}">
-        <link rel="apple-touch-icon" href="{{ asset('storage/' . $siteSetting->favicon) }}?v={{ $siteSetting->updated_at->timestamp }}">
+        <link rel="icon" href="{{ $storageUrl($siteSetting->favicon) }}?v={{ $siteSetting->updated_at->timestamp }}">
+        <link rel="shortcut icon" href="{{ $storageUrl($siteSetting->favicon) }}?v={{ $siteSetting->updated_at->timestamp }}">
+        <link rel="apple-touch-icon" href="{{ $storageUrl($siteSetting->favicon) }}?v={{ $siteSetting->updated_at->timestamp }}">
     @endif
     
     <!-- Fonts & Icons -->

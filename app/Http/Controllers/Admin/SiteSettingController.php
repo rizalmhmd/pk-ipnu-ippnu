@@ -57,6 +57,15 @@ class SiteSettingController extends Controller
             } else {
                 $validated['site_logo'] = $request->file('site_logo')->store('site', 'public');
             }
+        } elseif ($request->remove_site_logo == 'true' || $request->remove_site_logo === true) {
+            if ($setting->site_logo) {
+                try {
+                    Storage::delete($setting->site_logo);
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
+                }
+            }
+            $validated['site_logo'] = null;
         }
 
         if ($request->hasFile('favicon')) {
@@ -73,6 +82,15 @@ class SiteSettingController extends Controller
             } else {
                 $validated['favicon'] = $request->file('favicon')->store('site', 'public');
             }
+        } elseif ($request->remove_favicon == 'true' || $request->remove_favicon === true) {
+            if ($setting->favicon) {
+                try {
+                    Storage::delete($setting->favicon);
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
+                }
+            }
+            $validated['favicon'] = null;
         }
 
         if ($request->hasFile('default_hero_image')) {
@@ -89,6 +107,15 @@ class SiteSettingController extends Controller
             } else {
                 $validated['default_hero_image'] = $request->file('default_hero_image')->store('site', 'public');
             }
+        } elseif ($request->remove_default_hero_image == 'true' || $request->remove_default_hero_image === true) {
+            if ($setting->default_hero_image) {
+                try {
+                    Storage::delete($setting->default_hero_image);
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
+                }
+            }
+            $validated['default_hero_image'] = null;
         }
 
         $setting->update($validated);

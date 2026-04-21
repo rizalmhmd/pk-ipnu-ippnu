@@ -2,7 +2,6 @@ import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import HeroSection from '@/Components/HeroSection';
-import PageHeaderCard from '@/Components/PageHeaderCard';
 import { motion } from 'framer-motion';
 
 export default function NewsDetail({ post }) {
@@ -38,10 +37,7 @@ export default function NewsDetail({ post }) {
                 bgImage={post.image_url ? post.image_url : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'}
             />
 
-            <PageHeaderCard
-                title="Detail Berita"
-                subtitle={post.title}
-            />
+
 
             <div className="container mx-auto px-6 md:px-12 py-20">
                 <div className="max-w-4xl mx-auto">

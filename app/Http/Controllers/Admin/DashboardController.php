@@ -28,9 +28,9 @@ class DashboardController extends Controller
             // Recent News
             $recentPosts = Post::latest()->take(3)->get()->map(function($post) {
                 return [
-                    'type' => 'Berita',
+                    'type' => 'Pembaruan Berita',
                     'title' => $post->title,
-                    'user' => 'Administrator',
+                    'user' => 'Tim Admin',
                     'time' => $post->created_at->diffForHumans(),
                     'timestamp' => $post->created_at->timestamp,
                     'icon' => 'Newspaper',
@@ -42,9 +42,9 @@ class DashboardController extends Controller
             // Recent Articles
             $recentArticles = \App\Models\Article::latest()->take(3)->get()->map(function($article) {
                 return [
-                    'type' => 'Artikel',
+                    'type' => 'Rilis Artikel',
                     'title' => $article->title,
-                    'user' => 'Administrator',
+                    'user' => 'Tim Admin',
                     'time' => $article->created_at->diffForHumans(),
                     'timestamp' => $article->created_at->timestamp,
                     'icon' => 'FileText',
@@ -64,9 +64,9 @@ class DashboardController extends Controller
             // Recent Agendas
             $recentAgendas = \App\Models\Agenda::latest()->take(3)->get()->map(function($agenda) {
                 return [
-                    'type' => 'Agenda',
+                    'type' => 'Agenda Baru',
                     'title' => $agenda->title,
-                    'user' => 'Administrator',
+                    'user' => 'Tim Admin',
                     'time' => $agenda->created_at->diffForHumans(),
                     'timestamp' => $agenda->created_at->timestamp,
                     'icon' => 'Calendar',

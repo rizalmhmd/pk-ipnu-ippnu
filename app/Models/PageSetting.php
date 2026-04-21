@@ -16,9 +16,27 @@ class PageSetting extends Model
         'header_bg_image',
         'content_sejarah',
         'content_visi_misi',
+        'feature_subtitle',
+        'feature_title',
+        'feature_description',
+        'feature_image',
+        'feature_button_text',
+        'feature_button_url',
     ];
 
-    protected $appends = ['hero_image_url', 'header_bg_image_url'];
+    protected $appends = ['hero_image_url', 'header_bg_image_url', 'feature_image_url'];
+
+    public function getFeatureImageUrlAttribute()
+    {
+        if (!$this->feature_image) return null;
+        if (filter_var($this->feature_image, FILTER_VALIDATE_URL)) return $this->feature_image;
+        
+        try {
+            return \Illuminate\Support\Facades\Storage::url($this->feature_image);
+        } catch (\Throwable $e) {
+            return null;
+        }
+    }
 
     public function getHeroImageUrlAttribute()
     {

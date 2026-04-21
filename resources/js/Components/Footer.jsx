@@ -5,10 +5,10 @@ export default function Footer() {
     const { siteSetting } = usePage().props;
 
     return (
-        <footer className="bg-slate-950 text-slate-400 pt-20 pb-10 border-t border-white/5">
+        <footer className="bg-slate-950 text-slate-400 pt-12 pb-8 border-t border-white/5">
             <div className="container mx-auto px-6 md:px-12">
                 {/* Centered Brand & Social Section */}
-                <div className="flex flex-col items-center text-center mb-16 space-y-8">
+                <div className="flex flex-col items-center text-center mb-10 space-y-6">
                     <Link href="/" className="flex flex-col items-center gap-4 group">
                         <div className="w-16 h-16 bg-white rounded-lg flex items-center justify-center shadow-2xl group-hover:scale-105 transition-all duration-500 overflow-hidden">
                             {siteSetting?.site_logo ? (
@@ -34,7 +34,7 @@ export default function Footer() {
                             { icon: 'facebook-f', link: siteSetting?.facebook },
                             { icon: 'instagram', link: siteSetting?.instagram },
                             { icon: 'twitter', link: siteSetting?.twitter },
-                            { icon: 'youtube', link: siteSetting?.youtube },
+                            { icon: 'whatsapp', link: siteSetting?.youtube },
                         ].map((social, idx) => social.link && (
                             <a
                                 key={idx}
@@ -49,14 +49,14 @@ export default function Footer() {
                 </div>
 
                 {/* Info & Links Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-12 max-w-5xl mx-auto border-t border-white/5 pt-16">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-10 max-w-5xl mx-auto border-t border-white/5 pt-10">
                     {/* Quick Links */}
                     <div>
-                        <h4 className="text-white font-bold mb-6 relative inline-block">
+                        <h4 className="text-white font-bold mb-4 relative inline-block text-sm uppercase tracking-wider">
                             Tautan Cepat
-                            <div className="absolute -bottom-2 left-0 w-12 h-1 bg-emerald-600 rounded-full"></div>
+                            <div className="absolute -bottom-1.5 left-0 w-8 h-1 bg-emerald-600 rounded-full"></div>
                         </h4>
-                        <ul className="space-y-4 text-sm">
+                        <ul className="space-y-2.5 text-xs">
                             {[
                                 { name: 'Beranda', path: '/' },
                                 { name: 'Profil', path: '/profil' },
@@ -76,11 +76,11 @@ export default function Footer() {
 
                     {/* Legal */}
                     <div className="pl-0 md:pl-8">
-                        <h4 className="text-white font-bold mb-6 relative inline-block">
+                        <h4 className="text-white font-bold mb-4 relative inline-block text-sm uppercase tracking-wider">
                             Informasi
-                            <div className="absolute -bottom-2 left-0 w-12 h-1 bg-emerald-600 rounded-full"></div>
+                            <div className="absolute -bottom-1.5 left-0 w-8 h-1 bg-emerald-600 rounded-full"></div>
                         </h4>
-                        <ul className="space-y-4 text-sm">
+                        <ul className="space-y-2.5 text-xs">
                             <li><a href="#" className="hover:text-white transition-colors">Kebijakan Privasi</a></li>
                             <li><a href="#" className="hover:text-white transition-colors">Syarat & Ketentuan</a></li>
                             <li><a href="#" className="hover:text-white transition-colors">Bantuan / FAQ</a></li>
@@ -90,9 +90,9 @@ export default function Footer() {
 
                     {/* Contact - Spans 2 columns on mobile */}
                     <div className="col-span-2 md:col-span-1 border-t md:border-t-0 border-white/5 pt-12 md:pt-0">
-                        <h4 className="text-white font-bold mb-6 relative inline-block">
+                        <h4 className="text-white font-bold mb-4 relative inline-block text-sm uppercase tracking-wider">
                             Kontak Kami
-                            <div className="absolute -bottom-2 left-0 w-12 h-1 bg-emerald-600 rounded-full"></div>
+                            <div className="absolute -bottom-1.5 left-0 w-8 h-1 bg-emerald-600 rounded-full"></div>
                         </h4>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1 gap-6">
                             {[
@@ -113,7 +113,7 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
+                <div className="mt-12 pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-xs">
                     <p>
                         © {new Date().getFullYear()} {siteSetting?.site_name || 'PKPT IPNU IPPNU'}.
                         {siteSetting?.copyright_text || ' Hak Cipta Dilindungi.'}

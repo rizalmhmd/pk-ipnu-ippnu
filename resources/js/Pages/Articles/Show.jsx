@@ -2,7 +2,6 @@ import React from 'react';
 import { Head, Link } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import HeroSection from '@/Components/HeroSection';
-import PageHeaderCard from '@/Components/PageHeaderCard';
 import { motion } from 'framer-motion';
 
 export default function ArticleDetail({ article }) {
@@ -38,10 +37,7 @@ export default function ArticleDetail({ article }) {
                 bgImage={article.image_url ? article.image_url : 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'}
             />
 
-            <PageHeaderCard
-                title="Wawasan Kader"
-                subtitle={article.title}
-            />
+
 
             <div className="container mx-auto px-6 md:px-12 py-20">
                 <div className="max-w-4xl mx-auto">
@@ -54,7 +50,7 @@ export default function ArticleDetail({ article }) {
                                 </div>
                                 <div>
                                     <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Penulis</p>
-                                    <p className="text-sm font-bold text-slate-800">Administrator</p>
+                                    <p className="text-sm font-bold text-slate-800">{article.author || 'Administrator'}</p>
                                 </div>
                             </div>
                             <div className="h-8 w-px bg-slate-100"></div>

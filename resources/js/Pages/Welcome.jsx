@@ -2,12 +2,14 @@ import React from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import HeroSection from '@/Components/HeroSection';
-import PageHeaderCard from '@/Components/PageHeaderCard';
+import HomeFeature from '@/Components/HomeFeature';
+import ElegantHero from '@/Components/ElegantHero';
 import SectionTitle from '@/Components/SectionTitle';
 import StatCard from '@/Components/StatCard';
 import { motion } from 'framer-motion';
 
 import ArticleCard from '@/Components/ArticleCard';
+import NewsCard from '@/Components/NewsCard';
 
 export default function Home({ posts, articles, pageSetting, greeting, agendas, statistics }) {
     const { siteSetting } = usePage().props;
@@ -19,146 +21,89 @@ export default function Home({ posts, articles, pageSetting, greeting, agendas, 
             {/* Hero Section */}
             <HeroSection
                 bgImage={siteSetting?.default_hero_image_url ? siteSetting.default_hero_image_url : 'https://images.unsplash.com/photo-1541339907198-e08756ebafe3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'}
-                hideIndicators={true}
             />
 
-            {/* Statistics Section */}
+
+
+            {/* Feature Section (New Intro) */}
+            <HomeFeature 
+                subtitle={pageSetting?.feature_subtitle}
+                title={pageSetting?.feature_title}
+                description={pageSetting?.feature_description}
+                imageUrl={pageSetting?.feature_image_url}
+                buttonText={pageSetting?.feature_button_text}
+                buttonUrl={pageSetting?.feature_button_url}
+            />
+
+            {/* Statistics Section (Minimalist Style) */}
             {statistics && statistics.length > 0 && (
-                <div className="container mx-auto px-4 sm:px-6 md:px-12 -mt-12 relative z-40 mb-12">
-                    <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-4">
-                        {statistics.map((stat, index) => (
-                            <div key={stat.id} className="h-full">
-                                <StatCard statistic={stat} delay={index} />
-                            </div>
-                        ))}
+                <section className="bg-white py-20 border-b border-slate-50">
+                    <div className="container mx-auto px-6 sm:px-10 md:px-24">
+                        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 md:gap-24">
+                            {statistics.map((stat, index) => (
+                                <div key={stat.id} className="w-full">
+                                    <StatCard statistic={stat} delay={index} />
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                </section>
             )}
 
-            <PageHeaderCard
+            <ElegantHero
                 title={`Selamat Datang di ${siteSetting?.site_name || 'PKPT IPNU IPPNU'}`}
-                subtitle="Mewujudkan Kader yang Berilmu, Beramal, dan Bertaqwa"
-                bgColor={pageSetting?.header_bg_color}
-                textColor={pageSetting?.header_text_color}
+                description="Mewujudkan Kader yang Berilmu, Beramal, dan Bertaqwa"
+                subtitle="Portal Resmi"
                 bgImage={pageSetting?.header_bg_image_url}
             />
 
             {/* News and Articles Section */}
-            <div className="container mx-auto px-4 sm:px-6 md:px-12 py-12 sm:py-16 lg:py-20">
-                <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-16">
+            <div className="container mx-auto px-6 md:px-12 py-12 md:py-16">
+                <div className="flex flex-col lg:flex-row gap-12">
                     <div className="lg:w-full">
                         {/* News Section */}
-                        <div className="mb-16">
-                            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
-                                <SectionTitle className="mb-0">
-                                    {siteSetting?.home_news_title || 'Berita Terkini'}
-                                </SectionTitle>
-                                <Link
-                                    href="/berita"
-                                    className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors flex items-center gap-2 group"
-                                >
-                                    Lihat Semua
-                                    <i className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
-                                </Link>
-                            </div>
-
-                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
-                                {posts.map((post, idx) => (
-                                    <motion.div
-                                        key={post.id}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: idx * 0.05 }}
-                                        className="bg-white rounded-lg shadow-lg shadow-slate-200/50 overflow-hidden border border-slate-100 group hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500"
+                        {posts && posts.length > 0 && (
+                            <div className="mb-12 md:mb-16">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8 text-center sm:text-left">
+                                    <SectionTitle className="mb-0">
+                                        {siteSetting?.home_news_title || 'Berita Terkini'}
+                                    </SectionTitle>
+                                    <Link
+                                        href="/berita"
+                                        className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors flex items-center gap-2 group text-sm"
                                     >
-                                        <div className="relative h-40 sm:h-56 overflow-hidden">
-                                            <img
-                                                src={post.image_url ? post.image_url : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}
-                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                                alt={post.title}
-                                            />
-                                        </div>
+                                        Lihat Semua
+                                        <i className="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                                    </Link>
+                                </div>
 
-                                        <div className="p-4 sm:p-6">
-                                            <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-2">
-                                                <i className="far fa-calendar-alt text-emerald-500"></i>
-                                                {new Date(post.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
-                                            </div>
-                                            <h3 className="text-sm sm:text-lg font-bold text-slate-800 mb-3 font-serif line-clamp-2 leading-tight group-hover:text-emerald-700 transition-colors">
-                                                {post.title}
-                                            </h3>
-                                            <Link
-                                                href={`/berita/${post.slug}`}
-                                                className="inline-flex items-center gap-2 text-emerald-600 font-bold text-xs"
-                                            >
-                                                Baca Selengkapnya
-                                                <i className="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
-                                            </Link>
-                                        </div>
-                                    </motion.div>
-                                ))}
+                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
+                                    {posts.map((post, idx) => (
+                                        <NewsCard key={post.id} post={post} idx={idx} />
+                                    ))}
+                                </div>
                             </div>
-                        </div>
+                        )}
 
                         {/* Articles Section */}
                         {articles && articles.length > 0 && (
-                            <div className="mb-16">
-                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8">
+                            <div className="mb-12">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-8 text-center sm:text-left">
                                     <SectionTitle className="mb-0">
                                         Artikel Terbaru
                                     </SectionTitle>
                                     <Link
                                         href="/artikel"
-                                        className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors flex items-center gap-2 group"
+                                        className="text-emerald-600 font-bold hover:text-emerald-700 transition-colors flex items-center gap-2 group text-sm"
                                     >
                                         Lihat Semua
-                                        <i className="fas fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                                        <i className="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
                                     </Link>
                                 </div>
 
-                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+                                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
                                     {articles.map((article, idx) => (
-                                        <div key={article.id}>
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 20 }}
-                                                whileInView={{ opacity: 1, y: 0 }}
-                                                viewport={{ once: true }}
-                                                transition={{ delay: idx * 0.05 }}
-                                                className="bg-white rounded-lg shadow-lg shadow-slate-200/50 overflow-hidden border border-slate-100 group hover:shadow-2xl hover:shadow-emerald-900/10 transition-all duration-500 h-full"
-                                            >
-                                                <div className="relative h-40 sm:h-56 overflow-hidden">
-                                                    {article.image ? (
-                                                        <img
-                                                            src={article.image_url}
-                                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                                                            alt={article.title}
-                                                        />
-                                                    ) : (
-                                                        <div className="w-full h-full bg-gradient-to-br from-emerald-800 to-blue-900 flex flex-col items-center justify-center text-white/20">
-                                                            <i className="fas fa-file-alt text-4xl group-hover:scale-110 transition-transform duration-700"></i>
-                                                        </div>
-                                                    )}
-                                                </div>
-
-                                                <div className="p-4 sm:p-6">
-                                                    <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest mb-2">
-                                                        <i className="far fa-calendar-alt text-emerald-500"></i>
-                                                        {new Date(article.published_at || article.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
-                                                    </div>
-                                                    <h3 className="text-sm sm:text-lg font-bold text-slate-800 mb-3 font-serif line-clamp-2 leading-tight group-hover:text-emerald-700 transition-colors">
-                                                        {article.title}
-                                                    </h3>
-                                                    <Link
-                                                        href={`/artikel/${article.slug}`}
-                                                        className="inline-flex items-center gap-2 text-emerald-600 font-bold text-xs"
-                                                    >
-                                                        Baca Selengkapnya
-                                                        <i className="fas fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
-                                                    </Link>
-                                                </div>
-                                            </motion.div>
-                                        </div>
+                                        <ArticleCard key={article.id} article={article} idx={idx} />
                                     ))}
                                 </div>
                             </div>

@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class Article extends Model
 {
-    protected $fillable = ['title', 'slug', 'image', 'content', 'published_at'];
+    protected $fillable = ['title', 'slug', 'image', 'content', 'published_at', 'author'];
 
     protected $appends = ['image_url'];
 

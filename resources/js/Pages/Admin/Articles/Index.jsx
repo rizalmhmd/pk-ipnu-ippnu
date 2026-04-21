@@ -85,7 +85,7 @@ export default function Index({ articles }) {
                                                         <Calendar size={12} className="text-emerald-500" />
                                                         {new Date(article.published_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
                                                     </span>
-                                                    <span className="truncate max-w-[150px]">Oleh: Admin</span>
+                                                    <span className="truncate max-w-[150px]">Oleh: {article.author || 'Admin'}</span>
                                                 </div>
                                             </div>
                                         </div>
