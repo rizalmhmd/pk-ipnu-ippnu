@@ -1,7 +1,7 @@
 import { jsx, jsxs } from "react/jsx-runtime";
 import "react";
 import { Link, usePage, Head } from "@inertiajs/react";
-import { P as PublicLayout, H as HeroSection } from "./HeroSection-bz1qWmGN.js";
+import { P as PublicLayout, H as HeroSection } from "./HeroSection-BRcrzTIg.js";
 import { motion } from "framer-motion";
 import { S as SectionTitle } from "./SectionTitle-RfMm9Ud4.js";
 import { A as ArticleCard } from "./ArticleCard-CJ7ppg10.js";
@@ -167,8 +167,7 @@ function Home({ posts, articles, pageSetting, greeting, agendas, statistics }) {
     /* @__PURE__ */ jsx(
       HeroSection,
       {
-        bgImage: siteSetting?.default_hero_image_url ? siteSetting.default_hero_image_url : "https://images.unsplash.com/photo-1541339907198-e08756ebafe3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
-        hideIndicators: true
+        bgImage: siteSetting?.default_hero_image_url ? siteSetting.default_hero_image_url : "https://images.unsplash.com/photo-1541339907198-e08756ebafe3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
       }
     ),
     /* @__PURE__ */ jsx(
@@ -182,7 +181,7 @@ function Home({ posts, articles, pageSetting, greeting, agendas, statistics }) {
         buttonUrl: pageSetting?.feature_button_url
       }
     ),
-    statistics && statistics.length > 0 && /* @__PURE__ */ jsx("section", { className: "bg-white py-20 border-b border-slate-50", children: /* @__PURE__ */ jsx("div", { className: "container mx-auto px-6 sm:px-10 md:px-24", children: /* @__PURE__ */ jsx("div", { className: "flex flex-wrap justify-center gap-16 md:gap-24", children: statistics.map((stat, index) => /* @__PURE__ */ jsx("div", { className: "w-full md:w-[calc(50%-4rem)] lg:w-[calc(33.333%-6rem)] min-w-[250px]", children: /* @__PURE__ */ jsx(StatCard, { statistic: stat, delay: index }) }, stat.id)) }) }) }),
+    statistics && statistics.length > 0 && /* @__PURE__ */ jsx("section", { className: "bg-white py-20 border-b border-slate-50", children: /* @__PURE__ */ jsx("div", { className: "container mx-auto px-6 sm:px-10 md:px-24", children: /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 md:gap-24", children: statistics.map((stat, index) => /* @__PURE__ */ jsx("div", { className: "w-full", children: /* @__PURE__ */ jsx(StatCard, { statistic: stat, delay: index }) }, stat.id)) }) }) }),
     /* @__PURE__ */ jsx(
       ElegantHero,
       {

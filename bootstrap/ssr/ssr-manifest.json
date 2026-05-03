@@ -10,37 +10,37 @@
     "/build/assets/ArticleCard-CJ7ppg10.js"
   ],
   "resources/js/Components/ElegantHero.jsx": [
-    "/build/assets/Welcome-EPbOfens.js"
+    "/build/assets/Welcome-DZ_6CwYz.js"
   ],
   "resources/js/Components/Footer.jsx": [
-    "/build/assets/HeroSection-bz1qWmGN.js"
+    "/build/assets/HeroSection-BRcrzTIg.js"
   ],
   "resources/js/Components/HeroSection.jsx": [
-    "/build/assets/HeroSection-bz1qWmGN.js"
+    "/build/assets/HeroSection-BRcrzTIg.js"
   ],
   "resources/js/Components/HomeFeature.jsx": [
-    "/build/assets/Welcome-EPbOfens.js"
+    "/build/assets/Welcome-DZ_6CwYz.js"
   ],
   "resources/js/Components/NationalCalendar.jsx": [
-    "/build/assets/Index-9uwo7lR3.js"
+    "/build/assets/Index-CK1nBRoH.js"
   ],
   "resources/js/Components/Navbar.jsx": [
-    "/build/assets/HeroSection-bz1qWmGN.js"
+    "/build/assets/HeroSection-BRcrzTIg.js"
   ],
   "resources/js/Components/NewsCard.jsx": [
-    "/build/assets/Welcome-EPbOfens.js"
+    "/build/assets/Welcome-DZ_6CwYz.js"
   ],
   "resources/js/Components/Pagination.jsx": [
     "/build/assets/Pagination-CXuchKWL.js"
   ],
   "resources/js/Components/PostCard.jsx": [
-    "/build/assets/Index-BaZ9WlhH.js"
+    "/build/assets/Index-XNlRcfXH.js"
   ],
   "resources/js/Components/SectionTitle.jsx": [
     "/build/assets/SectionTitle-RfMm9Ud4.js"
   ],
   "resources/js/Components/StatCard.jsx": [
-    "/build/assets/Welcome-EPbOfens.js"
+    "/build/assets/Welcome-DZ_6CwYz.js"
   ],
   "resources/js/Layouts/AdminLayout.jsx": [
     "/build/assets/AdminLayout-aeaPXddD.js"
@@ -49,7 +49,7 @@
     "/build/assets/GuestLayout-BghQ2Vh7.js"
   ],
   "resources/js/Layouts/PublicLayout.jsx": [
-    "/build/assets/HeroSection-bz1qWmGN.js"
+    "/build/assets/HeroSection-BRcrzTIg.js"
   ],
   "resources/js/Pages/Admin/Agendas/Create.jsx": [
     "/build/assets/Create-oZNtoC_p.js"
@@ -109,13 +109,13 @@
     "/build/assets/Index-DEiOmEw3.js"
   ],
   "resources/js/Pages/Admin/Settings/Pages/Edit.jsx": [
-    "/build/assets/Edit-Ci5bpfgA.js"
+    "/build/assets/Edit-C1cuZgXQ.js"
   ],
   "resources/js/Pages/Admin/Settings/Pages/Index.jsx": [
     "/build/assets/Index-BOBdenTV.js"
   ],
   "resources/js/Pages/Admin/Settings/Site.jsx": [
-    "/build/assets/Site-CmOPEyYx.js"
+    "/build/assets/Site-DUeN8d11.js"
   ],
   "resources/js/Pages/Admin/Statistics/Create.jsx": [
     "/build/assets/Create-CPV7X-S-.js"
@@ -133,13 +133,13 @@
     "/build/assets/Index-D74zDF8M.js"
   ],
   "resources/js/Pages/Agenda/Index.jsx": [
-    "/build/assets/Index-9uwo7lR3.js"
+    "/build/assets/Index-CK1nBRoH.js"
   ],
   "resources/js/Pages/Articles/Index.jsx": [
-    "/build/assets/Index-yhH4x4Cf.js"
+    "/build/assets/Index-C-Gk1nV9.js"
   ],
   "resources/js/Pages/Articles/Show.jsx": [
-    "/build/assets/Show-B7LCz7_o.js"
+    "/build/assets/Show-C6Zk5BRp.js"
   ],
   "resources/js/Pages/Auth/ConfirmPassword.jsx": [
     "/build/assets/ConfirmPassword-B7Dzm5oF.js"
@@ -160,19 +160,28 @@
     "/build/assets/VerifyEmail-BgVSnPzL.js"
   ],
   "resources/js/Pages/Gallery.jsx": [
-    "/build/assets/Gallery-BJKaF4b2.js"
+    "/build/assets/Gallery-DJqMsdBl.js"
   ],
   "resources/js/Pages/News/Index.jsx": [
-    "/build/assets/Index-BaZ9WlhH.js"
+    "/build/assets/Index-XNlRcfXH.js"
   ],
   "resources/js/Pages/News/Show.jsx": [
-    "/build/assets/Show-BpeQzeHe.js"
+    "/build/assets/Show-DG04--jN.js"
   ],
   "resources/js/Pages/Profile.jsx": [
-    "/build/assets/Profile-BMq_5uku.js"
+    "/build/assets/Profile-KrjYdUjr.js"
+  ],
+  "resources/js/Pages/Profile/History.jsx": [
+    "/build/assets/History-B7PI9GJD.js"
+  ],
+  "resources/js/Pages/Profile/Structure.jsx": [
+    "/build/assets/Structure-By_Dzrw5.js"
+  ],
+  "resources/js/Pages/Profile/VisionMission.jsx": [
+    "/build/assets/VisionMission-BKuSfZxe.js"
   ],
   "resources/js/Pages/Welcome.jsx": [
-    "/build/assets/Welcome-EPbOfens.js"
+    "/build/assets/Welcome-DZ_6CwYz.js"
   ],
   "resources/js/ssr.jsx": [],
   "vendor/tightenco/ziggy/dist/index.js": []

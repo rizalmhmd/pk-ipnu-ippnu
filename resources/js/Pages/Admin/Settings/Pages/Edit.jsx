@@ -132,7 +132,7 @@ export default function Edit({ pageSetting }) {
         router.post(route('admin.page-settings.update', pageSetting.id), data);
     };
 
-    const isAboutPage = pageSetting.page_name === 'about';
+    const isProfilePage = pageSetting.page_name === 'profile';
     const isHomePage = pageSetting.page_name === 'home';
 
     return (
@@ -327,8 +327,8 @@ export default function Edit({ pageSetting }) {
                         </div>
                     )}
 
-                    {/* About Specific Content */}
-                    {isAboutPage && (
+                    {/* Profile Specific Content */}
+                    {isProfilePage && (
                         <div className="bg-white dark:bg-slate-900 p-10 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
                             <div className="flex items-center gap-4 mb-10">
                                 <div className="p-3 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg">

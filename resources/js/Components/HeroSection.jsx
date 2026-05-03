@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePage } from '@inertiajs/react';
 
-export default function HeroSection({ bgImage, hideIndicators = false }) {
+export default function HeroSection({ bgImage, title, subtitle, hideIndicators = false }) {
     const { activeQuotes } = usePage().props;
     const [currentQuote, setCurrentQuote] = useState(0);
 
@@ -53,7 +53,27 @@ export default function HeroSection({ bgImage, hideIndicators = false }) {
             {/* Centered Content Area — vertically & horizontally centered */}
             <div className="container mx-auto px-6 sm:px-10 relative z-20 flex flex-col items-center justify-center text-center flex-1 w-full">
                 <AnimatePresence mode="wait">
-                    {quotesToDisplay ? (
+                    {title ? (
+                        <motion.div
+                            key="static-title"
+                            initial={{ y: 30, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            className="max-w-4xl"
+                        >
+                            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight font-serif uppercase tracking-tight drop-shadow-2xl">
+                                {title}
+                            </h1>
+                            {subtitle && (
+                                <div className="flex flex-col items-center gap-4">
+                                    <div className="w-20 h-1.5 bg-emerald-500 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
+                                    <p className="text-emerald-100 text-sm md:text-lg font-bold uppercase tracking-[0.4em] drop-shadow-lg">
+                                        {subtitle}
+                                    </p>
+                                </div>
+                            )}
+                        </motion.div>
+                    ) : quotesToDisplay ? (
                         <motion.div
                             key={`quote-${currentQuote}`}
                             initial={{ y: 20, opacity: 0 }}
@@ -92,7 +112,7 @@ export default function HeroSection({ bgImage, hideIndicators = false }) {
 
 
             {/* Tabbed Progress Indicators at Bottom */}
-            {quotesToDisplay?.length > 1 && !hideIndicators && (
+            {quotesToDisplay?.length > 1 && !hideIndicators && !title && (
                 <div className="absolute bottom-6 md:bottom-10 left-0 right-0 z-30 px-6 md:px-12 flex justify-center">
                     <div className="container mx-auto max-w-6xl">
                         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-8">

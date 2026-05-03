@@ -18,12 +18,24 @@ export default function Navbar() {
 
     const navLinks = [
         { name: 'Beranda', path: '/', icon: 'home' },
-        { name: 'Profil', path: '/profil', icon: 'landmark' },
+        {
+            name: 'Profil',
+            path: '/profil',
+            icon: 'landmark',
+            dropdown: [
+                { name: 'Visi & Misi', path: '/profil/visi-misi', icon: 'bullseye' },
+                { name: 'Sejarah', path: '/profil/sejarah', icon: 'history' },
+                { name: 'Struktur Organisasi', path: '/profil/struktur-organisasi', icon: 'sitemap' },
+            ]
+        },
         { name: 'Berita', path: '/berita', icon: 'newspaper' },
         { name: 'Artikel', path: '/artikel', icon: 'file-alt' },
         { name: 'Galeri', path: '/galeri', icon: 'images' },
         { name: 'Agenda', path: '/agenda', icon: 'calendar-alt' },
     ];
+
+    const [activeDropdown, setActiveDropdown] = useState(null);
+    const [isMobileProfileOpen, setIsMobileProfileOpen] = useState(false);
 
     const isActive = (path) => {
         if (path === '/') return url === '/';
@@ -57,17 +69,61 @@ export default function Navbar() {
                     {/* Desktop Links */}
                     <div className="hidden lg:flex items-center space-x-2">
                         {navLinks.map((link) => (
-                            <Link
+                            <div
                                 key={link.path}
-                                href={link.path}
-                                className={`px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${isActive(link.path)
-                                    ? 'bg-white/20 text-white border border-white/30'
-                                    : 'text-emerald-50 hover:text-white hover:bg-white/10'
-                                    }`}
+                                className="relative group"
+                                onMouseEnter={() => link.dropdown && setActiveDropdown(link.name)}
+                                onMouseLeave={() => link.dropdown && setActiveDropdown(null)}
                             >
-                                <i className={`fas fa-${link.icon} opacity-70`}></i>
-                                {link.name}
-                            </Link>
+                                <Link
+                                    href={link.path}
+                                    className={`px-4 py-2 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${isActive(link.path)
+                                        ? 'bg-white/20 text-white border border-white/30'
+                                        : 'text-emerald-50 hover:text-white hover:bg-white/10'
+                                        }`}
+                                >
+                                    <i className={`fas fa-${link.icon} opacity-70`}></i>
+                                    {link.name}
+                                    {link.dropdown && (
+                                        <i className={`fas fa-chevron-down text-[10px] transition-transform duration-300 ${activeDropdown === link.name ? 'rotate-180' : ''}`}></i>
+                                    )}
+                                </Link>
+
+                                {link.dropdown && (
+                                    <AnimatePresence>
+                                        {activeDropdown === link.name && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                                                transition={{ duration: 0.2 }}
+                                                className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-2xl border border-emerald-50 overflow-hidden z-[60]"
+                                            >
+                                                <div className="p-2">
+                                                    {link.dropdown.map((subItem) => (
+                                                        <Link
+                                                            key={subItem.path}
+                                                            href={subItem.path}
+                                                            className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm transition-all ${isActive(subItem.path)
+                                                                ? 'bg-emerald-50 text-emerald-700 font-bold'
+                                                                : 'text-slate-600 hover:bg-emerald-50/50 hover:text-emerald-600'
+                                                                }`}
+                                                        >
+                                                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isActive(subItem.path) ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-50 text-slate-400'}`}>
+                                                                <i className={`fas fa-${subItem.icon} text-xs`}></i>
+                                                            </div>
+                                                            {subItem.name}
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                                <div className="bg-slate-50 px-4 py-2 border-t border-slate-100">
+                                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Mengenal Lebih Dekat</p>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                )}
+                            </div>
                         ))}
 
                         {auth?.user && (
@@ -149,25 +205,66 @@ export default function Navbar() {
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: idx * 0.05 + 0.1 }}
                                     >
-                                        <Link
-                                            href={link.path}
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                            className={`flex items-center gap-4 px-6 py-4 rounded-2xl text-sm font-bold transition-all relative group ${isActive(link.path)
-                                                ? 'bg-gradient-to-r from-white/15 to-white/5 text-white shadow-xl shadow-emerald-950/20 ring-1 ring-white/20'
-                                                : 'text-emerald-50/70 hover:text-white hover:bg-white/5'
-                                                }`}
-                                        >
-                                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isActive(link.path) ? 'bg-emerald-500 text-white' : 'bg-white/5 text-emerald-400 group-hover:text-emerald-300'}`}>
-                                                <i className={`fas fa-${link.icon} text-xs`}></i>
+                                        {link.dropdown ? (
+                                            <div className="flex flex-col">
+                                                <button
+                                                    onClick={() => setIsMobileProfileOpen(!isMobileProfileOpen)}
+                                                    className={`flex items-center gap-4 px-6 py-4 rounded-2xl text-sm font-bold transition-all relative group ${isActive(link.path)
+                                                        ? 'bg-gradient-to-r from-white/15 to-white/5 text-white shadow-xl shadow-emerald-950/20 ring-1 ring-white/20'
+                                                        : 'text-emerald-50/70 hover:text-white hover:bg-white/5'
+                                                        }`}
+                                                >
+                                                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isActive(link.path) ? 'bg-emerald-500 text-white' : 'bg-white/5 text-emerald-400 group-hover:text-emerald-300'}`}>
+                                                        <i className={`fas fa-${link.icon} text-xs`}></i>
+                                                    </div>
+                                                    <span className="flex-1 text-left">{link.name}</span>
+                                                    <i className={`fas fa-chevron-down text-[10px] transition-transform duration-300 ${isMobileProfileOpen ? 'rotate-180' : ''}`}></i>
+                                                </button>
+
+                                                <AnimatePresence>
+                                                    {isMobileProfileOpen && (
+                                                        <motion.div
+                                                            initial={{ height: 0, opacity: 0 }}
+                                                            animate={{ height: 'auto', opacity: 1 }}
+                                                            exit={{ height: 0, opacity: 0 }}
+                                                            className="overflow-hidden bg-white/5 rounded-2xl mt-1 ml-4"
+                                                        >
+                                                            {link.dropdown.map((subItem) => (
+                                                                <Link
+                                                                    key={subItem.path}
+                                                                    href={subItem.path}
+                                                                    onClick={() => setIsMobileMenuOpen(false)}
+                                                                    className={`flex items-center gap-4 px-6 py-3 text-xs font-bold transition-all ${isActive(subItem.path) ? 'text-emerald-400' : 'text-emerald-50/50 hover:text-emerald-200'}`}
+                                                                >
+                                                                    <i className={`fas fa-${subItem.icon} text-[10px] w-4 text-center`}></i>
+                                                                    {subItem.name}
+                                                                </Link>
+                                                            ))}
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
                                             </div>
-                                            <span className="flex-1">{link.name}</span>
-                                            {isActive(link.path) && (
-                                                <motion.div
-                                                    layoutId="activeIndicator"
-                                                    className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]"
-                                                />
-                                            )}
-                                        </Link>
+                                        ) : (
+                                            <Link
+                                                href={link.path}
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                className={`flex items-center gap-4 px-6 py-4 rounded-2xl text-sm font-bold transition-all relative group ${isActive(link.path)
+                                                    ? 'bg-gradient-to-r from-white/15 to-white/5 text-white shadow-xl shadow-emerald-950/20 ring-1 ring-white/20'
+                                                    : 'text-emerald-50/70 hover:text-white hover:bg-white/5'
+                                                    }`}
+                                            >
+                                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${isActive(link.path) ? 'bg-emerald-500 text-white' : 'bg-white/5 text-emerald-400 group-hover:text-emerald-300'}`}>
+                                                    <i className={`fas fa-${link.icon} text-xs`}></i>
+                                                </div>
+                                                <span className="flex-1 text-left">{link.name}</span>
+                                                {isActive(link.path) && (
+                                                    <motion.div
+                                                        layoutId="activeIndicator"
+                                                        className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]"
+                                                    />
+                                                )}
+                                            </Link>
+                                        )}
                                     </motion.div>
                                 ))}
 

@@ -45,9 +45,33 @@ class PublicController extends Controller
 
     public function profile()
     {
+        return redirect()->route('profile.vision-mission');
+    }
+
+    public function visionMission()
+    {
+        $pageSetting = PageSetting::where('page_name', 'profile')->first();
+        return Inertia::render('Profile/VisionMission', [
+            'pageSetting' => $pageSetting,
+        ]);
+    }
+
+    public function history()
+    {
+        $pageSetting = PageSetting::where('page_name', 'profile')->first();
+        return Inertia::render('Profile/History', [
+            'pageSetting' => $pageSetting,
+        ]);
+    }
+
+    public function structure()
+    {
         $organizations = Member::orderBy('order', 'asc')->get();
         $pageSetting = PageSetting::where('page_name', 'profile')->first();
-        return Inertia::render('Profile', compact('organizations', 'pageSetting'));
+        return Inertia::render('Profile/Structure', [
+            'organizations' => $organizations,
+            'pageSetting' => $pageSetting,
+        ]);
     }
 
     public function news()
@@ -219,7 +243,7 @@ class PublicController extends Controller
                 'id' => 'db-' . $agenda->id,
                 'title' => $agenda->title,
                 'category' => $category,
-                'start' => $agenda->event_date->toDateString(),
+                'start' => \Carbon\Carbon::parse($agenda->event_date)->toDateString(),
                 'time' => $agenda->event_time ? \Carbon\Carbon::parse($agenda->event_time)->format('H:i') : null,
                 'description' => $agenda->description,
                 'location' => $agenda->location,

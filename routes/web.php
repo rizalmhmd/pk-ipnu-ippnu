@@ -19,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PublicController::class, 'index'])->name('home');
 
 Route::get('/profil', [PublicController::class, 'profile'])->name('profile');
+Route::get('/profil/visi-misi', [PublicController::class, 'visionMission'])->name('profile.vision-mission');
+Route::get('/profil/sejarah', [PublicController::class, 'history'])->name('profile.history');
+Route::get('/profil/struktur-organisasi', [PublicController::class, 'structure'])->name('profile.structure');
 Route::get('/berita', [PublicController::class, 'news'])->name('news.index');
 Route::get('/berita/{slug}', [PublicController::class, 'newsDetail'])->name('news.show');
 Route::get('/artikel', [PublicController::class, 'articles'])->name('articles.index');

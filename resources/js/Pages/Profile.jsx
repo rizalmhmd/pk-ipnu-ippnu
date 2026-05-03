@@ -7,10 +7,20 @@ import Lightbox from '@/Components/Lightbox';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Instagram, Users } from 'lucide-react';
 
-export default function Profile({ siteSetting, sections, organizations, pageSetting }) {
-    const [selectedTab, setSelectedTab] = useState('visi-misi');
+export default function Profile({ siteSetting, sections, organizations, pageSetting, activeSection }) {
+    const [selectedTab, setSelectedTab] = useState(activeSection === 'sejarah' ? 'sejarah' : 'visi-misi');
     const [selectedOrg, setSelectedOrg] = useState('ipnu');
     const [selectedMember, setSelectedMember] = useState(null);
+
+    // Scroll to section if 'struktur' is active
+    React.useEffect(() => {
+        if (activeSection === 'struktur') {
+            const element = document.getElementById('struktur-organisasi');
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    }, [activeSection]);
 
     // Filter and Level Logic
     const filteredMembers = (organizations || []).filter(m => m.type === selectedOrg);
@@ -134,7 +144,7 @@ export default function Profile({ siteSetting, sections, organizations, pageSett
                     </div>
 
                     {/* Structure Section */}
-                    <div className="py-12 md:py-16">
+                    <div id="struktur-organisasi" className="py-12 md:py-16">
                         <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
                             <h3 className="text-2xl md:text-4xl font-black text-slate-900 dark:text-white font-serif mb-6 leading-tight uppercase tracking-tight">Struktur Pengurus</h3>
                             <div className="w-16 md:w-20 h-1.5 bg-emerald-600 mx-auto rounded-full mb-10"></div>

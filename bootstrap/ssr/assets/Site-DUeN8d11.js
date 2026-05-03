@@ -1,10 +1,10 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { useState } from "react";
-import { useForm, Head, router } from "@inertiajs/react";
+import { useForm, Head } from "@inertiajs/react";
 import { A as AdminLayout } from "./AdminLayout-aeaPXddD.js";
-import { Globe, Settings, Layout, Image, ImageIcon, Mail, Phone, Instagram, MessageCircle, Save } from "lucide-react";
+import { Globe, Settings, Layout, Image, X, ImageIcon, Mail, Phone, Instagram, MessageCircle, Save } from "lucide-react";
 function Site({ setting }) {
-  const { data, setData, processing, errors } = useForm({
+  const { data, setData, post, processing, errors } = useForm({
     site_name: setting.site_name || "",
     meta_description: setting.meta_description || "",
     footer_description: setting.footer_description || "",
@@ -60,7 +60,7 @@ function Site({ setting }) {
   };
   const submit = (e) => {
     e.preventDefault();
-    router.post(route("admin.site-settings.update"), data);
+    post(route("admin.site-settings.update"));
   };
   const SectionHeader = ({ icon: Icon, title, subtitle }) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-8", children: [
     /* @__PURE__ */ jsx("div", { className: "p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 rounded-lg", children: /* @__PURE__ */ jsx(Icon, { size: 20 }) }),
