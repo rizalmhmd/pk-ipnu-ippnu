@@ -16,6 +16,6 @@ class Agenda extends Model
     ];
 
     protected $casts = [
-        'event_date' => 'date',
+        'event_date' => 'date:Y-m-d',
     ];
 }

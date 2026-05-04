@@ -29,8 +29,6 @@ export default function VisionMission({ pageSetting }) {
 
             <HeroSection
                 bgImage={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3"}
-                title="Visi & Misi"
-                subtitle="Arah Gerak dan Tujuan Organisasi"
             />
 
             <div className="container mx-auto px-6 py-20">

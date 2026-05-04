@@ -30,8 +30,37 @@ export default function NationalCalendar({ agendas = [], nationalHolidays = [] }
     const getEventsForDay = (day) => {
         const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
-        const dayAgendas = agendas.filter(a => a.event_date === dateString);
-        const dayHolidays = nationalHolidays.filter(h => h.date === dateString);
+        const dayAgendas = agendas.filter(a => {
+            const rawDate = a.event_date || a.date;
+            if (!rawDate) return false;
+
+            // Handle ISO strings with 'T' (like from server) vs plain 'YYYY-MM-DD'
+            let formattedDate = '';
+            if (rawDate.includes('T')) {
+                const d = new Date(rawDate);
+                // Get local date parts to avoid UTC shift
+                formattedDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            } else {
+                formattedDate = rawDate.substring(0, 10);
+            }
+
+            return formattedDate === dateString;
+        });
+
+        const dayHolidays = nationalHolidays.filter(h => {
+            const rawDate = h.date || h.event_date;
+            if (!rawDate) return false;
+
+            let formattedDate = '';
+            if (rawDate.includes('T')) {
+                const d = new Date(rawDate);
+                formattedDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            } else {
+                formattedDate = rawDate.substring(0, 10);
+            }
+
+            return formattedDate === dateString;
+        });
 
         return [...dayAgendas.map(a => ({ ...a, type: 'agenda' })), ...dayHolidays.map(h => ({ ...h, type: 'holiday' }))];
     };
@@ -79,25 +108,43 @@ export default function NationalCalendar({ agendas = [], nationalHolidays = [] }
                             const events = day ? getEventsForDay(day) : [];
                             const isSunday = idx % 7 === 0;
                             const hasHoliday = events.some(e => e.type === 'holiday');
+                            const hasAgenda = events.some(e => e.type === 'agenda');
                             const isToday = day && new Date().getDate() === day && new Date().getMonth() === month && new Date().getFullYear() === year;
 
                             return (
-                                <div key={idx} className={`min-h-[100px] md:min-h-[140px] bg-white p-2 md:p-3 group transition-colors flex flex-col ${day ? 'hover:bg-slate-50 relative' : ''}`}>
+                                <div 
+                                    key={idx} 
+                                    className={`min-h-[100px] md:min-h-[140px] p-2 md:p-3 group transition-all flex flex-col 
+                                    ${day ? 'bg-white hover:bg-slate-50 relative cursor-default' : 'bg-slate-50/30'}
+                                    ${hasAgenda && !isToday ? 'bg-emerald-50/20' : ''}
+                                    ${hasHoliday && !isToday ? 'bg-red-50/10' : ''}
+                                    `}
+                                >
                                     {day && (
                                         <>
                                             <div className="flex justify-between items-start mb-2">
-                                                <span className={`text-sm font-bold ${isToday ? 'w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center' : (hasHoliday || isSunday ? 'text-red-500' : 'text-slate-400')}`}>
+                                                <span className={`text-sm font-black transition-colors ${
+                                                    isToday 
+                                                        ? 'w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-lg shadow-emerald-600/30' 
+                                                        : (hasHoliday || isSunday 
+                                                            ? 'text-red-500' 
+                                                            : (hasAgenda ? 'text-emerald-600' : 'text-slate-400')
+                                                          )
+                                                }`}>
                                                     {day}
                                                 </span>
+                                                {hasAgenda && !isToday && (
+                                                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                                                )}
                                             </div>
                                             <div className="space-y-1 overflow-y-auto max-h-[80px] md:max-h-[100px] no-scrollbar">
                                                 {events.map((event, eIdx) => (
                                                     <button
                                                         key={eIdx}
                                                         onClick={() => setSelectedEvent(event)}
-                                                        className={`w-full text-left text-[8px] md:text-[9px] p-2 rounded-lg font-bold leading-tight line-clamp-2 transition-all hover:brightness-95 active:scale-95 ${event.type === 'holiday'
+                                                        className={`w-full text-left text-[8px] md:text-[9px] p-2 rounded-lg font-black leading-tight line-clamp-2 transition-all hover:scale-[1.02] active:scale-95 shadow-sm ${event.type === 'holiday'
                                                             ? (event.cat === 'nasional' ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-blue-50 text-blue-600 border border-blue-100')
-                                                            : 'bg-emerald-50 text-emerald-600 border border-emerald-100'
+                                                            : 'bg-emerald-600 text-white border border-emerald-500 shadow-emerald-900/10'
                                                             }`}
                                                     >
                                                         {event.title}
@@ -171,7 +218,9 @@ export default function NationalCalendar({ agendas = [], nationalHolidays = [] }
                                                 ? (selectedEvent.cat === 'nasional' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white')
                                                 : 'bg-emerald-500 text-white'
                                                 }`}>
-                                                {selectedEvent.type === 'holiday' ? (selectedEvent.cat === 'nasional' ? 'Libur Nasional' : 'Hari Besar') : 'Agenda IPNU'}
+                                                {selectedEvent.type === 'holiday' 
+                                                     ? (selectedEvent.cat === 'nasional' ? 'Libur Nasional' : 'Hari Besar Keagamaan') 
+                                                     : (selectedEvent.category ? `Agenda ${selectedEvent.category}` : 'Agenda Organisasi')}
                                             </span>
                                             <h4 className="text-xl font-bold text-slate-800 font-serif mt-1">{selectedEvent.title}</h4>
                                         </div>

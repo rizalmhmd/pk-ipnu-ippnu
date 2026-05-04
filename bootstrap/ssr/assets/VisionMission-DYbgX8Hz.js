@@ -20,9 +20,7 @@ function VisionMission({ pageSetting }) {
     /* @__PURE__ */ jsx(
       HeroSection,
       {
-        bgImage: pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3",
-        title: "Visi & Misi",
-        subtitle: "Arah Gerak dan Tujuan Organisasi"
+        bgImage: pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3"
       }
     ),
     /* @__PURE__ */ jsx("div", { className: "container mx-auto px-6 py-20", children: /* @__PURE__ */ jsxs("div", { className: "space-y-32", children: [

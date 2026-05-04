@@ -15,9 +15,7 @@ function History({ pageSetting }) {
     /* @__PURE__ */ jsx(
       HeroSection,
       {
-        bgImage: pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1464695110811-47a0584c9c61?ixlib=rb-4.0.3",
-        title: "Sejarah Kami",
-        subtitle: "Jejak Langkah Perjuangan dan Pengabdian"
+        bgImage: pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1464695110811-47a0584c9c61?ixlib=rb-4.0.3"
       }
     ),
     /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-6 py-20", children: [
