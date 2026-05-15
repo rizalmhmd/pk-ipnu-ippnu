@@ -10,8 +10,10 @@ import {
     FileImage
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useRealtimeUpdates } from '@/Hooks/useRealtimeUpdates';
 
 export default function Index({ galleries }) {
+    useRealtimeUpdates('Gallery', 'galleries');
     const handleDelete = (id) => {
         if (confirm('Apakah Anda yakin ingin menghapus foto ini dari galeri?')) {
             router.delete(route('admin.galleries.destroy', id), {

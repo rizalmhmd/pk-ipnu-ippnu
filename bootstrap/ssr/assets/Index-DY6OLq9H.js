@@ -5,7 +5,9 @@ import { A as AdminLayout } from "./AdminLayout-aeaPXddD.js";
 import { P as Pagination } from "./Pagination-CXuchKWL.js";
 import { UserPlus, User, Instagram, Edit, Trash2, Users } from "lucide-react";
 import { motion } from "framer-motion";
+import { u as useRealtimeUpdates } from "./useRealtimeUpdates-CAqg7-RS.js";
 function Index({ members }) {
+  useRealtimeUpdates("Member", "members");
   const handleDelete = (id) => {
     if (confirm("Apakah Anda yakin ingin menghapus data anggota ini?")) {
       router.delete(route("admin.members.destroy", id), {

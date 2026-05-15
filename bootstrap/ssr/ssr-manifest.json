@@ -42,6 +42,9 @@
   "resources/js/Components/StatCard.jsx": [
     "/build/assets/Welcome-DZ_6CwYz.js"
   ],
+  "resources/js/Hooks/useRealtimeUpdates.js": [
+    "/build/assets/useRealtimeUpdates-CAqg7-RS.js"
+  ],
   "resources/js/Layouts/AdminLayout.jsx": [
     "/build/assets/AdminLayout-aeaPXddD.js"
   ],
@@ -58,7 +61,7 @@
     "/build/assets/Edit-WGY64mHz.js"
   ],
   "resources/js/Pages/Admin/Agendas/Index.jsx": [
-    "/build/assets/Index-Dr_sus6h.js"
+    "/build/assets/Index-E7SEJcV-.js"
   ],
   "resources/js/Pages/Admin/Articles/Create.jsx": [
     "/build/assets/Create-BM5r8wPP.js"
@@ -67,16 +70,16 @@
     "/build/assets/Edit-BFChWN8f.js"
   ],
   "resources/js/Pages/Admin/Articles/Index.jsx": [
-    "/build/assets/Index-BMd3F05b.js"
+    "/build/assets/Index-DuKkb4nJ.js"
   ],
   "resources/js/Pages/Admin/Dashboard.jsx": [
-    "/build/assets/Dashboard-Bc5RnM-o.js"
+    "/build/assets/Dashboard-Bohy3xyf.js"
   ],
   "resources/js/Pages/Admin/Galleries/Create.jsx": [
     "/build/assets/Create-CBBdQMKy.js"
   ],
   "resources/js/Pages/Admin/Galleries/Index.jsx": [
-    "/build/assets/Index-D2XlHezy.js"
+    "/build/assets/Index-C0XBVmrZ.js"
   ],
   "resources/js/Pages/Admin/Members/Create.jsx": [
     "/build/assets/Create-DVPxB6sC.js"
@@ -85,7 +88,7 @@
     "/build/assets/Edit-DHUtzzK2.js"
   ],
   "resources/js/Pages/Admin/Members/Index.jsx": [
-    "/build/assets/Index-C9deT97Y.js"
+    "/build/assets/Index-DY6OLq9H.js"
   ],
   "resources/js/Pages/Admin/Posts/Create.jsx": [
     "/build/assets/Create-CF4DWEed.js"
@@ -94,7 +97,7 @@
     "/build/assets/Edit-CfJSPSqY.js"
   ],
   "resources/js/Pages/Admin/Posts/Index.jsx": [
-    "/build/assets/Index-BvpUZgA5.js"
+    "/build/assets/Index-sNJZZgyz.js"
   ],
   "resources/js/Pages/Admin/Profile/Edit.jsx": [
     "/build/assets/Edit-BsfxMCBk.js"
@@ -106,7 +109,7 @@
     "/build/assets/Edit-yrtgQxbj.js"
   ],
   "resources/js/Pages/Admin/Quotes/Index.jsx": [
-    "/build/assets/Index-DEiOmEw3.js"
+    "/build/assets/Index-CqpPIr4I.js"
   ],
   "resources/js/Pages/Admin/Settings/Pages/Edit.jsx": [
     "/build/assets/Edit-C1cuZgXQ.js"
@@ -124,7 +127,7 @@
     "/build/assets/Edit-BWv7OQSw.js"
   ],
   "resources/js/Pages/Admin/Statistics/Index.jsx": [
-    "/build/assets/Index-CWKuDkso.js"
+    "/build/assets/Index-CbV5BVJc.js"
   ],
   "resources/js/Pages/Admin/Users/Form.jsx": [
     "/build/assets/Form-BpvKTNBu.js"

@@ -14,8 +14,10 @@ import {
     MoreVertical
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useRealtimeUpdates } from '@/Hooks/useRealtimeUpdates';
 
 export default function Index({ posts }) {
+    useRealtimeUpdates('Post', 'posts');
     const handleDelete = (id) => {
         if (confirm('Apakah Anda yakin ingin menghapus berita ini?')) {
             router.delete(route('admin.posts.destroy', id), {

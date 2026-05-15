@@ -13,8 +13,10 @@ import {
     Users
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useRealtimeUpdates } from '@/Hooks/useRealtimeUpdates';
 
 export default function Index({ members }) {
+    useRealtimeUpdates('Member', 'members');
     const handleDelete = (id) => {
         if (confirm('Apakah Anda yakin ingin menghapus data anggota ini?')) {
             router.delete(route('admin.members.destroy', id), {

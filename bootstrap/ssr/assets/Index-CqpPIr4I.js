@@ -4,7 +4,9 @@ import { Head, Link, router } from "@inertiajs/react";
 import { A as AdminLayout } from "./AdminLayout-aeaPXddD.js";
 import { Plus, CheckCircle2, XCircle, Quote, User, Edit, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { u as useRealtimeUpdates } from "./useRealtimeUpdates-CAqg7-RS.js";
 function Index({ quotes }) {
+  useRealtimeUpdates("Quote", "quotes");
   const handleDelete = (id) => {
     if (confirm("Apakah Anda yakin ingin menghapus kutipan ini?")) {
       router.delete(route("admin.quotes.destroy", id), {

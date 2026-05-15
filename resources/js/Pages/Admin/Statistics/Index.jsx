@@ -1,11 +1,13 @@
-
 import React from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { Plus, Pencil, Trash2, CheckCircle, XCircle } from 'lucide-react';
 import Swal from 'sweetalert2';
+import { useRealtimeUpdates } from '@/Hooks/useRealtimeUpdates';
 
 export default function Index({ statistics }) {
+    useRealtimeUpdates('Statistic', 'statistics');
+    
     const handleDelete = (id) => {
         Swal.fire({
             title: 'Apakah Anda yakin?',

@@ -9,6 +9,8 @@ use App\Models\Gallery;
 use App\Models\Agenda;
 use App\Models\Quote;
 use App\Models\SiteSetting;
+use App\Models\Article;
+use App\Models\Statistic;
 use App\Observers\ContentObserver;
 
 class AppServiceProvider extends ServiceProvider
@@ -87,6 +89,8 @@ class AppServiceProvider extends ServiceProvider
             Agenda::observe(ContentObserver::class);
             Quote::observe(ContentObserver::class);
             SiteSetting::observe(ContentObserver::class);
+            Article::observe(ContentObserver::class);
+            Statistic::observe(ContentObserver::class);
 
         } catch (\Exception $e) {
             // Silently fail if table not migrated yet

@@ -5,7 +5,9 @@ import { A as AdminLayout } from "./AdminLayout-aeaPXddD.js";
 import { P as Pagination } from "./Pagination-CXuchKWL.js";
 import { Plus, Trash2, FileImage } from "lucide-react";
 import { motion } from "framer-motion";
+import { u as useRealtimeUpdates } from "./useRealtimeUpdates-CAqg7-RS.js";
 function Index({ galleries }) {
+  useRealtimeUpdates("Gallery", "galleries");
   const handleDelete = (id) => {
     if (confirm("Apakah Anda yakin ingin menghapus foto ini dari galeri?")) {
       router.delete(route("admin.galleries.destroy", id), {

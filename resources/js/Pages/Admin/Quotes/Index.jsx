@@ -12,8 +12,10 @@ import {
     ImageIcon
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useRealtimeUpdates } from '@/Hooks/useRealtimeUpdates';
 
 export default function Index({ quotes }) {
+    useRealtimeUpdates('Quote', 'quotes');
     const handleDelete = (id) => {
         if (confirm('Apakah Anda yakin ingin menghapus kutipan ini?')) {
             router.delete(route('admin.quotes.destroy', id), {

@@ -4,7 +4,9 @@ import { Head, Link, router } from "@inertiajs/react";
 import { A as AdminLayout } from "./AdminLayout-aeaPXddD.js";
 import { Plus, CheckCircle, XCircle, Pencil, Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
+import { u as useRealtimeUpdates } from "./useRealtimeUpdates-CAqg7-RS.js";
 function Index({ statistics }) {
+  useRealtimeUpdates("Statistic", "statistics");
   const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah Anda yakin?",

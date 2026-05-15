@@ -5,7 +5,9 @@ import { A as AdminLayout } from "./AdminLayout-aeaPXddD.js";
 import { P as Pagination } from "./Pagination-CXuchKWL.js";
 import { Plus, Clock, MapPin, Edit, Trash2, ClipboardList } from "lucide-react";
 import { motion } from "framer-motion";
+import { u as useRealtimeUpdates } from "./useRealtimeUpdates-CAqg7-RS.js";
 function Index({ agendas }) {
+  useRealtimeUpdates("Agenda", "agendas");
   const handleDelete = (id) => {
     if (confirm("Apakah Anda yakin ingin menghapus agenda ini?")) {
       router.delete(route("admin.agendas.destroy", id), {

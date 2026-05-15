@@ -13,8 +13,10 @@ import {
     ChevronRight
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useRealtimeUpdates } from '@/Hooks/useRealtimeUpdates';
 
 export default function Dashboard({ stats, recentActivities }) {
+    useRealtimeUpdates(null); // Refresh dashboard on any content change
     const allStatCards = [
         { key: 'posts', title: 'Berita', count: stats?.posts, icon: Newspaper, color: 'from-emerald-500 to-teal-600', shadow: 'shadow-emerald-200', href: '/admin/posts' },
         { key: 'articles', title: 'Artikel', count: stats?.articles, icon: FileText, color: 'from-blue-500 to-indigo-600', shadow: 'shadow-blue-200', href: '/admin/articles' },
