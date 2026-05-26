@@ -124,104 +124,210 @@ class PublicController extends Controller
 
     private function getNationalHolidaysData()
     {
-        return Cache::remember('national_holidays_full_v7', now()->addDays(30), function () {
+        $currentYear = now()->year;
+        $nextYear = $currentYear + 1;
+
+        return collect([$currentYear, $nextYear])
+            ->flatMap(fn ($year) => $this->getNationalHolidaysByYear((int) $year))
+            ->unique(fn ($holiday) => ($holiday['official_name'] ?? $holiday['title']) . '|' . $holiday['date'])
+            ->sortBy('date')
+            ->values()
+            ->all();
+    }
+
+    private function getNationalHolidaysByYear(int $year): array
+    {
+        $cacheKey = "national_holidays_id_{$year}_v3";
+
+        return Cache::remember($cacheKey, now()->addDays(30), function () use ($year) {
             try {
-                // Fetch for current and next year to be safe
-                $currentYear = now()->year;
-                $nextYear = $currentYear + 1;
-                
-                $response = Http::get("https://libur.deno.dev/api");
-                
-                if ($response->successful()) {
-                    $holidays = $response->json();
-                    
-                    // Group by name to identify "doubles"
-                    $grouped = collect($holidays)->groupBy('name');
-                    
-                    $processed = [];
-                    foreach ($grouped as $name => $dates) {
-                        $dates = $dates->sortBy('date')->values();
-                        $count = $dates->count();
-                        
-                        foreach ($dates as $index => $h) {
-                            $cat = 'nasional';
-                            
-                            // Intelligent Categorization
-                            $religiousKeywords = [
-                                'Idul Fitri', 'Idul Adha', 'Natal', 'Nyepi', 'Waisak', 
-                                'Isra Mikraj', 'Maulid', 'Yesus Kristus', 'Imlek', 
-                                'Hijriah', 'Saka', 'Kongzili', 'Paskah', 'Kenaikan'
-                            ];
-                            
-                            foreach ($religiousKeywords as $keyword) {
-                                if (stripos($name, $keyword) !== false) {
-                                    $cat = 'keagamaan';
-                                    break;
-                                }
-                            }
-                            
-                            $displayTitle = $name;
-                            $description = 'Libur Nasional';
-                            
-                            // Highly Concise Labeling for Calendar Units
-                            if ($count > 1 && !str_contains(strtolower($name), 'cuti bersama')) {
-                                $shortName = $name;
-                                if (str_contains($name, 'Idul Fitri')) $shortName = 'Idul Fitri';
-                                if (str_contains($name, 'Idul Adha')) $shortName = 'Idul Adha';
-                                if (str_contains($name, 'Imlek')) $shortName = 'Imlek';
-                                if (str_contains($name, 'Nyepi')) $shortName = 'Nyepi';
-                                if (str_contains($name, 'Waisak')) $shortName = 'Waisak';
-                                if (str_contains($name, 'Natal')) $shortName = 'Natal';
+                $response = Http::timeout(20)->get('https://libur.deno.dev/api');
 
-                                if (str_contains($name, 'Idul Fitri') || str_contains($name, 'Idul Adha')) {
-                                    if ($index >= 2) { 
-                                        $displayTitle = 'Cuti ' . $shortName;
-                                        $description = 'Cuti Bersama';
-                                    } else {
-                                        $displayTitle = 'Hari ' . ($index + 1) . ' ' . $shortName;
-                                    }
-                                } elseif (str_contains($name, 'Imlek')) {
-                                    if ($index === 0) { 
-                                        $displayTitle = 'Cuti ' . $shortName;
-                                        $description = 'Cuti Bersama';
-                                    } else {
-                                        $displayTitle = $shortName;
-                                    }
-                                } elseif (str_contains($name, 'Nyepi') || str_contains($name, 'Natal') || str_contains($name, 'Waisak')) {
-                                    if ($index > 0) { 
-                                        $displayTitle = 'Cuti ' . $shortName;
-                                        $description = 'Cuti Bersama';
-                                    } else {
-                                        $displayTitle = $shortName;
-                                    }
-                                }
+                if ($response->successful() && is_array($response->json())) {
+                    $normalized = collect($response->json())
+                        ->filter(function ($item) use ($year) {
+                            $date = $item['date'] ?? null;
+                            if (!$date) {
+                                return false;
                             }
 
-                            if (str_contains(strtolower($name), 'cuti bersama')) {
-                                $description = 'Cuti Bersama';
-                                $displayTitle = 'Cuti ' . ($shortName ?? 'Libur');
-                            }
-                            
-                            $processed[] = [
-                                'title' => $displayTitle,
-                                'date' => $h['date'],
-                                'cat' => $cat,
-                                'desc' => $description
-                            ];
-                        }
-                    }
-                    
-                    return $processed;
+                            return (int) substr($date, 0, 4) === $year;
+                        })
+                        ->map(fn ($item) => $this->normalizeNationalHoliday($item))
+                        ->filter()
+                        ->sortBy('date')
+                        ->values()
+                        ->all();
+
+                    return $this->harmonizeCutiBersamaNames($normalized);
                 }
-            } catch (\Exception $e) {
-                \Log::error("Failed to fetch holidays: " . $e->getMessage());
+            } catch (\Throwable $e) {
+                \Log::warning("Failed to fetch national holidays for {$year}: " . $e->getMessage());
             }
-            
-            // Minimal Fallback if API fails
-            return [
-                ['title' => 'Tahun Baru 2025', 'date' => '2025-01-01', 'cat' => 'nasional', 'desc' => 'Libur Nasional'],
-            ];
+
+            return $this->getNationalHolidayFallback($year);
         });
+    }
+
+    private function normalizeNationalHoliday(array $holiday): ?array
+    {
+        $name = trim((string) ($holiday['name'] ?? ''));
+        $date = (string) ($holiday['date'] ?? '');
+        $isNationalHoliday = (bool) ($holiday['is_national_holiday'] ?? false);
+
+        if ($name === '' || $date === '') {
+            return null;
+        }
+
+        $lowerName = mb_strtolower($name);
+        $isCutiBersama = str_contains($lowerName, 'cuti bersama');
+
+        $religiousKeywords = [
+            'idul fitri', 'idul adha', 'natal', 'nyepi', 'waisak',
+            'isra mikraj', 'maulid', 'yesus kristus', 'imlek',
+            'hijriah', 'saka', 'kongzili', 'paskah', 'kenaikan',
+        ];
+
+        $isReligious = false;
+        foreach ($religiousKeywords as $keyword) {
+            if (str_contains($lowerName, $keyword)) {
+                $isReligious = true;
+                break;
+            }
+        }
+
+        // Prioritas klasifikasi:
+        // 1) Jika nama mengandung "cuti bersama" => cuti_bersama
+        // 2) Jika hari libur resmi nasional dari API => keagamaan / nasional
+        // 3) Selain itu => tidak ditampilkan (null)
+        $cat = null;
+        $type = null;
+        if ($isCutiBersama) {
+            $cat = 'cuti_bersama';
+            $type = 'cuti_bersama';
+        } elseif ($isNationalHoliday) {
+            $cat = $isReligious ? 'keagamaan' : 'nasional';
+            $type = 'libur_nasional';
+        } else {
+            return null;
+        }
+
+        $desc = 'Kalender Nasional Indonesia';
+        if ($type === 'cuti_bersama') {
+            $desc = 'Cuti Bersama (Kalender Nasional Indonesia)';
+        } elseif ($type === 'libur_nasional') {
+            $desc = 'Libur Nasional Indonesia';
+        }
+
+        return [
+            'title' => $name,
+            'official_name' => $name,
+            'date' => $date,
+            'event_date' => $date,
+            'cat' => $cat,
+            'type' => $type,
+            'desc' => $desc,
+            'source' => 'libur.deno.dev',
+            'is_national_holiday' => $isNationalHoliday,
+        ];
+    }
+
+    private function harmonizeCutiBersamaNames(array $events): array
+    {
+        $religiousMap = [
+            'idul fitri' => 'idul fitri',
+            'idul adha' => 'idul adha',
+            'natal' => 'natal',
+            'nyepi' => 'nyepi',
+            'waisak' => 'waisak',
+            'imlek' => 'imlek',
+            'isra mi\'raj' => 'isra mi\'raj',
+            'maulid' => 'maulid',
+            'paskah' => 'paskah',
+            'kenaikan yesus kristus' => 'kenaikan yesus kristus',
+            'tahun baru islam' => 'tahun baru islam',
+        ];
+
+        $detectFamily = function (string $text) use ($religiousMap): ?string {
+            $lower = mb_strtolower($text);
+            foreach ($religiousMap as $needle => $family) {
+                if (str_contains($lower, $needle)) {
+                    return $family;
+                }
+            }
+            return null;
+        };
+
+        $result = $events;
+        foreach ($result as $idx => $event) {
+            if (($event['type'] ?? null) !== 'cuti_bersama') {
+                continue;
+            }
+
+            $cutiFamily = $detectFamily((string) ($event['title'] ?? ''));
+            $cutiDate = $event['date'] ?? null;
+            if (!$cutiDate) {
+                continue;
+            }
+
+            $nearestHoliday = null;
+            $nearestDistance = PHP_INT_MAX;
+
+            foreach ($result as $candidate) {
+                if (($candidate['type'] ?? null) !== 'libur_nasional') {
+                    continue;
+                }
+
+                $candidateDate = $candidate['date'] ?? null;
+                if (!$candidateDate) {
+                    continue;
+                }
+
+                $distance = abs(strtotime($candidateDate) - strtotime($cutiDate));
+                if ($distance < $nearestDistance) {
+                    $nearestDistance = $distance;
+                    $nearestHoliday = $candidate;
+                }
+            }
+
+            if (!$nearestHoliday || $nearestDistance > (5 * 86400)) {
+                continue;
+            }
+
+            $holidayTitle = (string) ($nearestHoliday['official_name'] ?? $nearestHoliday['title'] ?? '');
+            $holidayFamily = $detectFamily($holidayTitle);
+
+            // Standarisasi nama cuti bersama agar SELALU mengikuti hari raya/libur nasional terdekat.
+            // Ini menghindari kasus salah label seperti "Cuti Bersama ... Idul Fitri" di sekitar Idul Adha.
+            if ($holidayTitle !== '') {
+                $fixedTitle = 'Cuti Bersama ' . $holidayTitle;
+                $result[$idx]['title'] = $fixedTitle;
+                $result[$idx]['official_name'] = $fixedTitle;
+            } elseif ($holidayFamily && $cutiFamily && $holidayFamily !== $cutiFamily) {
+                // Fallback safety jika title kosong tapi family mismatch terdeteksi.
+                $result[$idx]['title'] = 'Cuti Bersama';
+                $result[$idx]['official_name'] = 'Cuti Bersama';
+            }
+        }
+
+        return $result;
+    }
+
+    private function getNationalHolidayFallback(int $year): array
+    {
+        // Fallback minimum to keep UI stable when external API is unavailable.
+        return [
+            [
+                'title' => "Tahun Baru Masehi {$year}",
+                'official_name' => "Tahun Baru Masehi {$year}",
+                'date' => "{$year}-01-01",
+                'event_date' => "{$year}-01-01",
+                'cat' => 'nasional',
+                'type' => 'libur_nasional',
+                'desc' => 'Fallback kalender nasional (API tidak tersedia)',
+                'source' => 'local-fallback',
+            ],
+        ];
     }
 
     public function getAgendasJson()
@@ -258,7 +364,19 @@ class PublicController extends Controller
         $nationalHolidays = $this->getNationalHolidaysData();
 
         $autoEvents = collect($nationalHolidays)->map(function($h) {
-             $colors = ['nasional' => '#e11d48', 'keagamaan' => '#2563eb'];
+             $colors = [
+                 'nasional' => '#e11d48',
+                 'keagamaan' => '#2563eb',
+                 'cuti_bersama' => '#f59e0b',
+             ];
+
+             $status = 'Nasional';
+             if (($h['type'] ?? null) === 'cuti_bersama') {
+                 $status = 'Cuti Bersama';
+             } elseif (($h['cat'] ?? null) === 'keagamaan') {
+                 $status = 'Keagamaan';
+             }
+
              return [
                 'id' => 'auto-' . md5($h['title'] . $h['date']),
                 'title' => $h['title'],
@@ -266,7 +384,7 @@ class PublicController extends Controller
                 'start' => $h['date'],
                 'description' => $h['desc'] ?? '',
                 'isAgenda' => false, // Flag for special days (not agenda events)
-                'status' => 'Nasional',
+                'status' => $status,
                 'allDay' => true,
                 'color' => $colors[$h['cat']] ?? '#e11d48',
              ];

@@ -8,7 +8,12 @@ use Illuminate\Support\Str;
 
 class Article extends Model
 {
-    protected $fillable = ['title', 'slug', 'image', 'content', 'published_at', 'author'];
+    protected $fillable = ['user_id', 'title', 'slug', 'image', 'content', 'published_at', 'author'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     protected $appends = ['image_url'];
 

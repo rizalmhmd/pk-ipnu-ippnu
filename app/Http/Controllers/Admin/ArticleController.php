@@ -32,6 +32,7 @@ class ArticleController extends Controller
         ]);
 
         $data = $request->all();
+        $data['user_id'] = auth()->id();
         $data['slug'] = Str::slug($request->title) . '-' . time();
         $data['published_at'] = now();
 

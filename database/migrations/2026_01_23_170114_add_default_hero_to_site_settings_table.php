@@ -24,7 +24,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('site_settings', function (Blueprint $table) {
-            //
+            $table->dropColumn([
+                'default_hero_title',
+                'default_hero_subtitle',
+                'default_hero_image',
+            ]);
         });
     }
 };

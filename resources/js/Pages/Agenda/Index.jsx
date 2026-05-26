@@ -15,6 +15,7 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
         { id: 'organisasi', name: 'Organisasi', icon: 'fa-users', color: 'bg-emerald-500' },
         { id: 'nasional', name: 'Nasional', icon: 'fa-flag', color: 'bg-red-500' },
         { id: 'keagamaan', name: 'Keagamaan', icon: 'fa-mosque', color: 'bg-blue-500' },
+        { id: 'cuti_bersama', name: 'Cuti Bersama', icon: 'fa-calendar-day', color: 'bg-amber-500' },
         { id: 'khusus', name: 'Khusus', icon: 'fa-star', color: 'bg-amber-500' },
     ];
 
@@ -28,6 +29,7 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
         if (activeFilter === 'semua') return true;
         if (activeFilter === 'nasional') return h.cat === 'nasional';
         if (activeFilter === 'keagamaan') return h.cat === 'keagamaan';
+        if (activeFilter === 'cuti_bersama') return h.cat === 'cuti_bersama';
         return false;
     });
 
@@ -187,7 +189,7 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
                                                             >
                                                                 {/* Date Badge */}
                                                                 <div className="flex items-center gap-4 md:flex-col md:w-24 md:h-24 md:bg-slate-50 md:rounded-lg md:justify-center md:border md:border-slate-100 group-hover:bg-emerald-50 group-hover:border-emerald-100 transition-colors shrink-0">
-                                                                    <div className={`${isHoliday ? (item.cat === 'nasional' ? 'bg-red-600' : 'bg-blue-600') : 'bg-emerald-600'} text-white w-14 h-14 rounded-lg flex flex-col items-center justify-center md:bg-transparent ${isHoliday ? (item.cat === 'nasional' ? 'md:text-red-600' : 'md:text-blue-600') : 'md:text-emerald-600'}`}>
+                                                                    <div className={`${isHoliday ? (item.cat === 'nasional' ? 'bg-red-600' : item.cat === 'keagamaan' ? 'bg-blue-600' : item.cat === 'cuti_bersama' ? 'bg-amber-600' : 'bg-slate-600') : 'bg-emerald-600'} text-white w-14 h-14 rounded-lg flex flex-col items-center justify-center md:bg-transparent ${isHoliday ? (item.cat === 'nasional' ? 'md:text-red-600' : item.cat === 'keagamaan' ? 'md:text-blue-600' : item.cat === 'cuti_bersama' ? 'md:text-amber-600' : 'md:text-slate-600') : 'md:text-emerald-600'}`}>
                                                                         <span className="text-[10px] font-bold uppercase md:mb-1">
                                                                             {date.toLocaleDateString('id-ID', { month: 'short' })}
                                                                         </span>
@@ -209,7 +211,7 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
                                                                             {category?.name}
                                                                         </span>
                                                                     </div>
-                                                                    <h4 className={`text-xl font-bold text-slate-800 font-serif mb-4 transition-colors ${isHoliday ? (item.cat === 'nasional' ? 'group-hover:text-red-700' : 'group-hover:text-blue-700') : 'group-hover:text-emerald-700'}`}>
+                                                                    <h4 className={`text-xl font-bold text-slate-800 font-serif mb-4 transition-colors ${isHoliday ? (item.cat === 'nasional' ? 'group-hover:text-red-700' : item.cat === 'keagamaan' ? 'group-hover:text-blue-700' : item.cat === 'cuti_bersama' ? 'group-hover:text-amber-700' : 'group-hover:text-slate-700') : 'group-hover:text-emerald-700'}`}>
                                                                         {item.title}
                                                                     </h4>
                                                                     <div className="flex flex-wrap gap-6 text-sm text-slate-400 font-medium">

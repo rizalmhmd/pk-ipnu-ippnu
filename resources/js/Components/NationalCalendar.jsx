@@ -143,7 +143,13 @@ export default function NationalCalendar({ agendas = [], nationalHolidays = [] }
                                                         key={eIdx}
                                                         onClick={() => setSelectedEvent(event)}
                                                         className={`w-full text-left text-[8px] md:text-[9px] p-2 rounded-lg font-black leading-tight line-clamp-2 transition-all hover:scale-[1.02] active:scale-95 shadow-sm ${event.type === 'holiday'
-                                                            ? (event.cat === 'nasional' ? 'bg-red-50 text-red-600 border border-red-100' : 'bg-blue-50 text-blue-600 border border-blue-100')
+                                                            ? (event.cat === 'nasional'
+                                                                ? 'bg-red-50 text-red-600 border border-red-100'
+                                                                : event.cat === 'keagamaan'
+                                                                    ? 'bg-blue-50 text-blue-600 border border-blue-100'
+                                                                    : event.cat === 'cuti_bersama'
+                                                                        ? 'bg-amber-50 text-amber-700 border border-amber-100'
+                                                                        : 'bg-slate-100 text-slate-700 border border-slate-200')
                                                             : 'bg-emerald-600 text-white border border-emerald-500 shadow-emerald-900/10'
                                                             }`}
                                                     >
@@ -169,6 +175,10 @@ export default function NationalCalendar({ agendas = [], nationalHolidays = [] }
                         <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-blue-500"></div>
                             <span className="text-slate-500">Hari Besar Keagamaan</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+                            <span className="text-slate-500">Cuti Bersama</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
@@ -208,18 +218,30 @@ export default function NationalCalendar({ agendas = [], nationalHolidays = [] }
                                 <div className="space-y-6">
                                     <div className="flex gap-4 items-center">
                                         <div className={`w-14 h-14 rounded-lg flex items-center justify-center text-xl ${selectedEvent.type === 'holiday'
-                                            ? (selectedEvent.cat === 'nasional' ? 'bg-red-50 text-red-500' : 'bg-blue-50 text-blue-500')
+                                            ? (selectedEvent.cat === 'nasional'
+                                                ? 'bg-red-50 text-red-500'
+                                                : selectedEvent.cat === 'keagamaan'
+                                                    ? 'bg-blue-50 text-blue-500'
+                                                    : selectedEvent.cat === 'cuti_bersama'
+                                                        ? 'bg-amber-50 text-amber-500'
+                                                        : 'bg-slate-100 text-slate-600')
                                             : 'bg-emerald-50 text-emerald-500'
                                             }`}>
-                                            <i className={`fas ${selectedEvent.type === 'holiday' ? (selectedEvent.cat === 'nasional' ? 'fa-flag' : 'fa-mosque') : 'fa-calendar-check'}`}></i>
+                                            <i className={`fas ${selectedEvent.type === 'holiday' ? (selectedEvent.cat === 'nasional' ? 'fa-flag' : selectedEvent.cat === 'keagamaan' ? 'fa-mosque' : selectedEvent.cat === 'cuti_bersama' ? 'fa-calendar-day' : 'fa-star') : 'fa-calendar-check'}`}></i>
                                         </div>
                                         <div>
                                             <span className={`px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${selectedEvent.type === 'holiday'
-                                                ? (selectedEvent.cat === 'nasional' ? 'bg-red-500 text-white' : 'bg-blue-500 text-white')
+                                                ? (selectedEvent.cat === 'nasional'
+                                                    ? 'bg-red-500 text-white'
+                                                    : selectedEvent.cat === 'keagamaan'
+                                                        ? 'bg-blue-500 text-white'
+                                                        : selectedEvent.cat === 'cuti_bersama'
+                                                            ? 'bg-amber-500 text-white'
+                                                            : 'bg-slate-500 text-white')
                                                 : 'bg-emerald-500 text-white'
                                                 }`}>
                                                 {selectedEvent.type === 'holiday' 
-                                                     ? (selectedEvent.cat === 'nasional' ? 'Libur Nasional' : 'Hari Besar Keagamaan') 
+                                                     ? (selectedEvent.cat === 'nasional' ? 'Libur Nasional' : selectedEvent.cat === 'keagamaan' ? 'Hari Besar Keagamaan' : selectedEvent.cat === 'cuti_bersama' ? 'Cuti Bersama' : 'Hari Istimewa') 
                                                      : (selectedEvent.category ? `Agenda ${selectedEvent.category}` : 'Agenda Organisasi')}
                                             </span>
                                             <h4 className="text-xl font-bold text-slate-800 font-serif mt-1">{selectedEvent.title}</h4>

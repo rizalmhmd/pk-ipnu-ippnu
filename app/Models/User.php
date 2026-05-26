@@ -29,6 +29,16 @@ class User extends Authenticatable
         return $this->hasOne(Member::class);
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
     // ─── Role helpers ─────────────────────────────────────────────────────────
 
     public function isAdmin(): bool

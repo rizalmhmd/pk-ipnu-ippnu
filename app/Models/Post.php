@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    protected $fillable = ['title', 'slug', 'image', 'content', 'published_at'];
+    protected $fillable = ['user_id', 'title', 'slug', 'image', 'content', 'published_at'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     protected $appends = ['image_url'];
 
