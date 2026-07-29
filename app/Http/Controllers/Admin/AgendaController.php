@@ -38,7 +38,23 @@ class AgendaController extends Controller
             'event_time' => 'nullable',
             'location' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'is_registration_open' => 'boolean',
+            'registration_fee' => 'nullable|string',
+            'payment_account' => 'nullable|string|max:255',
+            'form_schema' => 'nullable|array',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = \Illuminate\Support\Str::random(40) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('pamflet');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $file->move($destinationPath, $filename);
+            $validated['image'] = 'pamflet/' . $filename;
+        }
 
         Agenda::create($validated);
 
@@ -66,7 +82,27 @@ class AgendaController extends Controller
             'event_time' => 'nullable',
             'location' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'is_registration_open' => 'boolean',
+            'registration_fee' => 'nullable|string',
+            'payment_account' => 'nullable|string|max:255',
+            'form_schema' => 'nullable|array',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = \Illuminate\Support\Str::random(40) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('pamflet');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $file->move($destinationPath, $filename);
+            $validated['image'] = 'pamflet/' . $filename;
+
+            if ($agenda->image && file_exists(public_path($agenda->image))) {
+                unlink(public_path($agenda->image));
+            }
+        }
 
         $agenda->update($validated);
 
@@ -79,9 +115,15 @@ class AgendaController extends Controller
      */
     public function destroy(Agenda $agenda)
     {
+        if ($agenda->image && file_exists(public_path($agenda->image))) {
+            unlink(public_path($agenda->image));
+        }
+
         $agenda->delete();
 
         return redirect()->route('admin.agendas.index')
             ->with('success', 'Agenda berhasil dihapus.');
     }
+
+
 }

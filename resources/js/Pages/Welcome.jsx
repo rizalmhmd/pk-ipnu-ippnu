@@ -39,7 +39,7 @@ export default function Home({ posts, articles, pageSetting, greeting, agendas, 
             {statistics && statistics.length > 0 && (
                 <section className="bg-white py-20 border-b border-slate-50">
                     <div className="container mx-auto px-6 sm:px-10 md:px-24">
-                        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 md:gap-24">
+                        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-12">
                             {statistics.map((stat, index) => (
                                 <div key={stat.id} className="w-full">
                                     <StatCard statistic={stat} delay={index} />

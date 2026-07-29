@@ -32,6 +32,7 @@ export default function Navbar() {
         { name: 'Artikel', path: '/artikel', icon: 'file-alt' },
         { name: 'Galeri', path: '/galeri', icon: 'images' },
         { name: 'Agenda', path: '/agenda', icon: 'calendar-alt' },
+        { name: 'Kegiatan', path: '/kegiatan', icon: 'tasks' },
     ];
 
     const [activeDropdown, setActiveDropdown] = useState(null);

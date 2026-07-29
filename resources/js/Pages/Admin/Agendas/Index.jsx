@@ -10,7 +10,8 @@ import {
     MapPin,
     Clock,
     Tag,
-    ClipboardList
+    ClipboardList,
+    Users
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useRealtimeUpdates } from '@/Hooks/useRealtimeUpdates';
@@ -100,6 +101,15 @@ export default function Index({ agendas }) {
                                     </td>
                                     <td className="px-8 py-6">
                                         <div className="flex items-center justify-center gap-2">
+                                            {agenda.is_registration_open && (
+                                                <Link
+                                                    href={route('admin.agendas.registrations', agenda.id)}
+                                                    className="p-2.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500 hover:text-emerald-700 hover:bg-emerald-100 dark:hover:bg-emerald-800/30 rounded-lg transition-all"
+                                                    title="Lihat Pendaftar"
+                                                >
+                                                    <Users size={18} />
+                                                </Link>
+                                            )}
                                             <Link
                                                 href={route('admin.agendas.edit', agenda.id)}
                                                 className="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-all"

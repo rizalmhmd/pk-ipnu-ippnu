@@ -13,9 +13,21 @@ class Agenda extends Model
         'event_date',
         'event_time',
         'location',
+        'is_registration_open',
+        'registration_fee',
+        'payment_account',
+        'form_schema',
+        'image'
     ];
 
     protected $casts = [
         'event_date' => 'date:Y-m-d',
+        'is_registration_open' => 'boolean',
+        'form_schema' => 'array',
     ];
+
+    public function registrations()
+    {
+        return $this->hasMany(AgendaRegistration::class);
+    }
 }

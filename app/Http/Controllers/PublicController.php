@@ -76,7 +76,7 @@ class PublicController extends Controller
 
     public function news()
     {
-        $posts = Post::latest()->paginate(10);
+        $posts = Post::latest()->paginate(12);
         $pageSetting = PageSetting::where('page_name', 'news')->first();
         return Inertia::render('News/Index', compact('posts', 'pageSetting'));
     }
@@ -89,7 +89,7 @@ class PublicController extends Controller
 
     public function articles()
     {
-        $articles = Article::latest()->paginate(10);
+        $articles = Article::latest()->paginate(12);
         $pageSetting = PageSetting::where('page_name', 'articles')->first();
         return Inertia::render('Articles/Index', compact('articles', 'pageSetting'));
     }
@@ -120,6 +120,89 @@ class PublicController extends Controller
         $nationalHolidays = $this->getNationalHolidaysData();
         
         return Inertia::render('Agenda/Index', compact('agendas', 'todayAgendas', 'pageSetting', 'nationalHolidays'));
+    }
+
+    public function kegiatan()
+    {
+        $kegiatans = Agenda::whereIn('category', ['organisasi', 'khusus'])
+                         ->orderBy('event_date', 'desc')
+                         ->get();
+        
+        $pageSetting = PageSetting::where('page_name', 'agenda')->first();
+        
+        return Inertia::render('Kegiatan/Index', compact('kegiatans', 'pageSetting'));
+    }
+
+    public function kegiatanDaftar(Agenda $agenda)
+    {
+        if (!$agenda->is_registration_open) {
+            abort(404, 'Pendaftaran untuk kegiatan ini tidak tersedia atau sudah ditutup.');
+        }
+
+        $pageSetting = PageSetting::where('page_name', 'agenda')->first();
+        return Inertia::render('Kegiatan/RegistrationForm', compact('agenda', 'pageSetting'));
+    }
+
+    public function kegiatanStoreDaftar(Request $request, Agenda $agenda)
+    {
+        if (!$agenda->is_registration_open) {
+            return back()->withErrors(['message' => 'Pendaftaran ditutup.']);
+        }
+
+        // Validate the dynamic fields based on schema
+        $schema = $agenda->form_schema ?? [];
+        $rules = [];
+        foreach ($schema as $field) {
+            $fieldRules = [];
+            if ($field['required']) $fieldRules[] = 'required';
+            else $fieldRules[] = 'nullable';
+
+            if ($field['type'] === 'email') $fieldRules[] = 'email';
+            if ($field['type'] === 'number') $fieldRules[] = 'numeric';
+
+            $rules['responses.' . $field['id']] = $fieldRules;
+        }
+
+        // Add payment_proof rule if agenda has registration_fee
+        if (!empty($agenda->registration_fee)) {
+            $rules['payment_method'] = ['required', 'in:cash,transfer'];
+            $rules['payment_proof'] = ['required_if:payment_method,transfer', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'];
+        }
+
+        $validated = $request->validate($rules, [
+            'responses.*.required' => 'Kolom ini wajib diisi.',
+            'responses.*.email' => 'Format email tidak valid.',
+            'responses.*.numeric' => 'Harus berupa angka.',
+            'payment_method.required' => 'Metode pembayaran wajib dipilih.',
+            'payment_proof.required_if' => 'Bukti pembayaran wajib diunggah untuk metode transfer.',
+            'payment_proof.image' => 'File bukti pembayaran harus berupa gambar.',
+            'payment_proof.max' => 'Ukuran maksimal file bukti pembayaran adalah 5MB.',
+        ]);
+
+        $paymentProofPath = null;
+        $paymentMethod = $validated['payment_method'] ?? 'cash';
+        
+        if ($paymentMethod === 'transfer' && $request->hasFile('payment_proof')) {
+            $file = $request->file('payment_proof');
+            $filename = \Illuminate\Support\Str::random(40) . '.' . $file->getClientOriginalExtension();
+            $destinationPath = public_path('payment_proofs');
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+            $file->move($destinationPath, $filename);
+            $paymentProofPath = 'payment_proofs/' . $filename;
+        }
+
+        $agenda->registrations()->create([
+            'user_id' => auth()->id(), // null if not logged in
+            'responses' => $validated['responses'] ?? [],
+            'status' => 'pending',
+            'payment_proof' => $paymentProofPath,
+            'payment_method' => $paymentMethod,
+        ]);
+
+        return redirect()->route('kegiatan.index')
+            ->with('success', 'Pendaftaran berhasil dikirim. Terima kasih!');
     }
 
     private function getNationalHolidaysData()

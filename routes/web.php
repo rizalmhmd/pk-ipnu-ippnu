@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\AgendaController;
+use App\Http\Controllers\Admin\AgendaRegistrationController;
 use App\Http\Controllers\Admin\PageSettingController;
 use App\Http\Controllers\Admin\SiteSettingController;
 use App\Http\Controllers\Admin\QuoteController;
@@ -28,6 +29,9 @@ Route::get('/artikel', [PublicController::class, 'articles'])->name('articles.in
 Route::get('/artikel/{slug}', [PublicController::class, 'articlesDetail'])->name('articles.show');
 Route::get('/galeri', [PublicController::class, 'gallery'])->name('gallery.index');
 Route::get('/agenda', [PublicController::class, 'agenda'])->name('agenda.index');
+Route::get('/kegiatan', [PublicController::class, 'kegiatan'])->name('kegiatan.index');
+Route::get('/kegiatan/{agenda}/daftar', [PublicController::class, 'kegiatanDaftar'])->name('kegiatan.daftar');
+Route::post('/kegiatan/{agenda}/daftar', [PublicController::class, 'kegiatanStoreDaftar'])->name('kegiatan.daftar.store');
 Route::get('/api/agendas', [PublicController::class, 'getAgendasJson'])->name('api.agendas');
 
 // Admin Routes (Protected) - All authenticated users can access dashboard & profile
@@ -50,8 +54,11 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     });
 
-    // ── Ketua IPNU/IPPNU: agenda, galeri, anggota, statistik ────────────────
+    // ── Ketua IPNU/IPPNU: agenda, galeri, anggota, statistik, pendaftar ────────────────
     Route::middleware('role:admin,ketua')->group(function () {
+        Route::get('registrations', [AgendaRegistrationController::class, 'index'])->name('registrations.index');
+        Route::put('registrations/{id}/status', [AgendaRegistrationController::class, 'updateStatus'])->name('registrations.updateStatus');
+        Route::delete('registrations/{id}', [AgendaRegistrationController::class, 'destroy'])->name('registrations.destroy');
         Route::resource('agendas', AgendaController::class);
         Route::resource('galleries', GalleryController::class);
         Route::resource('members', MemberController::class);

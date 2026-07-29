@@ -59,6 +59,7 @@ class DashboardController extends Controller
             $stats['galleries'] = Gallery::count();
             $stats['members'] = Member::count();
             $stats['agendas'] = \App\Models\Agenda::count();
+            $stats['registrations'] = \App\Models\AgendaRegistration::count();
             $stats['statistics'] = \App\Models\Statistic::count();
 
             // Recent Agendas

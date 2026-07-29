@@ -10,7 +10,8 @@ import {
     FileText,
     Quote,
     Activity,
-    ChevronRight
+    ChevronRight,
+    UserCheck
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useRealtimeUpdates } from '@/Hooks/useRealtimeUpdates';
@@ -22,6 +23,7 @@ export default function Dashboard({ stats, recentActivities }) {
         { key: 'articles', title: 'Artikel', count: stats?.articles, icon: FileText, color: 'from-blue-500 to-indigo-600', shadow: 'shadow-blue-200', href: '/admin/articles' },
         { key: 'members', title: 'Anggota', count: stats?.members, icon: Users, color: 'from-violet-500 to-purple-600', shadow: 'shadow-violet-200', href: '/admin/members' },
         { key: 'agendas', title: 'Agenda', count: stats?.agendas, icon: Calendar, color: 'from-amber-500 to-orange-600', shadow: 'shadow-amber-200', href: '/admin/agendas' },
+        { key: 'registrations', title: 'Pendaftar', count: stats?.registrations, icon: UserCheck, color: 'from-fuchsia-500 to-pink-600', shadow: 'shadow-fuchsia-200', href: '/admin/registrations' },
         { key: 'galleries', title: 'Galeri', count: stats?.galleries, icon: ImageIcon, color: 'from-cyan-500 to-blue-600', shadow: 'shadow-cyan-200', href: '/admin/galleries' },
         { key: 'quotes', title: 'Quotes', count: stats?.quotes, icon: Quote, color: 'from-pink-500 to-rose-600', shadow: 'shadow-pink-200', href: '/admin/quotes' },
         { key: 'statistics', title: 'Statistik', count: stats?.statistics, icon: Activity, color: 'from-orange-500 to-red-600', shadow: 'shadow-orange-200', href: '/admin/statistics' },
@@ -36,9 +38,10 @@ export default function Dashboard({ stats, recentActivities }) {
         3: 'xl:grid-cols-3',
         4: 'xl:grid-cols-4',
         5: 'xl:grid-cols-5',
-        6: 'xl:grid-cols-6',
-        7: 'xl:grid-cols-7',
-    }[statCards.length] || 'xl:grid-cols-7';
+        6: 'xl:grid-cols-3', // 2 rows of 3
+        7: 'xl:grid-cols-4', // 2 rows, one with 4 one with 3
+        8: 'xl:grid-cols-4', // 2 rows of 4
+    }[statCards.length] || 'xl:grid-cols-4';
 
     // Dynamic shortcuts based on permissions/available stats
     const shortcuts = [];
@@ -224,12 +227,12 @@ export default function Dashboard({ stats, recentActivities }) {
                             <h4 className="text-xl md:text-2xl font-black mb-4 md:mb-6 leading-tight">Mulai Kelola<br />Konten Hari Ini</h4>
                             <p className="text-emerald-50 text-xs md:text-sm font-medium leading-relaxed mb-8 md:mb-10 opacity-80">Gunakan pintasan di bawah untuk menambahkan konten baru dengan cepat.</p>
 
-                            <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 md:gap-4">
+                            <div className="flex flex-wrap justify-center gap-3 md:gap-4">
                                 {shortcuts.map((shortcut, idx) => (
                                     <Link
                                         key={idx}
                                         href={shortcut.href}
-                                        className="p-3 md:p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-white/20 transition-all group"
+                                        className="w-[calc(50%-0.5rem)] sm:flex-1 p-3 md:p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-white/20 transition-all group"
                                     >
                                         <shortcut.icon size={18} className="md:w-5 md:h-5" />
                                         <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-center">{shortcut.title}</span>
