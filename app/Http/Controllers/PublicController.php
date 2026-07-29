@@ -164,7 +164,8 @@ class PublicController extends Controller
         }
 
         // Add payment_proof rule if agenda has registration_fee
-        if (!empty($agenda->registration_fee)) {
+        $isFree = empty($agenda->registration_fee) || in_array(strtolower(trim($agenda->registration_fee)), ['0', 'gratis', 'free', '-', 'rp 0', 'rp. 0']);
+        if (!$isFree) {
             $rules['payment_method'] = ['required', 'in:cash,transfer'];
             $rules['payment_proof'] = ['required_if:payment_method,transfer', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'];
         }
