@@ -23,7 +23,7 @@ Sistem yang dibangun dalam kerja praktek ini termasuk kategori **situs web dinam
 
 Pembangunan situs web profil organisasi dengan memanfaatkan *framework* Laravel telah terbukti efektif meningkatkan akses informasi dan partisipasi anggota, sebagaimana ditunjukkan oleh penelitian pada Ikatan Mahasiswa Arosbaya (Abidin et al., 2024) dan pada modul profil Dinas Cipta Karya, Tata Ruang dan Pertanahan (Kharismatunnisaa et al., 2023).
 
-Sistem PKPT IPNU-IPPNU UNEJ dirancang sebagai CMS yang dibangun khusus (*custom CMS*), bukan menggunakan CMS siap pakai, karena struktur organisasi IPNU dan IPPNU memerlukan pengelompokan anggota berdasarkan tingkat (*level*) dan departemen yang tidak tersedia pada CMS umum.
+Sistem PKPT IPNU IPPNU UNSIQ dirancang sebagai CMS yang dibangun khusus (*custom CMS*), bukan menggunakan CMS siap pakai, karena struktur organisasi IPNU dan IPPNU memerlukan pengelompokan anggota berdasarkan tingkat (*level*) dan departemen yang tidak tersedia pada CMS umum.
 
 ## 2.3 Rekayasa Perangkat Lunak dan Model Pengembangan
 
