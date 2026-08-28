@@ -222,3 +222,54 @@ Kerjakan dari yang paling berat dampaknya:
 | `docs/analisis-proyek.md` | Bedah *source code*: 12 tabel, relasi, 3 peran, arsitektur |
 
 **Catatan:** draf `BAB-2-Landasan-Teori.md` saya susun sebelum membaca laporan Anda, sehingga masih menyebut "UNEJ" dan belum memakai susunan sub-bab Anda (2.1 Sistem Informasi … 2.8 UML). Setelah Anda mengonfirmasi, saya akan **menyatukannya ke dalam struktur Bab II Anda yang sekarang** — bukan menggantinya — supaya nomor sub-bab tetap berurutan dan tidak perlu menulis ulang 24 halaman yang sudah ada.
+
+---
+
+# PERBANDINGAN SITASI: FIRMAN (lulus) vs RIZAL
+
+Dianalisis langsung dari `docs/FIRMAN TEMPLATE KP.pdf` (95 hlm) dan `docs/Kerja Praktek Rizal.pdf` (44 hlm).
+
+## Angka pokok
+
+| | FIRMAN (lulus 2025) | RIZAL (draf) |
+|---|---|---|
+| Sitasi unik dalam teks | **17** | **18** |
+| Total kemunculan sitasi | 23 | 43 |
+| Entri Daftar Pustaka | **15** | **4** |
+| Sitasi yang tercantum di Daftar Pustaka | 14 dari 17 (**82%**) | 4 dari 18 (**22%**) |
+
+**Kesimpulan utama: jumlah sitasi Rizal (18) wajar dan tidak berlebihan** — nyaris sama dengan FIRMAN (17). Yang bermasalah bukan jumlahnya, melainkan yang dicantumkan di Daftar Pustaka.
+
+## FIRMAN juga melanggar aturan (3 sitasi tidak ditulis)
+
+Berkas FIRMAN yang sudah lulus ternyata **tidak 100% konsisten**:
+
+- **Dikutip di teks tetapi TIDAK ada di Daftar Pustaka:** (Sommervile, 2001), (Kristanto, 2003), (Dicoding, 2021)
+- **Ada di Daftar Pustaka tetapi tidak pernah dikutip:** Wahyono, T. (2004)
+
+Catatan tambahan pada FIRMAN:
+- "Sommervile" salah eja (seharusnya **Sommerville**).
+- (Dicoding, 2021) merujuk situs bootcamp pemrograman — sebenarnya melanggar larangan 4.9.g.4, sama seperti sitasi dokumentasi Laravel/React/Oracle pada Rizal.
+- Beberapa entri Daftar Pustaka FIRMAN tidak lengkap, antara lain:
+  - `Dsouza, E. P. (2020). 650-2224-1-Pb. 37.` — "650-2224-1-Pb" adalah **nama berkas PDF**, bukan judul artikel.
+  - `Sidik, B. (2011). Javascript.` — tanpa penerbit.
+  - `Maulida, N. H., ... (2022). ... Repository: Universitas Palangkaraya.` — tanpa nama jurnal.
+
+**Implikasi:** lulus sidang tidak berarti bebas cacat. FIRMAN bukan "standar kualitas", melainkan bukti bahwa cacat kecil pada sitasi *bisa* lolos. Karena memperbaiki konsistensi sitasi berbiaya rendah, Rizal sebaiknya menargetkan 100%, bukan sekadar menyamai FIRMAN.
+
+## Distribusi tahun sitasi FIRMAN (jangan ditiru)
+
+| Rentang | Jumlah |
+|---|---|
+| ≥ 2022 | 5 |
+| 2015–2021 | 12 |
+| < 2015 | 6 (2001, 2003, 2005, 2011 ×2, 2016) |
+
+FIRMAN banyak memakai sumber lama (Sommervile 2001, Kristanto 2003, Wahyono 2004, Ladjamudin 2005, Sidik 2011, Nikiforova 2011). **Syarat "2022 ke atas" yang Rizal tetapkan justru lebih mutakhir dari FIRMAN**, sehingga tidak perlu diturunkan mengikuti FIRMAN.
+
+## Target yang disarankan untuk Rizal
+
+- Pertahankan **18 sitasi** yang ada (jumlahnya sudah wajar).
+- Tambahkan **14 entri** ke Daftar Pustaka sehingga 18/18 tercantum.
+- Ganti 3 sitasi dokumentasi web ((Laravel, 2026), (React, 2026), (Oracle, 2026)) dengan sumber jurnal/buku, mengikuti syarat 4.9.g.4.
+- Hapus atau ganti sumber di bawah 2022 bila memungkinkan (Muhyidin et al., 2020).
