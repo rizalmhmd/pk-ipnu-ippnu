@@ -33,6 +33,8 @@ Route::get('/kegiatan', [PublicController::class, 'kegiatan'])->name('kegiatan.i
 Route::get('/kegiatan/{agenda}/daftar', [PublicController::class, 'kegiatanDaftar'])->name('kegiatan.daftar');
 Route::post('/kegiatan/{agenda}/daftar', [PublicController::class, 'kegiatanStoreDaftar'])->name('kegiatan.daftar.store');
 Route::get('/api/agendas', [PublicController::class, 'getAgendasJson'])->name('api.agendas');
+Route::get('/kegiatan/payment/{registration}', [PublicController::class, 'kegiatanPayment'])->name('kegiatan.payment');
+Route::post('/api/midtrans-callback', [PublicController::class, 'midtransCallback'])->name('api.midtrans-callback');
 
 // Admin Routes (Protected) - All authenticated users can access dashboard & profile
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {

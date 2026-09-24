@@ -15,6 +15,9 @@ use App\Models\Statistic;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use Midtrans\Config;
+use Midtrans\Snap;
+use Midtrans\Notification;
 
 class PublicController extends Controller
 {
@@ -124,9 +127,7 @@ class PublicController extends Controller
 
     public function kegiatan()
     {
-        $kegiatans = Agenda::whereIn('category', ['organisasi', 'khusus'])
-                         ->orderBy('event_date', 'desc')
-                         ->get();
+        $kegiatans = Agenda::orderBy('event_date', 'desc')->get();
         
         $pageSetting = PageSetting::where('page_name', 'agenda')->first();
         
@@ -149,16 +150,21 @@ class PublicController extends Controller
             return back()->withErrors(['message' => 'Pendaftaran ditutup.']);
         }
 
-        // Validate the dynamic fields based on schema
-        $schema = $agenda->form_schema ?? [];
+        // Validate the dynamic fields based on schema (fallback to default if empty)
+        $schema = (!empty($agenda->form_schema) && is_array($agenda->form_schema)) ? $agenda->form_schema : [
+            ['id' => 'field_name', 'label' => 'Nama Lengkap', 'type' => 'text', 'required' => true],
+            ['id' => 'field_email', 'label' => 'Alamat Email', 'type' => 'email', 'required' => true],
+            ['id' => 'field_phone', 'label' => 'Nomor WhatsApp / HP', 'type' => 'text', 'required' => true],
+        ];
+
         $rules = [];
         foreach ($schema as $field) {
             $fieldRules = [];
-            if ($field['required']) $fieldRules[] = 'required';
+            if (!empty($field['required'])) $fieldRules[] = 'required';
             else $fieldRules[] = 'nullable';
 
-            if ($field['type'] === 'email') $fieldRules[] = 'email';
-            if ($field['type'] === 'number') $fieldRules[] = 'numeric';
+            if (($field['type'] ?? '') === 'email') $fieldRules[] = 'email';
+            if (($field['type'] ?? '') === 'number') $fieldRules[] = 'numeric';
 
             $rules['responses.' . $field['id']] = $fieldRules;
         }
@@ -166,7 +172,7 @@ class PublicController extends Controller
         // Add payment_proof rule if agenda has registration_fee
         $isFree = empty($agenda->registration_fee) || in_array(strtolower(trim($agenda->registration_fee)), ['0', 'gratis', 'free', '-', 'rp 0', 'rp. 0']);
         if (!$isFree) {
-            $rules['payment_method'] = ['required', 'in:cash,transfer'];
+            $rules['payment_method'] = ['required', 'in:cash,transfer,midtrans'];
             $rules['payment_proof'] = ['required_if:payment_method,transfer', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'];
         }
 
@@ -194,7 +200,7 @@ class PublicController extends Controller
             $paymentProofPath = 'payment_proofs/' . $filename;
         }
 
-        $agenda->registrations()->create([
+        $registration = $agenda->registrations()->create([
             'user_id' => auth()->id(), // null if not logged in
             'responses' => $validated['responses'] ?? [],
             'status' => 'pending',
@@ -202,8 +208,108 @@ class PublicController extends Controller
             'payment_method' => $paymentMethod,
         ]);
 
+        if ($paymentMethod === 'midtrans' && !$isFree) {
+            // Set your Merchant Server Key
+            Config::$serverKey = config('midtrans.server_key');
+            // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+            Config::$isProduction = config('midtrans.is_production');
+            // Set sanitization on (default)
+            Config::$isSanitized = config('midtrans.is_sanitized');
+            // Set 3DS transaction for credit card to true
+            Config::$is3ds = config('midtrans.is_3ds');
+            
+            $grossAmount = (int) preg_replace('/[^0-9]/', '', $agenda->registration_fee);
+            if ($grossAmount <= 0) $grossAmount = 10000; // Fallback if parse fails
+
+            $params = [
+                'transaction_details' => [
+                    'order_id' => 'REG-' . $registration->id . '-' . time(),
+                    'gross_amount' => $grossAmount,
+                ],
+                'customer_details' => [
+                    'first_name' => $registration->getRegistrantName(),
+                    'email' => $registration->getRegistrantEmail() ?? 'peserta@example.com',
+                ],
+            ];
+
+            try {
+                $snapToken = Snap::getSnapToken($params);
+                $registration->update(['snap_token' => $snapToken]);
+                
+                return redirect()->route('kegiatan.payment', $registration->id);
+            } catch (\Exception $e) {
+                return back()->withErrors(['message' => 'Gagal menginisiasi pembayaran Midtrans: ' . $e->getMessage()]);
+            }
+        }
+
         return redirect()->route('kegiatan.index')
             ->with('success', 'Pendaftaran berhasil dikirim. Terima kasih!');
+    }
+
+    public function kegiatanPayment(\App\Models\AgendaRegistration $registration)
+    {
+        if ($registration->payment_method !== 'midtrans' || !$registration->snap_token) {
+            return redirect()->route('kegiatan.index')->withErrors(['message' => 'Pembayaran ini tidak menggunakan Midtrans.']);
+        }
+        
+        $agenda = $registration->agenda;
+        $pageSetting = PageSetting::where('page_name', 'agenda')->first();
+
+        return Inertia::render('Kegiatan/Payment', [
+            'registration' => $registration->load('agenda'),
+            'snapToken' => $registration->snap_token,
+            'pageSetting' => $pageSetting,
+            'clientKey' => config('midtrans.client_key'),
+            'isProduction' => config('midtrans.is_production')
+        ]);
+    }
+
+    public function midtransCallback(Request $request)
+    {
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = config('midtrans.is_production');
+
+        try {
+            $notification = new Notification();
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to process notification'], 500);
+        }
+
+        $status = $notification->transaction_status;
+        $type = $notification->payment_type;
+        $orderId = $notification->order_id;
+        $fraud = $notification->fraud_status;
+
+        // Parse order_id format: REG-{id}-{timestamp}
+        $parts = explode('-', $orderId);
+        if (count($parts) >= 2 && $parts[0] === 'REG') {
+            $registrationId = $parts[1];
+            $registration = \App\Models\AgendaRegistration::find($registrationId);
+
+            if ($registration) {
+                if ($status == 'capture') {
+                    if ($type == 'credit_card') {
+                        if ($fraud == 'challenge') {
+                            $registration->update(['status' => 'pending']);
+                        } else {
+                            $registration->update(['status' => 'approved']);
+                        }
+                    }
+                } else if ($status == 'settlement') {
+                    $registration->update(['status' => 'approved']);
+                } else if ($status == 'pending') {
+                    $registration->update(['status' => 'pending']);
+                } else if ($status == 'deny') {
+                    $registration->update(['status' => 'rejected']);
+                } else if ($status == 'expire') {
+                    $registration->update(['status' => 'rejected']);
+                } else if ($status == 'cancel') {
+                    $registration->update(['status' => 'rejected']);
+                }
+            }
+        }
+
+        return response()->json(['message' => 'Success']);
     }
 
     private function getNationalHolidaysData()

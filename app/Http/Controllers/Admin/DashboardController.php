@@ -75,6 +75,22 @@ class DashboardController extends Controller
                 ];
             });
             $recentActivities = $recentActivities->merge($recentAgendas);
+
+            // Recent Registrations
+            $recentRegistrations = \App\Models\AgendaRegistration::with('agenda')->latest()->take(3)->get()->map(function($reg) {
+                $name = $reg->getRegistrantName();
+                $agendaTitle = $reg->agenda?->title ?? 'Agenda';
+                return [
+                    'type' => 'Pendaftaran Baru',
+                    'title' => "{$name} mendaftar pada {$agendaTitle}",
+                    'user' => 'Peserta',
+                    'time' => $reg->created_at->diffForHumans(),
+                    'timestamp' => $reg->created_at->timestamp,
+                    'icon' => 'UserCheck',
+                    'color' => 'emerald'
+                ];
+            });
+            $recentActivities = $recentActivities->merge($recentRegistrations);
         }
 
         $activities = $recentActivities

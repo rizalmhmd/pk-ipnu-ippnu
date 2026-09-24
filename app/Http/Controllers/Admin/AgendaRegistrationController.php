@@ -8,11 +8,15 @@ use App\Models\Agenda;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+use App\Mail\RegistrationRejectedMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 class AgendaRegistrationController extends Controller
 {
     public function index(Request $request)
     {
-        $query = AgendaRegistration::with('agenda')->latest();
+        $query = AgendaRegistration::with(['agenda', 'user'])->latest();
 
         if ($request->filled('agenda_id')) {
             $query->where('agenda_id', $request->agenda_id);
@@ -38,12 +42,32 @@ class AgendaRegistrationController extends Controller
     {
         $validated = $request->validate([
             'status' => 'required|in:pending,approved,rejected',
+            'reason' => 'nullable|string|max:500',
         ]);
 
-        $registration = AgendaRegistration::findOrFail($id);
+        $registration = AgendaRegistration::with(['agenda', 'user'])->findOrFail($id);
+        $oldStatus = $registration->status;
         $registration->update(['status' => $validated['status']]);
 
-        return back()->with('success', 'Status pendaftar berhasil diperbarui.');
+        $emailNotice = '';
+
+        // If status changed to rejected, send rejection email
+        if ($validated['status'] === 'rejected' && $oldStatus !== 'rejected') {
+            $email = $registration->getRegistrantEmail();
+            if ($email) {
+                try {
+                    Mail::to($email)->send(new RegistrationRejectedMail($registration, $validated['reason'] ?? null));
+                    $emailNotice = " dan email pemberitahuan penolakan telah dikirim ke {$email}.";
+                } catch (\Throwable $e) {
+                    Log::error("Gagal mengirim email penolakan pendaftaran (ID: {$registration->id}): " . $e->getMessage());
+                    $emailNotice = ", namun email pemberitahuan gagal dikirim. (Cek konfigurasi SMTP)";
+                }
+            } else {
+                $emailNotice = ", namun tidak ditemukan alamat email pendaftar.";
+            }
+        }
+
+        return back()->with('success', 'Status pendaftar berhasil diperbarui' . $emailNotice);
     }
 
     public function destroy($id)

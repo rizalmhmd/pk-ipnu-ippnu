@@ -231,6 +231,17 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
                                                                             {item.description || item.desc}
                                                                         </p>
                                                                     )}
+                                                                    {!isHoliday && item.is_registration_open && (
+                                                                        <div className="mt-6 border-t border-slate-50 pt-4 flex justify-end">
+                                                                            <Link
+                                                                                href={route('kegiatan.daftar', item.id)}
+                                                                                className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-200 transition-all hover:-translate-y-0.5"
+                                                                            >
+                                                                                <span>Daftar Sekarang</span>
+                                                                                <i className="fas fa-arrow-right"></i>
+                                                                            </Link>
+                                                                        </div>
+                                                                    )}
                                                                 </div>
                                                             </motion.div>
                                                         );

@@ -25,7 +25,7 @@
     "/build/assets/Welcome-AroEjf8z.js"
   ],
   "resources/js/Components/NationalCalendar.jsx": [
-    "/build/assets/Index-CqceLye9.js"
+    "/build/assets/Index-0EhbYYg8.js"
   ],
   "resources/js/Components/Navbar.jsx": [
     "/build/assets/PublicLayout-B7b7eloc.js"
@@ -64,7 +64,7 @@
     "/build/assets/Edit-Ck3XxpGN.js"
   ],
   "resources/js/Pages/Admin/Agendas/Index.jsx": [
-    "/build/assets/Index-BXLB69T9.js"
+    "/build/assets/Index-D7UdoEyS.js"
   ],
   "resources/js/Pages/Admin/Articles/Create.jsx": [
     "/build/assets/Create-D5ms9NkX.js"
@@ -115,7 +115,7 @@
     "/build/assets/Index-D5VNmOlR.js"
   ],
   "resources/js/Pages/Admin/Registrations/Index.jsx": [
-    "/build/assets/Index-_jmbOwa9.js"
+    "/build/assets/Index-CRjTSFtu.js"
   ],
   "resources/js/Pages/Admin/Settings/Pages/Edit.jsx": [
     "/build/assets/Edit-CiO567Ue.js"
@@ -142,7 +142,7 @@
     "/build/assets/Index-Dss1FA_N.js"
   ],
   "resources/js/Pages/Agenda/Index.jsx": [
-    "/build/assets/Index-CqceLye9.js"
+    "/build/assets/Index-0EhbYYg8.js"
   ],
   "resources/js/Pages/Articles/Index.jsx": [
     "/build/assets/Index-CI6eivka.js"
@@ -174,8 +174,11 @@
   "resources/js/Pages/Kegiatan/Index.jsx": [
     "/build/assets/Index-Bro7rwQF.js"
   ],
+  "resources/js/Pages/Kegiatan/Payment.jsx": [
+    "/build/assets/Payment-KB5Oto-o.js"
+  ],
   "resources/js/Pages/Kegiatan/RegistrationForm.jsx": [
-    "/build/assets/RegistrationForm-gYZO21MQ.js"
+    "/build/assets/RegistrationForm-BX9AmBU2.js"
   ],
   "resources/js/Pages/News/Index.jsx": [
     "/build/assets/Index-Cp3gKj58.js"

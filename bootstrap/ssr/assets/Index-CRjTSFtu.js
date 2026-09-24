@@ -5,6 +5,7 @@ import { A as AdminLayout } from "./AdminLayout-2Ze9ffSM.js";
 import { P as Pagination } from "./Pagination-CXuchKWL.js";
 import { Filter, FileImage, Eye, Check, X, Trash2, Users } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import Swal from "sweetalert2";
 function RegistrationsIndex({ registrations, agendas, filters }) {
   const [selectedReg, setSelectedReg] = useState(null);
   const handleFilterChange = (key, value) => {
@@ -16,7 +17,39 @@ function RegistrationsIndex({ registrations, agendas, filters }) {
     }
   };
   const handleUpdateStatus = (id, status) => {
-    router.put(route("admin.registrations.updateStatus", id), { status }, { preserveScroll: true });
+    if (status === "rejected") {
+      Swal.fire({
+        title: "Tolak Pendaftaran?",
+        text: "Masukkan alasan penolakan (opsional, akan dikirim ke email pendaftar):",
+        input: "textarea",
+        inputPlaceholder: "Contoh: Bukti transfer tidak terbaca / Nominal tidak sesuai.",
+        showCancelButton: true,
+        confirmButtonColor: "#ef4444",
+        confirmButtonText: "Tolak & Kirim Email",
+        cancelButtonText: "Batal"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.put(
+            route("admin.registrations.updateStatus", id),
+            { status: "rejected", reason: result.value || "" },
+            { preserveScroll: true }
+          );
+        }
+      });
+    } else {
+      router.put(route("admin.registrations.updateStatus", id), { status }, { preserveScroll: true });
+    }
+  };
+  const getRegistrantName = (reg) => {
+    if (!reg.responses || typeof reg.responses !== "object") return "Peserta";
+    const schema = reg.agenda?.form_schema;
+    if (schema && Array.isArray(schema)) {
+      const nameField = schema.find((f) => f.label.toLowerCase().includes("nama"));
+      if (nameField && reg.responses[nameField.id]) return reg.responses[nameField.id];
+      if (schema.length > 0 && reg.responses[schema[0].id]) return reg.responses[schema[0].id];
+    }
+    const values = Object.values(reg.responses);
+    return values.length > 0 && typeof values[0] === "string" ? values[0] : "Peserta";
   };
   return /* @__PURE__ */ jsxs(AdminLayout, { children: [
     /* @__PURE__ */ jsx(Head, { title: "Semua Pendaftar" }),
@@ -45,7 +78,7 @@ function RegistrationsIndex({ registrations, agendas, filters }) {
       /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-left border-collapse", children: [
         /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { className: "bg-slate-50/50 dark:bg-slate-800/50", children: [
           /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap", children: "Waktu Daftar" }),
-          /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap", children: "Agenda" }),
+          /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap", children: "Pendaftar & Agenda" }),
           /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap text-center", children: "Metode" }),
           /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap text-center", children: "Status" }),
           /* @__PURE__ */ jsx("th", { className: "px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap text-center", children: "Bukti Bayar" }),
@@ -53,7 +86,10 @@ function RegistrationsIndex({ registrations, agendas, filters }) {
         ] }) }),
         /* @__PURE__ */ jsx("tbody", { className: "divide-y divide-slate-50 dark:divide-slate-800", children: registrations.data.map((reg) => /* @__PURE__ */ jsxs("tr", { className: "group hover:bg-slate-50/30 dark:hover:bg-slate-800/20 transition-colors", children: [
           /* @__PURE__ */ jsx("td", { className: "px-6 py-4 whitespace-nowrap text-sm text-slate-600 dark:text-slate-400", children: new Date(reg.created_at).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" }) }),
-          /* @__PURE__ */ jsx("td", { className: "px-6 py-4", children: /* @__PURE__ */ jsx("p", { className: "text-sm font-bold text-slate-800 dark:text-white line-clamp-1", children: reg.agenda?.title }) }),
+          /* @__PURE__ */ jsxs("td", { className: "px-6 py-4", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-sm font-bold text-slate-800 dark:text-white line-clamp-1", children: getRegistrantName(reg) }),
+            /* @__PURE__ */ jsx("p", { className: "text-xs font-medium text-emerald-600 dark:text-emerald-400 line-clamp-1", children: reg.agenda?.title })
+          ] }),
           /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-center", children: /* @__PURE__ */ jsx("span", { className: `inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${reg.payment_method === "transfer" ? "bg-blue-100 text-blue-700" : "bg-slate-100 text-slate-600"}`, children: reg.payment_method }) }),
           /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-center", children: /* @__PURE__ */ jsx("span", { className: `inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${reg.status === "approved" ? "bg-emerald-100 text-emerald-700" : reg.status === "rejected" ? "bg-red-100 text-red-700" : "bg-yellow-100 text-yellow-700"}`, children: reg.status }) }),
           /* @__PURE__ */ jsx("td", { className: "px-6 py-4 text-center", children: reg.payment_proof ? /* @__PURE__ */ jsx("a", { href: `/${reg.payment_proof}`, target: "_blank", rel: "noreferrer", className: "inline-flex items-center justify-center p-2 bg-blue-50 text-blue-500 hover:bg-blue-100 rounded-lg transition-colors", title: "Lihat Bukti Bayar", children: /* @__PURE__ */ jsx(FileImage, { size: 16 }) }) : /* @__PURE__ */ jsx("span", { className: "text-xs text-slate-400 italic", children: "-" }) }),
@@ -81,24 +117,42 @@ function RegistrationsIndex({ registrations, agendas, filters }) {
       ] })
     ] }),
     registrations.links && /* @__PURE__ */ jsx("div", { className: "mt-6 flex justify-center", children: /* @__PURE__ */ jsx(Pagination, { links: registrations.links }) }),
-    /* @__PURE__ */ jsx(AnimatePresence, { children: selectedReg && /* @__PURE__ */ jsxs(Fragment, { children: [
-      /* @__PURE__ */ jsx(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, onClick: () => setSelectedReg(null), className: "fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40" }),
-      /* @__PURE__ */ jsxs(motion.div, { initial: { opacity: 0, scale: 0.95, y: 20 }, animate: { opacity: 1, scale: 1, y: 0 }, exit: { opacity: 0, scale: 0.95, y: 20 }, className: "fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl z-50 p-6 md:p-8 max-h-[90vh] overflow-y-auto border border-slate-100 dark:border-slate-800", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-6", children: [
-          /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-slate-800 dark:text-white", children: "Detail Jawaban Form" }),
-          /* @__PURE__ */ jsx("button", { onClick: () => setSelectedReg(null), className: "p-2 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-full transition-colors", children: /* @__PURE__ */ jsx(X, { size: 20 }) })
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-          /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-slate-400 uppercase tracking-widest mb-1", children: "Agenda" }),
-            /* @__PURE__ */ jsx("p", { className: "font-bold text-slate-800 dark:text-white", children: selectedReg.agenda?.title })
-          ] }),
-          /* @__PURE__ */ jsx("div", { className: "space-y-4 border-t border-slate-100 dark:border-slate-800 pt-4", children: selectedReg.agenda?.form_schema?.map((field) => /* @__PURE__ */ jsxs("div", { children: [
-            /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-slate-400 uppercase tracking-widest mb-1", children: field.label }),
-            /* @__PURE__ */ jsx("p", { className: "font-medium text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700 whitespace-pre-wrap", children: selectedReg.responses[field.id] || "-" })
-          ] }, field.id)) })
-        ] })
-      ] })
+    /* @__PURE__ */ jsx(AnimatePresence, { children: selectedReg && /* @__PURE__ */ jsxs("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6", children: [
+      /* @__PURE__ */ jsx(
+        motion.div,
+        {
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+          exit: { opacity: 0 },
+          onClick: () => setSelectedReg(null),
+          className: "absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+        }
+      ),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, scale: 0.95, y: 20 },
+          animate: { opacity: 1, scale: 1, y: 0 },
+          exit: { opacity: 0, scale: 0.95, y: 20 },
+          className: "relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6 md:p-8 max-h-[90vh] overflow-y-auto border border-slate-100 dark:border-slate-800",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-6", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-slate-800 dark:text-white", children: "Detail Jawaban Form" }),
+              /* @__PURE__ */ jsx("button", { onClick: () => setSelectedReg(null), className: "p-2 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-full transition-colors", children: /* @__PURE__ */ jsx(X, { size: 20 }) })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-slate-400 uppercase tracking-widest mb-1", children: "Agenda" }),
+                /* @__PURE__ */ jsx("p", { className: "font-bold text-slate-800 dark:text-white", children: selectedReg.agenda?.title })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "space-y-4 border-t border-slate-100 dark:border-slate-800 pt-4", children: selectedReg.agenda?.form_schema?.map((field) => /* @__PURE__ */ jsxs("div", { children: [
+                /* @__PURE__ */ jsx("p", { className: "text-xs font-bold text-slate-400 uppercase tracking-widest mb-1", children: field.label }),
+                /* @__PURE__ */ jsx("p", { className: "font-medium text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700 whitespace-pre-wrap", children: selectedReg.responses?.[field.id] || "-" })
+              ] }, field.id)) })
+            ] })
+          ]
+        }
+      )
     ] }) })
   ] });
 }

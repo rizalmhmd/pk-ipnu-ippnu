@@ -103,7 +103,7 @@ export default function Index({ agendas }) {
                                         <div className="flex items-center justify-center gap-2">
                                             {agenda.is_registration_open && (
                                                 <Link
-                                                    href={route('admin.agendas.registrations', agenda.id)}
+                                                    href={route('admin.registrations.index', { agenda_id: agenda.id })}
                                                     className="p-2.5 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-500 hover:text-emerald-700 hover:bg-emerald-100 dark:hover:bg-emerald-800/30 rounded-lg transition-all"
                                                     title="Lihat Pendaftar"
                                                 >

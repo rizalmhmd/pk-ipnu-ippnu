@@ -380,7 +380,18 @@ function AgendaIndex({ agendas = [], todayAgendas = [], pageSetting, nationalHol
                             item.location
                           ] })
                         ] }),
-                        (item.description || item.desc) && /* @__PURE__ */ jsx("p", { className: "mt-6 text-slate-500 text-sm leading-relaxed border-t border-slate-50 pt-6 italic", children: item.description || item.desc })
+                        (item.description || item.desc) && /* @__PURE__ */ jsx("p", { className: "mt-6 text-slate-500 text-sm leading-relaxed border-t border-slate-50 pt-6 italic", children: item.description || item.desc }),
+                        !isHoliday && item.is_registration_open && /* @__PURE__ */ jsx("div", { className: "mt-6 border-t border-slate-50 pt-4 flex justify-end", children: /* @__PURE__ */ jsxs(
+                          Link,
+                          {
+                            href: route("kegiatan.daftar", item.id),
+                            className: "inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-lg shadow-emerald-200 transition-all hover:-translate-y-0.5",
+                            children: [
+                              /* @__PURE__ */ jsx("span", { children: "Daftar Sekarang" }),
+                              /* @__PURE__ */ jsx("i", { className: "fas fa-arrow-right" })
+                            ]
+                          }
+                        ) })
                       ] })
                     ]
                   },

@@ -4,6 +4,7 @@ import AdminLayout from '@/Layouts/AdminLayout';
 import Pagination from '@/Components/Pagination';
 import { Trash2, Users, Download, Check, X, FileImage, Eye, Filter } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Swal from 'sweetalert2';
 
 export default function RegistrationsIndex({ registrations, agendas, filters }) {
     const [selectedReg, setSelectedReg] = useState(null);
@@ -19,7 +20,39 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
     };
 
     const handleUpdateStatus = (id, status) => {
-        router.put(route('admin.registrations.updateStatus', id), { status }, { preserveScroll: true });
+        if (status === 'rejected') {
+            Swal.fire({
+                title: 'Tolak Pendaftaran?',
+                text: 'Masukkan alasan penolakan (opsional, akan dikirim ke email pendaftar):',
+                input: 'textarea',
+                inputPlaceholder: 'Contoh: Bukti transfer tidak terbaca / Nominal tidak sesuai.',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                confirmButtonText: 'Tolak & Kirim Email',
+                cancelButtonText: 'Batal',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    router.put(
+                        route('admin.registrations.updateStatus', id), 
+                        { status: 'rejected', reason: result.value || '' }, 
+                        { preserveScroll: true }
+                    );
+                }
+            });
+        } else {
+            router.put(route('admin.registrations.updateStatus', id), { status }, { preserveScroll: true });
+        }
+    };
+    const getRegistrantName = (reg) => {
+        if (!reg.responses || typeof reg.responses !== 'object') return 'Peserta';
+        const schema = reg.agenda?.form_schema;
+        if (schema && Array.isArray(schema)) {
+            const nameField = schema.find(f => f.label.toLowerCase().includes('nama'));
+            if (nameField && reg.responses[nameField.id]) return reg.responses[nameField.id];
+            if (schema.length > 0 && reg.responses[schema[0].id]) return reg.responses[schema[0].id];
+        }
+        const values = Object.values(reg.responses);
+        return values.length > 0 && typeof values[0] === 'string' ? values[0] : 'Peserta';
     };
 
     return (
@@ -53,7 +86,7 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                         <thead>
                             <tr className="bg-slate-50/50 dark:bg-slate-800/50">
                                 <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">Waktu Daftar</th>
-                                <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">Agenda</th>
+                                <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">Pendaftar & Agenda</th>
                                 <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap text-center">Metode</th>
                                 <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap text-center">Status</th>
                                 <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap text-center">Bukti Bayar</th>
@@ -67,7 +100,8 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                                         {new Date(reg.created_at).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })}
                                     </td>
                                     <td className="px-6 py-4">
-                                        <p className="text-sm font-bold text-slate-800 dark:text-white line-clamp-1">{reg.agenda?.title}</p>
+                                        <p className="text-sm font-bold text-slate-800 dark:text-white line-clamp-1">{getRegistrantName(reg)}</p>
+                                        <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400 line-clamp-1">{reg.agenda?.title}</p>
                                     </td>
                                     <td className="px-6 py-4 text-center">
                                         <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${reg.payment_method === 'transfer' ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-600'}`}>
@@ -132,9 +166,20 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
             {/* Detail Modal */}
             <AnimatePresence>
                 {selectedReg && (
-                    <>
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelectedReg(null)} className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40" />
-                        <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl z-50 p-6 md:p-8 max-h-[90vh] overflow-y-auto border border-slate-100 dark:border-slate-800">
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+                        <motion.div 
+                            initial={{ opacity: 0 }} 
+                            animate={{ opacity: 1 }} 
+                            exit={{ opacity: 0 }} 
+                            onClick={() => setSelectedReg(null)} 
+                            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" 
+                        />
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.95, y: 20 }} 
+                            animate={{ opacity: 1, scale: 1, y: 0 }} 
+                            exit={{ opacity: 0, scale: 0.95, y: 20 }} 
+                            className="relative w-full max-w-lg bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6 md:p-8 max-h-[90vh] overflow-y-auto border border-slate-100 dark:border-slate-800"
+                        >
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-xl font-bold text-slate-800 dark:text-white">Detail Jawaban Form</h3>
                                 <button onClick={() => setSelectedReg(null)} className="p-2 bg-slate-50 dark:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-full transition-colors"><X size={20} /></button>
@@ -148,13 +193,15 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                                     {selectedReg.agenda?.form_schema?.map(field => (
                                         <div key={field.id}>
                                             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">{field.label}</p>
-                                            <p className="font-medium text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700 whitespace-pre-wrap">{selectedReg.responses[field.id] || '-'}</p>
+                                            <p className="font-medium text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700 whitespace-pre-wrap">
+                                                {selectedReg.responses?.[field.id] || '-'}
+                                            </p>
                                         </div>
                                     ))}
                                 </div>
                             </div>
                         </motion.div>
-                    </>
+                    </div>
                 )}
             </AnimatePresence>
         </AdminLayout>
