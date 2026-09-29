@@ -33,25 +33,23 @@ class AppServiceProvider extends ServiceProvider
         }
 
         try {
-            if (\Illuminate\Support\Facades\Schema::hasTable('site_settings')) {
-                $siteSetting = \App\Models\SiteSetting::first() ?? new \App\Models\SiteSetting([
-                    'site_name' => config('app.name', 'PKPT IPNU IPPNU')
-                ]);
-                \Illuminate\Support\Facades\View::share('siteSetting', $siteSetting);
-            }
+            // Fetch Site Settings
+            $siteSetting = \App\Models\SiteSetting::first() ?? new \App\Models\SiteSetting([
+                'site_name' => config('app.name', 'PKPT IPNU IPPNU')
+            ]);
+            \Illuminate\Support\Facades\View::share('siteSetting', $siteSetting);
 
-            if (\Illuminate\Support\Facades\Schema::hasTable('quotes')) {
-                $quotes = \App\Models\Quote::where('is_active', true)->orderBy('order')->get();
-                \Illuminate\Support\Facades\View::share('quotes', $quotes);
-            }
+            // Fetch Quotes
+            $quotes = \App\Models\Quote::where('is_active', true)->orderBy('order')->get();
+            \Illuminate\Support\Facades\View::share('quotes', $quotes);
 
             // Share counts for Admin Sidebar
             if (request()->is('admin*')) {
                 $counts = [
-                    'posts' => \Illuminate\Support\Facades\Schema::hasTable('posts') ? \App\Models\Post::count() : 0,
-                    'galleries' => \Illuminate\Support\Facades\Schema::hasTable('galleries') ? \App\Models\Gallery::count() : 0,
-                    'members' => \Illuminate\Support\Facades\Schema::hasTable('members') ? \App\Models\Member::count() : 0,
-                    'agendas' => \Illuminate\Support\Facades\Schema::hasTable('agendas') ? \App\Models\Agenda::count() : 0,
+                    'posts' => \App\Models\Post::count(),
+                    'galleries' => \App\Models\Gallery::count(),
+                    'members' => \App\Models\Member::count(),
+                    'agendas' => \App\Models\Agenda::count(),
                 ];
                 \Illuminate\Support\Facades\View::share('adminCounts', (object)$counts);
             }
