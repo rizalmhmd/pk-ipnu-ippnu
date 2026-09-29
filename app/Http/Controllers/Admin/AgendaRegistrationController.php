@@ -75,8 +75,8 @@ class AgendaRegistrationController extends Controller
         $registration = AgendaRegistration::findOrFail($id);
         
         // Delete payment proof if exists
-        if ($registration->payment_proof && file_exists(public_path($registration->payment_proof))) {
-            unlink(public_path($registration->payment_proof));
+        if ($registration->payment_proof) {
+            \Illuminate\Support\Facades\Storage::delete($registration->payment_proof);
         }
 
         $registration->delete();

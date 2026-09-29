@@ -190,14 +190,7 @@ class PublicController extends Controller
         $paymentMethod = $validated['payment_method'] ?? 'cash';
         
         if ($paymentMethod === 'transfer' && $request->hasFile('payment_proof')) {
-            $file = $request->file('payment_proof');
-            $filename = \Illuminate\Support\Str::random(40) . '.' . $file->getClientOriginalExtension();
-            $destinationPath = public_path('payment_proofs');
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0755, true);
-            }
-            $file->move($destinationPath, $filename);
-            $paymentProofPath = 'payment_proofs/' . $filename;
+            $paymentProofPath = $request->file('payment_proof')->store('payment_proofs');
         }
 
         $registration = $agenda->registrations()->create([

@@ -46,14 +46,7 @@ class AgendaController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = \Illuminate\Support\Str::random(40) . '.' . $file->getClientOriginalExtension();
-            $destinationPath = public_path('pamflet');
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0755, true);
-            }
-            $file->move($destinationPath, $filename);
-            $validated['image'] = 'pamflet/' . $filename;
+            $validated['image'] = $request->file('image')->store('pamflet');
         }
 
         Agenda::create($validated);
@@ -90,17 +83,10 @@ class AgendaController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            $filename = \Illuminate\Support\Str::random(40) . '.' . $file->getClientOriginalExtension();
-            $destinationPath = public_path('pamflet');
-            if (!file_exists($destinationPath)) {
-                mkdir($destinationPath, 0755, true);
-            }
-            $file->move($destinationPath, $filename);
-            $validated['image'] = 'pamflet/' . $filename;
+            $validated['image'] = $request->file('image')->store('pamflet');
 
-            if ($agenda->image && file_exists(public_path($agenda->image))) {
-                unlink(public_path($agenda->image));
+            if ($agenda->image) {
+                \Illuminate\Support\Facades\Storage::delete($agenda->image);
             }
         }
 
@@ -115,8 +101,8 @@ class AgendaController extends Controller
      */
     public function destroy(Agenda $agenda)
     {
-        if ($agenda->image && file_exists(public_path($agenda->image))) {
-            unlink(public_path($agenda->image));
+        if ($agenda->image) {
+            \Illuminate\Support\Facades\Storage::delete($agenda->image);
         }
 
         $agenda->delete();
