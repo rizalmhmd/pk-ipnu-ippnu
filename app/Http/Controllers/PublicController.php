@@ -146,6 +146,7 @@ class PublicController extends Controller
 
     public function kegiatanStoreDaftar(Request $request, Agenda $agenda)
     {
+        \Illuminate\Support\Facades\Log::info('Store action started: ' . json_encode($request->all()));
         if (!$agenda->is_registration_open) {
             return back()->withErrors(['message' => 'Pendaftaran ditutup.']);
         }
@@ -176,15 +177,21 @@ class PublicController extends Controller
             $rules['payment_proof'] = ['required_if:payment_method,transfer', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'];
         }
 
-        $validated = $request->validate($rules, [
-            'responses.*.required' => 'Kolom ini wajib diisi.',
-            'responses.*.email' => 'Format email tidak valid.',
-            'responses.*.numeric' => 'Harus berupa angka.',
-            'payment_method.required' => 'Metode pembayaran wajib dipilih.',
-            'payment_proof.required_if' => 'Bukti pembayaran wajib diunggah untuk metode transfer.',
-            'payment_proof.image' => 'File bukti pembayaran harus berupa gambar.',
-            'payment_proof.max' => 'Ukuran maksimal file bukti pembayaran adalah 5MB.',
-        ]);
+        try {
+            $validated = $request->validate($rules, [
+                'responses.*.required' => 'Kolom ini wajib diisi.',
+                'responses.*.email' => 'Format email tidak valid.',
+                'responses.*.numeric' => 'Harus berupa angka.',
+                'payment_method.required' => 'Metode pembayaran wajib dipilih.',
+                'payment_proof.required_if' => 'Bukti pembayaran wajib diunggah untuk metode transfer.',
+                'payment_proof.image' => 'File bukti pembayaran harus berupa gambar.',
+                'payment_proof.max' => 'Ukuran maksimal file bukti pembayaran adalah 5MB.',
+            ]);
+            \Illuminate\Support\Facades\Log::info('Validation passed', $validated);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Illuminate\Support\Facades\Log::error('Validation failed', $e->errors());
+            throw $e;
+        }
 
         $paymentProofPath = null;
         $paymentMethod = $validated['payment_method'] ?? 'cash';
@@ -202,14 +209,10 @@ class PublicController extends Controller
         ]);
 
         if ($paymentMethod === 'midtrans' && !$isFree) {
-            // Set your Merchant Server Key
             Config::$serverKey = config('midtrans.server_key');
-            // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-            Config::$isProduction = config('midtrans.is_production');
-            // Set sanitization on (default)
-            Config::$isSanitized = config('midtrans.is_sanitized');
-            // Set 3DS transaction for credit card to true
-            Config::$is3ds = config('midtrans.is_3ds');
+            Config::$isProduction = (bool) config('midtrans.is_production', false);
+            Config::$isSanitized = (bool) config('midtrans.is_sanitized', true);
+            Config::$is3ds = (bool) config('midtrans.is_3ds', true);
             
             $grossAmount = (int) preg_replace('/[^0-9]/', '', $agenda->registration_fee);
             if ($grossAmount <= 0) $grossAmount = 10000; // Fallback if parse fails
@@ -222,7 +225,16 @@ class PublicController extends Controller
                 'customer_details' => [
                     'first_name' => $registration->getRegistrantName(),
                     'email' => $registration->getRegistrantEmail() ?? 'peserta@example.com',
+                    'phone' => $registration->responses['field_phone'] ?? null,
                 ],
+                'item_details' => [
+                    [
+                        'id' => 'AGENDA-' . $agenda->id,
+                        'price' => $grossAmount,
+                        'quantity' => 1,
+                        'name' => mb_substr($agenda->title, 0, 50),
+                    ]
+                ]
             ];
 
             try {
@@ -231,6 +243,7 @@ class PublicController extends Controller
                 
                 return redirect()->route('kegiatan.payment', $registration->id);
             } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error('Midtrans Snap Error: ' . $e->getMessage());
                 return back()->withErrors(['message' => 'Gagal menginisiasi pembayaran Midtrans: ' . $e->getMessage()]);
             }
         }
@@ -253,18 +266,19 @@ class PublicController extends Controller
             'snapToken' => $registration->snap_token,
             'pageSetting' => $pageSetting,
             'clientKey' => config('midtrans.client_key'),
-            'isProduction' => config('midtrans.is_production')
+            'isProduction' => (bool) config('midtrans.is_production', false),
         ]);
     }
 
     public function midtransCallback(Request $request)
     {
         Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = config('midtrans.is_production');
+        Config::$isProduction = (bool) config('midtrans.is_production', false);
 
         try {
             $notification = new Notification();
         } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Midtrans Callback Error: ' . $e->getMessage());
             return response()->json(['message' => 'Failed to process notification'], 500);
         }
 
@@ -292,11 +306,7 @@ class PublicController extends Controller
                     $registration->update(['status' => 'approved']);
                 } else if ($status == 'pending') {
                     $registration->update(['status' => 'pending']);
-                } else if ($status == 'deny') {
-                    $registration->update(['status' => 'rejected']);
-                } else if ($status == 'expire') {
-                    $registration->update(['status' => 'rejected']);
-                } else if ($status == 'cancel') {
+                } else if (in_array($status, ['deny', 'expire', 'cancel'])) {
                     $registration->update(['status' => 'rejected']);
                 }
             }

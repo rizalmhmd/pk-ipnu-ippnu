@@ -1,11 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import HeroSection from '@/Components/HeroSection';
 import { motion, AnimatePresence } from 'framer-motion';
+import Swal from 'sweetalert2';
 
 export default function KegiatanIndex({ kegiatans = [], pageSetting }) {
     const [activeFilter, setActiveFilter] = useState('semua');
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get('status');
+
+        if (status === 'success') {
+            Swal.fire({
+                icon: 'success',
+                title: 'Pembayaran Berhasil!',
+                text: 'Terima kasih, pendaftaran dan pembayaran kegiatan Anda telah berhasil diproses.',
+                confirmButtonColor: '#059669',
+            });
+            window.history.replaceState({}, document.title, window.location.pathname);
+        } else if (status === 'pending') {
+            Swal.fire({
+                icon: 'info',
+                title: 'Pembayaran Sedang Diproses',
+                text: 'Silakan selesaikan pembayaran Anda sesuai instruksi pembayaran Midtrans.',
+                confirmButtonColor: '#059669',
+            });
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    }, []);
 
     const categories = [
         { id: 'semua', name: 'Semua Kegiatan', icon: 'fa-list' },

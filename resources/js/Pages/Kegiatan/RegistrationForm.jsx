@@ -79,6 +79,21 @@ export default function RegistrationForm({ agenda, pageSetting }) {
                         )}
 
                         <form onSubmit={submit} className="space-y-6">
+                            {errors.message && (
+                                <div className="p-4 mb-6 bg-red-50 border-l-4 border-red-500 rounded-r-lg">
+                                    <div className="flex">
+                                        <div className="flex-shrink-0">
+                                            <i className="fas fa-exclamation-circle text-red-500"></i>
+                                        </div>
+                                        <div className="ml-3">
+                                            <p className="text-sm text-red-700 font-medium">
+                                                {errors.message}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
                             {agenda.registration_fee && (
                                 <div className="mb-8 space-y-6 border-b border-slate-100 pb-8">
                                     <div className="p-6 bg-emerald-50 border border-emerald-100 rounded-xl flex items-center justify-between">
