@@ -146,7 +146,6 @@ class PublicController extends Controller
 
     public function kegiatanStoreDaftar(Request $request, Agenda $agenda)
     {
-        \Illuminate\Support\Facades\Log::info('Store action started: ' . json_encode($request->all()));
         if (!$agenda->is_registration_open) {
             return back()->withErrors(['message' => 'Pendaftaran ditutup.']);
         }
@@ -177,21 +176,15 @@ class PublicController extends Controller
             $rules['payment_proof'] = ['required_if:payment_method,transfer', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'];
         }
 
-        try {
-            $validated = $request->validate($rules, [
-                'responses.*.required' => 'Kolom ini wajib diisi.',
-                'responses.*.email' => 'Format email tidak valid.',
-                'responses.*.numeric' => 'Harus berupa angka.',
-                'payment_method.required' => 'Metode pembayaran wajib dipilih.',
-                'payment_proof.required_if' => 'Bukti pembayaran wajib diunggah untuk metode transfer.',
-                'payment_proof.image' => 'File bukti pembayaran harus berupa gambar.',
-                'payment_proof.max' => 'Ukuran maksimal file bukti pembayaran adalah 5MB.',
-            ]);
-            \Illuminate\Support\Facades\Log::info('Validation passed', $validated);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            \Illuminate\Support\Facades\Log::error('Validation failed', $e->errors());
-            throw $e;
-        }
+        $validated = $request->validate($rules, [
+            'responses.*.required' => 'Kolom ini wajib diisi.',
+            'responses.*.email' => 'Format email tidak valid.',
+            'responses.*.numeric' => 'Harus berupa angka.',
+            'payment_method.required' => 'Metode pembayaran wajib dipilih.',
+            'payment_proof.required_if' => 'Bukti pembayaran wajib diunggah untuk metode transfer.',
+            'payment_proof.image' => 'File bukti pembayaran harus berupa gambar.',
+            'payment_proof.max' => 'Ukuran maksimal file bukti pembayaran adalah 5MB.',
+        ]);
 
         $paymentProofPath = null;
         $paymentMethod = $validated['payment_method'] ?? 'cash';

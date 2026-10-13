@@ -3,9 +3,16 @@
 // Vercel serverless functions bersifat read-only (kecuali folder /tmp).
 // Maka kita arahkan semua penyimpanan file cache dan view ke /tmp.
 
+putenv('VERCEL=1');
+$_ENV['VERCEL'] = '1';
+$_SERVER['VERCEL'] = '1';
+
+putenv('LOG_CHANNEL=stderr');
+$_ENV['LOG_CHANNEL'] = 'stderr';
+$_SERVER['LOG_CHANNEL'] = 'stderr';
+
 $_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
 $_ENV['SESSION_DRIVER'] = $_ENV['SESSION_DRIVER'] ?? 'cookie';
-$_ENV['LOG_CHANNEL'] = $_ENV['LOG_CHANNEL'] ?? 'stderr';
 $_ENV['APP_CONFIG_CACHE'] = '/tmp/storage/bootstrap/cache/config.php';
 $_ENV['APP_EVENTS_CACHE'] = '/tmp/storage/bootstrap/cache/events.php';
 $_ENV['APP_ROUTES_CACHE'] = '/tmp/storage/bootstrap/cache/routes.php';
