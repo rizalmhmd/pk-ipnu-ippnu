@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { motion } from 'framer-motion';
@@ -6,8 +6,29 @@ import { motion } from 'framer-motion';
 export default function Payment({ registration, snapToken, pageSetting, clientKey, isProduction }) {
     const [isSnapLoaded, setIsSnapLoaded] = useState(false);
 
+    const handlePay = useCallback(() => {
+        if (!window.snap || !snapToken) {
+            alert('Sistem pembayaran sedang disiapkan, silakan coba beberapa saat lagi.');
+            return;
+        }
+
+        window.snap.pay(snapToken, {
+            onSuccess: function (result) {
+                window.location.href = route('kegiatan.index') + '?status=success';
+            },
+            onPending: function (result) {
+                window.location.href = route('kegiatan.index') + '?status=pending';
+            },
+            onError: function (result) {
+                alert('Terjadi kesalahan pada pembayaran');
+            },
+            onClose: function () {
+                console.log('User closed the popup without finishing the payment');
+            }
+        });
+    }, [snapToken]);
+
     useEffect(() => {
-        // Load Midtrans Snap script dynamically
         const midtransScriptUrl = isProduction 
             ? 'https://app.midtrans.com/snap/snap.js'
             : 'https://app.sandbox.midtrans.com/snap/snap.js';
@@ -18,40 +39,34 @@ export default function Payment({ registration, snapToken, pageSetting, clientKe
         
         scriptTag.onload = () => {
             setIsSnapLoaded(true);
+            setTimeout(() => {
+                if (window.snap && snapToken) {
+                    window.snap.pay(snapToken, {
+                        onSuccess: function (result) {
+                            window.location.href = route('kegiatan.index') + '?status=success';
+                        },
+                        onPending: function (result) {
+                            window.location.href = route('kegiatan.index') + '?status=pending';
+                        },
+                        onError: function (result) {
+                            alert('Terjadi kesalahan pada pembayaran');
+                        },
+                        onClose: function () {
+                            console.log('User closed the popup');
+                        }
+                    });
+                }
+            }, 300);
         };
         
         document.body.appendChild(scriptTag);
         
         return () => {
-            document.body.removeChild(scriptTag);
-        };
-    }, [clientKey, isProduction]);
-
-    const handlePay = () => {
-        if (!isSnapLoaded) {
-            alert('Sistem pembayaran sedang disiapkan, silakan coba beberapa saat lagi.');
-            return;
-        }
-
-        window.snap.pay(snapToken, {
-            onSuccess: function (result) {
-                // Payment success
-                window.location.href = route('kegiatan.index') + '?status=success';
-            },
-            onPending: function (result) {
-                // Payment pending
-                window.location.href = route('kegiatan.index') + '?status=pending';
-            },
-            onError: function (result) {
-                // Payment error
-                alert('Terjadi kesalahan pada pembayaran');
-            },
-            onClose: function () {
-                // User closed the popup
-                console.log('User closed the popup without finishing the payment');
+            if (document.body.contains(scriptTag)) {
+                document.body.removeChild(scriptTag);
             }
-        });
-    };
+        };
+    }, [clientKey, isProduction, snapToken]);
 
     return (
         <PublicLayout>

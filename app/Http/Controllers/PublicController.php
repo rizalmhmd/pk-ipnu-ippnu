@@ -164,7 +164,7 @@ class PublicController extends Controller
             else $fieldRules[] = 'nullable';
 
             if (($field['type'] ?? '') === 'email') $fieldRules[] = 'email';
-            if (($field['type'] ?? '') === 'number') $fieldRules[] = 'numeric';
+            if (($field['type'] ?? '') === 'number') $fieldRules[] = 'regex:/^[0-9+\-\s()]+$/';
 
             $rules['responses.' . $field['id']] = $fieldRules;
         }
@@ -180,6 +180,7 @@ class PublicController extends Controller
             'responses.*.required' => 'Kolom ini wajib diisi.',
             'responses.*.email' => 'Format email tidak valid.',
             'responses.*.numeric' => 'Harus berupa angka.',
+            'responses.*.regex' => 'Format nomor/angka tidak valid.',
             'payment_method.required' => 'Metode pembayaran wajib dipilih.',
             'payment_proof.required_if' => 'Bukti pembayaran wajib diunggah untuk metode transfer.',
             'payment_proof.image' => 'File bukti pembayaran harus berupa gambar.',
