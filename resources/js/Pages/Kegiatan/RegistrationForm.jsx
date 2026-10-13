@@ -38,7 +38,7 @@ export default function RegistrationForm({ agenda, pageSetting }) {
     const submit = (e) => {
         e.preventDefault();
         post(route('kegiatan.daftar.store', agenda.id), {
-            forceFormData: true
+            forceFormData: data.payment_method === 'transfer'
         });
     };
 
@@ -101,9 +101,14 @@ export default function RegistrationForm({ agenda, pageSetting }) {
                                             <i className="fas fa-exclamation-triangle text-amber-500"></i>
                                         </div>
                                         <div className="ml-3">
-                                            <p className="text-sm text-amber-700 font-medium">
-                                                Ada beberapa data yang belum lengkap atau formatnya tidak sesuai. Silakan periksa kolom yang ditandai merah di bawah.
+                                            <p className="text-sm text-amber-700 font-bold mb-1">
+                                                Terdapat data yang belum sesuai:
                                             </p>
+                                            <ul className="list-disc list-inside text-xs text-amber-800 space-y-1">
+                                                {Object.entries(errors).map(([key, err]) => (
+                                                    <li key={key}>{err}</li>
+                                                ))}
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>

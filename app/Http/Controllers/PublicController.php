@@ -173,7 +173,9 @@ class PublicController extends Controller
         $isFree = empty($agenda->registration_fee) || in_array(strtolower(trim($agenda->registration_fee)), ['0', 'gratis', 'free', '-', 'rp 0', 'rp. 0']);
         if (!$isFree) {
             $rules['payment_method'] = ['required', 'in:cash,transfer,midtrans'];
-            $rules['payment_proof'] = ['required_if:payment_method,transfer', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'];
+            if ($request->input('payment_method') === 'transfer') {
+                $rules['payment_proof'] = ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'];
+            }
         }
 
         $validated = $request->validate($rules, [
@@ -182,7 +184,7 @@ class PublicController extends Controller
             'responses.*.numeric' => 'Harus berupa angka.',
             'responses.*.regex' => 'Format nomor/angka tidak valid.',
             'payment_method.required' => 'Metode pembayaran wajib dipilih.',
-            'payment_proof.required_if' => 'Bukti pembayaran wajib diunggah untuk metode transfer.',
+            'payment_proof.required' => 'Bukti pembayaran wajib diunggah untuk metode transfer.',
             'payment_proof.image' => 'File bukti pembayaran harus berupa gambar.',
             'payment_proof.max' => 'Ukuran maksimal file bukti pembayaran adalah 5MB.',
         ]);
