@@ -140,8 +140,17 @@ class PublicController extends Controller
             abort(404, 'Pendaftaran untuk kegiatan ini tidak tersedia atau sudah ditutup.');
         }
 
+        $existingRegistration = null;
+        if (auth()->check()) {
+            $existingRegistration = $agenda->registrations()
+                ->where('user_id', auth()->id())
+                ->whereIn('status', ['approved', 'pending'])
+                ->latest()
+                ->first();
+        }
+
         $pageSetting = PageSetting::where('page_name', 'agenda')->first();
-        return Inertia::render('Kegiatan/RegistrationForm', compact('agenda', 'pageSetting'));
+        return Inertia::render('Kegiatan/RegistrationForm', compact('agenda', 'pageSetting', 'existingRegistration'));
     }
 
     public function kegiatanStoreDaftar(Request $request, Agenda $agenda)
@@ -153,18 +162,46 @@ class PublicController extends Controller
         // Validate the dynamic fields based on schema (fallback to default if empty)
         $schema = (!empty($agenda->form_schema) && is_array($agenda->form_schema)) ? $agenda->form_schema : [
             ['id' => 'field_name', 'label' => 'Nama Lengkap', 'type' => 'text', 'required' => true],
-            ['id' => 'field_email', 'label' => 'Alamat Email', 'type' => 'email', 'required' => true],
             ['id' => 'field_phone', 'label' => 'Nomor WhatsApp / HP', 'type' => 'text', 'required' => true],
+            ['id' => 'field_email', 'label' => 'Alamat Email', 'type' => 'email', 'required' => true],
+            ['id' => 'field_nik', 'label' => 'NIK (KTP / KK)', 'type' => 'nik', 'required' => false],
         ];
 
         $rules = [];
+        $customMessages = [
+            'responses.*.required' => 'Kolom ini wajib diisi.',
+            'responses.*.email' => 'Format email tidak valid.',
+            'responses.*.numeric' => 'Harus berupa angka.',
+            'responses.*.regex' => 'Format nomor/angka tidak valid.',
+            'payment_method.required' => 'Metode pembayaran wajib dipilih.',
+            'payment_proof.required' => 'Bukti pembayaran wajib diunggah untuk metode transfer.',
+            'payment_proof.image' => 'File bukti pembayaran harus berupa gambar.',
+            'payment_proof.max' => 'Ukuran maksimal file bukti pembayaran adalah 5MB.',
+        ];
+
         foreach ($schema as $field) {
             $fieldRules = [];
             if (!empty($field['required'])) $fieldRules[] = 'required';
             else $fieldRules[] = 'nullable';
 
-            if (($field['type'] ?? '') === 'email') $fieldRules[] = 'email';
-            if (($field['type'] ?? '') === 'number') $fieldRules[] = 'regex:/^[0-9+\-\s()]+$/';
+            $fieldType = $field['type'] ?? '';
+            $fieldId = $field['id'] ?? '';
+            $fieldLabel = strtolower($field['label'] ?? '');
+
+            if ($fieldType === 'email' || str_contains($fieldId, 'email') || str_contains($fieldLabel, 'email')) {
+                $fieldRules[] = 'email';
+            }
+
+            if ($fieldType === 'nik' || str_contains($fieldId, 'nik') || str_contains($fieldLabel, 'nik')) {
+                // If NIK provided, must be exactly 16 numeric digits
+                $fieldRules[] = 'regex:/^[0-9]{16}$/';
+                $customMessages['responses.' . $fieldId . '.regex'] = 'NIK harus berupa 16 digit angka (sesuai KTP atau Kartu Keluarga).';
+            } elseif ($fieldType === 'number' || str_contains($fieldId, 'phone') || str_contains($fieldId, 'whatsapp') || str_contains($fieldLabel, 'telepon') || str_contains($fieldLabel, 'whatsapp') || str_contains($fieldLabel, 'hp')) {
+                // Phone / WhatsApp validation
+                $fieldRules[] = 'regex:/^[0-9+\-\s()]+$/';
+                $fieldRules[] = 'min:9';
+                $customMessages['responses.' . $fieldId . '.min'] = 'Nomor WhatsApp minimal 9 digit.';
+            }
 
             $rules['responses.' . $field['id']] = $fieldRules;
         }
@@ -178,16 +215,95 @@ class PublicController extends Controller
             }
         }
 
-        $validated = $request->validate($rules, [
-            'responses.*.required' => 'Kolom ini wajib diisi.',
-            'responses.*.email' => 'Format email tidak valid.',
-            'responses.*.numeric' => 'Harus berupa angka.',
-            'responses.*.regex' => 'Format nomor/angka tidak valid.',
-            'payment_method.required' => 'Metode pembayaran wajib dipilih.',
-            'payment_proof.required' => 'Bukti pembayaran wajib diunggah untuk metode transfer.',
-            'payment_proof.image' => 'File bukti pembayaran harus berupa gambar.',
-            'payment_proof.max' => 'Ukuran maksimal file bukti pembayaran adalah 5MB.',
-        ]);
+        $validated = $request->validate($rules, $customMessages);
+
+        // ─── Multi-Layer Duplicate Registration Prevention ─────────────────
+        $inputResponses = $validated['responses'] ?? [];
+        $rawPhone = null;
+        $rawEmail = null;
+        $rawNik = null;
+
+        foreach ($inputResponses as $key => $val) {
+            $k = strtolower($key);
+            if (!$rawPhone && (str_contains($k, 'phone') || str_contains($k, 'whatsapp') || str_contains($k, 'hp'))) {
+                $rawPhone = $val;
+            }
+            if (!$rawEmail && (str_contains($k, 'email') || (is_string($val) && filter_var($val, FILTER_VALIDATE_EMAIL)))) {
+                $rawEmail = $val;
+            }
+            if (!$rawNik && str_contains($k, 'nik')) {
+                $rawNik = $val;
+            }
+        }
+
+        $normPhone = \App\Models\AgendaRegistration::normalizePhone($rawPhone);
+        $normEmail = $rawEmail ? strtolower(trim($rawEmail)) : null;
+        $normNik = $rawNik ? preg_replace('/[^0-9]/', '', $rawNik) : null;
+        $currentUserId = auth()->id();
+
+        // Check against existing non-rejected registrations in this agenda
+        $existingRegistrations = $agenda->registrations()
+            ->whereIn('status', ['approved', 'pending'])
+            ->get();
+
+        $existingRegistration = null;
+        $duplicateReason = null;
+
+        foreach ($existingRegistrations as $reg) {
+            // Layer 1: Check WhatsApp / Phone (Primary Key)
+            if ($normPhone && $reg->getRegistrantPhone()) {
+                $regNormPhone = \App\Models\AgendaRegistration::normalizePhone($reg->getRegistrantPhone());
+                if ($regNormPhone && $regNormPhone === $normPhone) {
+                    $existingRegistration = $reg;
+                    $duplicateReason = "Nomor WhatsApp ({$rawPhone})";
+                    break;
+                }
+            }
+
+            // Layer 2: Check Email
+            if ($normEmail && $reg->getRegistrantEmail()) {
+                if (strtolower(trim($reg->getRegistrantEmail())) === $normEmail) {
+                    $existingRegistration = $reg;
+                    $duplicateReason = "Alamat Email ({$rawEmail})";
+                    break;
+                }
+            }
+
+            // Layer 3: Check NIK (if provided)
+            if ($normNik && strlen($normNik) === 16 && $reg->getRegistrantNik()) {
+                $regNik = preg_replace('/[^0-9]/', '', $reg->getRegistrantNik());
+                if ($regNik === $normNik) {
+                    $existingRegistration = $reg;
+                    $duplicateReason = "NIK ({$normNik})";
+                    break;
+                }
+            }
+
+            // Layer 4: Check User Account (if logged in)
+            if ($currentUserId && $reg->user_id === $currentUserId) {
+                $existingRegistration = $reg;
+                $duplicateReason = "Akun Anda";
+                break;
+            }
+        }
+
+        if ($existingRegistration) {
+            if ($existingRegistration->status === 'approved') {
+                return back()->withErrors([
+                    'message' => "{$duplicateReason} sudah terdaftar dan berstatus disetujui (Approved) untuk kegiatan ini. Pendaftaran ganda tidak diperbolehkan."
+                ])->withInput();
+            }
+
+            // If pending with midtrans and snap token is available, smart redirect to existing payment
+            if ($existingRegistration->payment_method === 'midtrans' && $existingRegistration->snap_token) {
+                return redirect()->route('kegiatan.payment', $existingRegistration->id)
+                    ->with('info', "{$duplicateReason} sudah memiliki pendaftaran yang menunggu pembayaran. Silakan selesaikan pembayaran berikut.");
+            }
+
+            return back()->withErrors([
+                'message' => "{$duplicateReason} sudah terdaftar dan saat ini sedang menunggu verifikasi panitia. Hubungi panitia jika membutuhkan perubahan data."
+            ])->withInput();
+        }
 
         $paymentProofPath = null;
         $paymentMethod = $validated['payment_method'] ?? 'cash';

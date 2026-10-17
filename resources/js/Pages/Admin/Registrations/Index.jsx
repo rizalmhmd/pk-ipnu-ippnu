@@ -55,6 +55,32 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
         return values.length > 0 && typeof values[0] === 'string' ? values[0] : 'Peserta';
     };
 
+    const getRegistrantPhone = (reg) => {
+        if (!reg.responses || typeof reg.responses !== 'object') return null;
+        for (const [k, v] of Object.entries(reg.responses)) {
+            const keyLower = k.toLowerCase();
+            if (keyLower.includes('phone') || keyLower.includes('whatsapp') || keyLower.includes('hp')) return v;
+        }
+        return null;
+    };
+
+    const getRegistrantEmail = (reg) => {
+        if (reg.user?.email) return reg.user.email;
+        if (!reg.responses || typeof reg.responses !== 'object') return null;
+        for (const [k, v] of Object.entries(reg.responses)) {
+            if (k.toLowerCase().includes('email') || (typeof v === 'string' && v.includes('@'))) return v;
+        }
+        return null;
+    };
+
+    const getRegistrantNik = (reg) => {
+        if (!reg.responses || typeof reg.responses !== 'object') return null;
+        for (const [k, v] of Object.entries(reg.responses)) {
+            if (k.toLowerCase().includes('nik') && v) return v;
+        }
+        return null;
+    };
+
     return (
         <AdminLayout>
             <Head title="Semua Pendaftar" />
@@ -102,6 +128,23 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                                     <td className="px-6 py-4">
                                         <p className="text-sm font-bold text-slate-800 dark:text-white line-clamp-1">{getRegistrantName(reg)}</p>
                                         <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400 line-clamp-1">{reg.agenda?.title}</p>
+                                        <div className="flex flex-wrap items-center gap-2 mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+                                            {getRegistrantPhone(reg) && (
+                                                <span className="inline-flex items-center gap-1 font-semibold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-100 dark:border-emerald-800/50">
+                                                    WA: {getRegistrantPhone(reg)}
+                                                </span>
+                                            )}
+                                            {getRegistrantEmail(reg) && (
+                                                <span className="text-slate-400 dark:text-slate-500">
+                                                    • {getRegistrantEmail(reg)}
+                                                </span>
+                                            )}
+                                            {getRegistrantNik(reg) && (
+                                                <span className="font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-[10px]">
+                                                    NIK: {getRegistrantNik(reg)}
+                                                </span>
+                                            )}
+                                        </div>
                                     </td>
                                     <td className="px-6 py-4 text-center">
                                         <span className={`inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${

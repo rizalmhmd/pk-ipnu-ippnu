@@ -94,4 +94,67 @@ class AgendaRegistration extends Model
 
         return 'Peserta';
     }
+
+    /**
+     * Normalize Indonesian phone number into 628... format.
+     */
+    public static function normalizePhone(?string $phone): string
+    {
+        if (!$phone) return '';
+        $cleaned = preg_replace('/[^0-9]/', '', $phone);
+        if (str_starts_with($cleaned, '08')) {
+            $cleaned = '628' . substr($cleaned, 2);
+        } elseif (str_starts_with($cleaned, '8')) {
+            $cleaned = '628' . substr($cleaned, 1);
+        }
+        return $cleaned;
+    }
+
+    /**
+     * Get phone / whatsapp number of the registrant.
+     */
+    public function getRegistrantPhone(): ?string
+    {
+        $schema = $this->agenda?->form_schema;
+        if (is_array($schema) && is_array($this->responses)) {
+            foreach ($schema as $field) {
+                $id = strtolower($field['id'] ?? '');
+                $label = strtolower($field['label'] ?? '');
+                if (str_contains($id, 'phone') || str_contains($id, 'whatsapp') || str_contains($label, 'telepon') || str_contains($label, 'whatsapp') || str_contains($label, 'hp')) {
+                    $val = $this->responses[$field['id']] ?? null;
+                    if ($val) return trim($val);
+                }
+            }
+        }
+
+        if (isset($this->responses['field_phone'])) {
+            return trim($this->responses['field_phone']);
+        }
+
+        return null;
+    }
+
+    /**
+     * Get NIK of the registrant.
+     */
+    public function getRegistrantNik(): ?string
+    {
+        $schema = $this->agenda?->form_schema;
+        if (is_array($schema) && is_array($this->responses)) {
+            foreach ($schema as $field) {
+                $id = strtolower($field['id'] ?? '');
+                $label = strtolower($field['label'] ?? '');
+                if (str_contains($id, 'nik') || str_contains($label, 'nik')) {
+                    $val = $this->responses[$field['id']] ?? null;
+                    if ($val) return trim($val);
+                }
+            }
+        }
+
+        if (isset($this->responses['field_nik'])) {
+            return trim($this->responses['field_nik']);
+        }
+
+        return null;
+    }
 }

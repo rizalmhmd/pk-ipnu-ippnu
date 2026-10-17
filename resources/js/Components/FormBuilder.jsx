@@ -86,6 +86,7 @@ export default function FormBuilder({ schema, onChange }) {
                                                 <option value="text">Teks Pendek</option>
                                                 <option value="email">Email</option>
                                                 <option value="number">Angka / No HP</option>
+                                                <option value="nik">NIK (16 Digit KTP/KK)</option>
                                                 <option value="textarea">Teks Panjang</option>
                                                 <option value="select">Dropdown / Pilihan</option>
                                             </select>

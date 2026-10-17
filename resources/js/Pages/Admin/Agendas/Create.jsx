@@ -32,8 +32,9 @@ export default function Create() {
         image: null,
         form_schema: [
             { id: 'field_name', label: 'Nama Lengkap', type: 'text', required: true, options: [] },
-            { id: 'field_email', label: 'Email', type: 'email', required: true, options: [] },
             { id: 'field_phone', label: 'No. WhatsApp', type: 'number', required: true, options: [] },
+            { id: 'field_email', label: 'Email', type: 'email', required: true, options: [] },
+            { id: 'field_nik', label: 'NIK (KTP / KK)', type: 'nik', required: false, options: [] },
         ],
     });
 
