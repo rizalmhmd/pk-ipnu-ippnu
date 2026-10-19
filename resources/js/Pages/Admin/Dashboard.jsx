@@ -75,24 +75,24 @@ export default function Dashboard({ stats, recentActivities }) {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                 >
-                    <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight mb-2">
-                        Dashboard <span className="text-emerald-600">Overview</span>
+                    <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white leading-tight mb-2 tracking-tight">
+                        Dashboard <span className="text-emerald-600 dark:text-emerald-400">Overview</span>
                     </h1>
-                    <p className="text-[11px] md:text-sm text-slate-500 dark:text-slate-400 font-medium">Monitoring performa dan aktivitas platform Anda secara real-time.</p>
+                    <p className="text-xs md:text-sm text-slate-600 dark:text-slate-300 font-medium tracking-wide">Monitoring performa dan aktivitas platform Anda secara real-time.</p>
                 </motion.div>
 
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none"
+                    className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 bg-white/75 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-xl shadow-slate-200/40 dark:shadow-none"
                 >
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg flex items-center justify-center text-emerald-600">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                         <Activity size={20} className="md:w-6 md:h-6" />
                     </div>
                     <div>
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Status Sistem</p>
                         <div className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                            <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-emerald-500 rounded-full animate-pulse shadow-sm shadow-emerald-500"></div>
                             <p className="text-xs md:text-sm font-extrabold text-slate-800 dark:text-slate-200">Online & Stabil</p>
                         </div>
                     </div>
@@ -110,23 +110,23 @@ export default function Dashboard({ stats, recentActivities }) {
                     <motion.div
                         key={index}
                         variants={item}
-                        whileHover={{ y: -5 }}
-                        className="bg-white dark:bg-slate-900 rounded-lg p-3 md:p-5 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-50 dark:border-slate-800 group relative overflow-hidden"
+                        whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                        className="bg-white/75 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl p-4 md:p-6 shadow-xl shadow-slate-200/40 dark:shadow-2xl dark:shadow-black/30 border border-slate-200/60 dark:border-slate-800/60 hover:border-emerald-500/40 dark:hover:border-emerald-500/40 group relative overflow-hidden transition-all duration-300"
                     >
-                        <div className={`absolute top-0 right-0 w-16 md:w-24 h-16 md:h-24 bg-gradient-to-br ${card.color} opacity-0 group-hover:opacity-5 transition-opacity rounded-bl-xl`}></div>
+                        <div className={`absolute top-0 right-0 w-20 md:w-28 h-20 md:h-28 bg-gradient-to-br ${card.color} opacity-0 group-hover:opacity-10 transition-opacity rounded-bl-3xl`}></div>
 
                         <div className="relative z-10">
-                            <div className={`w-10 h-10 md:w-14 md:h-14 rounded-lg bg-gradient-to-br ${card.color} text-white flex items-center justify-center mb-4 md:mb-6 shadow-lg ${card.shadow}/40 group-hover:scale-110 transition-transform duration-300`}>
-                                <card.icon size={20} className="md:w-7 md:h-7" />
+                            <div className={`w-11 h-11 md:w-14 md:h-14 rounded-xl bg-gradient-to-br ${card.color} text-white flex items-center justify-center mb-4 md:mb-6 shadow-lg ${card.shadow}/40 group-hover:scale-105 transition-transform duration-300`}>
+                                <card.icon size={22} className="md:w-7 md:h-7" />
                             </div>
 
                             <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">{card.title}</p>
-                            <h3 className="text-xl md:text-3xl font-black text-slate-900 dark:text-white leading-tight">{card.count}</h3>
+                            <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white leading-tight">{card.count}</h3>
 
-                            <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-slate-50 dark:border-slate-800/50">
+                            <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-slate-100 dark:border-slate-800/60">
                                 <Link
                                     href={card.href}
-                                    className="text-[9px] md:text-xs font-bold text-slate-400 group-hover:text-emerald-600 transition-colors flex items-center gap-1 uppercase tracking-widest"
+                                    className="text-[9px] md:text-xs font-bold text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors flex items-center gap-1 uppercase tracking-widest"
                                 >
                                     Manage <ChevronRight size={12} className="md:w-[14px] md:h-[14px] group-hover:translate-x-1 transition-transform" />
                                 </Link>
@@ -143,7 +143,7 @@ export default function Dashboard({ stats, recentActivities }) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="lg:col-span-8 bg-white dark:bg-slate-900 rounded-lg shadow-2xl shadow-slate-200/50 dark:shadow-none border border-slate-50 dark:border-slate-800 overflow-hidden"
+                    className="lg:col-span-8 bg-white/75 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl shadow-xl shadow-slate-200/40 dark:shadow-none border border-slate-200/60 dark:border-slate-800/60 overflow-hidden"
                 >
                     <div className="px-6 md:px-10 py-6 md:py-8 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center">
                         <div className="flex items-center gap-4">
@@ -242,7 +242,7 @@ export default function Dashboard({ stats, recentActivities }) {
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-slate-900 p-6 md:p-10 rounded-lg border border-slate-50 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                    <div className="bg-white/75 dark:bg-slate-900/60 backdrop-blur-xl p-6 md:p-10 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-xl shadow-slate-200/40 dark:shadow-none">
                         <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-8 uppercase tracking-widest">Inspirasi Harian</h4>
                         <div className="relative p-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg italic text-slate-500 dark:text-slate-400 font-serif leading-relaxed">
                             <span className="absolute -top-4 -left-2 text-6xl text-emerald-100 dark:text-emerald-900/40 non-italic">"</span>
