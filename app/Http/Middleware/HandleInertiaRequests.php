@@ -59,6 +59,9 @@ class HandleInertiaRequests extends Middleware
                 'members' => \App\Models\Member::count(),
                 'agendas' => \App\Models\Agenda::count(),
             ] : null,
+            'adminNotifications' => fn () => $request->user()
+                ? app(\App\Services\NotificationService::class)->getAdminNotifications($request->user())
+                : [],
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
                 'error'   => fn () => $request->session()->get('error'),

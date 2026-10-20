@@ -68,8 +68,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 }
             }}
             className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${isActive(item.href)
-                ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
-                : 'text-slate-500 hover:bg-emerald-50 hover:text-emerald-600 dark:text-slate-400 dark:hover:bg-slate-800'
+                ? 'bg-gradient-to-r from-emerald-600 to-emerald-500 text-white font-semibold shadow-md shadow-emerald-600/25'
+                : 'text-slate-500 hover:bg-emerald-50/80 hover:text-emerald-700 dark:text-slate-400 dark:hover:bg-slate-800/80 dark:hover:text-emerald-300'
                 }`}
         >
             <item.icon size={20} strokeWidth={isActive(item.href) ? 2.5 : 2} />
@@ -97,7 +97,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
             )}
 
             {/* Sidebar */}
-            <aside className={`fixed top-0 left-0 z-40 h-screen bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transition-all duration-300 ${isOpen ? 'w-64' : 'w-64 -translate-x-full lg:translate-x-0 lg:w-20'
+            <aside className={`fixed top-0 left-0 z-40 h-screen bg-gradient-to-b from-white via-slate-50/80 to-emerald-50/40 dark:bg-gradient-to-b dark:from-[#0b1322] dark:via-[#091522] dark:to-[#042018] border-r border-slate-200/90 dark:border-slate-800/80 shadow-sm transition-all duration-300 ${isOpen ? 'w-64' : 'w-64 -translate-x-full lg:translate-x-0 lg:w-20'
                 }`}>
                 <div className="flex flex-col h-full">
                     {/* Logo + Role Badge */}

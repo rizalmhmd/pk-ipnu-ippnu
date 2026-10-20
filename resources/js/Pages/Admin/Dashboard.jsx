@@ -99,39 +99,49 @@ export default function Dashboard({ stats, recentActivities }) {
                 </motion.div>
             </div>
 
-            {/* Stats Grid */}
+            {/* Stats Grid - Compact Horizontal Layout */}
             <motion.div
                 variants={container}
                 initial="hidden"
                 animate="show"
-                className={`grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 ${gridCols} gap-3 md:gap-4 lg:gap-6 mb-12`}
+                className={`grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 ${gridCols} gap-3 sm:gap-4 lg:gap-5 mb-8 sm:mb-10`}
             >
                 {statCards.map((card, index) => (
                     <motion.div
                         key={index}
                         variants={item}
-                        whileHover={{ y: -4, transition: { duration: 0.2 } }}
-                        className="bg-white/75 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl p-4 md:p-6 shadow-xl shadow-slate-200/40 dark:shadow-2xl dark:shadow-black/30 border border-slate-200/60 dark:border-slate-800/60 hover:border-emerald-500/40 dark:hover:border-emerald-500/40 group relative overflow-hidden transition-all duration-300"
+                        whileHover={{ y: -3, transition: { duration: 0.15 } }}
+                        className="group relative"
                     >
-                        <div className={`absolute top-0 right-0 w-20 md:w-28 h-20 md:h-28 bg-gradient-to-br ${card.color} opacity-0 group-hover:opacity-10 transition-opacity rounded-bl-3xl`}></div>
+                        <Link
+                            href={card.href}
+                            className="block h-full bg-white/75 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl p-4 sm:p-5 shadow-lg shadow-slate-200/40 dark:shadow-xl dark:shadow-black/20 border border-slate-200/60 dark:border-slate-800/60 hover:border-emerald-500/40 dark:hover:border-emerald-500/40 relative overflow-hidden transition-all duration-300"
+                        >
+                            {/* Subtle Ambient Accent Gradient */}
+                            <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${card.color} opacity-0 group-hover:opacity-10 transition-opacity rounded-bl-full pointer-events-none`} />
 
-                        <div className="relative z-10">
-                            <div className={`w-11 h-11 md:w-14 md:h-14 rounded-xl bg-gradient-to-br ${card.color} text-white flex items-center justify-center mb-4 md:mb-6 shadow-lg ${card.shadow}/40 group-hover:scale-105 transition-transform duration-300`}>
-                                <card.icon size={22} className="md:w-7 md:h-7" />
+                            <div className="flex items-center justify-between gap-3 sm:gap-4 relative z-10">
+                                {/* Left: Icon */}
+                                <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-gradient-to-br ${card.color} text-white flex items-center justify-center shrink-0 shadow-md ${card.shadow}/40 group-hover:scale-105 transition-transform duration-300`}>
+                                    <card.icon size={22} className="sm:w-6 sm:h-6" />
+                                </div>
+
+                                {/* Center: Numbers & Title */}
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest truncate mb-0.5">
+                                        {card.title}
+                                    </p>
+                                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-black text-slate-900 dark:text-white leading-none">
+                                        {card.count}
+                                    </h3>
+                                </div>
+
+                                {/* Right: Subtle Arrow Indicator */}
+                                <div className="w-7 h-7 rounded-lg flex items-center justify-center text-slate-300 dark:text-slate-600 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all shrink-0">
+                                    <ChevronRight size={16} />
+                                </div>
                             </div>
-
-                            <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">{card.title}</p>
-                            <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white leading-tight">{card.count}</h3>
-
-                            <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t border-slate-100 dark:border-slate-800/60">
-                                <Link
-                                    href={card.href}
-                                    className="text-[9px] md:text-xs font-bold text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors flex items-center gap-1 uppercase tracking-widest"
-                                >
-                                    Manage <ChevronRight size={12} className="md:w-[14px] md:h-[14px] group-hover:translate-x-1 transition-transform" />
-                                </Link>
-                            </div>
-                        </div>
+                        </Link>
                     </motion.div>
                 ))}
             </motion.div>
