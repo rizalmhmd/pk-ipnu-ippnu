@@ -65,7 +65,7 @@ export default function AdminLayout({ children }) {
                 </main>
 
                 {/* Footer */}
-                <div className="py-6 text-center text-xs font-bold text-slate-400 dark:text-slate-600 uppercase tracking-widest border-t border-slate-200 dark:border-slate-800">
+                <div className="py-6 text-center text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest border-t border-slate-200 dark:border-slate-800/70">
                     &copy; {new Date().getFullYear()} PKPT IPNU IPPNU. Premium System.
                 </div>
                 </div>

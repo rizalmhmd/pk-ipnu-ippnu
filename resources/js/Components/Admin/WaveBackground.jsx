@@ -9,10 +9,10 @@ import React from 'react';
  */
 export default function WaveBackground() {
     return (
-        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none bg-gradient-to-br from-slate-50 via-[#f4f9f6] to-[#ebf6f0] dark:bg-gradient-to-br dark:from-[#060b13] dark:via-[#07131b] dark:to-[#031812] transition-colors duration-500">
+        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none bg-gradient-to-br from-slate-50 via-[#f4f9f6] to-[#ebf6f0] dark:bg-gradient-to-br dark:from-[#050b12] dark:via-[#061219] dark:to-[#031812] transition-colors duration-500">
             {/* ─── Pendaran Cahaya Ambient (Menghidupkan Nuansa Gelombang) ─── */}
-            <div className="absolute top-10 right-1/4 w-[600px] h-[400px] bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-[140px]" />
-            <div className="absolute bottom-10 left-1/3 w-[500px] h-[350px] bg-teal-500/5 dark:bg-emerald-600/10 rounded-full blur-[160px]" />
+            <div className="absolute top-10 right-1/4 w-[600px] h-[400px] bg-emerald-500/10 dark:bg-emerald-500/12 rounded-full blur-[140px]" />
+            <div className="absolute bottom-10 left-1/3 w-[500px] h-[350px] bg-teal-500/5 dark:bg-emerald-600/8 rounded-full blur-[160px]" />
 
             {/* ─── Single Wave Canvas ─── */}
             <div className="absolute inset-0 w-full h-full">
@@ -52,7 +52,7 @@ export default function WaveBackground() {
                         d="M -60,365 C 180,365 330,415 540,415 C 750,415 880,335 1100,335 C 1260,335 1380,365 1500,370"
                         stroke="url(#solid-crest-line)"
                         strokeWidth="2"
-                        className="opacity-65 dark:opacity-80"
+                        className="opacity-65 dark:opacity-45"
                     />
                 </svg>
             </div>

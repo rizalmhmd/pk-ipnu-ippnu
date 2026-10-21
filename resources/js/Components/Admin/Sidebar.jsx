@@ -69,7 +69,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
             }}
             className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${isActive(item.href)
                 ? 'bg-gradient-to-r from-emerald-600 to-emerald-500 text-white font-semibold shadow-md shadow-emerald-600/25'
-                : 'text-slate-500 hover:bg-emerald-50/80 hover:text-emerald-700 dark:text-slate-400 dark:hover:bg-slate-800/80 dark:hover:text-emerald-300'
+                : 'text-slate-500 hover:bg-emerald-50/80 hover:text-emerald-700 dark:text-slate-300 dark:hover:bg-white/5 dark:hover:text-emerald-400'
                 }`}
         >
             <item.icon size={20} strokeWidth={isActive(item.href) ? 2.5 : 2} />
@@ -97,11 +97,11 @@ export default function Sidebar({ isOpen, setIsOpen }) {
             )}
 
             {/* Sidebar */}
-            <aside className={`fixed top-0 left-0 z-40 h-screen bg-gradient-to-b from-white via-slate-50/80 to-emerald-50/40 dark:bg-gradient-to-b dark:from-[#0b1322] dark:via-[#091522] dark:to-[#042018] border-r border-slate-200/90 dark:border-slate-800/80 shadow-sm transition-all duration-300 ${isOpen ? 'w-64' : 'w-64 -translate-x-full lg:translate-x-0 lg:w-20'
+            <aside className={`fixed top-0 left-0 z-40 h-screen bg-gradient-to-b from-white via-slate-50/80 to-emerald-50/40 dark:bg-gradient-to-b dark:from-[#070e17] dark:via-[#061219] dark:to-[#031812] border-r border-slate-200/90 dark:border-slate-800/70 shadow-sm transition-all duration-300 ${isOpen ? 'w-64' : 'w-64 -translate-x-full lg:translate-x-0 lg:w-20'
                 }`}>
                 <div className="flex flex-col h-full">
                     {/* Logo + Role Badge */}
-                    <div className="h-20 flex items-center justify-center border-b border-slate-100 dark:border-slate-800">
+                    <div className="h-20 flex items-center justify-center border-b border-slate-100 dark:border-slate-800/70">
                         <div className="w-10 h-10 bg-emerald-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-emerald-600/20">
                             IP
                         </div>
@@ -141,11 +141,11 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                     </div>
 
                     {/* Bottom Actions */}
-                    <div className="p-3 border-t border-slate-100 dark:border-slate-800 space-y-1">
+                    <div className="p-3 border-t border-slate-100 dark:border-slate-800/70 space-y-1">
                         <a
                             href="/"
                             target="_blank"
-                            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-all`}
+                            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 transition-all`}
                         >
                             <Globe size={20} />
                             <span className={`font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>
@@ -156,7 +156,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                             href="/logout"
                             method="post"
                             as="button"
-                            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all`}
+                            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 transition-all`}
                         >
                             <LogOut size={20} />
                             <span className={`font-medium whitespace-nowrap overflow-hidden transition-all duration-300 ${isOpen ? 'opacity-100 w-auto' : 'opacity-0 w-0'}`}>

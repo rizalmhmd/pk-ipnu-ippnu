@@ -84,9 +84,9 @@ export default function Dashboard({ stats, recentActivities }) {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 bg-white/75 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-xl shadow-slate-200/40 dark:shadow-none"
+                    className="flex items-center gap-3 md:gap-4 px-4 md:px-6 py-3 md:py-4 bg-white/75 dark:bg-[#0a1320]/85 backdrop-blur-xl rounded-2xl border border-slate-200/60 dark:border-slate-800/70 shadow-xl shadow-slate-200/40 dark:shadow-none"
                 >
-                    <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 dark:bg-emerald-950/50 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                         <Activity size={20} className="md:w-6 md:h-6" />
                     </div>
                     <div>
@@ -115,7 +115,7 @@ export default function Dashboard({ stats, recentActivities }) {
                     >
                         <Link
                             href={card.href}
-                            className="block h-full bg-white/75 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl p-4 sm:p-5 shadow-lg shadow-slate-200/40 dark:shadow-xl dark:shadow-black/20 border border-slate-200/60 dark:border-slate-800/60 hover:border-emerald-500/40 dark:hover:border-emerald-500/40 relative overflow-hidden transition-all duration-300"
+                            className="block h-full bg-white/75 dark:bg-[#0a1320]/85 backdrop-blur-xl rounded-2xl p-4 sm:p-5 shadow-lg shadow-slate-200/40 dark:shadow-xl dark:shadow-black/30 border border-slate-200/60 dark:border-slate-800/70 hover:border-emerald-500/40 dark:hover:border-emerald-500/40 relative overflow-hidden transition-all duration-300"
                         >
                             {/* Subtle Ambient Accent Gradient */}
                             <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${card.color} opacity-0 group-hover:opacity-10 transition-opacity rounded-bl-full pointer-events-none`} />
@@ -153,16 +153,16 @@ export default function Dashboard({ stats, recentActivities }) {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="lg:col-span-8 bg-white/75 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl shadow-xl shadow-slate-200/40 dark:shadow-none border border-slate-200/60 dark:border-slate-800/60 overflow-hidden"
+                    className="lg:col-span-8 bg-white/75 dark:bg-[#0a1320]/85 backdrop-blur-xl rounded-2xl shadow-xl shadow-slate-200/40 dark:shadow-none border border-slate-200/60 dark:border-slate-800/70 overflow-hidden"
                 >
-                    <div className="px-6 md:px-10 py-6 md:py-8 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center">
+                    <div className="px-6 md:px-10 py-6 md:py-8 border-b border-slate-50 dark:border-slate-800/70 flex justify-between items-center">
                         <div className="flex items-center gap-4">
-                            <div className="p-2.5 md:p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 rounded-lg">
+                            <div className="p-2.5 md:p-3 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border border-transparent dark:border-emerald-500/20 rounded-xl">
                                 <Activity size={18} className="md:w-5 md:h-5" />
                             </div>
                             <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white">Aktivitas Terakhir</h3>
                         </div>
-                        <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 md:px-3 py-1 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 rounded-full">LIVE Updates</span>
+                        <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest px-2.5 md:px-3 py-1 bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 dark:border dark:border-emerald-500/30 rounded-full">LIVE Updates</span>
                     </div>
 
                     <div className="p-6 md:p-10">
@@ -213,12 +213,12 @@ export default function Dashboard({ stats, recentActivities }) {
                                 })}
                             </div>
                         ) : (
-                            <div className="text-center py-20 bg-slate-50 dark:bg-slate-800/20 rounded-lg border-2 border-dashed border-slate-100 dark:border-slate-800">
-                                <div className="w-20 h-20 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center text-slate-200 dark:text-slate-700 mx-auto mb-6 shadow-xl shadow-slate-200/50 dark:shadow-none">
+                            <div className="text-center py-20 bg-slate-50 dark:bg-slate-900/40 rounded-xl border-2 border-dashed border-slate-100 dark:border-slate-800/70">
+                                <div className="w-20 h-20 bg-white dark:bg-[#0a1320] rounded-xl flex items-center justify-center text-slate-200 dark:text-slate-600 mx-auto mb-6 shadow-xl shadow-slate-200/50 dark:shadow-none border border-transparent dark:border-slate-800/70">
                                     <Activity size={40} />
                                 </div>
                                 <h4 className="text-lg font-bold text-slate-400 uppercase tracking-widest">Belum Ada Aktivitas</h4>
-                                <p className="text-sm text-slate-300 dark:text-slate-600 font-medium mt-2">Sistem akan menampilkan entri terbaru secara otomatis.</p>
+                                <p className="text-sm text-slate-300 dark:text-slate-500 font-medium mt-2">Sistem akan menampilkan entri terbaru secara otomatis.</p>
                             </div>
                         )}
                     </div>
@@ -231,7 +231,7 @@ export default function Dashboard({ stats, recentActivities }) {
                     transition={{ delay: 0.6 }}
                     className="lg:col-span-4 space-y-8"
                 >
-                    <div className="bg-emerald-600 p-6 md:p-10 rounded-lg text-white shadow-2xl shadow-emerald-900/20 relative overflow-hidden">
+                    <div className="bg-emerald-600 dark:bg-gradient-to-br dark:from-emerald-950/90 dark:via-[#064e3b]/90 dark:to-[#032e23] dark:border dark:border-emerald-500/30 p-6 md:p-10 rounded-2xl text-white shadow-2xl shadow-emerald-900/20 dark:shadow-xl dark:shadow-emerald-950/40 relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 md:w-40 h-32 md:h-40 bg-white/10 rounded-full -mr-16 md:-mr-20 -mt-16 md:-mt-20 blur-3xl"></div>
                         <div className="relative z-10">
                             <h4 className="text-xl md:text-2xl font-black mb-4 md:mb-6 leading-tight">Mulai Kelola<br />Konten Hari Ini</h4>
@@ -242,7 +242,7 @@ export default function Dashboard({ stats, recentActivities }) {
                                     <Link
                                         key={idx}
                                         href={shortcut.href}
-                                        className="w-[calc(50%-0.5rem)] sm:flex-1 p-3 md:p-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-white/20 transition-all group"
+                                        className="w-[calc(50%-0.5rem)] sm:flex-1 p-3 md:p-4 bg-white/10 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10 rounded-xl flex flex-col items-center justify-center gap-2 hover:bg-white/20 dark:hover:bg-white/10 transition-all group"
                                     >
                                         <shortcut.icon size={18} className="md:w-5 md:h-5" />
                                         <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-center">{shortcut.title}</span>
@@ -252,12 +252,12 @@ export default function Dashboard({ stats, recentActivities }) {
                         </div>
                     </div>
 
-                    <div className="bg-white/75 dark:bg-slate-900/60 backdrop-blur-xl p-6 md:p-10 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-xl shadow-slate-200/40 dark:shadow-none">
+                    <div className="bg-white/75 dark:bg-[#0a1320]/85 backdrop-blur-xl p-6 md:p-10 rounded-2xl border border-slate-200/60 dark:border-slate-800/70 shadow-xl shadow-slate-200/40 dark:shadow-none">
                         <h4 className="text-lg font-bold text-slate-900 dark:text-white mb-8 uppercase tracking-widest">Inspirasi Harian</h4>
-                        <div className="relative p-6 bg-slate-50 dark:bg-slate-800/50 rounded-lg italic text-slate-500 dark:text-slate-400 font-serif leading-relaxed">
+                        <div className="relative p-6 bg-slate-50 dark:bg-slate-900/50 rounded-xl italic text-slate-500 dark:text-slate-300 font-serif leading-relaxed border border-transparent dark:border-slate-800/60">
                             <span className="absolute -top-4 -left-2 text-6xl text-emerald-100 dark:text-emerald-900/40 non-italic">"</span>
                             Tingkatkan kualitas organisasi dengan literasi dan penyebaran informasi yang positif dan konsisten.
-                            <div className="mt-4 font-sans not-italic text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600">PKPT IPNU IPPNU</div>
+                            <div className="mt-4 font-sans not-italic text-[10px] font-black uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-400">PKPT IPNU IPPNU</div>
                         </div>
                     </div>
                 </motion.div>

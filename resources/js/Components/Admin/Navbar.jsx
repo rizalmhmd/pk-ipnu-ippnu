@@ -58,13 +58,13 @@ export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
     };
 
     return (
-        <nav className="fixed top-0 right-0 left-0 h-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 z-30 transition-all duration-300 lg:pl-[inherit]">
+        <nav className="fixed top-0 right-0 left-0 h-20 bg-white/80 dark:bg-[#070e17]/85 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800/70 z-30 transition-all duration-300 lg:pl-[inherit]">
             <div className="h-full px-6 flex items-center justify-between">
                 {/* Left: Mobile Toggle */}
                 <div className="flex items-center gap-4">
                     <button
                         onClick={toggleSidebar}
-                        className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/5 transition-colors"
                     >
                         <Menu size={24} />
                     </button>
@@ -78,7 +78,7 @@ export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
                     {/* Dark Mode Toggle */}
                     <button
                         onClick={toggleDarkMode}
-                        className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/5 dark:hover:text-white transition-colors"
                         title={darkMode ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap'}
                     >
                         {darkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -93,8 +93,8 @@ export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
                             }}
                             className={`p-2.5 rounded-xl transition-all relative group ${
                                 isNotificationOpen
-                                    ? 'bg-emerald-50 text-emerald-600 dark:bg-slate-800 dark:text-emerald-400'
-                                    : 'text-slate-500 hover:text-slate-800 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
+                                    ? 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400'
+                                    : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
                             }`}
                             aria-label="Pemberitahuan"
                             title="Notifikasi Sistem"
@@ -114,9 +114,9 @@ export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
                                     className="fixed inset-0 z-40 cursor-default"
                                     onClick={() => setIsNotificationOpen(false)}
                                 />
-                                <div className="absolute right-0 mt-3 w-80 sm:w-96 bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200/80 dark:border-slate-800/80 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-150">
+                                <div className="absolute right-0 mt-3 w-80 sm:w-96 bg-white dark:bg-[#0a1320] rounded-2xl shadow-2xl border border-slate-200/80 dark:border-slate-800/80 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-150">
                                     {/* Header */}
-                                    <div className="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/70 dark:bg-slate-950/40">
+                                    <div className="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/70 flex items-center justify-between bg-slate-50/70 dark:bg-[#060c14]/80">
                                         <div className="flex items-center gap-2">
                                             <span className="font-extrabold text-sm text-slate-900 dark:text-white">Notifikasi Penting</span>
                                             {unreadCount > 0 && (
@@ -226,7 +226,7 @@ export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
                                 setIsProfileOpen(!isProfileOpen);
                                 setIsNotificationOpen(false);
                             }}
-                            className="flex items-center gap-3 pl-3 pr-1 py-1 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+                            className="flex items-center gap-3 pl-3 pr-1 py-1 rounded-full hover:bg-slate-50 dark:hover:bg-white/5 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-800"
                         >
                             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-emerald-500 to-blue-500 flex items-center justify-center text-white font-bold text-sm">
                                 {auth?.user?.name?.charAt(0) || 'A'}
@@ -243,8 +243,8 @@ export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
                                     className="fixed inset-0 z-0 cursor-default"
                                     onClick={() => setIsProfileOpen(false)}
                                 ></div>
-                                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-slate-900 rounded-lg shadow-xl border border-slate-100 dark:border-slate-800 overflow-hidden z-50">
-                                    <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800">
+                                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#0a1320] rounded-xl shadow-2xl border border-slate-100 dark:border-slate-800/80 overflow-hidden z-50">
+                                    <div className="px-4 py-3 border-b border-slate-100 dark:border-slate-800/70">
                                         <p className="text-xs text-slate-500 uppercase tracking-wider font-bold">Terdaftar sebagai</p>
                                         <p className="text-sm font-medium text-slate-900 dark:text-white truncate">
                                             {auth?.user?.email}
@@ -253,7 +253,7 @@ export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
                                     <div className="py-1">
                                         <Link
                                             href="/admin/profile"
-                                            className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                                            className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5"
                                         >
                                             <User size={16} /> Profil Saya
                                         </Link>
@@ -261,7 +261,7 @@ export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
                                             href="/logout"
                                             method="post"
                                             as="button"
-                                            className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                                            className="w-full text-left flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30"
                                         >
                                             <LogOut size={16} /> Keluar
                                         </Link>
