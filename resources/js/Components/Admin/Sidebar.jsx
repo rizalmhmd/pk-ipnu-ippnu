@@ -97,7 +97,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
             )}
 
             {/* Sidebar */}
-            <aside className={`fixed top-0 left-0 z-40 h-screen bg-gradient-to-b from-white via-slate-50/80 to-emerald-50/40 dark:bg-gradient-to-b dark:from-[#070e17] dark:via-[#061219] dark:to-[#031812] border-r border-slate-200/90 dark:border-slate-800/70 shadow-sm transition-all duration-300 ${isOpen ? 'w-64' : 'w-64 -translate-x-full lg:translate-x-0 lg:w-20'
+            <aside className={`fixed top-0 left-0 z-40 h-screen bg-gradient-to-b from-white via-slate-50/80 to-emerald-50/40 dark:bg-gradient-to-b dark:from-[#070e17] dark:via-[#061219] dark:to-[#031812] border-r border-slate-200/90 dark:border-slate-800/70 shadow-sm overflow-hidden transition-all duration-300 ${isOpen ? 'w-64' : 'w-64 -translate-x-full lg:translate-x-0 lg:w-20'
                 }`}>
                 <div className="flex flex-col h-full">
                     {/* Logo + Role Badge */}
@@ -116,7 +116,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                     </div>
 
                     {/* Navigation */}
-                    <div className="flex-1 overflow-y-auto py-6 px-3 space-y-8 custom-scrollbar">
+                    <div className="flex-1 overflow-y-auto overflow-x-hidden py-5 px-3 space-y-6 no-scrollbar">
                         <div>
                             <p className={`px-3 text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 transition-opacity ${isOpen ? 'opacity-100' : 'opacity-0 text-center'}`}>
                                 Menu

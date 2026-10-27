@@ -80,14 +80,31 @@ class AgendaController extends Controller
             'payment_account' => 'nullable|string|max:255',
             'form_schema' => 'nullable|array',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'remove_image' => 'nullable',
         ]);
 
-        if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('pamflet');
-
+        if ($request->boolean('remove_image') || $request->remove_image === 'true' || $request->remove_image === '1') {
             if ($agenda->image) {
-                \Illuminate\Support\Facades\Storage::delete($agenda->image);
+                try {
+                    \Illuminate\Support\Facades\Storage::delete($agenda->image);
+                } catch (\Throwable $e) {}
+                if (file_exists(public_path($agenda->image))) {
+                    @unlink(public_path($agenda->image));
+                }
             }
+            $validated['image'] = null;
+        } elseif ($request->hasFile('image')) {
+            if ($agenda->image) {
+                try {
+                    \Illuminate\Support\Facades\Storage::delete($agenda->image);
+                } catch (\Throwable $e) {}
+                if (file_exists(public_path($agenda->image))) {
+                    @unlink(public_path($agenda->image));
+                }
+            }
+            $validated['image'] = $request->file('image')->store('pamflet');
+        } else {
+            unset($validated['image']);
         }
 
         $agenda->update($validated);

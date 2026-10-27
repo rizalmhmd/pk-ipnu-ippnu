@@ -3,61 +3,7 @@ import { Head, Link, useForm } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Helper to decode Indonesian NIK (16 digits)
-const parseNik = (nik) => {
-    if (!nik) return null;
-    const clean = String(nik).replace(/[^0-9]/g, '');
-    if (clean.length !== 16) return null;
-
-    const provinces = {
-        '11': 'Aceh', '12': 'Sumatera Utara', '13': 'Sumatera Barat', '14': 'Riau',
-        '15': 'Jambi', '16': 'Sumatera Selatan', '17': 'Bengkulu', '18': 'Lampung',
-        '19': 'Kep. Bangka Belitung', '21': 'Kep. Riau',
-        '31': 'DKI Jakarta', '32': 'Jawa Barat', '33': 'Jawa Tengah',
-        '34': 'DI Yogyakarta', '35': 'Jawa Timur', '36': 'Banten',
-        '51': 'Bali', '52': 'Nusa Tenggara Barat', '53': 'Nusa Tenggara Timur',
-        '61': 'Kalimantan Barat', '62': 'Kalimantan Tengah', '63': 'Kalimantan Selatan',
-        '64': 'Kalimantan Timur', '65': 'Kalimantan Utara',
-        '71': 'Sulawesi Utara', '72': 'Sulawesi Tengah', '73': 'Sulawesi Selatan',
-        '74': 'Sulawesi Tenggara', '75': 'Gorontalo', '76': 'Sulawesi Barat',
-        '81': 'Maluku', '82': 'Maluku Utara',
-        '91': 'Papua Barat', '92': 'Papua Barat Daya', '93': 'Papua Selatan',
-        '94': 'Papua', '95': 'Papua Pegunungan', '96': 'Papua Tengah'
-    };
-
-    const prov = provinces[clean.substring(0, 2)] || 'Wilayah Indonesia';
-
-    let day = parseInt(clean.substring(6, 8), 10);
-    const month = parseInt(clean.substring(8, 10), 10);
-    const yearShort = parseInt(clean.substring(10, 12), 10);
-
-    const isFemale = day > 40;
-    if (isFemale) day -= 40;
-
-    if (day < 1 || day > 31 || month < 1 || month > 12) {
-        return { isValid: false, message: 'Format tanggal/bulan lahir pada NIK tidak valid.' };
-    }
-
-    const currentYear = new Date().getFullYear();
-    const currentYearShort = currentYear % 100;
-    const fullYear = yearShort <= currentYearShort ? (2000 + yearShort) : (1900 + yearShort);
-    const age = currentYear - fullYear;
-
-    const monthNames = [
-        'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-    ];
-
-    return {
-        isValid: true,
-        cleanNik: clean,
-        isFemale,
-        genderLabel: isFemale ? 'Rekanita (Perempuan)' : 'Rekan (Laki-laki)',
-        birthDateFormatted: `${day} ${monthNames[month - 1]} ${fullYear}`,
-        age,
-        province: prov,
-    };
-};
+import { parseFullNik } from '@/Utils/nikParser';
 
 export default function RegistrationForm({ agenda, pageSetting, existingRegistration }) {
     const defaultSchema = [
@@ -90,6 +36,84 @@ export default function RegistrationForm({ agenda, pageSetting, existingRegistra
             ...data.responses,
             [fieldId]: value
         });
+    };
+
+    const handleNikChange = (fieldId, rawValue) => {
+        const numericOnly = String(rawValue || '').replace(/[^0-9]/g, '').slice(0, 16);
+        const updated = {
+            ...data.responses,
+            [fieldId]: numericOnly
+        };
+
+        if (numericOnly.length === 16) {
+            const info = parseFullNik(numericOnly);
+            if (info && info.isValid) {
+                schema.forEach(f => {
+                    if (f.id === fieldId) return;
+                    const fid = f.id.toLowerCase();
+                    const flabel = (f.label || '').toLowerCase();
+
+                    // Auto-fill Jenis Kelamin jika belum diisi
+                    if (fid.includes('gender') || fid.includes('kelamin') || flabel.includes('jenis kelamin') || flabel.includes('gender')) {
+                        if (!updated[f.id]) {
+                            if (f.type === 'select' && Array.isArray(f.options)) {
+                                const matched = f.options.find(opt =>
+                                    (info.isFemale && opt.toLowerCase().includes('perempuan')) ||
+                                    (!info.isFemale && (opt.toLowerCase().includes('laki') || opt.toLowerCase().includes('pria')))
+                                );
+                                if (matched) updated[f.id] = matched;
+                            } else {
+                                updated[f.id] = info.gender;
+                            }
+                        }
+                    }
+
+                    // Auto-fill Tanggal Lahir jika belum diisi
+                    if (fid.includes('tanggal_lahir') || fid.includes('tgl_lahir') || fid.includes('birth_date') || flabel.includes('tanggal lahir')) {
+                        if (!updated[f.id]) {
+                            updated[f.id] = info.birthDate;
+                        }
+                    }
+
+                    // Auto-fill Tempat Lahir jika belum diisi
+                    if (fid.includes('tempat_lahir') || flabel.includes('tempat lahir')) {
+                        if (!updated[f.id]) {
+                            updated[f.id] = info.kabupatenKota;
+                        }
+                    }
+
+                    // Auto-fill Kecamatan jika belum diisi
+                    if (fid.includes('kecamatan') || flabel.includes('kecamatan')) {
+                        if (!updated[f.id]) {
+                            updated[f.id] = info.kecamatan;
+                        }
+                    }
+
+                    // Auto-fill Kabupaten / Kota jika belum diisi
+                    if (fid.includes('kabupaten') || fid.includes('kota') || flabel.includes('kabupaten') || flabel.includes('kota')) {
+                        if (!updated[f.id]) {
+                            updated[f.id] = info.kabupatenKota;
+                        }
+                    }
+
+                    // Auto-fill Provinsi jika belum diisi
+                    if (fid.includes('provinsi') || flabel.includes('provinsi')) {
+                        if (!updated[f.id]) {
+                            updated[f.id] = info.province;
+                        }
+                    }
+
+                    // Auto-fill Kode Pos jika belum diisi
+                    if (fid.includes('kodepos') || fid.includes('kode_pos') || flabel.includes('kode pos')) {
+                        if (!updated[f.id] && info.kodepos) {
+                            updated[f.id] = info.kodepos;
+                        }
+                    }
+                });
+            }
+        }
+
+        setData('responses', updated);
     };
 
     const submit = (e) => {
@@ -196,9 +220,16 @@ export default function RegistrationForm({ agenda, pageSetting, existingRegistra
                                 </div>
                             )}
 
-                            {agenda.image && (
-                                <div className="mb-8 rounded-xl overflow-hidden shadow-lg shadow-emerald-900/10">
-                                    <img src={`/${agenda.image}`} alt="Pamflet Agenda" className="w-full h-auto object-cover" />
+                            {(agenda.image_url || agenda.image) && (
+                                <div className="mb-8 rounded-2xl overflow-hidden shadow-lg shadow-emerald-900/10 border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-center">
+                                    <img
+                                        src={agenda.image_url || (agenda.image?.startsWith('http') ? agenda.image : `/${agenda.image}`)}
+                                        alt={agenda.title ? `Pamflet ${agenda.title}` : 'Pamflet Agenda'}
+                                        className="w-full max-h-[550px] object-contain mx-auto"
+                                        onError={(e) => {
+                                            e.currentTarget.parentElement.style.display = 'none';
+                                        }}
+                                    />
                                 </div>
                             )}
 
@@ -310,7 +341,7 @@ export default function RegistrationForm({ agenda, pageSetting, existingRegistra
                                     const isPhoneField = !isNikField && (field.type === 'number' || fieldId.includes('phone') || fieldId.includes('whatsapp') || fieldLabelLower.includes('telepon') || fieldLabelLower.includes('whatsapp') || fieldLabelLower.includes('hp'));
                                     
                                     const rawVal = data.responses[fieldId] || '';
-                                    const nikInfo = isNikField ? parseNik(rawVal) : null;
+                                    const nikInfo = isNikField ? parseFullNik(rawVal) : null;
 
                                     return (
                                         <div key={field.id} className="space-y-1.5">
@@ -369,12 +400,9 @@ export default function RegistrationForm({ agenda, pageSetting, existingRegistra
                                                             type="text"
                                                             inputMode="numeric"
                                                             maxLength={16}
-                                                            placeholder="Contoh: 3201011508050001 (16 digit)"
+                                                            placeholder="Contoh: 3307112509040002 (16 digit)"
                                                             value={rawVal}
-                                                            onChange={e => {
-                                                                const numericOnly = e.target.value.replace(/[^0-9]/g, '').slice(0, 16);
-                                                                handleChange(field.id, numericOnly);
-                                                            }}
+                                                            onChange={e => handleNikChange(field.id, e.target.value)}
                                                             required={field.required}
                                                             className={`w-full px-4 py-3 bg-slate-50 border-2 rounded-lg focus:outline-none font-mono tracking-wider transition-all ${errors[`responses.${field.id}`] ? 'border-red-500 bg-red-50' : 'border-slate-200 focus:border-emerald-500'}`}
                                                         />
@@ -392,32 +420,42 @@ export default function RegistrationForm({ agenda, pageSetting, existingRegistra
                                                                 initial={{ opacity: 0, height: 0, y: -5 }}
                                                                 animate={{ opacity: 1, height: 'auto', y: 0 }}
                                                                 exit={{ opacity: 0, height: 0 }}
-                                                                className="p-4 bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl space-y-2.5 overflow-hidden"
+                                                                className="p-4 bg-gradient-to-br from-emerald-50/90 to-teal-50/70 border-2 border-emerald-300/70 rounded-xl space-y-3 overflow-hidden shadow-xs text-slate-700"
                                                             >
-                                                                <div className="flex items-center justify-between pb-2 border-b border-emerald-100">
-                                                                    <div className="flex items-center gap-2">
-                                                                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-extrabold ${nikInfo.isFemale ? 'bg-pink-100 text-pink-700' : 'bg-emerald-100 text-emerald-800'}`}>
-                                                                            <i className={`fas ${nikInfo.isFemale ? 'fa-female' : 'fa-male'}`}></i>
-                                                                            {nikInfo.genderLabel}
-                                                                        </span>
-                                                                    </div>
-                                                                    <span className="text-[11px] font-bold text-emerald-700 flex items-center gap-1">
-                                                                        <i className="fas fa-check-circle text-emerald-500"></i> NIK Terdeteksi
+                                                                {/* Header: Jenis Kelamin & Status */}
+                                                                <div className="flex items-center justify-between pb-2.5 border-b border-emerald-200/60">
+                                                                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black shadow-xs ${
+                                                                        nikInfo.isFemale ? 'bg-pink-100 text-pink-700 border border-pink-200' : 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                                                                    }`}>
+                                                                        <i className={`fas ${nikInfo.isFemale ? 'fa-female' : 'fa-male'}`}></i>
+                                                                        {nikInfo.genderLabel}
+                                                                    </span>
+
+                                                                    <span className="text-xs font-bold text-emerald-700 flex items-center gap-1.5">
+                                                                        <i className="fas fa-check-circle text-emerald-600"></i> NIK Terdeteksi
                                                                     </span>
                                                                 </div>
 
-                                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                                                                    <div className="flex items-center gap-2 text-slate-700">
-                                                                        <i className="fas fa-birthday-cake text-emerald-600 w-4"></i>
-                                                                        <span>
-                                                                            <strong>Lahir:</strong> {nikInfo.birthDateFormatted} ({nikInfo.age} thn)
-                                                                        </span>
+                                                                {/* Wilayah Administrasi KTP */}
+                                                                <div className="bg-white/90 p-3.5 rounded-xl border border-emerald-100 shadow-xs space-y-2">
+                                                                    <div className="flex items-center gap-2 font-black text-slate-800 pb-1.5 border-b border-slate-100">
+                                                                        <i className="fas fa-map-marked-alt text-emerald-600 text-sm"></i>
+                                                                        <span>Wilayah Administrasi KTP</span>
                                                                     </div>
-                                                                    <div className="flex items-center gap-2 text-slate-700">
-                                                                        <i className="fas fa-map-marker-alt text-emerald-600 w-4"></i>
-                                                                        <span>
-                                                                            <strong>Asal:</strong> Provinsi {nikInfo.province}
-                                                                        </span>
+
+                                                                    <div className="space-y-1.5 text-xs text-slate-600">
+                                                                        <div className="flex items-center justify-between gap-4">
+                                                                            <span className="text-slate-400">Kecamatan:</span>
+                                                                            <strong className="font-bold text-slate-800 text-right">{nikInfo.kecamatan}</strong>
+                                                                        </div>
+                                                                        <div className="flex items-center justify-between gap-4">
+                                                                            <span className="text-slate-400">Kabupaten/Kota:</span>
+                                                                            <strong className="font-bold text-slate-800 text-right">{nikInfo.kabupatenKota}</strong>
+                                                                        </div>
+                                                                        <div className="flex items-center justify-between gap-4">
+                                                                            <span className="text-slate-400">Provinsi:</span>
+                                                                            <strong className="font-bold text-slate-800 text-right">{nikInfo.province}</strong>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </motion.div>

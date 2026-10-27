@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
-import { ArrowLeft, Save, UserCog } from 'lucide-react';
+import { ArrowLeft, Save, UserCog, Eye, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function UserForm({ user, roles }) {
     const isEditing = !!user;
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const { data, setData, post, put, processing, errors } = useForm({
         name: user?.name || '',
@@ -96,26 +98,50 @@ export default function UserForm({ user, roles }) {
                                 <label className="block text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-2">
                                     Password {isEditing && <span className="text-slate-300 dark:text-slate-600 normal-case tracking-normal">(kosongkan jika tidak diubah)</span>}
                                 </label>
-                                <input
-                                    type="password"
-                                    value={data.password}
-                                    onChange={e => setData('password', e.target.value)}
-                                    className="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
-                                    placeholder="Min. 6 karakter"
-                                />
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? 'text' : 'password'}
+                                        value={data.password}
+                                        onChange={e => setData('password', e.target.value)}
+                                        className="w-full pl-5 pr-12 py-3.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+                                        placeholder="Min. 6 karakter"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-600 focus:outline-none transition-colors cursor-pointer"
+                                        title={showPassword ? 'Sembunyikan password' : 'Lihat password'}
+                                        aria-label={showPassword ? 'Sembunyikan password' : 'Lihat password'}
+                                        tabIndex={-1}
+                                    >
+                                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
+                                </div>
                                 {errors.password && <p className="mt-2 text-xs text-red-500 font-bold">{errors.password}</p>}
                             </div>
                             <div>
                                 <label className="block text-xs font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-2">
                                     Konfirmasi Password
                                 </label>
-                                <input
-                                    type="password"
-                                    value={data.password_confirmation}
-                                    onChange={e => setData('password_confirmation', e.target.value)}
-                                    className="w-full px-5 py-3.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
-                                    placeholder="Ulangi password"
-                                />
+                                <div className="relative">
+                                    <input
+                                        type={showConfirmPassword ? 'text' : 'password'}
+                                        value={data.password_confirmation}
+                                        onChange={e => setData('password_confirmation', e.target.value)}
+                                        className="w-full pl-5 pr-12 py-3.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-800 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all font-medium"
+                                        placeholder="Ulangi password"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-600 focus:outline-none transition-colors cursor-pointer"
+                                        title={showConfirmPassword ? 'Sembunyikan password' : 'Lihat password'}
+                                        aria-label={showConfirmPassword ? 'Sembunyikan password' : 'Lihat password'}
+                                        tabIndex={-1}
+                                    >
+                                        {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
+                                </div>
                             </div>
                         </div>
 

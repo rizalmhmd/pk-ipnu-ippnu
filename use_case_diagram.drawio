@@ -1,0 +1,242 @@
+<mxfile host="app.diagrams.net" modified="2026-10-26T22:35:00.000Z" agent="Antigravity" version="21.0.0" type="device">
+  
+  <!-- =================================================================== -->
+  <!-- TAB 1: SEMUA USE CASE (PERSIS CONTOH TEMPLATE SKRIPSI)             -->
+  <!-- =================================================================== -->
+  <diagram id="all-in-one" name="Semua Use Case (Format Skripsi)">
+    <mxGraphModel dx="1600" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- ============================================================= -->
+        <!-- 1. GAMBAR 4.1 USE CASE ADMIN                                  -->
+        <!-- ============================================================= -->
+        <mxCell id="act_admin" value="Admin" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#000000;strokeWidth=1.5;fillColor=#ffffff;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="80" y="230" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- 6 Elips Utama Admin (Kolom Vertikal) -->
+        <mxCell id="adm_uc1" value="Login" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="60" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="adm_uc2" value="Lihat Dashboard Admin" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="130" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="adm_uc3" value="Kelola Data Master (CRUD)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="200" width="170" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="adm_uc4" value="Kelola Pengguna (User)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="270" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="adm_uc5" value="Kelola Pengaturan Situs" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="340" width="160" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="adm_uc6" value="Logout" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="410" width="160" height="42" as="geometry" />
+        </mxCell>
+
+        <!-- Garis Asosiasi Lurus Admin ke 6 Elips -->
+        <mxCell id="e_adm_1" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_admin" target="adm_uc1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_adm_2" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_admin" target="adm_uc2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_adm_3" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_admin" target="adm_uc3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_adm_4" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_admin" target="adm_uc4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_adm_5" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_admin" target="adm_uc5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_adm_6" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_admin" target="adm_uc6"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 3 Sub-Elips Cabang Kanan (Include dari Kelola Data Master) -->
+        <mxCell id="adm_sub1" value="Data Anggota" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="490" y="145" width="140" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="adm_sub2" value="Agenda Kegiatan" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="490" y="202" width="140" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="adm_sub3" value="Berita &amp; Artikel" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="490" y="260" width="140" height="38" as="geometry" />
+        </mxCell>
+
+        <!-- Garis Putus-putus <<include>> ke Sub-Elips -->
+        <mxCell id="ext_adm_1" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endSize=6;strokeColor=#000000;strokeWidth=1.2;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;" edge="1" parent="1" source="adm_uc3" target="adm_sub1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ext_adm_2" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endSize=6;strokeColor=#000000;strokeWidth=1.2;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;" edge="1" parent="1" source="adm_uc3" target="adm_sub2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ext_adm_3" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endSize=6;strokeColor=#000000;strokeWidth=1.2;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;" edge="1" parent="1" source="adm_uc3" target="adm_sub3"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Keterangan Gambar 4.1 -->
+        <mxCell id="cap_4_1" value="Gambar 4.1 Use Case Admin" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="180" y="480" width="350" height="30" as="geometry" />
+        </mxCell>
+
+
+        <!-- ============================================================= -->
+        <!-- 2. GAMBAR 4.2 USE CASE KETUA IPNU / IPPNU                     -->
+        <!-- ============================================================= -->
+        <mxCell id="act_ketua" value="Ketua IPNU/IPPNU" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#000000;strokeWidth=1.5;fillColor=#ffffff;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="780" y="230" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- 6 Elips Utama Ketua -->
+        <mxCell id="ket_uc1" value="Login" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="960" y="60" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="ket_uc2" value="Lihat Dashboard" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="960" y="130" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="ket_uc3" value="Kelola Kegiatan &amp; Pendaftar" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="960" y="200" width="180" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="ket_uc4" value="Kelola Data Anggota" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="960" y="270" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="ket_uc5" value="Kelola Galeri &amp; Statistik" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="960" y="340" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="ket_uc6" value="Logout" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="960" y="410" width="170" height="42" as="geometry" />
+        </mxCell>
+
+        <!-- Garis Asosiasi Lurus Ketua ke 6 Elips -->
+        <mxCell id="e_ket_1" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_ketua" target="ket_uc1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_ket_2" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_ketua" target="ket_uc2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_ket_3" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_ketua" target="ket_uc3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_ket_4" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_ketua" target="ket_uc4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_ket_5" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_ketua" target="ket_uc5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_ket_6" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_ketua" target="ket_uc6"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 3 Sub-Elips Cabang Kanan Ketua -->
+        <mxCell id="ket_sub1" value="Agenda Kegiatan" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="145" width="145" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="ket_sub2" value="Verifikasi Pendaftar" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="202" width="145" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="ket_sub3" value="Sinkronisasi Midtrans" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="260" width="145" height="38" as="geometry" />
+        </mxCell>
+
+        <!-- Garis Putus-putus ke Sub-Elips Ketua -->
+        <mxCell id="ext_ket_1" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endSize=6;strokeColor=#000000;strokeWidth=1.2;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;" edge="1" parent="1" source="ket_uc3" target="ket_sub1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ext_ket_2" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endSize=6;strokeColor=#000000;strokeWidth=1.2;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;" edge="1" parent="1" source="ket_uc3" target="ket_sub2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ext_ket_3" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endSize=6;strokeColor=#000000;strokeWidth=1.2;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;" edge="1" parent="1" source="ket_sub3" target="ket_uc3"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Keterangan Gambar 4.2 -->
+        <mxCell id="cap_4_2" value="Gambar 4.2 Use Case Ketua IPNU/IPPNU" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="900" y="480" width="350" height="30" as="geometry" />
+        </mxCell>
+
+
+        <!-- ============================================================= -->
+        <!-- 3. GAMBAR 4.3 USE CASE KETUA DEPARTEMEN                       -->
+        <!-- ============================================================= -->
+        <mxCell id="act_dept" value="Ketua Departemen" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#000000;strokeWidth=1.5;fillColor=#ffffff;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="80" y="770" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- 6 Elips Utama Departemen -->
+        <mxCell id="dep_uc1" value="Login" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="600" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="dep_uc2" value="Lihat Dashboard" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="670" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="dep_uc3" value="Kelola Publikasi Konten" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="740" width="170" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="dep_uc4" value="Kelola Quotes" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="810" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="dep_uc5" value="Kelola Profil Akun" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="880" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="dep_uc6" value="Logout" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="950" width="170" height="42" as="geometry" />
+        </mxCell>
+
+        <!-- Garis Asosiasi Lurus Departemen -->
+        <mxCell id="e_dep_1" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_dept" target="dep_uc1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_dep_2" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_dept" target="dep_uc2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_dep_3" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_dept" target="dep_uc3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_dep_4" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_dept" target="dep_uc4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_dep_5" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_dept" target="dep_uc5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_dep_6" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_dept" target="dep_uc6"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 3 Sub-Elips Cabang Kanan Departemen -->
+        <mxCell id="dep_sub1" value="Berita Organisasi" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="490" y="685" width="140" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="dep_sub2" value="Artikel Opini / Kader" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="490" y="742" width="140" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="dep_sub3" value="Kategori Konten" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="490" y="800" width="140" height="38" as="geometry" />
+        </mxCell>
+
+        <!-- Garis Putus-putus ke Sub-Elips Departemen -->
+        <mxCell id="ext_dep_1" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endSize=6;strokeColor=#000000;strokeWidth=1.2;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;" edge="1" parent="1" source="dep_uc3" target="dep_sub1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ext_dep_2" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endSize=6;strokeColor=#000000;strokeWidth=1.2;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;" edge="1" parent="1" source="dep_uc3" target="dep_sub2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ext_dep_3" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endSize=6;strokeColor=#000000;strokeWidth=1.2;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;" edge="1" parent="1" source="dep_uc3" target="dep_sub3"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Keterangan Gambar 4.3 -->
+        <mxCell id="cap_4_3" value="Gambar 4.3 Use Case Ketua Departemen" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="180" y="1020" width="350" height="30" as="geometry" />
+        </mxCell>
+
+
+        <!-- ============================================================= -->
+        <!-- 4. GAMBAR 4.4 USE CASE PENGUNJUNG                             -->
+        <!-- ============================================================= -->
+        <mxCell id="act_guest" value="Pengunjung" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#000000;strokeWidth=1.5;fillColor=#ffffff;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="780" y="770" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- 6 Elips Utama Pengunjung -->
+        <mxCell id="gst_uc1" value="Melihat Profil Organisasi" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="960" y="600" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="gst_uc2" value="Membaca Berita &amp; Artikel" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="960" y="670" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="gst_uc3" value="Melihat Galeri &amp; Agenda" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="960" y="740" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="gst_uc4" value="Mendaftar Kegiatan" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="960" y="810" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="gst_uc5" value="Melakukan Pembayaran" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="960" y="880" width="170" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="gst_uc6" value="Melihat Bukti &amp; Tiket" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="960" y="950" width="170" height="42" as="geometry" />
+        </mxCell>
+
+        <!-- Garis Asosiasi Lurus Pengunjung -->
+        <mxCell id="e_gst_1" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_guest" target="gst_uc1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_gst_2" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_guest" target="gst_uc2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_gst_3" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_guest" target="gst_uc3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_gst_4" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_guest" target="gst_uc4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_gst_5" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_guest" target="gst_uc5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_gst_6" style="edgeStyle=none;html=1;endArrow=none;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="1" source="act_guest" target="gst_uc6"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 3 Sub-Elips Cabang Kanan (Metode Pembayaran) -->
+        <mxCell id="gst_sub1" value="Tunai / Cash" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="825" width="145" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="gst_sub2" value="Transfer Bank" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="882" width="145" height="38" as="geometry" />
+        </mxCell>
+        <mxCell id="gst_sub3" value="Midtrans (QRIS &amp; VA)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.3;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="940" width="145" height="38" as="geometry" />
+        </mxCell>
+
+        <!-- Garis Putus-putus ke Sub-Elips Pembayaran (Extend) -->
+        <mxCell id="ext_gst_1" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endSize=6;strokeColor=#000000;strokeWidth=1.2;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;" edge="1" parent="1" source="gst_sub1" target="gst_uc5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ext_gst_2" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endSize=6;strokeColor=#000000;strokeWidth=1.2;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;" edge="1" parent="1" source="gst_sub2" target="gst_uc5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ext_gst_3" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="edgeStyle=none;html=1;dashed=1;endArrow=open;endSize=6;strokeColor=#000000;strokeWidth=1.2;fontFamily=Times New Roman;fontSize=10;fontColor=#000000;" edge="1" parent="1" source="gst_sub3" target="gst_uc5"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Keterangan Gambar 4.4 -->
+        <mxCell id="cap_4_4" value="Gambar 4.4 Use Case Pengunjung" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="900" y="1020" width="350" height="30" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

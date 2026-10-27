@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import {
@@ -9,12 +9,17 @@ import {
     ShieldCheck,
     Fingerprint,
     CheckCircle2,
-    AlertCircle
+    AlertCircle,
+    Eye,
+    EyeOff
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function Edit({ mustVerifyEmail, status, member }) {
     const user = usePage().props.auth.user;
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     // Profile Info Form (Integrated with Member)
     const profileForm = useForm({
@@ -258,12 +263,22 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                                 <div className="relative">
                                     <Lock size={14} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" />
                                     <input
-                                        type="password"
+                                        type={showCurrentPassword ? 'text' : 'password'}
                                         value={passwordForm.data.current_password}
                                         onChange={e => passwordForm.setData('current_password', e.target.value)}
-                                        className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-slate-900 dark:text-white"
+                                        className="w-full pl-14 pr-12 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-slate-900 dark:text-white"
                                         required
                                     />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                                        className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-600 focus:outline-none transition-colors cursor-pointer"
+                                        title={showCurrentPassword ? 'Sembunyikan password' : 'Lihat password'}
+                                        aria-label={showCurrentPassword ? 'Sembunyikan password' : 'Lihat password'}
+                                        tabIndex={-1}
+                                    >
+                                        {showCurrentPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
                                 </div>
                                 {passwordForm.errors.current_password && <p className="mt-2 text-[10px] font-bold text-red-500 uppercase tracking-widest">{passwordForm.errors.current_password}</p>}
                             </div>
@@ -273,12 +288,22 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                                 <div className="relative">
                                     <Lock size={14} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" />
                                     <input
-                                        type="password"
+                                        type={showNewPassword ? 'text' : 'password'}
                                         value={passwordForm.data.password}
                                         onChange={e => passwordForm.setData('password', e.target.value)}
-                                        className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-slate-900 dark:text-white"
+                                        className="w-full pl-14 pr-12 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-slate-900 dark:text-white"
                                         required
                                     />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowNewPassword(!showNewPassword)}
+                                        className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-600 focus:outline-none transition-colors cursor-pointer"
+                                        title={showNewPassword ? 'Sembunyikan password' : 'Lihat password'}
+                                        aria-label={showNewPassword ? 'Sembunyikan password' : 'Lihat password'}
+                                        tabIndex={-1}
+                                    >
+                                        {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
                                 </div>
                                 {passwordForm.errors.password && <p className="mt-2 text-[10px] font-bold text-red-500 uppercase tracking-widest">{passwordForm.errors.password}</p>}
                             </div>
@@ -288,12 +313,22 @@ export default function Edit({ mustVerifyEmail, status, member }) {
                                 <div className="relative">
                                     <Lock size={14} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300" />
                                     <input
-                                        type="password"
+                                        type={showConfirmPassword ? 'text' : 'password'}
                                         value={passwordForm.data.password_confirmation}
                                         onChange={e => passwordForm.setData('password_confirmation', e.target.value)}
-                                        className="w-full pl-14 pr-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-slate-900 dark:text-white"
+                                        className="w-full pl-14 pr-12 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold text-slate-900 dark:text-white"
                                         required
                                     />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        className="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-emerald-600 focus:outline-none transition-colors cursor-pointer"
+                                        title={showConfirmPassword ? 'Sembunyikan password' : 'Lihat password'}
+                                        aria-label={showConfirmPassword ? 'Sembunyikan password' : 'Lihat password'}
+                                        tabIndex={-1}
+                                    >
+                                        {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
                                 </div>
                                 {passwordForm.errors.password_confirmation && <p className="mt-2 text-[10px] font-bold text-red-500 uppercase tracking-widest">{passwordForm.errors.password_confirmation}</p>}
                             </div>

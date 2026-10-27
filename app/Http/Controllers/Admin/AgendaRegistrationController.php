@@ -14,8 +14,19 @@ use Illuminate\Support\Facades\Log;
 
 class AgendaRegistrationController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, \App\Services\MidtransService $midtransService)
     {
+        // Auto-sync any recent pending Midtrans transactions so the admin table is always up to date
+        $pendingMidtrans = AgendaRegistration::where('payment_method', 'midtrans')
+            ->where('status', 'pending')
+            ->where('created_at', '>=', now()->subDays(3))
+            ->take(5)
+            ->get();
+
+        foreach ($pendingMidtrans as $pendingReg) {
+            $midtransService->syncRegistration($pendingReg);
+        }
+
         $query = AgendaRegistration::with(['agenda', 'user'])->latest();
 
         if ($request->filled('agenda_id')) {
@@ -68,6 +79,49 @@ class AgendaRegistrationController extends Controller
         }
 
         return back()->with('success', 'Status pendaftar berhasil diperbarui' . $emailNotice);
+    }
+
+    public function syncMidtrans($id, \App\Services\MidtransService $midtransService)
+    {
+        $registration = AgendaRegistration::findOrFail($id);
+
+        if ($registration->payment_method !== 'midtrans') {
+            return back()->withErrors(['message' => 'Pendaftaran ini tidak menggunakan metode pembayaran Midtrans.']);
+        }
+
+        $result = $midtransService->syncRegistration($registration);
+
+        if ($result['success']) {
+            return back()->with('success', $result['message']);
+        }
+
+        return back()->withErrors(['message' => $result['message']]);
+    }
+
+    public function syncAllMidtrans(\App\Services\MidtransService $midtransService)
+    {
+        $pendingRegistrations = AgendaRegistration::where('payment_method', 'midtrans')
+            ->where('status', 'pending')
+            ->get();
+
+        if ($pendingRegistrations->isEmpty()) {
+            return back()->with('info', 'Tidak ada transaksi Midtrans yang berstatus pending.');
+        }
+
+        $synced = 0;
+        $approved = 0;
+
+        foreach ($pendingRegistrations as $registration) {
+            $result = $midtransService->syncRegistration($registration);
+            if ($result['success']) {
+                $synced++;
+                if (($result['status'] ?? '') === 'approved') {
+                    $approved++;
+                }
+            }
+        }
+
+        return back()->with('success', "Sinkronisasi selesai: {$synced} transaksi dicek, {$approved} transaksi disetujui (Settlement).");
     }
 
     public function destroy($id)

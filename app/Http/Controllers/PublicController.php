@@ -321,37 +321,9 @@ class PublicController extends Controller
         ]);
 
         if ($paymentMethod === 'midtrans' && !$isFree) {
-            Config::$serverKey = config('midtrans.server_key');
-            Config::$isProduction = (bool) config('midtrans.is_production', false);
-            Config::$isSanitized = (bool) config('midtrans.is_sanitized', true);
-            Config::$is3ds = (bool) config('midtrans.is_3ds', true);
-            
-            $grossAmount = (int) preg_replace('/[^0-9]/', '', $agenda->registration_fee);
-            if ($grossAmount <= 0) $grossAmount = 10000; // Fallback if parse fails
-
-            $params = [
-                'transaction_details' => [
-                    'order_id' => 'REG-' . $registration->id . '-' . time(),
-                    'gross_amount' => $grossAmount,
-                ],
-                'customer_details' => [
-                    'first_name' => $registration->getRegistrantName(),
-                    'email' => $registration->getRegistrantEmail() ?? 'peserta@example.com',
-                    'phone' => $registration->responses['field_phone'] ?? null,
-                ],
-                'item_details' => [
-                    [
-                        'id' => 'AGENDA-' . $agenda->id,
-                        'price' => $grossAmount,
-                        'quantity' => 1,
-                        'name' => mb_substr($agenda->title, 0, 50),
-                    ]
-                ]
-            ];
-
             try {
-                $snapToken = Snap::getSnapToken($params);
-                $registration->update(['snap_token' => $snapToken]);
+                $midtransService = new \App\Services\MidtransService();
+                $snapToken = $midtransService->createSnapToken($registration, $agenda);
                 
                 return redirect()->route('kegiatan.payment', $registration->id);
             } catch (\Exception $e) {
@@ -366,8 +338,21 @@ class PublicController extends Controller
 
     public function kegiatanPayment(\App\Models\AgendaRegistration $registration)
     {
+        if ($registration->status === 'approved') {
+            return redirect()->route('kegiatan.index')
+                ->with('success', 'Pendaftaran Anda sudah berhasil disetujui dan pembayaran telah terkonfirmasi.');
+        }
+
         if ($registration->payment_method !== 'midtrans' || !$registration->snap_token) {
             return redirect()->route('kegiatan.index')->withErrors(['message' => 'Pembayaran ini tidak menggunakan Midtrans.']);
+        }
+
+        // Proactively check status with Midtrans in case webhook was missed (e.g. local environment or network latency)
+        $midtransService = new \App\Services\MidtransService();
+        $syncResult = $midtransService->syncRegistration($registration);
+        if ($syncResult['success'] && $syncResult['status'] === 'approved') {
+            return redirect()->route('kegiatan.index')
+                ->with('success', 'Pembayaran berhasil terkonfirmasi! Status pendaftaran Anda telah disetujui.');
         }
         
         $agenda = $registration->agenda;
@@ -382,49 +367,31 @@ class PublicController extends Controller
         ]);
     }
 
+    public function kegiatanVerifyPayment(\App\Models\AgendaRegistration $registration, Request $request)
+    {
+        $orderId = $request->input('order_id');
+        $midtransService = new \App\Services\MidtransService();
+        $syncResult = $midtransService->syncRegistration($registration, $orderId);
+
+        return response()->json([
+            'success' => $syncResult['success'],
+            'message' => $syncResult['message'],
+            'status' => $syncResult['status'] ?? $registration->status,
+            'transaction_status' => $syncResult['transaction_status'] ?? null,
+            'redirect_url' => route('kegiatan.index') . '?status=success',
+        ]);
+    }
+
     public function midtransCallback(Request $request)
     {
-        Config::$serverKey = config('midtrans.server_key');
-        Config::$isProduction = (bool) config('midtrans.is_production', false);
+        $midtransService = new \App\Services\MidtransService();
+        $result = $midtransService->handleWebhook();
 
-        try {
-            $notification = new Notification();
-        } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::error('Midtrans Callback Error: ' . $e->getMessage());
-            return response()->json(['message' => 'Failed to process notification'], 500);
+        if ($result['success']) {
+            return response()->json(['message' => 'Success']);
         }
 
-        $status = $notification->transaction_status;
-        $type = $notification->payment_type;
-        $orderId = $notification->order_id;
-        $fraud = $notification->fraud_status;
-
-        // Parse order_id format: REG-{id}-{timestamp}
-        $parts = explode('-', $orderId);
-        if (count($parts) >= 2 && $parts[0] === 'REG') {
-            $registrationId = $parts[1];
-            $registration = \App\Models\AgendaRegistration::find($registrationId);
-
-            if ($registration) {
-                if ($status == 'capture') {
-                    if ($type == 'credit_card') {
-                        if ($fraud == 'challenge') {
-                            $registration->update(['status' => 'pending']);
-                        } else {
-                            $registration->update(['status' => 'approved']);
-                        }
-                    }
-                } else if ($status == 'settlement') {
-                    $registration->update(['status' => 'approved']);
-                } else if ($status == 'pending') {
-                    $registration->update(['status' => 'pending']);
-                } else if (in_array($status, ['deny', 'expire', 'cancel'])) {
-                    $registration->update(['status' => 'rejected']);
-                }
-            }
-        }
-
-        return response()->json(['message' => 'Success']);
+        return response()->json(['message' => $result['message']], 400);
     }
 
     private function getNationalHolidaysData()

@@ -20,6 +20,30 @@ class Agenda extends Model
         'image'
     ];
 
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        if (filter_var($this->image, FILTER_VALIDATE_URL)) {
+            return $this->image;
+        }
+
+        // Cek apakah berkas ada di folder public lokal
+        if (file_exists(public_path($this->image))) {
+            return asset($this->image);
+        }
+
+        try {
+            return \Illuminate\Support\Facades\Storage::url($this->image);
+        } catch (\Throwable $e) {
+            return '/' . ltrim($this->image, '/');
+        }
+    }
+
     protected $casts = [
         'event_date' => 'date:Y-m-d',
         'is_registration_open' => 'boolean',

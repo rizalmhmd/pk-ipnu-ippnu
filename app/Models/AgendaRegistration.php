@@ -14,10 +14,15 @@ class AgendaRegistration extends Model
         'payment_proof',
         'payment_method',
         'snap_token',
+        'midtrans_order_id',
+        'midtrans_payment_type',
+        'midtrans_transaction_status',
+        'midtrans_settlement_time',
     ];
 
     protected $casts = [
         'responses' => 'array',
+        'midtrans_settlement_time' => 'datetime',
     ];
 
     public function agenda()

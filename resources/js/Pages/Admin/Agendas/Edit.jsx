@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import {
@@ -12,29 +12,97 @@ import {
     Users,
     DollarSign,
     Lightbulb,
-    ImagePlus
+    ImagePlus,
+    UploadCloud,
+    Trash2,
+    RefreshCw,
+    RotateCcw,
+    CheckCircle2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import FormBuilder from '@/Components/FormBuilder';
+import TimePicker24 from '@/Components/TimePicker24';
 
 export default function Edit({ agenda }) {
+    const existingImageUrl = agenda.image_url || (agenda.image ? (agenda.image.startsWith('http') ? agenda.image : `/${agenda.image}`) : null);
+    const fileInputRef = useRef(null);
+    const [previewUrl, setPreviewUrl] = useState(existingImageUrl);
+    const [fileInfo, setFileInfo] = useState(null);
+
     const { data, setData, post, processing, errors } = useForm({
+        _method: 'PUT',
         title: agenda.title || '',
         category: agenda.category || 'organisasi',
         event_date: agenda.event_date || '',
-        event_time: agenda.event_time || '',
+        event_time: agenda.event_time ? agenda.event_time.substring(0, 5) : '',
         location: agenda.location || '',
         description: agenda.description || '',
         is_registration_open: agenda.is_registration_open || false,
         registration_fee: agenda.registration_fee || '',
         payment_account: agenda.payment_account || '',
         image: null,
+        remove_image: false,
         form_schema: agenda.form_schema || [
             { id: 'field_name', label: 'Nama Lengkap', type: 'text', required: true, options: [] },
             { id: 'field_email', label: 'Email', type: 'email', required: true, options: [] },
             { id: 'field_phone', label: 'No. WhatsApp', type: 'number', required: true, options: [] },
         ],
     });
+
+    useEffect(() => {
+        return () => {
+            if (previewUrl && previewUrl.startsWith('blob:')) {
+                URL.revokeObjectURL(previewUrl);
+            }
+        };
+    }, [previewUrl]);
+
+    const handleFileChange = (e) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setData(prev => ({
+                ...prev,
+                image: file,
+                remove_image: false,
+            }));
+            const url = URL.createObjectURL(file);
+            setPreviewUrl(url);
+            setFileInfo({
+                name: file.name,
+                size: (file.size / (1024 * 1024)).toFixed(2) + ' MB',
+                isNew: true,
+            });
+        }
+    };
+
+    const handleRemoveImage = () => {
+        if (previewUrl && previewUrl.startsWith('blob:')) {
+            URL.revokeObjectURL(previewUrl);
+        }
+        setData(prev => ({
+            ...prev,
+            image: null,
+            remove_image: true,
+        }));
+        setPreviewUrl(null);
+        setFileInfo(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+    };
+
+    const handleRestoreImage = () => {
+        setData(prev => ({
+            ...prev,
+            image: null,
+            remove_image: false,
+        }));
+        setPreviewUrl(existingImageUrl);
+        setFileInfo(null);
+        if (fileInputRef.current) {
+            fileInputRef.current.value = '';
+        }
+    };
 
     const categories = [
         { id: 'organisasi', name: 'Organisasi', color: 'emerald' },
@@ -46,7 +114,6 @@ export default function Edit({ agenda }) {
     const submit = (e) => {
         e.preventDefault();
         post(route('admin.agendas.update', agenda.id), {
-            _method: 'put',
             forceFormData: true,
         });
     };
@@ -105,23 +172,113 @@ export default function Edit({ agenda }) {
                                 {errors.title && <p className="mt-2 text-xs font-bold text-red-500 uppercase tracking-wider">{errors.title}</p>}
                             </div>
 
-                            {/* Image */}
+                            {/* Image / Pamflet */}
                             <div>
                                 <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
-                                    <ImagePlus size={16} className="text-slate-400" />
+                                    <ImagePlus size={16} className="text-emerald-600 dark:text-emerald-400" />
                                     Pamflet / Poster (Opsional)
                                 </label>
-                                {agenda.image && (
-                                    <div className="mb-4">
-                                        <img src={`/${agenda.image}`} alt="Pamflet" className="h-32 object-contain rounded-lg bg-slate-100 dark:bg-slate-800" />
-                                    </div>
-                                )}
+
                                 <input
+                                    ref={fileInputRef}
                                     type="file"
-                                    onChange={e => setData('image', e.target.files[0])}
-                                    className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
+                                    onChange={handleFileChange}
+                                    className="hidden"
                                     accept="image/*"
                                 />
+
+                                {previewUrl ? (
+                                    <div className="bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 rounded-2xl p-4 sm:p-5">
+                                        <div className="flex flex-col sm:flex-row items-center gap-5">
+                                            {/* Preview Image */}
+                                            <div className="relative group shrink-0">
+                                                <img
+                                                    src={previewUrl}
+                                                    alt="Preview Pamflet"
+                                                    className="w-40 sm:w-48 max-h-56 object-contain rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-2 shadow-sm"
+                                                />
+                                            </div>
+
+                                            {/* Info & Actions */}
+                                            <div className="flex-1 min-w-0 flex flex-col justify-between py-1 text-center sm:text-left">
+                                                <div>
+                                                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-2">
+                                                        {fileInfo?.isNew ? (
+                                                            <span className="px-2.5 py-1 text-[11px] font-black uppercase tracking-wider bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 rounded-md border border-emerald-500/20 flex items-center gap-1">
+                                                                <CheckCircle2 size={12} />
+                                                                Gambar Baru
+                                                            </span>
+                                                        ) : (
+                                                            <span className="px-2.5 py-1 text-[11px] font-black uppercase tracking-wider bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-md">
+                                                                Pamflet Saat Ini
+                                                            </span>
+                                                        )}
+                                                        {fileInfo?.size && (
+                                                            <span className="text-xs text-slate-400 font-medium">
+                                                                ({fileInfo.size})
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium truncate mb-4">
+                                                        {fileInfo?.name || 'Pamflet tersimpan di server'}
+                                                    </p>
+                                                </div>
+
+                                                {/* Action Buttons */}
+                                                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2.5">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => fileInputRef.current?.click()}
+                                                        className="inline-flex items-center gap-2 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold shadow-md shadow-emerald-600/20 transition-all cursor-pointer"
+                                                    >
+                                                        <RefreshCw size={14} />
+                                                        Ganti Pamflet
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        onClick={handleRemoveImage}
+                                                        className="inline-flex items-center gap-2 px-3.5 py-2 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/40 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/40 rounded-lg text-xs font-bold transition-all cursor-pointer"
+                                                    >
+                                                        <Trash2 size={14} />
+                                                        Hapus Pamflet
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-3">
+                                        {data.remove_image && existingImageUrl && (
+                                            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 p-3.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/40 rounded-xl text-xs">
+                                                <span className="text-amber-800 dark:text-amber-300 font-medium">
+                                                    Pamflet sebelumnya ditandai untuk dihapus saat Anda menyimpan.
+                                                </span>
+                                                <button
+                                                    type="button"
+                                                    onClick={handleRestoreImage}
+                                                    className="inline-flex items-center gap-1.5 font-bold text-amber-700 dark:text-amber-300 hover:underline cursor-pointer shrink-0"
+                                                >
+                                                    <RotateCcw size={13} />
+                                                    Batalkan Hapus
+                                                </button>
+                                            </div>
+                                        )}
+                                        <div
+                                            onClick={() => fileInputRef.current?.click()}
+                                            className="border-2 border-dashed border-slate-200 dark:border-slate-700 hover:border-emerald-500 dark:hover:border-emerald-500 rounded-2xl p-8 text-center cursor-pointer bg-slate-50/50 dark:bg-slate-800/30 hover:bg-emerald-50/20 dark:hover:bg-emerald-950/20 transition-all group"
+                                        >
+                                            <div className="w-14 h-14 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
+                                                <UploadCloud size={28} />
+                                            </div>
+                                            <p className="text-sm font-bold text-slate-800 dark:text-white mb-1">
+                                                Klik untuk memilih pamflet / poster
+                                            </p>
+                                            <p className="text-xs text-slate-400 font-medium">
+                                                Format: JPG, JPEG, PNG, WEBP (Maksimal 5MB)
+                                            </p>
+                                        </div>
+                                    </div>
+                                )}
                                 {errors.image && <p className="mt-2 text-xs font-bold text-red-500 uppercase tracking-wider">{errors.image}</p>}
                             </div>
 
@@ -171,12 +328,13 @@ export default function Edit({ agenda }) {
                                         <Clock size={16} className="text-slate-400" />
                                         Waktu (Opsional)
                                     </label>
-                                    <input
-                                        type="time"
+                                    <TimePicker24
+                                        id="event_time"
                                         value={data.event_time}
-                                        onChange={e => setData('event_time', e.target.value)}
-                                        className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all font-bold"
+                                        onChange={val => setData('event_time', val)}
+                                        error={errors.event_time}
                                     />
+                                    {errors.event_time && <p className="mt-2 text-xs font-bold text-red-500 uppercase tracking-wider">{errors.event_time}</p>}
                                 </div>
                             </div>
 

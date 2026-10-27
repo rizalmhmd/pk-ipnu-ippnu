@@ -35,6 +35,7 @@ Route::post('/kegiatan/{agenda}/daftar', [PublicController::class, 'kegiatanStor
 Route::get('/api/agendas', [PublicController::class, 'getAgendasJson'])->name('api.agendas');
 
 Route::get('/kegiatan/payment/{registration}', [PublicController::class, 'kegiatanPayment'])->name('kegiatan.payment');
+Route::post('/kegiatan/payment/{registration}/verify', [PublicController::class, 'kegiatanVerifyPayment'])->name('kegiatan.payment.verify');
 Route::post('/api/midtrans-callback', [PublicController::class, 'midtransCallback'])->name('api.midtrans-callback');
 
 // Admin Routes (Protected) - All authenticated users can access dashboard & profile
@@ -61,6 +62,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::middleware('role:admin,ketua')->group(function () {
         Route::get('registrations', [AgendaRegistrationController::class, 'index'])->name('registrations.index');
         Route::put('registrations/{id}/status', [AgendaRegistrationController::class, 'updateStatus'])->name('registrations.updateStatus');
+        Route::post('registrations/{id}/sync-midtrans', [AgendaRegistrationController::class, 'syncMidtrans'])->name('registrations.syncMidtrans');
+        Route::post('registrations/sync-all-midtrans', [AgendaRegistrationController::class, 'syncAllMidtrans'])->name('registrations.syncAllMidtrans');
         Route::delete('registrations/{id}', [AgendaRegistrationController::class, 'destroy'])->name('registrations.destroy');
         Route::resource('agendas', AgendaController::class);
         Route::resource('galleries', GalleryController::class);

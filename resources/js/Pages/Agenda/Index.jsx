@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import HeroSection from '@/Components/HeroSection';
-import SectionTitle from '@/Components/SectionTitle';
 import NationalCalendar from '@/Components/NationalCalendar';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -19,13 +18,19 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
         { id: 'khusus', name: 'Khusus', icon: 'fa-star', color: 'bg-amber-500' },
     ];
 
-    const filteredAgendas = agendas.filter(a => {
+    const safeAgendas = Array.isArray(agendas) ? agendas : [];
+    const safeTodayAgendas = Array.isArray(todayAgendas) ? todayAgendas : [];
+    const safeHolidays = Array.isArray(nationalHolidays) ? nationalHolidays : [];
+
+    const filteredAgendas = safeAgendas.filter(a => {
+        if (!a) return false;
         if (activeFilter === 'semua') return true;
         if (activeFilter === 'organisasi') return (a.category || 'organisasi') === 'organisasi';
         return a.category === activeFilter;
     });
 
-    const filteredHolidays = nationalHolidays.filter(h => {
+    const filteredHolidays = safeHolidays.filter(h => {
+        if (!h) return false;
         if (activeFilter === 'semua') return true;
         if (activeFilter === 'nasional') return h.cat === 'nasional';
         if (activeFilter === 'keagamaan') return h.cat === 'keagamaan';
@@ -37,11 +42,15 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
     const combinedList = [
         ...filteredAgendas.map(a => ({ ...a, type: 'agenda' })),
         ...filteredHolidays.map(h => ({ ...h, type: 'holiday', event_date: h.date }))
-    ].sort((a, b) => new Date(a.event_date) - new Date(b.event_date));
+    ].filter(item => Boolean(item && item.event_date))
+    .sort((a, b) => new Date(a.event_date).getTime() - new Date(b.event_date).getTime());
 
     // Group by month
     const groupedAgendas = combinedList.reduce((groups, item) => {
-        const month = new Date(item.event_date).toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
+        if (!item.event_date) return groups;
+        const d = new Date(item.event_date);
+        if (isNaN(d.getTime())) return groups;
+        const month = d.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
         if (!groups[month]) groups[month] = [];
         groups[month].push(item);
         return groups;
@@ -52,7 +61,9 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
             <Head title="Agenda & Kegiatan" />
 
             <HeroSection
-                bgImage="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                bgImage={pageSetting?.banner_image ? `/${pageSetting.banner_image}` : "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"}
+                title={pageSetting?.title || "Agenda & Kegiatan"}
+                subtitle={pageSetting?.subtitle || "Jadwal agenda organisasi & kalender hari libur nasional"}
             />
 
 
