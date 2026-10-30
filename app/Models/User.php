@@ -39,6 +39,11 @@ class User extends Authenticatable
         return $this->hasMany(Article::class);
     }
 
+    public function agendaRegistrations()
+    {
+        return $this->hasMany(AgendaRegistration::class);
+    }
+
     // ─── Role helpers ─────────────────────────────────────────────────────────
 
     public function isAdmin(): bool

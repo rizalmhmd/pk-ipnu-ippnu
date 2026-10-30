@@ -1,270 +1,208 @@
 # Dokumentasi Lengkap Sequence Diagram — Sistem Informasi PK IPNU-IPPNU
-*(Sesuai Standar Formal UML: Tanpa Emotikon, Notasi Boundary-Control-Entity)*
+*(Format Hitam Putih: Actor Stickman – Frontend (Inertia React) – Route (web.php) – Controller – Tabel Database)*
 
-Dokumen ini memuat **6 Sequence Diagram lengkap** yang merepresentasikan interaksi objek pada use case utama aplikasi. Komponen diklasifikasikan menggunakan stereotipe arsitektur UML standar:
-- **Aktor**: Pengguna manusia (`Pengunjung`, `Pengurus`, `Administrator`)
-- **Boundary (`<<boundary>>`)**: Komponen antarmuka pengguna / UI View
-- **Control (`<<control>>`)**: Komponen pengendali logika bisnis / Controller
-- **Entity (`<<entity>>`)**: Komponen entitas data / Model Database
-- **External System (`<<external system>>`)**: Layanan eksternal (*Midtrans Payment Gateway / File Storage*)
+Dokumen ini memuat **7 Sequence Diagram lengkap** dengan tampilan **Hitam Putih (Monochrome)** yang merepresentasikan alur interaksi sistem sesuai gambar referensi:
+- **Actor (Stickman)**: Pengguna aplikasi (`Pengunjung`, `User (Admin/Pengurus)`, `User (Admin/Ketua Dept)`, `User (Admin/Ketua)`, `User (Administrator)`)
+- **Frontend (`Frontend (Inertia React)`)**: Antarmuka pengguna berbasis React & Inertia.js
+- **Route (`Route (web.php)`)**: Pengarah rute HTTP Laravel (`GET`, `POST`, `PUT`, `PATCH`, `DELETE`)
+- **Controller (`...Controller`)**: Pengendali logika bisnis di `app/Http/Controllers`
+- **Database Table (Cylinder)**: Tabel basis data MySQL (`agenda_registrations`, `users`, `posts`, `agendas`, `members`) serta layanan eksternal (`Midtrans API`)
 
 ---
 
-## 1. Sequence Diagram: Pendaftaran & Pembayaran Kegiatan (Publik & Midtrans)
+## 1. Sequence Diagram - 1) Pendaftaran & Pembayaran Kegiatan (Midtrans)
 
 ```mermaid
+%%{init: {'theme': 'neutral'}}%%
 sequenceDiagram
-    autonumber
-    actor Pengunjung as Pengunjung
-    participant View as <<boundary>><br/>:KegiatanView
-    participant Controller as <<control>><br/>:PublicController
-    participant Model as <<entity>><br/>:AgendaRegistration
-    participant Gateway as <<external system>><br/>:MidtransGateway
+    actor User as Pengunjung
+    participant FE as Frontend<br/>(Inertia React)
+    participant Route as Route<br/>(web.php)
+    participant Ctrl as PublicController
+    participant Midtrans as Midtrans API
+    participant DB as agenda_registrations
 
-    Pengunjung->>View: pilihAgendaDanKlikDaftar()
-    View->>Controller: getFormPendaftaran(agendaId)
-    Controller-->>View: renderView(formPendaftaran)
-    View-->>Pengunjung: tampilkanFormInputData()
-
-    Pengunjung->>View: submitPendaftaran(nama, email, phone)
-    View->>Controller: storePendaftaran(requestPayload)
-    activate Controller
-    Controller->>Controller: validasiInputData()
-    Controller->>Model: create(dataRegistrasi, status='pending')
-    activate Model
-    Model-->>Controller: instanceRegistrasiTersimpan
-    deactivate Model
-
-    alt Kegiatan Berbayar
-        Controller->>Gateway: createSnapTransaction(orderId, grossAmount)
-        activate Gateway
-        Gateway-->>Controller: returnSnapToken(token, redirectUrl)
-        deactivate Gateway
-
-        Controller-->>View: redirectPayment(snapToken)
-        View-->>Pengunjung: showSnapPopup(token)
-
-        Pengunjung->>Gateway: prosesPembayaran(metodeDipilih)
-        activate Gateway
-        Gateway-->>Pengunjung: notifikasiPembayaranSelesai
-        
-        Gateway->>Controller: midtransCallback(payloadWebhook)
-        deactivate Gateway
-        Controller->>Controller: verifikasiSignatureKey()
-        
-        alt Transaksi Sukses (Settlement)
-            Controller->>Model: updateStatus(status='confirmed', payment_status='settlement')
-            Controller-->>Gateway: responseHttp200(ok)
-            Controller-->>View: broadcastStatusSukses()
-            View-->>Pengunjung: renderBuktiPendaftaran(tiket)
-        else Transaksi Gagal / Kadaluarsa
-            Controller->>Model: updateStatus(status='cancelled', payment_status='failed')
-            Controller-->>Gateway: responseHttp200(ok)
-            View-->>Pengunjung: renderPesanGagal()
-        end
-    else Kegiatan Gratis
-        Controller->>Model: updateStatus(status='confirmed', payment_status='free')
-        Controller-->>View: redirectHalamanSukses()
-        View-->>Pengunjung: renderTiketGratis()
+    User->>FE: Akses form pendaftaran kegiatan
+    FE->>Route: GET /kegiatan/{agenda}/daftar
+    Route->>Ctrl: kegiatanDaftar(agenda)
+    Ctrl-->>FE: form pendaftaran + detail agenda
+    User->>FE: Kirim data pendaftaran & metode bayar
+    FE->>Route: POST /kegiatan/{agenda}/daftar
+    Route->>Ctrl: kegiatanStoreDaftar()
+    alt metode = midtrans (berbayar)
+        Ctrl->>Midtrans: createSnapToken(order_id, nominal)
+        Midtrans-->>Ctrl: snap_token
+        Midtrans->>Ctrl: POST /midtrans/callback (settlement)
+        Ctrl->>DB: insert/update status = 'approved'
     end
-    deactivate Controller
+    Ctrl-->>FE: redirect + bukti pendaftaran
 ```
 
 ---
 
-## 2. Sequence Diagram: Autentikasi / Login Pengurus
+## 2. Sequence Diagram - 2) Autentikasi & Login Pengurus
 
 ```mermaid
+%%{init: {'theme': 'neutral'}}%%
 sequenceDiagram
-    autonumber
-    actor Pengurus as Pengurus
-    participant LoginView as <<boundary>><br/>:LoginView
-    participant AuthCtrl as <<control>><br/>:AuthenticatedSessionController
-    participant UserModel as <<entity>><br/>:User
-    participant DashCtrl as <<control>><br/>:DashboardController
+    actor User as User (Admin/Pengurus)
+    participant FE as Frontend<br/>(Inertia React)
+    participant Route as Route<br/>(web.php)
+    participant Ctrl as AuthenticatedSessionController
+    participant DB as users
 
-    Pengurus->>LoginView: getLoginPage()
-    LoginView-->>Pengurus: renderFormLogin()
-
-    Pengurus->>LoginView: inputKredensial(email, password)
-    LoginView->>AuthCtrl: submitLogin(credentials)
-    activate AuthCtrl
-
-    AuthCtrl->>AuthCtrl: validasiFormatInput()
-    AuthCtrl->>UserModel: getUserByEmail(email)
-    activate UserModel
-    UserModel-->>AuthCtrl: returnUserData(userRecord)
-    deactivate UserModel
-
-    AuthCtrl->>AuthCtrl: verifyPasswordHash(password, hash)
-
-    alt Kredensial Valid
-        AuthCtrl->>AuthCtrl: loginAndRegenerateSession(user)
-        AuthCtrl-->>LoginView: redirectToDashboard()
-        
-        LoginView->>DashCtrl: getDashboardByRole(userRole)
-        activate DashCtrl
-        DashCtrl->>DashCtrl: periksaWewenangRole()
-        DashCtrl-->>LoginView: renderDashboard(stats, menuList)
-        deactivate DashCtrl
-
-        LoginView-->>Pengurus: displayDashboardPage()
-    else Kredensial Tidak Valid
-        AuthCtrl-->>LoginView: returnValidationError('Email atau password salah')
-        LoginView-->>Pengurus: displayErrorMessage()
+    User->>FE: Akses halaman Login
+    FE->>Route: GET /login
+    Route->>Ctrl: create()
+    Ctrl-->>FE: tampilkan form login
+    User->>FE: Input email & password
+    FE->>Route: POST /login
+    Route->>Ctrl: store(LoginRequest)
+    alt kredensial valid
+        Ctrl->>DB: query user by email & cek password
+        Ctrl->>DB: regenerate session login
     end
-    deactivate AuthCtrl
+    Ctrl-->>FE: redirect /admin/dashboard
 ```
 
 ---
 
-## 3. Sequence Diagram: Pengelolaan Konten (Tambah Berita / Artikel)
+## 3. Sequence Diagram - 3) Kelola Berita & Artikel (CRUD + Foto)
 
 ```mermaid
+%%{init: {'theme': 'neutral'}}%%
 sequenceDiagram
-    autonumber
-    actor Pengurus as Ketua Departemen / Admin
-    participant PostView as <<boundary>><br/>:PostCreateView
-    participant PostCtrl as <<control>><br/>:PostController
-    participant Storage as <<external system>><br/>:FileStorage
-    participant PostModel as <<entity>><br/>:Post
+    actor User as User (Admin/Ketua Dept)
+    participant FE as Frontend<br/>(Inertia React)
+    participant Route as Route<br/>(web.php)
+    participant Ctrl as PostController
+    participant DB as posts
 
-    Pengurus->>PostView: getCreatePostPage()
-    PostView-->>Pengurus: renderFormInputBerita()
-
-    Pengurus->>PostView: submitBerita(title, content, imageFile)
-    PostView->>PostCtrl: storePost(requestData)
-    activate PostCtrl
-
-    PostCtrl->>PostCtrl: validasiDataForm()
-
-    alt Validasi Berhasil
-        PostCtrl->>PostCtrl: generateSlug(title)
-        PostCtrl->>Storage: putFile('posts/images', imageFile)
-        activate Storage
-        Storage-->>PostCtrl: returnFilePath(imagePath)
-        deactivate Storage
-
-        PostCtrl->>PostModel: create(title, slug, content, imagePath, authorId)
-        activate PostModel
-        PostModel-->>PostCtrl: recordCreatedInstance
-        deactivate PostModel
-
-        PostCtrl-->>PostView: redirectWithSuccessFlash('Berita berhasil disimpan')
-        PostView-->>Pengurus: displaySuccessMessage()
-    else Validasi Gagal
-        PostCtrl-->>PostView: returnWithErrors(validationErrors)
-        PostView-->>Pengurus: displayFormErrors()
+    User->>FE: Akses modul Berita & Artikel
+    FE->>Route: GET /admin/posts
+    Route->>Ctrl: index()
+    Ctrl->>DB: query posts terbaru (paginate)
+    Ctrl-->>FE: list berita
+    User->>FE: Simpan/Ubah data berita
+    FE->>Route: POST/PUT /admin/posts
+    Route->>Ctrl: store()/update()
+    alt ada file gambar
+        Ctrl->>DB: upload foto & generate slug
     end
-    deactivate PostCtrl
+    Ctrl->>DB: insert/update post
+    Ctrl-->>FE: redirect + success message
 ```
 
 ---
 
-## 4. Sequence Diagram: Pengelolaan Agenda Kegiatan
+## 4. Sequence Diagram - 4) Kelola Agenda Kegiatan (CRUD + Form Schema)
 
 ```mermaid
+%%{init: {'theme': 'neutral'}}%%
 sequenceDiagram
-    autonumber
-    actor Ketua as Ketua IPNU/IPPNU / Admin
-    participant AgendaView as <<boundary>><br/>:AgendaCreateView
-    participant AgendaCtrl as <<control>><br/>:AgendaController
-    participant AgendaModel as <<entity>><br/>:Agenda
+    actor User as User (Admin/Ketua)
+    participant FE as Frontend<br/>(Inertia React)
+    participant Route as Route<br/>(web.php)
+    participant Ctrl as AgendaController
+    participant DB as agendas
 
-    Ketua->>AgendaView: getCreateAgendaPage()
-    AgendaView-->>Ketua: renderFormInputAgenda()
-
-    Ketua->>AgendaView: submitAgenda(title, date, location, price, quota)
-    AgendaView->>AgendaCtrl: storeAgenda(requestPayload)
-    activate AgendaCtrl
-
-    AgendaCtrl->>AgendaCtrl: validasiDataAgenda()
-
-    alt Validasi Sukses
-        AgendaCtrl->>AgendaModel: create(title, date, location, price, quota)
-        activate AgendaModel
-        AgendaModel-->>AgendaCtrl: recordAgendaTersimpan
-        deactivate AgendaModel
-
-        AgendaCtrl-->>AgendaView: redirectWithSuccess('Agenda berhasil ditambahkan')
-        AgendaView-->>Ketua: displaySuccessNotification()
-    else Validasi Gagal
-        AgendaCtrl-->>AgendaView: returnValidationErrors()
-        AgendaView-->>Ketua: displayInputErrors()
+    User->>FE: Akses modul Agenda Kegiatan
+    FE->>Route: GET /admin/agendas
+    Route->>Ctrl: index()
+    Ctrl->>DB: query agendas + kategori
+    Ctrl-->>FE: list agenda
+    User->>FE: Simpan/Ubah data agenda
+    FE->>Route: POST/PUT /admin/agendas
+    Route->>Ctrl: store()/update()
+    Ctrl->>DB: insert/update agenda + form_schema
+    alt ada upload pamflet
+        Ctrl->>DB: simpan file pamflet kegiatan
     end
-    deactivate AgendaCtrl
+    Ctrl-->>FE: redirect + success message
 ```
 
 ---
 
-## 5. Sequence Diagram: Sinkronisasi Status Pembayaran Midtrans Manual
+## 5. Sequence Diagram - 5) Verifikasi Pendaftar & Sinkronisasi Midtrans
 
 ```mermaid
+%%{init: {'theme': 'neutral'}}%%
 sequenceDiagram
-    autonumber
-    actor Pengurus as Ketua IPNU/IPPNU / Admin
-    participant RegView as <<boundary>><br/>:RegistrationIndexView
-    participant RegCtrl as <<control>><br/>:AgendaRegistrationController
-    participant Gateway as <<external system>><br/>:MidtransGateway
-    participant RegModel as <<entity>><br/>:AgendaRegistration
+    actor User as User (Admin/Ketua)
+    participant FE as Frontend<br/>(Inertia React)
+    participant Route as Route<br/>(web.php)
+    participant Ctrl as AgendaRegistrationController
+    participant Midtrans as Midtrans API
+    participant DB as agenda_registrations
 
-    Pengurus->>RegView: klikSyncMidtrans(registrationId)
-    RegView->>RegCtrl: postSyncMidtrans(id)
-    activate RegCtrl
-
-    RegCtrl->>RegModel: findOrFail(id)
-    activate RegModel
-    RegModel-->>RegCtrl: returnRegistrationData(orderId)
-    deactivate RegModel
-
-    RegCtrl->>Gateway: getTransactionStatus(orderId)
-    activate Gateway
-    Gateway-->>RegCtrl: returnStatusResponse(transactionStatus)
-    deactivate Gateway
-
-    RegCtrl->>RegModel: update(payment_status, status)
-    activate RegModel
-    RegModel-->>RegCtrl: updateSuccess
-    deactivate RegModel
-
-    RegCtrl-->>RegView: redirectWithSuccess('Status pembayaran berhasil disinkronkan')
-    RegView-->>Pengurus: updateTampilanTabelStatus()
-    deactivate RegCtrl
+    User->>FE: Akses modul Pendaftaran Kegiatan
+    FE->>Route: GET /admin/registrations
+    Route->>Ctrl: index()
+    Ctrl->>DB: query registrations + agenda
+    Ctrl-->>FE: list pendaftar kegiatan
+    User->>FE: Ubah status / Sync Midtrans
+    FE->>Route: POST/PATCH /admin/registrations/{id}
+    Route->>Ctrl: syncMidtrans() / updateStatus()
+    alt klik Sync Midtrans
+        Ctrl->>Midtrans: getTransactionStatus(order_id)
+        Midtrans-->>Ctrl: status (settlement/expire)
+        Ctrl->>DB: update status ('approved'/'rejected')
+    end
+    Ctrl-->>FE: redirect + success message
 ```
 
 ---
 
-## 6. Sequence Diagram: Manajemen Pengguna / Users (Admin Only)
+## 6. Sequence Diagram - 6) Kelola Data Anggota (CRUD + Foto)
 
 ```mermaid
+%%{init: {'theme': 'neutral'}}%%
 sequenceDiagram
-    autonumber
-    actor Admin as Administrator
-    participant UserView as <<boundary>><br/>:UserCreateView
-    participant UserCtrl as <<control>><br/>:UserController
-    participant UserModel as <<entity>><br/>:User
+    actor User as User (Admin/Ketua)
+    participant FE as Frontend<br/>(Inertia React)
+    participant Route as Route<br/>(web.php)
+    participant Ctrl as MemberController
+    participant DB as members
 
-    Admin->>UserView: getCreateUserPage()
-    UserView-->>Admin: renderFormTambahUser()
-
-    Admin->>UserView: submitUser(name, email, password, role)
-    UserView->>UserCtrl: storeUser(requestPayload)
-    activate UserCtrl
-
-    UserCtrl->>UserCtrl: validasiEmailUnikDanPassword()
-
-    alt Validasi Berhasil
-        UserCtrl->>UserCtrl: hashPassword(bcrypt)
-        UserCtrl->>UserModel: create(name, email, hashedPassword, role)
-        activate UserModel
-        UserModel-->>UserCtrl: userRecordCreated
-        deactivate UserModel
-
-        UserCtrl-->>UserView: redirectWithSuccess('Pengguna berhasil dibuat')
-        UserView-->>Admin: displayUpdatedUserList()
-    else Validasi Gagal
-        UserCtrl-->>UserView: returnValidationErrors('Email sudah digunakan / password tidak valid')
-        UserView-->>Admin: displayErrorAlert()
+    User->>FE: Akses modul Data Anggota
+    FE->>Route: GET /admin/members
+    Route->>Ctrl: index()
+    Ctrl->>DB: query members + departemen
+    Ctrl-->>FE: list anggota
+    User->>FE: Simpan/Ubah data anggota
+    FE->>Route: POST/PUT /admin/members
+    Route->>Ctrl: store()/update()
+    Ctrl->>DB: insert/update member
+    alt ada foto anggota
+        Ctrl->>DB: upload & simpan path foto
     end
-    deactivate UserCtrl
+    Ctrl-->>FE: redirect + success message
+```
+
+---
+
+## 7. Sequence Diagram - 7) Kelola Pengguna / User (CRUD + Role)
+
+```mermaid
+%%{init: {'theme': 'neutral'}}%%
+sequenceDiagram
+    actor User as User (Administrator)
+    participant FE as Frontend<br/>(Inertia React)
+    participant Route as Route<br/>(web.php)
+    participant Ctrl as UserController
+    participant DB as users
+
+    User->>FE: Akses modul Kelola Pengguna
+    FE->>Route: GET /admin/users
+    Route->>Ctrl: index()
+    Ctrl->>DB: query users + role
+    Ctrl-->>FE: list pengguna
+    User->>FE: Simpan/Ubah data pengguna
+    FE->>Route: POST/PUT /admin/users
+    Route->>Ctrl: store()/update()
+    Ctrl->>DB: insert/update user + role
+    alt password diisi
+        Ctrl->>DB: hash password (bcrypt)
+    end
+    Ctrl-->>FE: redirect + success message
 ```

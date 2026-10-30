@@ -1,0 +1,974 @@
+<mxfile host="app.diagrams.net" modified="2026-10-29T15:45:00.000Z" agent="Antigravity" version="24.0.0" type="device">
+  <diagram id="mockup-1-beranda" name="1. Halaman Beranda">
+    <mxGraphModel dx="1200" dy="1050" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="1060" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <!-- Section Title -->
+        <mxCell id="b-title" value="&lt;b&gt;4.10.   Perancangan Antarmuka (Desain Mockup)&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=15;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="70" y="15" width="500" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="b-sub" value="&lt;b&gt;a.   Desain Antarmuka Halaman Beranda (Welcome.jsx)&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=13;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="43" width="450" height="24" as="geometry" />
+        </mxCell>
+
+        <!-- Browser Frame -->
+        <mxCell id="b-frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="95" y="75" width="810" height="910" as="geometry" />
+        </mxCell>
+        <mxCell id="b-topbar" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="95" y="75" width="810" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="b-dots" value="o  o  o" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Courier New;fontSize=13;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="108" y="79" width="60" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="b-url" value="https://pkpt-ipnu-ippnu.or.id/" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="175" y="81" width="610" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Navbar (Navbar.jsx) -->
+        <mxCell id="b-nav" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="107" width="810" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="b-logo" value="&lt;b&gt;[Logo] PKPT IPNU IPPNU&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 8px;&quot;&gt;PORTAL RESMI&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="115" y="113" width="165" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="b-menu" value="&lt;b&gt;[Beranda]&lt;/b&gt;   Profil [v]   Berita   Artikel   Galeri   Agenda   Kegiatan" style="text;html=1;align=right;verticalAlign=middle;fontFamily=Arial;fontSize=10;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="115" width="585" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- 1. HeroSection (HeroSection.jsx) -->
+        <mxCell id="b-hero" value="&lt;font style=&quot;font-size: 13px;&quot;&gt;&lt;b&gt;HERO SECTION (BANNER UTAMA &amp; SLIDER QUOTES)&lt;/b&gt;&lt;/font&gt;&lt;br&gt;Background Foto Kegiatan Organisasi + Kutipan Tokoh (Quotes) + Tombol Jelajahi" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="115" y="162" width="770" height="105" as="geometry" />
+        </mxCell>
+
+        <!-- 2. HomeFeature (HomeFeature.jsx) -->
+        <mxCell id="b-feat" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="115" y="278" width="770" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="b-feat-img" value="[ Gambar Feature / Tentang Kami ]&lt;br&gt;(feature_image_url)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="128" y="288" width="240" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="b-feat-txt" value="&lt;b&gt;TENTANG ORGANISASI (feature_subtitle)&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Mengenal Lebih Dekat PKPT IPNU IPPNU (feature_title)&lt;/b&gt;&lt;/font&gt;&lt;br&gt;Deskripsi singkat pengenalan organisasi dan visi kepelajaran...&lt;br&gt;&lt;b&gt;[ Selengkapnya &amp;rarr; ]&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="385" y="288" width="485" height="85" as="geometry" />
+        </mxCell>
+
+        <!-- 3. Statistics Section (4 StatCard) -->
+        <mxCell id="b-stat1" value="&lt;b&gt;[Ikon] 250+&lt;/b&gt;&lt;br&gt;Anggota / Kader" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="115" y="394" width="180" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="b-stat2" value="&lt;b&gt;[Ikon] 6&lt;/b&gt;&lt;br&gt;Departemen" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="311" y="394" width="180" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="b-stat3" value="&lt;b&gt;[Ikon] 24&lt;/b&gt;&lt;br&gt;Agenda Kegiatan" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="508" y="394" width="180" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="b-stat4" value="&lt;b&gt;[Ikon] 48&lt;/b&gt;&lt;br&gt;Berita &amp; Artikel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="705" y="394" width="180" height="46" as="geometry" />
+        </mxCell>
+
+        <!-- 4. ElegantHero Divider Banner -->
+        <mxCell id="b-elhero" value="&lt;font style=&quot;font-size: 9px;&quot;&gt;PORTAL RESMI&lt;/font&gt;&lt;br&gt;&lt;b&gt;Selamat Datang di PKPT IPNU IPPNU&lt;/b&gt;&lt;br&gt;&lt;i&gt;&quot;Mewujudkan Kader yang Berilmu, Beramal, dan Bertaqwa&quot;&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="115" y="450" width="770" height="52" as="geometry" />
+        </mxCell>
+
+        <!-- 5. Berita Terkini (4 NewsCard) -->
+        <mxCell id="b-news-hdr" value="&lt;b&gt;Berita Terkini&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="115" y="510" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="b-news-all" value="&lt;b&gt;Lihat Semua &amp;rarr;&lt;/b&gt;" style="text;html=1;align=right;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="735" y="510" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="b-nc1" value="[Foto Berita 1]&lt;br&gt;&lt;b&gt;Judul Berita 1&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Baca Selengkapnya&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="115" y="532" width="180" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="b-nc2" value="[Foto Berita 2]&lt;br&gt;&lt;b&gt;Judul Berita 2&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Baca Selengkapnya&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="311" y="532" width="180" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="b-nc3" value="[Foto Berita 3]&lt;br&gt;&lt;b&gt;Judul Berita 3&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Baca Selengkapnya&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="508" y="532" width="180" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="b-nc4" value="[Foto Berita 4]&lt;br&gt;&lt;b&gt;Judul Berita 4&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Baca Selengkapnya&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="705" y="532" width="180" height="75" as="geometry" />
+        </mxCell>
+
+        <!-- 6. Artikel Terbaru (4 ArticleCard) -->
+        <mxCell id="b-art-hdr" value="&lt;b&gt;Artikel Terbaru&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="115" y="616" width="200" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="b-art-all" value="&lt;b&gt;Lihat Semua &amp;rarr;&lt;/b&gt;" style="text;html=1;align=right;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="735" y="616" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="b-ac1" value="[Foto Artikel 1]&lt;br&gt;&lt;b&gt;Judul Artikel 1&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="115" y="638" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="b-ac2" value="[Foto Artikel 2]&lt;br&gt;&lt;b&gt;Judul Artikel 2&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="311" y="638" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="b-ac3" value="[Foto Artikel 3]&lt;br&gt;&lt;b&gt;Judul Artikel 3&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="508" y="638" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="b-ac4" value="[Foto Artikel 4]&lt;br&gt;&lt;b&gt;Judul Artikel 4&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="705" y="638" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- 7. Bottom 2 Columns: Sambutan Ketua (Kiri) & Agenda Terdekat (Kanan) -->
+        <mxCell id="b-greet" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="115" y="722" width="375" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="b-greet-ava" value="[Foto&lt;br&gt;Ketua]" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="135" y="765" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="b-greet-txt" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Sambutan Ketua&lt;/b&gt;&lt;/font&gt;&lt;hr&gt;&lt;i&gt;&quot;Selamat datang di website resmi PKPT IPNU IPPNU. Semoga bermanfaat untuk kita semua dalam mengembangkan potensi pelajar.&quot;&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="230" y="745" width="245" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="b-agbox" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="510" y="722" width="375" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="b-ag-hdr" value="&lt;b&gt;Agenda Terdekat&lt;/b&gt;                                                 [Ikon Kalender]" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="525" y="730" width="345" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="b-ag-item1" value="&lt;b&gt;[NOV 15]&lt;/b&gt;  &lt;b&gt;Makesta Raya PKPT IPNU IPPNU&lt;/b&gt;&lt;br&gt;                 08:00 WIB | Aula Kampus Utama" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;align=left;spacingLeft=8;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="525" y="758" width="345" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="b-ag-item2" value="&lt;b&gt;[NOV 22]&lt;/b&gt;  &lt;b&gt;Seminar Kepemimpinan Pelajar&lt;/b&gt;&lt;br&gt;                 09:00 WIB | Gedung Serbaguna" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;align=left;spacingLeft=8;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="525" y="797" width="345" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="b-ag-item3" value="&lt;b&gt;[NOV 30]&lt;/b&gt;  &lt;b&gt;Pelatihan Jurnalistik &amp; Media&lt;/b&gt;&lt;br&gt;                 13:00 WIB | Lab Komputer" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;align=left;spacingLeft=8;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="525" y="836" width="345" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="b-ag-btn" value="&lt;b&gt;Lihat Semua Agenda&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="525" y="876" width="345" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- 8. Footer -->
+        <mxCell id="b-footer" value="&lt;b&gt;FOOTER PKPT IPNU IPPNU&lt;/b&gt;  |  Profil &amp; Navigasi Cepat  |  Kontak &amp; Sosial Media  |  &amp;copy; 2026 PKPT IPNU IPPNU" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;align=center;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="95" y="930" width="810" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Caption -->
+        <mxCell id="b-caption" value="Gambar 4. 24 Desain Antarmuka Halaman Beranda" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="250" y="998" width="500" height="25" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="mockup-2-pendaftaran" name="2. Halaman Pendaftaran Kegiatan">
+    <mxGraphModel dx="1200" dy="1050" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="1040" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p-sub" value="&lt;b&gt;b.   Desain Antarmuka Halaman Pendaftaran Kegiatan (RegistrationForm.jsx)&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=13;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="25" width="550" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Browser Frame -->
+        <mxCell id="p-frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="95" y="60" width="810" height="900" as="geometry" />
+        </mxCell>
+        <mxCell id="p-topbar" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="60" width="810" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="p-dots" value="o  o  o" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Courier New;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="108" y="64" width="60" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="p-url" value="https://pkpt-ipnu-ippnu.or.id/kegiatan/1/daftar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="175" y="66" width="610" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Navbar -->
+        <mxCell id="p-nav" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="92" width="810" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p-logo" value="&lt;b&gt;[Logo] PKPT IPNU IPPNU&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="115" y="98" width="160" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="p-menu" value="Beranda   Profil [v]   Berita   Artikel   Galeri   Agenda   &lt;b&gt;[Kegiatan]&lt;/b&gt;" style="text;html=1;align=right;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="98" width="585" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- Emerald Header Banner -->
+        <mxCell id="p-banner" value="&amp;larr; Kembali ke Kegiatan&lt;br&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Pendaftaran Kegiatan&lt;/b&gt;&lt;/font&gt;&lt;br&gt;Makesta Raya PKPT IPNU IPPNU 2026" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;align=center;fontFamily=Arial;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="95" y="132" width="810" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Single Centered Card (max-w-2xl mx-auto) -->
+        <mxCell id="p-card" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;" vertex="1" parent="1">
+          <mxGeometry x="210" y="205" width="580" height="730" as="geometry" />
+        </mxCell>
+
+        <!-- Pamflet Agenda Inside Card Top -->
+        <mxCell id="p-poster" value="[ Pamflet / Poster Kegiatan (agenda.image_url) ]&lt;br&gt;&lt;b&gt;MAKESTA RAYA PKPT IPNU IPPNU&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="225" width="520" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- HTM Box -->
+        <mxCell id="p-htm-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="240" y="360" width="520" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="p-htm-txt" value="&lt;b&gt;Harga Tiket Masuk (HTM)&lt;/b&gt;&lt;br&gt;Silakan pilih metode pembayaran di bawah ini." style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="255" y="365" width="340" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="p-htm-price" value="&lt;b&gt;Rp 25.000&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="645" y="371" width="100" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- 3 Payment Method Radio Cards -->
+        <mxCell id="p-pm-lbl" value="&lt;b&gt;Metode Pembayaran&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="422" width="200" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="p-pm1" value="(&amp;bull;) &lt;b&gt;Otomatis (Midtrans)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="444" width="165" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="p-pm2" value="( ) &lt;b&gt;Cash / Langsung&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="417" y="444" width="165" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="p-pm3" value="( ) &lt;b&gt;Manual Transfer&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="595" y="444" width="165" height="36" as="geometry" />
+        </mxCell>
+
+        <!-- Conditional Manual Transfer Box -->
+        <mxCell id="p-trf-box" value="&lt;i&gt;(Muncul jika memilih Manual Transfer)&lt;/i&gt;  |  &lt;b&gt;INFORMASI REKENING:&lt;/b&gt; BRI 0021-xxxx a.n PKPT IPNU IPPNU&lt;br&gt;&lt;b&gt;Unggah Bukti Pembayaran *:&lt;/b&gt;  [ Pilih File (Browse...) ]  bukti_transfer.jpg" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;dashed=1;align=left;spacingLeft=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="240" y="488" width="520" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Dynamic Schema Form Fields -->
+        <mxCell id="p-f1-lbl" value="&lt;b&gt;Nama Lengkap *&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="542" width="300" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="p-f1-inp" value="Masukkan Nama Lengkap" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="562" width="520" height="32" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p-f2-lbl" value="&lt;b&gt;Nomor WhatsApp / HP *&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="602" width="300" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="p-f2-inp" value="Contoh: 081234567890" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="622" width="520" height="32" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p-f3-lbl" value="&lt;b&gt;Alamat Email *&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="662" width="300" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="p-f3-inp" value="Masukkan Alamat Email" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="682" width="520" height="32" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p-f4-lbl" value="&lt;b&gt;NIK (KTP / Kartu Keluarga)&lt;/b&gt;                                                                                &lt;font style=&quot;font-size: 9px;&quot;&gt;16/16 digit&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="722" width="520" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="p-f4-inp" value="Masukkan 16 digit NIK sesuai KTP / Kartu Keluarga" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="240" y="742" width="520" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="p-nik-box" value="&lt;b&gt;[v] NIK Valid Terdeteksi (parseFullNik):&lt;/b&gt; Laki-Laki | Tgl Lahir | Kecamatan | Kabupaten/Kota | Provinsi" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="240" y="780" width="520" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- Submit Button -->
+        <mxCell id="p-submit" value="&lt;b&gt;Daftar Sekarang&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9d9d9;strokeColor=#000000;fontFamily=Arial;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="240" y="822" width="520" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="p-note" value="Pastikan seluruh data yang Anda masukkan sudah benar sebelum mengirim formulir." style="text;html=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="240" y="868" width="520" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Caption -->
+        <mxCell id="p-caption" value="Gambar 4. 25 Desain Antarmuka Halaman Pendaftaran Kegiatan" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="200" y="975" width="600" height="25" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="mockup-3-pembayaran" name="3. Halaman Pembayaran">
+    <mxGraphModel dx="1200" dy="950" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="880" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="m-sub" value="&lt;b&gt;c.   Desain Antarmuka Halaman Pembayaran Kegiatan (Payment.jsx)&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=13;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="25" width="550" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Browser Frame -->
+        <mxCell id="m-frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="95" y="60" width="810" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="m-topbar" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="60" width="810" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="m-dots" value="o  o  o" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Courier New;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="108" y="64" width="60" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="m-url" value="https://pkpt-ipnu-ippnu.or.id/kegiatan/payment/104" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="175" y="66" width="610" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Navbar -->
+        <mxCell id="m-nav" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="92" width="810" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="m-logo" value="&lt;b&gt;[Logo] PKPT IPNU IPPNU&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="115" y="98" width="160" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="m-menu" value="Beranda   Profil [v]   Berita   Artikel   Galeri   Agenda   &lt;b&gt;[Kegiatan]&lt;/b&gt;" style="text;html=1;align=right;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="300" y="98" width="585" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- Emerald Header Banner -->
+        <mxCell id="m-banner" value="&amp;larr; Kembali ke Kegiatan&lt;br&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Selesaikan Pembayaran&lt;/b&gt;&lt;/font&gt;&lt;br&gt;Makesta Raya PKPT IPNU IPPNU 2026" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;align=center;fontFamily=Arial;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="95" y="132" width="810" height="95" as="geometry" />
+        </mxCell>
+
+        <!-- Centered Card (max-w-xl mx-auto) -->
+        <mxCell id="m-card" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;" vertex="1" parent="1">
+          <mxGeometry x="260" y="210" width="480" height="495" as="geometry" />
+        </mxCell>
+
+        <!-- Wallet Icon Circle -->
+        <mxCell id="m-icon" value="&lt;b&gt;[Ikon&lt;br&gt;Wallet]&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f2f2f2;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="465" y="230" width="70" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m-tot-lbl" value="&lt;b&gt;Total Pembayaran&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="350" y="310" width="300" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="m-tot-val" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;b&gt;Rp 25.000&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=18;" vertex="1" parent="1">
+          <mxGeometry x="350" y="336" width="300" height="34" as="geometry" />
+        </mxCell>
+
+        <!-- Details Box (bg-slate-50) -->
+        <mxCell id="m-det-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="295" y="385" width="410" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="m-det-r1" value="ID Pendaftaran                                                                        &lt;b&gt;REG-104&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="310" y="395" width="380" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="m-det-r2" value="Nama Peserta                                                                   &lt;b&gt;Ahmad Fauzi&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="310" y="425" width="380" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="m-det-r3" value="Status Pembayaran                                        &lt;b&gt;[ MENUNGGU PEMBAYARAN ]&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="310" y="460" width="380" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- Action Buttons -->
+        <mxCell id="m-btn-pay" value="&lt;b&gt;[Ikon Kartu]  Bayar Sekarang (Buka Midtrans)&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9d9d9;strokeColor=#000000;fontFamily=Arial;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="295" y="520" width="410" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="m-btn-chk" value="&lt;b&gt;[Ikon Refresh]  Sudah Bayar? Cek Status Pembayaran&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="295" y="575" width="410" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m-foot-txt" value="Pembayaran Anda diproses secara aman menggunakan payment gateway resmi Midtrans." style="text;html=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="295" y="630" width="410" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Footer -->
+        <mxCell id="m-footer" value="&amp;copy; 2026 PKPT IPNU IPPNU" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;align=center;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="95" y="745" width="810" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- Caption -->
+        <mxCell id="m-caption" value="Gambar 4. 26 Desain Antarmuka Halaman Pembayaran Kegiatan" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="250" y="805" width="500" height="25" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="mockup-4-login" name="4. Halaman Login Pengurus">
+    <mxGraphModel dx="1200" dy="850" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="780" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="l-sub" value="&lt;b&gt;d.   Desain Antarmuka Halaman Login Pengurus (Login.jsx &amp; GuestLayout.jsx)&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=13;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="25" width="550" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Browser Frame -->
+        <mxCell id="l-frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="95" y="60" width="810" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="l-topbar" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="60" width="810" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="l-dots" value="o  o  o" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Courier New;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="108" y="64" width="60" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="l-url" value="https://pkpt-ipnu-ippnu.or.id/login" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="175" y="66" width="610" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Branding Outside Card (GuestLayout.jsx) -->
+        <mxCell id="l-logo" value="&lt;b&gt;[Logo&lt;br&gt;IPNU-IPPNU]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="462" y="118" width="76" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="l-brand-title" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;&lt;b&gt;PKPT IPNU IPPNU&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;&lt;b&gt;PORTAL ADMINISTRASI&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="350" y="195" width="300" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Login Form Card (Login.jsx) -->
+        <mxCell id="l-card" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;" vertex="1" parent="1">
+          <mxGeometry x="305" y="250" width="390" height="350" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l-lbl-email" value="&lt;b&gt;ALAMAT EMAIL&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="340" y="275" width="320" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="l-inp-email" value="[Ikon Amplop]   admin@pkpt-ipnu-ippnu.or.id" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="340" y="297" width="320" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l-lbl-pass" value="&lt;b&gt;PASSWORD&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="340" y="355" width="320" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="l-inp-pass" value="[Ikon Gembok]   &amp;bull;&amp;bull;&amp;bull;&amp;bull;&amp;bull;&amp;bull;&amp;bull;&amp;bull;&amp;bull;&amp;bull;&amp;bull;&amp;bull;                                        [Ikon Mata]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="340" y="377" width="320" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l-rem" value="[x] &lt;b&gt;Ingat Saya&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="340" y="432" width="150" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="l-forgot" value="&lt;i&gt;&lt;b&gt;Lupa Password?&lt;/b&gt;&lt;/i&gt;" style="text;html=1;align=right;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="510" y="432" width="150" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l-btn" value="&lt;b&gt;[&amp;rarr;]  Masuk ke Dashboard&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9d9d9;strokeColor=#000000;fontFamily=Arial;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="340" y="472" width="320" height="44" as="geometry" />
+        </mxCell>
+
+        <mxCell id="l-copy" value="&amp;copy; 2026 PKPT IPNU IPPNU" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="350" y="625" width="300" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Caption -->
+        <mxCell id="l-caption" value="Gambar 4. 27 Desain Antarmuka Halaman Login Pengurus" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="250" y="695" width="500" height="25" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="mockup-5-dashboard" name="5. Dashboard Admin">
+    <mxGraphModel dx="1200" dy="950" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="920" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="d-sub" value="&lt;b&gt;e.   Desain Antarmuka Halaman Dashboard Admin (Dashboard.jsx &amp; AdminLayout.jsx)&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=13;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="25" width="600" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Browser Frame -->
+        <mxCell id="d-frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="95" y="60" width="810" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="d-topbar" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="60" width="810" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dots" value="o  o  o" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Courier New;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="108" y="64" width="60" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="d-url" value="https://pkpt-ipnu-ippnu.or.id/admin/dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="175" y="66" width="610" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Sidebar Navigation (Sidebar.jsx) -->
+        <mxCell id="d-sidebar" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="92" width="175" height="708" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-brand" value="&lt;b&gt;[IP] AdminPanel&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;[ ADMIN ]&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="95" y="92" width="175" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-lbl1" value="&lt;b&gt;MENU&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="105" y="145" width="100" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-m1" value="&lt;b&gt;&amp;gt; Dashboard&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9d9d9;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="163" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-m2" value="   Berita" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="193" width="155" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-m3" value="   Artikel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="221" width="155" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-m4" value="   Quotes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="249" width="155" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-m5" value="   Galeri" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="277" width="155" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-m6" value="   Anggota" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="305" width="155" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-m7" value="   Agenda" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="333" width="155" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-m8" value="   Pendaftar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="361" width="155" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-m9" value="   Statistik" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="389" width="155" height="24" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d-sb-lbl2" value="&lt;b&gt;SYSTEM&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="105" y="422" width="100" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-s1" value="   Manajemen User" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="440" width="155" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-s2" value="   Pengaturan" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="468" width="155" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-s3" value="   Halaman" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="496" width="155" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-s4" value="   Profil" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="524" width="155" height="24" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d-sb-web" value="[Globe] Lihat Website" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="725" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sb-out" value="&lt;b&gt;[LogOut] Keluar&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="757" width="155" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- Admin Top Navbar -->
+        <mxCell id="d-main-hdr" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="270" y="92" width="635" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="d-toggle" value="[=]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="285" y="102" width="32" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="d-dark" value="[Tema]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="615" y="102" width="55" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="d-notif-btn" value="&lt;b&gt;[Lonceng (3)]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="680" y="102" width="95" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="d-user-btn" value="&lt;b&gt;[Admin PK]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="785" y="102" width="105" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- Dashboard Header + Status Sistem -->
+        <mxCell id="d-ov-title" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Dashboard Overview&lt;/b&gt;&lt;/font&gt;&lt;br&gt;Monitoring performa dan aktivitas platform Anda secara real-time." style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="290" y="152" width="380" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sys-status" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;STATUS SISTEM&lt;/font&gt;&lt;br&gt;&lt;b&gt;(&amp;bull;) Online &amp; Stabil&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="730" y="152" width="155" height="45" as="geometry" />
+        </mxCell>
+
+        <!-- 8 Stat Cards Grid (2 Rows x 4 Columns as in Dashboard.jsx) -->
+        <mxCell id="d-c1" value="[Ikon]  &lt;b&gt;BERITA&lt;/b&gt;&lt;br&gt;           &lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;12&lt;/b&gt;&lt;/font&gt;          &amp;gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="290" y="210" width="140" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="d-c2" value="[Ikon]  &lt;b&gt;ARTIKEL&lt;/b&gt;&lt;br&gt;           &lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;36&lt;/b&gt;&lt;/font&gt;          &amp;gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="441" y="210" width="140" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="d-c3" value="[Ikon]  &lt;b&gt;ANGGOTA&lt;/b&gt;&lt;br&gt;           &lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;45&lt;/b&gt;&lt;/font&gt;          &amp;gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="593" y="210" width="140" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="d-c4" value="[Ikon]  &lt;b&gt;AGENDA&lt;/b&gt;&lt;br&gt;           &lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;8&lt;/b&gt;&lt;/font&gt;            &amp;gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="745" y="210" width="140" height="52" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d-c5" value="[Ikon]  &lt;b&gt;PENDAFTAR&lt;/b&gt;&lt;br&gt;           &lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;142&lt;/b&gt;&lt;/font&gt;        &amp;gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="290" y="272" width="140" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="d-c6" value="[Ikon]  &lt;b&gt;GALERI&lt;/b&gt;&lt;br&gt;           &lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;20&lt;/b&gt;&lt;/font&gt;          &amp;gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="441" y="272" width="140" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="d-c7" value="[Ikon]  &lt;b&gt;QUOTES&lt;/b&gt;&lt;br&gt;           &lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;6&lt;/b&gt;&lt;/font&gt;            &amp;gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="593" y="272" width="140" height="52" as="geometry" />
+        </mxCell>
+        <mxCell id="d-c8" value="[Ikon]  &lt;b&gt;STATISTIK&lt;/b&gt;&lt;br&gt;           &lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b&gt;4&lt;/b&gt;&lt;/font&gt;            &amp;gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="745" y="272" width="140" height="52" as="geometry" />
+        </mxCell>
+
+        <!-- Bottom Section: Left = Aktivitas Terakhir (lg:col-span-8), Right = Pintasan & Inspirasi (lg:col-span-4) -->
+        <mxCell id="d-act-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="290" y="340" width="380" height="405" as="geometry" />
+        </mxCell>
+        <mxCell id="d-act-hdr" value="&lt;b&gt;[Ikon] Aktivitas Terakhir&lt;/b&gt;                                     &lt;b&gt;[ LIVE UPDATES ]&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;align=left;spacingLeft=12;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="290" y="340" width="380" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="d-act-1" value="[Ikon]  &lt;b&gt;MAKESTA RAYA PKPT IPNU IPPNU&lt;/b&gt;               2 JAM LALU&lt;br&gt;           &lt;b&gt;[AGENDA]&lt;/b&gt;  &amp;bull;  OLEH ADMIN" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="305" y="395" width="350" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="d-act-2" value="[Ikon]  &lt;b&gt;PELANTIKAN PENGURUS BARU 2026&lt;/b&gt;             5 JAM LALU&lt;br&gt;           &lt;b&gt;[BERITA]&lt;/b&gt;  &amp;bull;  OLEH DEPARTEMEN" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="305" y="460" width="350" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="d-act-3" value="[Ikon]  &lt;b&gt;PERAN PELAJAR NU DI ERA DIGITAL&lt;/b&gt;            1 HARI LALU&lt;br&gt;           &lt;b&gt;[ARTIKEL]&lt;/b&gt;  &amp;bull;  OLEH KADER" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="305" y="525" width="350" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Right Column: Quick Shortcuts & Inspirasi Harian -->
+        <mxCell id="d-sc-box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="685" y="340" width="200" height="235" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sc-txt" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;&lt;b&gt;Mulai Kelola&lt;br&gt;Konten Hari Ini&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Gunakan pintasan di bawah untuk menambahkan konten baru.&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="698" y="350" width="175" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sc-1" value="[Ikon]&lt;br&gt;&lt;b&gt;POST BERITA&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="698" y="420" width="82" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sc-2" value="[Ikon]&lt;br&gt;&lt;b&gt;BUAT ARTIKEL&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="790" y="420" width="82" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sc-3" value="[Ikon]&lt;br&gt;&lt;b&gt;AGENDA BARU&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="698" y="470" width="82" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sc-4" value="[Ikon]&lt;br&gt;&lt;b&gt;UPLOAD GALERI&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="790" y="470" width="82" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="d-sc-5" value="[Ikon] &lt;b&gt;TAMBAH QUOTE&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="698" y="520" width="174" height="38" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d-ins-box" value="&lt;b&gt;INSPIRASI HARIAN&lt;/b&gt;&lt;hr&gt;&lt;i&gt;&quot;Tingkatkan kualitas organisasi dengan literasi dan penyebaran informasi yang positif dan konsisten.&quot;&lt;/i&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;PKPT IPNU IPPNU&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="685" y="590" width="200" height="155" as="geometry" />
+        </mxCell>
+
+        <!-- Admin Footer -->
+        <mxCell id="d-foot" value="&amp;copy; 2026 PKPT IPNU IPPNU. PREMIUM SYSTEM." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=center;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="270" y="765" width="635" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Caption -->
+        <mxCell id="d-caption" value="Gambar 4. 28 Desain Antarmuka Halaman Dashboard Admin" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="250" y="815" width="500" height="25" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="mockup-6-manajemen" name="6. Halaman Manajemen Data">
+    <mxGraphModel dx="1200" dy="950" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="920" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="v-sub" value="&lt;b&gt;f.   Desain Antarmuka Halaman Manajemen Data Pendaftar (Admin/Registrations/Index.jsx)&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=13;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="25" width="650" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Browser Frame -->
+        <mxCell id="v-frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="95" y="60" width="810" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="v-topbar" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="60" width="810" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="v-dots" value="o  o  o" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Courier New;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="108" y="64" width="60" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="v-url" value="https://pkpt-ipnu-ippnu.or.id/admin/registrations" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="175" y="66" width="610" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Sidebar Navigation -->
+        <mxCell id="v-sidebar" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="92" width="175" height="708" as="geometry" />
+        </mxCell>
+        <mxCell id="v-sb-brand" value="&lt;b&gt;[IP] AdminPanel&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;[ ADMIN ]&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="95" y="92" width="175" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="v-sb-m1" value="   Dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="160" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="v-sb-m2" value="   Berita" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="192" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="v-sb-m3" value="   Artikel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="224" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="v-sb-m4" value="   Galeri" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="256" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="v-sb-m5" value="   Anggota" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="288" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="v-sb-m6" value="   Agenda" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="320" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="v-sb-m7" value="&lt;b&gt;&amp;gt; Pendaftar&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9d9d9;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="352" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="v-sb-m8" value="   Statistik" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="384" width="155" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- Main Top Header -->
+        <mxCell id="v-main-hdr" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="270" y="92" width="635" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="v-toggle" value="[=]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="285" y="102" width="32" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="v-notif" value="&lt;b&gt;[Lonceng (3)]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="680" y="102" width="95" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="v-user" value="&lt;b&gt;[Admin PK]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="785" y="102" width="105" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- Page Title & Top Controls (Registrations/Index.jsx) -->
+        <mxCell id="v-title" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Data Pendaftar Global&lt;/b&gt;&lt;/font&gt;&lt;br&gt;Kelola semua pendaftar dari berbagai agenda." style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="290" y="152" width="260" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="v-btn-syncall" value="&lt;b&gt;[Refresh] Sinkronkan Semua Midtrans&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9d9d9;strokeColor=#000000;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="540" y="160" width="190" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="v-flt-ag" value="&lt;b&gt;Semua Agenda        [Filter]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="740" y="160" width="150" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- 6-Column Data Table (Exact Columns from Registrations/Index.jsx) -->
+        <mxCell id="v-tbl-hdr" value="&lt;b&gt;WAKTU DAFTAR  | PENDAFTAR &amp; AGENDA               | METODE    | STATUS     | BUKTI | AKSI&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;align=left;spacingLeft=8;fontFamily=Courier New;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="290" y="205" width="600" height="32" as="geometry" />
+        </mxCell>
+
+        <mxCell id="v-r1" value="29 Okt 2026   | &lt;b&gt;Ahmad Fauzi&lt;/b&gt;                      | [MIDTRANS]| [APPROVED] |   -   | [Mata][Sync][Hapus]&lt;br&gt;14:20 WIB     | Makesta Raya PKPT IPNU IPPNU     |  qris     | (SETTLEMENT)|       |&lt;br&gt;              | [WA: 08123456789] [NIK: 3509...] |           |            |       |" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=8;fontFamily=Courier New;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="290" y="237" width="600" height="58" as="geometry" />
+        </mxCell>
+
+        <mxCell id="v-r2" value="29 Okt 2026   | &lt;b&gt;Siti Aminah&lt;/b&gt;                      | [TRANSFER]| [PENDING ] | [Img] | [Mata][v][x][Hapus]&lt;br&gt;13:05 WIB     | Makesta Raya PKPT IPNU IPPNU     |           |            |       |&lt;br&gt;              | [WA: 08571234567] [NIK: 3509...] |           |            |       |" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;align=left;spacingLeft=8;fontFamily=Courier New;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="290" y="295" width="600" height="58" as="geometry" />
+        </mxCell>
+
+        <mxCell id="v-r3" value="28 Okt 2026   | &lt;b&gt;Dewi Lestari&lt;/b&gt;                     | [CASH]    | [PENDING ] |   -   | [Mata][v][x][Hapus]&lt;br&gt;19:40 WIB     | Seminar Kepemimpinan Pelajar     |           |            |       |&lt;br&gt;              | [WA: 08219876543] [NIK: 3509...] |           |            |       |" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=8;fontFamily=Courier New;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="290" y="353" width="600" height="58" as="geometry" />
+        </mxCell>
+
+        <!-- Detail Modal Preview (Detail Jawaban Form in Registrations/Index.jsx) -->
+        <mxCell id="v-modal" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="290" y="428" width="600" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="v-mod-hdr" value="&lt;b&gt;Modal Pop-up: Detail Jawaban Form (Saat Klik Ikon [Mata])&lt;/b&gt;                                                &lt;b&gt;[ X ]&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;align=left;spacingLeft=12;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="290" y="428" width="600" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- Left Side of Modal: Midtrans Info Box & Form Responses -->
+        <mxCell id="v-mod-mid" value="&lt;b&gt;[Kartu] INFORMASI MIDTRANS&lt;/b&gt;                                      &lt;b&gt;[Refresh: Sinkronkan Sekarang]&lt;/b&gt;&lt;hr&gt;Order ID: &lt;b&gt;REG-104-17298501&lt;/b&gt;                  |   Status Midtrans: &lt;b&gt;SETTLEMENT&lt;/b&gt;&lt;br&gt;Metode / Channel: &lt;b&gt;qris&lt;/b&gt;                        |   Waktu Bayar: &lt;b&gt;29/10/2026, 14.21.10&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="305" y="470" width="570" height="75" as="geometry" />
+        </mxCell>
+
+        <mxCell id="v-mod-f1" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;&lt;b&gt;NAMA LENGKAP&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;b&gt;Ahmad Fauzi&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="305" y="555" width="275" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="v-mod-f2" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;&lt;b&gt;NOMOR WHATSAPP / HP&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;b&gt;081234567890&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="600" y="555" width="275" height="42" as="geometry" />
+        </mxCell>
+
+        <mxCell id="v-mod-f3" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;&lt;b&gt;NIK (KTP / KARTU KELUARGA)&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;b&gt;3509121405040001&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="305" y="605" width="275" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="v-mod-nik" value="&lt;b&gt;Laki-Laki&lt;/b&gt;                                     &lt;b&gt;[NIK Terdeteksi]&lt;/b&gt;&lt;hr&gt;Kecamatan: &lt;b&gt;Sumbersari&lt;/b&gt; | Kab/Kota: &lt;b&gt;Kab. Jember&lt;/b&gt;&lt;br&gt;Provinsi: &lt;b&gt;Jawa Timur&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="600" y="605" width="275" height="65" as="geometry" />
+        </mxCell>
+
+        <mxCell id="v-mod-rej" value="&lt;i&gt;Catatan: Saat klik tombol Tolak [x], sistem menampilkan pop-up SweetAlert2 untuk mengisi alasan penolakan yang otomatis dikirimkan ke email pendaftar (RegistrationRejectedMail).&lt;/i&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="305" y="680" width="570" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Pagination -->
+        <mxCell id="v-pag" value="[ &amp;laquo; Previous ]   [ 1 ]   [ 2 ]   [ Next &amp;raquo; ]" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="290" y="760" width="600" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Caption -->
+        <mxCell id="v-caption" value="Gambar 4. 29 Desain Antarmuka Halaman Manajemen Data Pendaftar" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="200" y="815" width="600" height="25" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="mockup-7-kelola-konten" name="7. Halaman Kelola Konten">
+    <mxGraphModel dx="1200" dy="1050" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="980" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="k-sub" value="&lt;b&gt;g.   Desain Antarmuka Halaman Kelola Konten (Admin/Posts/Index.jsx &amp; Create.jsx)&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=13;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="25" width="650" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Browser Frame -->
+        <mxCell id="k-frame" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="95" y="60" width="810" height="820" as="geometry" />
+        </mxCell>
+        <mxCell id="k-topbar" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="60" width="810" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="k-dots" value="o  o  o" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Courier New;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="108" y="64" width="60" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="k-url" value="https://pkpt-ipnu-ippnu.or.id/admin/posts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="175" y="66" width="610" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Sidebar Navigation -->
+        <mxCell id="k-sidebar" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="95" y="92" width="175" height="788" as="geometry" />
+        </mxCell>
+        <mxCell id="k-sb-brand" value="&lt;b&gt;[IP] AdminPanel&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;[ ADMIN / DEPT ]&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="95" y="92" width="175" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="k-sb-lbl1" value="&lt;b&gt;MENU&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="105" y="145" width="100" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="k-sb-m1" value="   Dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="165" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="k-sb-m2" value="&lt;b&gt;&amp;gt; Berita&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9d9d9;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="197" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="k-sb-m3" value="   Artikel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="229" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="k-sb-m4" value="   Quotes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="261" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="k-sb-m5" value="   Galeri" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="293" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="k-sb-m6" value="   Anggota" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="325" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="k-sb-m7" value="   Agenda" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="357" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="k-sb-m8" value="   Pendaftar" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="389" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="k-sb-m9" value="   Statistik" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="421" width="155" height="26" as="geometry" />
+        </mxCell>
+
+        <mxCell id="k-sb-web" value="[Globe] Lihat Website" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="805" width="155" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="k-sb-out" value="&lt;b&gt;[LogOut] Keluar&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="105" y="837" width="155" height="26" as="geometry" />
+        </mxCell>
+
+        <!-- Admin Top Navbar -->
+        <mxCell id="k-main-hdr" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="270" y="92" width="635" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="k-toggle" value="[=]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="285" y="102" width="32" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="k-dark" value="[Tema]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="615" y="102" width="55" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="k-notif" value="&lt;b&gt;[Lonceng (3)]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="680" y="102" width="95" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="k-user" value="&lt;b&gt;[Admin PK]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="785" y="102" width="105" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- Part 1: Daftar Kelola Konten Berita / Artikel (Posts/Index.jsx) -->
+        <mxCell id="k-title" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Kelola Berita&lt;/b&gt;&lt;/font&gt;&lt;br&gt;Manajemen seluruh konten berita dan informasi organisasi." style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="290" y="150" width="380" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="k-btn-add" value="&lt;b&gt;[ + ]  Tambah Berita&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9d9d9;strokeColor=#000000;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="740" y="155" width="150" height="34" as="geometry" />
+        </mxCell>
+
+        <!-- Table Posts/Index.jsx (3 Columns: INFORMASI BERITA | STATISTIK | AKSI) -->
+        <mxCell id="k-tbl-hdr" value="&lt;b&gt;INFORMASI BERITA                                              | STATISTIK        | AKSI&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;align=left;spacingLeft=12;fontFamily=Courier New;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="290" y="200" width="600" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Row 1 -->
+        <mxCell id="k-r1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="290" y="230" width="600" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="k-r1-img" value="[Foto&lt;br&gt;Berita]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#000000;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="302" y="238" width="48" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="k-r1-txt" value="&lt;b&gt;PKPT IPNU IPPNU Sukses Gelar Makesta Raya 2026&lt;/b&gt;&lt;br&gt;[Kalender: 29 Okt 2026]   Oleh: Admin" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="238" width="300" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="k-r1-stat" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;STATUS&lt;/font&gt;&lt;br&gt;&lt;b&gt;(&amp;bull;) Published&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="670" y="238" width="95" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="k-r1-act" value="[Mata]  [Edit]  [Hapus]" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Courier New;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="765" y="248" width="120" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- Row 2 -->
+        <mxCell id="k-r2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="290" y="294" width="600" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="k-r2-img" value="[Foto&lt;br&gt;Berita]" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f2f2f2;strokeColor=#000000;fontFamily=Arial;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="302" y="302" width="48" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="k-r2-txt" value="&lt;b&gt;Pelantikan Pengurus Baru PKPT IPNU IPPNU Periode 2026-2027&lt;/b&gt;&lt;br&gt;[Kalender: 20 Okt 2026]   Oleh: Admin" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="360" y="302" width="300" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="k-r2-stat" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;STATUS&lt;/font&gt;&lt;br&gt;&lt;b&gt;(&amp;bull;) Published&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="670" y="302" width="95" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="k-r2-act" value="[Mata]  [Edit]  [Hapus]" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Courier New;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="765" y="312" width="120" height="28" as="geometry" />
+        </mxCell>
+
+        <!-- Part 2: Form Tambah / Edit Konten (Posts/Create.jsx) -->
+        <mxCell id="k-form-sec" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.2;" vertex="1" parent="1">
+          <mxGeometry x="290" y="378" width="600" height="482" as="geometry" />
+        </mxCell>
+        <mxCell id="k-form-hdr" value="&lt;b&gt;Tampilan Form Tambah / Edit Konten (/admin/posts/create)&lt;/b&gt;                        &lt;b&gt;&amp;larr; Kembali ke Daftar&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;align=left;spacingLeft=12;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="290" y="378" width="600" height="32" as="geometry" />
+        </mxCell>
+
+        <!-- Left Column of Form (lg:col-span-8) -->
+        <mxCell id="k-f-left" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="305" y="422" width="380" height="422" as="geometry" />
+        </mxCell>
+        <mxCell id="k-lbl-jdl" value="&lt;b&gt;Judul Berita&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="320" y="432" width="200" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="k-inp-jdl" value="Contoh: PKPT IPNU IPPNU Sukses Gelar Makesta 2026" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;align=left;spacingLeft=10;fontFamily=Arial;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="320" y="452" width="350" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="k-lbl-img" value="&lt;b&gt;Gambar Utama&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="320" y="496" width="200" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="k-inp-img" value="[Ikon CloudUpload]&lt;br&gt;&lt;b&gt;Unggah Foto Berita&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size: 8.5px;&quot;&gt;Format: JPG, PNG, atau WEBP. Max: 5MB.&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#000000;dashed=1;fontFamily=Arial;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="320" y="516" width="350" height="85" as="geometry" />
+        </mxCell>
+
+        <mxCell id="k-lbl-isi" value="&lt;b&gt;Isi Berita Lengkap&lt;/b&gt;" style="text;html=1;align=left;verticalAlign=middle;fontFamily=Arial;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="320" y="612" width="200" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="k-inp-isi" value="Mulailah menulis narasi berita Anda di sini..." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontFamily=Arial;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="320" y="632" width="350" height="145" as="geometry" />
+        </mxCell>
+
+        <mxCell id="k-btn-rst" value="Reset Form" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontFamily=Arial;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="405" y="792" width="90" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="k-btn-pub" value="&lt;b&gt;[Send]  PUBLIKASIKAN SEKARANG&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d9d9d9;strokeColor=#000000;fontFamily=Arial;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="505" y="792" width="165" height="36" as="geometry" />
+        </mxCell>
+
+        <!-- Right Column of Form: Tips Menulis Card (lg:col-span-4) -->
+        <mxCell id="k-tips" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6e6e6;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="698" y="422" width="178" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="k-tips-txt" value="&lt;b&gt;[Ikon Lampu]  Tips Menulis&lt;/b&gt;&lt;hr&gt;&amp;bull; Gunakan judul yang singkat dan menggambarkan isi berita secara tepat.&lt;br&gt;&lt;br&gt;&amp;bull; Pastikan gambar utama berkualitas tinggi untuk daya tarik visual.&lt;br&gt;&lt;br&gt;&amp;bull; Gunakan paragraf yang tidak terlalu panjang untuk kenyamanan pembaca." style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;fontFamily=Arial;fontSize=9.5;" vertex="1" parent="1">
+          <mxGeometry x="708" y="432" width="158" height="245" as="geometry" />
+        </mxCell>
+
+        <!-- Caption -->
+        <mxCell id="k-caption" value="Gambar 4. 30 Desain Antarmuka Halaman Kelola Konten" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Times New Roman;fontSize=12;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="250" y="895" width="500" height="25" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

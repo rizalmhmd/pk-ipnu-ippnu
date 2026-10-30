@@ -1,0 +1,328 @@
+<mxfile host="app.diagrams.net" modified="2026-10-28T13:02:00.000Z" agent="Antigravity" version="21.0.0" type="device">
+  <diagram id="erd-main" name="1. ERD Utama (Sesuai Contoh Laporan)">
+    <mxGraphModel dx="1450" dy="1050" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1360" pageHeight="1120" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- JUDUL BAB -->
+        <mxCell id="title_48" value="4.8.    Entity Relationship Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontStyle=1;fontSize=16;fontColor=#000000;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="60" y="20" width="400" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- ========================================================================= -->
+        <!-- 1. ENTITAS: PEMBAYARAN (Atas Tengah)                                      -->
+        <!-- ========================================================================= -->
+        <mxCell id="ent_pembayaran" value="Pembayaran" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="535" y="230" width="130" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="att_pay_1" value="midtrans_order_id PK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="345" y="145" width="135" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="att_pay_2" value="registration_id FK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="385" y="82" width="125" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="att_pay_3" value="snap_token" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="485" y="38" width="105" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="att_pay_4" value="payment_type" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="605" y="38" width="105" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="att_pay_5" value="transaction_status" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="695" y="82" width="125" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="att_pay_6" value="settlement_time" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="730" y="145" width="125" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_pay_1" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_pembayaran" target="att_pay_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_pay_2" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_pembayaran" target="att_pay_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_pay_3" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_pembayaran" target="att_pay_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_pay_4" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_pembayaran" target="att_pay_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_pay_5" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_pembayaran" target="att_pay_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_pay_6" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_pembayaran" target="att_pay_6"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ========================================================================= -->
+        <!-- 2. ENTITAS: AGENDAREGISTRATIONS (Pusat Tengah)                            -->
+        <!-- ========================================================================= -->
+        <mxCell id="ent_reg" value="AgendaRegistrations" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="530" y="440" width="140" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="att_reg_1" value="id PK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="760" y="275" width="105" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="att_reg_2" value="agenda_id FK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="835" y="325" width="115" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="att_reg_3" value="user_id FK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="885" y="382" width="115" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="att_reg_4" value="responses" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="905" y="444" width="115" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="att_reg_5" value="payment_method" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="885" y="506" width="120" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="att_reg_6" value="payment_proof" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="835" y="563" width="115" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="att_reg_7" value="status" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="760" y="613" width="105" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_reg_1" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_reg" target="att_reg_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_reg_2" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_reg" target="att_reg_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_reg_3" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_reg" target="att_reg_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_reg_4" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_reg" target="att_reg_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_reg_5" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_reg" target="att_reg_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_reg_6" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_reg" target="att_reg_6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_reg_7" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_reg" target="att_reg_7"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ========================================================================= -->
+        <!-- 3. ENTITAS: AGENDAS (Kiri Atas)                                           -->
+        <!-- ========================================================================= -->
+        <mxCell id="ent_agenda" value="Agendas" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="250" y="310" width="120" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ag_1" value="id PK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="125" y="175" width="105" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ag_2" value="title" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="60" y="222" width="105" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ag_3" value="category" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="25" y="275" width="110" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ag_4" value="event_date" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="15" y="330" width="110" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ag_5" value="location" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="30" y="385" width="110" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ag_6" value="registration_fee" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="65" y="438" width="115" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ag_7" value="form_schema" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="135" y="482" width="110" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_ag_1" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_agenda" target="att_ag_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ag_2" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_agenda" target="att_ag_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ag_3" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_agenda" target="att_ag_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ag_4" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_agenda" target="att_ag_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ag_5" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_agenda" target="att_ag_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ag_6" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_agenda" target="att_ag_6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ag_7" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_agenda" target="att_ag_7"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ========================================================================= -->
+        <!-- 4. ENTITAS: USERS (Kiri Tengah)                                           -->
+        <!-- ========================================================================= -->
+        <mxCell id="ent_user" value="Users" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="250" y="580" width="120" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="att_us_1" value="id PK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="95" y="530" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_us_2" value="name" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="35" y="568" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_us_3" value="email" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="20" y="618" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_us_4" value="password" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="40" y="668" width="105" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_us_5" value="role" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="105" y="710" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_us_1" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_user" target="att_us_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_us_2" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_user" target="att_us_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_us_3" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_user" target="att_us_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_us_4" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_user" target="att_us_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_us_5" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_user" target="att_us_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ========================================================================= -->
+        <!-- 5. ENTITAS: MEMBERS (Kiri Bawah)                                          -->
+        <!-- ========================================================================= -->
+        <mxCell id="ent_member" value="Members" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="250" y="810" width="120" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="att_mb_1" value="id PK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="65" y="840" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_mb_2" value="user_id FK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="75" y="898" width="110" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_mb_3" value="name" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="125" y="950" width="105" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_mb_4" value="position" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="220" y="975" width="105" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_mb_5" value="type" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="330" y="965" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_mb_6" value="department" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="365" y="905" width="105" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_mb_1" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_member" target="att_mb_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_mb_2" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_member" target="att_mb_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_mb_3" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_member" target="att_mb_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_mb_4" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_member" target="att_mb_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_mb_5" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_member" target="att_mb_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_mb_6" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_member" target="att_mb_6"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ========================================================================= -->
+        <!-- 6. ENTITAS: POSTS (Tengah Bawah)                                          -->
+        <!-- ========================================================================= -->
+        <mxCell id="ent_post" value="Posts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="540" y="750" width="120" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="att_po_1" value="id PK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="440" y="835" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_po_2" value="user_id FK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="455" y="895" width="105" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_po_3" value="title" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="500" y="950" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_po_4" value="published_at" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="550" y="998" width="105" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_po_5" value="slug" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="610" y="950" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_po_6" value="image" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="665" y="895" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_po_7" value="content" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="680" y="835" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_po_1" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_post" target="att_po_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_po_2" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_post" target="att_po_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_po_3" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_post" target="att_po_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_po_4" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_post" target="att_po_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_po_5" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_post" target="att_po_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_po_6" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_post" target="att_po_6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_po_7" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_post" target="att_po_7"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ========================================================================= -->
+        <!-- 7. ENTITAS: ARTICLES (Kanan Bawah)                                        -->
+        <!-- ========================================================================= -->
+        <mxCell id="ent_article" value="Articles" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=11;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="890" y="750" width="120" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ar_1" value="id PK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="805" y="845" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ar_2" value="user_id FK" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="835" y="905" width="105" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ar_3" value="title" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="895" y="960" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ar_4" value="slug" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1005" y="960" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ar_5" value="author" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="910" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ar_6" value="image" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1115" y="850" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ar_7" value="content" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1115" y="790" width="100" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="att_ar_8" value="published_at" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="1095" y="730" width="110" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_ar_1" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_article" target="att_ar_1"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ar_2" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_article" target="att_ar_2"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ar_3" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_article" target="att_ar_3"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ar_4" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_article" target="att_ar_4"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ar_5" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_article" target="att_ar_5"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ar_6" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_article" target="att_ar_6"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ar_7" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_article" target="att_ar_7"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_ar_8" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="ent_article" target="att_ar_8"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- ========================================================================= -->
+        <!-- BELAH KETUPAT RELASI (DIAMONDS) & GARIS KARDINALITAS                      -->
+        <!-- ========================================================================= -->
+
+        <!-- Relasi 1: AgendaRegistrations (1) - [dibayar dengan] - (1) Pembayaran -->
+        <mxCell id="rel_dibayar" value="dibayar&#xa;dengan" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="555" y="325" width="90" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_rel_1a" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;" edge="1" parent="1" source="ent_pembayaran" target="rel_dibayar"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_rel_1b" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;" edge="1" parent="1" source="rel_dibayar" target="ent_reg"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="lbl_r1_1" value="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;fontFamily=Arial;" vertex="1" parent="1"><mxGeometry x="580" y="285" width="20" height="18" as="geometry"/></mxCell>
+        <mxCell id="lbl_r1_2" value="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;fontFamily=Arial;" vertex="1" parent="1"><mxGeometry x="605" y="415" width="20" height="18" as="geometry"/></mxCell>
+
+        <!-- Relasi 2: Agendas (1) - [memiliki] - (M) AgendaRegistrations -->
+        <mxCell id="rel_memiliki" value="memiliki" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="410" y="365" width="84" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_rel_2a" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ent_agenda" target="rel_memiliki">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="452" y="338"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="ed_rel_2b" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;" edge="1" parent="1" source="rel_memiliki" target="ent_reg">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="452" y="456"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_r2_1" value="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;fontFamily=Arial;" vertex="1" parent="1"><mxGeometry x="378" y="318" width="20" height="18" as="geometry"/></mxCell>
+        <mxCell id="lbl_r2_2" value="M" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;fontFamily=Arial;" vertex="1" parent="1"><mxGeometry x="505" y="436" width="20" height="18" as="geometry"/></mxCell>
+
+        <!-- Relasi 3: Users (1) - [memproses] - (M) AgendaRegistrations -->
+        <mxCell id="rel_memproses" value="memproses" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="410" y="495" width="84" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_rel_3a" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ent_user" target="rel_memproses">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="390" y="594"/><mxPoint x="390" y="528"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="ed_rel_3b" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="rel_memproses" target="ent_reg">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="510" y="528"/><mxPoint x="510" y="481"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_r3_1" value="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;fontFamily=Arial;" vertex="1" parent="1"><mxGeometry x="372" y="574" width="20" height="18" as="geometry"/></mxCell>
+        <mxCell id="lbl_r3_2" value="M" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;fontFamily=Arial;" vertex="1" parent="1"><mxGeometry x="508" y="462" width="20" height="18" as="geometry"/></mxCell>
+
+        <!-- Relasi 4: Users (1) - [memiliki] - (1) Members -->
+        <mxCell id="rel_profil" value="memiliki" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="268" y="690" width="84" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_rel_4a" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;" edge="1" parent="1" source="ent_user" target="rel_profil"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="ed_rel_4b" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;" edge="1" parent="1" source="rel_profil" target="ent_member"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="lbl_r4_1" value="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;fontFamily=Arial;" vertex="1" parent="1"><mxGeometry x="315" y="642" width="20" height="18" as="geometry"/></mxCell>
+        <mxCell id="lbl_r4_2" value="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;fontFamily=Arial;" vertex="1" parent="1"><mxGeometry x="315" y="785" width="20" height="18" as="geometry"/></mxCell>
+
+        <!-- Relasi 5: Users (1) - [mengelola] - (M) Posts -->
+        <mxCell id="rel_post" value="mengelola" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="425" y="620" width="84" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_rel_5a" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ent_user" target="rel_post">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="467" y="608"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="ed_rel_5b" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="rel_post" target="ent_post">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="467" y="778"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_r5_1" value="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;fontFamily=Arial;" vertex="1" parent="1"><mxGeometry x="395" y="588" width="20" height="18" as="geometry"/></mxCell>
+        <mxCell id="lbl_r5_2" value="M" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;fontFamily=Arial;" vertex="1" parent="1"><mxGeometry x="515" y="758" width="20" height="18" as="geometry"/></mxCell>
+
+        <!-- Relasi 6: Users (1) - [menulis] - (M) Articles -->
+        <mxCell id="rel_article" value="menulis" style="rhombus;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontColor=#000000;fontSize=10;fontFamily=Arial;" vertex="1" parent="1">
+          <mxGeometry x="715" y="680" width="84" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="ed_rel_6a" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.8;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ent_user" target="rel_article">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="395" y="624"/><mxPoint x="395" y="713"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="ed_rel_6b" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="rel_article" target="ent_article">
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="950" y="713"/></Array></mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_r6_1" value="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;fontFamily=Arial;" vertex="1" parent="1"><mxGeometry x="398" y="693" width="20" height="18" as="geometry"/></mxCell>
+        <mxCell id="lbl_r6_2" value="M" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=10;fontColor=#000000;fontFamily=Arial;" vertex="1" parent="1"><mxGeometry x="955" y="725" width="20" height="18" as="geometry"/></mxCell>
+
+        <!-- CAPTION BAWAH -->
+        <mxCell id="caption_423" value="Gambar 4. 23 Entity Relationship Diagram" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontStyle=0;fontSize=15;fontColor=#000000;fontFamily=Times New Roman;" vertex="1" parent="1">
+          <mxGeometry x="450" y="1060" width="420" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
+
