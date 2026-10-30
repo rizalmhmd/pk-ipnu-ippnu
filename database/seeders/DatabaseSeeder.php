@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             PageSettingSeeder::class,
             HomeWidgetsSeeder::class,
+            RealisticContentSeeder::class,
         ]);
     }
 }
