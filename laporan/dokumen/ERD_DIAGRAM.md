@@ -3,7 +3,7 @@
 **Entity Relationship Diagram (ERD)** memodelkan struktur data dan hubungan antar-entitas basis data pada **Sistem Informasi PK IPNU-IPPNU** menggunakan **Notasi Chen** (*Persegi Panjang* untuk Entitas, *Elips/Oval* untuk Atribut dengan penanda `PK` dan `FK`, serta *Belah Ketupat* untuk Relasi beserta derajat kardinalitas `1` ke `1` maupun `1` ke `M`).
 
 > 💡 **File Siap Ekspor di draw.io**:
-> File mentahan [**`erd_diagram.drawio`**](file:///e:/zallzall/pk-ipnu-ippnu/erd_diagram.drawio) sudah disusun **100% mengikuti format gambar referensi Anda (`Gambar 4. 23 Entity Relationship Diagram`)**:
+> File mentahan [**`erd_diagram.drawio`**](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/erd_diagram.drawio) sudah disusun **100% mengikuti format gambar referensi Anda (`Gambar 4. 23 Entity Relationship Diagram`)**:
 > - Menggunakan **Notasi Chen Hitam-Putih** (Kotak Entitas, Belah Ketupat Relasi, dan Kipas Oval Atribut yang terhubung ke satu titik tumpu pada tiap sisi entitas).
 > - Penulisan *Primary Key* dan *Foreign Key* di dalam oval atribut menggunakan sufiks **`PK`** dan **`FK`** (contoh: `id PK`, `agenda_id FK`, `user_id FK`, `midtrans_order_id PK`).
 > - Dilengkapi judul **`4.8. Entity Relationship Diagram`** di bagian atas dan keterangan **`Gambar 4. 23 Entity Relationship Diagram`** di bagian bawah.

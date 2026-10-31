@@ -8,7 +8,7 @@ Setiap diagram per-aktor disusun dengan pola standar laporan/skripsi:
 - **Tampilan Bersih**: Dibuat hitam-putih tanpa kotak pembatas (*no boundary box*) dengan penomoran gambar resmi bab 4.
 
 > 💡 **File Siap Ekspor di draw.io**:
-> File mentahan [**`use_case_diagram.drawio`**](file:///e:/zallzall/pk-ipnu-ippnu/use_case_diagram.drawio) sudah 100% disesuaikan dengan contoh di atas. Anda dapat membukanya di **[app.diagrams.net](https://app.diagrams.net/)** lalu mengekspornya langsung ke Word/PDF.
+> File mentahan [**`use_case_diagram.drawio`**](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/use_case_diagram.drawio) sudah 100% disesuaikan dengan contoh di atas. Anda dapat membukanya di **[app.diagrams.net](https://app.diagrams.net/)** lalu mengekspornya langsung ke Word/PDF.
 
 ---
 

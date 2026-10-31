@@ -16,7 +16,7 @@ Halaman Beranda ([`Welcome.jsx`](file:///e:/zallzall/pk-ipnu-ippnu/resources/js/
 6. **Seksi Berita Terkini & Artikel Terbaru**: Masing-masing menampilkan 4 kartu publikasi terbaru secara berjajar (`NewsCard` dari tabel `posts` dan `ArticleCard` dari tabel `articles`) lengkap dengan tautan `Lihat Semua →`.
 7. **Seksi Sambutan Ketua & Agenda Terdekat**: Terletak berdampingan sebanyak 2 kolom di bagian bawah halaman. Kolom kiri menampilkan kartu **Sambutan Ketua** beserta foto profil bulat Ketua dan kutipan sambutan, sedangkan kolom kanan menampilkan kartu **Agenda Terdekat** yang memuat 3 daftar agenda terdekat beserta tombol `Lihat Semua Agenda`, ditutup dengan bagian *Footer*.
 
-*(Lihat **Gambar 4. 24 Desain Antarmuka Halaman Beranda** pada Tab 1 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/mockup_diagram.drawio))*
+*(Lihat **Gambar 4. 24 Desain Antarmuka Halaman Beranda** pada Tab 1 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/mockup_diagram.drawio))*
 
 ---
 
@@ -31,7 +31,7 @@ Halaman Pendaftaran Kegiatan ([`RegistrationForm.jsx`](file:///e:/zallzall/pk-ip
    - **Pilihan Metode Pembayaran**: Menampilkan 3 tombol radio kartu berjajar horizontal, yaitu **`Otomatis (Midtrans)`**, **`Cash / Langsung`**, dan **`Manual Transfer`**. Apabila peserta memilih `Manual Transfer`, sistem menampilkan kotak `Informasi Rekening` beserta input unggah berkas `Unggah Bukti Pembayaran *`.
    - **Input Formulir Dinamis (`form_schema`)**: Menampilkan kolom isian peserta secara berurutan ke bawah (`Nama Lengkap *`, `Nomor WhatsApp / HP *`, `Alamat Email *`, dan `NIK (KTP / Kartu Keluarga)`). Khusus pada kolom NIK 16 digit, sistem dilengkapi fitur deteksi otomatis (`parseFullNik`) yang menampilkan informasi jenis kelamin, tanggal lahir, kecamatan, kabupaten/kota, dan provinsi peserta, diakhiri dengan tombol penuh **`Daftar Sekarang`**.
 
-*(Lihat **Gambar 4. 25 Desain Antarmuka Halaman Pendaftaran Kegiatan** pada Tab 2 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/mockup_diagram.drawio))*
+*(Lihat **Gambar 4. 25 Desain Antarmuka Halaman Pendaftaran Kegiatan** pada Tab 2 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/mockup_diagram.drawio))*
 
 ---
 
@@ -46,7 +46,7 @@ Komponen utama pada halaman ini meliputi:
    - **Kotak Rincian Pendaftaran**: Menampilkan baris `ID Pendaftaran` (`REG-{id}`), `Nama Peserta`, serta badge `Status Pembayaran` (`MENUNGGU PEMBAYARAN`).
    - **Tombol Aksi Pembayaran**: Terdiri dari dua tombol bertumpuk secara vertikal, yaitu tombol utama **`Bayar Sekarang (Buka Midtrans)`** yang memunculkan *pop-up* pembayaran *Midtrans Snap* (QRIS, Virtual Account, E-Wallet), serta tombol sekunder **`Sudah Bayar? Cek Status Pembayaran`** untuk memverifikasi status transaksi secara langsung ke server Midtrans.
 
-*(Lihat **Gambar 4. 26 Desain Antarmuka Halaman Pembayaran Kegiatan** pada Tab 3 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/mockup_diagram.drawio))*
+*(Lihat **Gambar 4. 26 Desain Antarmuka Halaman Pembayaran Kegiatan** pada Tab 3 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/mockup_diagram.drawio))*
 
 ---
 
@@ -62,7 +62,7 @@ Komponen utama pada halaman ini meliputi:
    - Baris opsi kotak centang **`Ingat Saya`** di sisi kiri dan tautan **`Lupa Password?`** di sisi kanan.
    - Tombol penuh **`Masuk ke Dashboard`** beserta teks hak cipta `© 2026 PKPT IPNU IPPNU` di bagian bawah kartu.
 
-*(Lihat **Gambar 4. 27 Desain Antarmuka Halaman Login Pengurus** pada Tab 4 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/mockup_diagram.drawio))*
+*(Lihat **Gambar 4. 27 Desain Antarmuka Halaman Login Pengurus** pada Tab 4 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/mockup_diagram.drawio))*
 
 ---
 
@@ -76,7 +76,7 @@ Komponen utama pada halaman ini meliputi:
 3. **Grid 8 Kartu Statistik (2 Baris × 4 Kolom)**: Menampilkan jumlah data secara *real-time* untuk `BERITA`, `ARTIKEL`, `ANGGOTA`, `AGENDA`, `PENDAFTAR`, `GALERI`, `QUOTES`, dan `STATISTIK`.
 4. **Panel Aktivitas Terakhir & Pintasan Cepat**: Bagian bawah terbagi menjadi dua kolom, yaitu kolom kiri lebar yang menampilkan **`Aktivitas Terakhir (LIVE UPDATES)`**, serta kolom kanan yang menampilkan kartu **`Mulai Kelola Konten Hari Ini`** (berisi tombol pintasan `Post Berita`, `Buat Artikel`, `Agenda Baru`, `Upload Galeri`, `Tambah Quote`) dan kartu **`INSPIRASI HARIAN`**.
 
-*(Lihat **Gambar 4. 28 Desain Antarmuka Halaman Dashboard Admin** pada Tab 5 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/mockup_diagram.drawio))*
+*(Lihat **Gambar 4. 28 Desain Antarmuka Halaman Dashboard Admin** pada Tab 5 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/mockup_diagram.drawio))*
 
 ---
 
@@ -89,7 +89,7 @@ Komponen utama pada halaman ini meliputi:
 2. **Tabel Data Pendaftar (6 Kolom)**: Menampilkan kolom `WAKTU DAFTAR`, `PENDAFTAR & AGENDA` (memuat nama peserta, nama agenda, badge nomor WhatsApp, email, dan NIK), `METODE` (`MIDTRANS`, `TRANSFER`, atau `CASH`), `STATUS` (`APPROVED`, `PENDING`, `REJECTED` beserta status transaksi Midtrans), `BUKTI BAYAR` (ikon pratinjau gambar), serta kolom `AKSI` (tombol ikon **Mata/Detail**, **Sync Midtrans**, **Setujui [✓]**, **Tolak [✕]**, dan **Hapus**).
 3. **Modal Pop-up `Detail Jawaban Form`**: Ditampilkan ketika pengurus menekan tombol ikon mata (`Eye`), memuat nama agenda, kotak **`Informasi Midtrans`** (`Order ID`, `Status Midtrans`, `Metode/Channel`, `Waktu Bayar`, dan tombol `Sinkronkan Sekarang`), serta seluruh jawaban formulir peserta lengkap dengan hasil deteksi wilayah NIK otomatis (`Kecamatan`, `Kabupaten/Kota`, `Provinsi`).
 
-*(Lihat **Gambar 4. 29 Desain Antarmuka Halaman Manajemen Data Pendaftar** pada Tab 6 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/mockup_diagram.drawio))*
+*(Lihat **Gambar 4. 29 Desain Antarmuka Halaman Manajemen Data Pendaftar** pada Tab 6 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/mockup_diagram.drawio))*
 
 ---
 
@@ -109,5 +109,5 @@ Komponen utama pada Halaman Kelola Konten meliputi:
      - **Kolom Kiri (Formulir Utama)**: Memuat input **`Judul Berita`**, area unggah gambar bergaris putus-putus **`Gambar Utama (Unggah Foto Berita)`** dengan pratinjau gambar langsung (*live image preview*) berformat JPG/PNG/WEBP (maksimal 5MB), kolom area teks **`Isi Berita Lengkap`**, serta tombol **`Reset Form`** dan **`PUBLIKASIKAN SEKARANG`**.
      - **Kolom Kanan (Kartu `Tips Menulis`)**: Menampilkan kartu panduan penulisan konten (menggunakan judul yang singkat dan tepat, gambar berkualitas tinggi, serta paragraf yang nyaman dibaca) untuk menjaga kualitas publikasi organisasi.
 
-*(Lihat **Gambar 4. 30 Desain Antarmuka Halaman Kelola Konten** pada Tab 7 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/mockup_diagram.drawio))*
+*(Lihat **Gambar 4. 30 Desain Antarmuka Halaman Kelola Konten** pada Tab 7 file [`mockup_diagram.drawio`](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/mockup_diagram.drawio))*
 

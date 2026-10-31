@@ -5,7 +5,7 @@ Dokumen ini memuat **7 Activity Diagram lengkap** yang merepresentasikan seluruh
 > 💡 **Catatan Metodologi & Notasi UML**:
 > - **Pendekatan Swimlane**: Mengadopsi arsitektur 3-Tier (*User Presentation*, *Application Logic / Sistem*, dan *Data Storage / Third-Party Gateway*).
 > - **Penanganan Validasi**: Setiap proses *input* dilengkapi *Decision Node* untuk menangani kondisi validasi gagal (*alternative path*) maupun validasi sukses (*happy path*).
-> - **File Mentahan draw.io**: File [**`activity_diagram.drawio`**](file:///e:/zallzall/pk-ipnu-ippnu/activity_diagram.drawio) dapat dibuka dan diekspor melalui **[app.diagrams.net](https://app.diagrams.net/)**.
+> - **File Mentahan draw.io**: File [**`activity_diagram.drawio`**](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/activity_diagram.drawio) dapat dibuka dan diekspor melalui **[app.diagrams.net](https://app.diagrams.net/)**.
 
 ---
 

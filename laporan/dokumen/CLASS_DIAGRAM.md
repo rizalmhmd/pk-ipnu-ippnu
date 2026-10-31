@@ -3,7 +3,7 @@
 Class Diagram menggambarkan struktur statis dari kelas-kelas (*models* & *services*) pembentuk **Sistem Informasi PK IPNU-IPPNU**, lengkap dengan atribut, tipe data, *Primary Key* (`[PK]`), *Foreign Key* (`[FK]`), metode/operasi bisnis, serta kardinalitas relasi antar-kelas (`1` ke `1` maupun `1` ke `M`).
 
 > 💡 **File Siap Ekspor di draw.io**:
-> File mentahan [**`class_diagram.drawio`**](file:///e:/zallzall/pk-ipnu-ippnu/class_diagram.drawio) sudah disusun **100% mengikuti format referensi laporan Anda** (Hitam-Putih, 3 kompartemen: Nama Kelas, Atribut rata dua kolom dengan `[PK]`/`[FK → Kelas]`, dan Method rata dua kolom beserta garis relasi siku `1` ke `M` / `1` ke `1`). Tersedia dalam 2 Tab:
+> File mentahan [**`class_diagram.drawio`**](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/class_diagram.drawio) sudah disusun **100% mengikuti format referensi laporan Anda** (Hitam-Putih, 3 kompartemen: Nama Kelas, Atribut rata dua kolom dengan `[PK]`/`[FK → Kelas]`, dan Method rata dua kolom beserta garis relasi siku `1` ke `M` / `1` ke `1`). Tersedia dalam 2 Tab:
 > 1. **Tab 1 (`1. Class Diagram Utama (Sesuai Contoh)`)**: 7 Kelas Inti berelasi (`Agenda`, `AgendaRegistration`, `PembayaranMidtrans`, `Member`, `User`, `Post`, `Article`) tanpa garis saling silang, pas 1 halaman laporan.
 > 2. **Tab 2 (`2. Class Diagram Lengkap (Semua Model)`)**: Seluruh 11 Model (`Agenda`, `AgendaRegistration`, `Member`, `User`, `Post`, `Article`, `Gallery`, `Quote`, `Statistic`, `SiteSetting`, `PageSetting`) + 2 Service (`MidtransService`, `NotificationService`) sesuai struktur kode PHP aplikasi.
 
