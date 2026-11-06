@@ -2,50 +2,61 @@
 
 Use Case Diagram menggambarkan interaksi fungsional antara pengguna luar (*aktor*) dengan sistem perangkat lunak yang dibangun. Diagram ini menjelaskan "apa" yang dapat dilakukan oleh sistem berdasarkan hak akses masing-masing aktor, yakni **Admin**, **Ketua IPNU/IPPNU**, **Ketua Departemen**, dan **Pengunjung**.
 
-Setiap diagram per-aktor disusun dengan pola standar laporan/skripsi:
-- **Aktor Primer** di sisi kiri terhubung dengan garis asosiasi lurus ke **6 Use Case Utama** secara vertikal.
-- **Sub-Use Case Fungsional** berada di sisi kanan yang dihubungkan dengan relasi `<<include>>` (keharusan) atau `<<extend>>` (pilihan/kondisional).
-- **Tampilan Bersih**: Dibuat hitam-putih tanpa kotak pembatas (*no boundary box*) dengan penomoran gambar resmi bab 4.
+Sesuai dengan standar baku **UML (*Unified Modeling Language*)**:
+- **Batas Sistem (*System Boundary*)**: Dinyatakan dengan kotak batas sistem bertuliskan nama sistem di bagian atas dalam kotak: **"Sistem Informasi PKPT IPNU IPPNU UNSIQ"**.
+- **Aktivitas Sistem (*Use Case*)**: Seluruh fungsi dan aktivitas sistem digambarkan dalam bentuk elips/oval dan wajib berada di **DALAM** kotak batas sistem.
+- **Aktor (*Actor*)**: Aktor merupakan entitas eksternal (pengguna) sehingga wajib berada di **LUAR** kotak batas sistem dan dihubungkan ke *Use Case* menggunakan garis asosiasi lurus.
+- **Relasi Antar *Use Case***:
+  - `<<include>>`: Menunjukkan fungsionalitas yang wajib disertakan/dijalankan oleh use case pemanggil.
+  - `<<extend>>`: Menunjukkan fungsionalitas tambahan/kondisional/opsional.
 
-> 💡 **File Siap Ekspor di draw.io**:
-> File mentahan [**`use_case_diagram.drawio`**](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/use_case_diagram.drawio) sudah 100% disesuaikan dengan contoh di atas. Anda dapat membukanya di **[app.diagrams.net](https://app.diagrams.net/)** lalu mengekspornya langsung ke Word/PDF.
+> 💡 **File Siap Pakai di draw.io**:
+> File mentahan [**`use_case_diagram.drawio`**](file:///e:/zallzall/pk-ipnu-ippnu/laporan/diagram/use_case_diagram.drawio) sudah **100% diperbarui dan siap digunakan**. Tersedia dalam 6 Tab:
+> 1. **Tab 1: Use Case Global (Sistem)** - Seluruh 4 aktor dan semua use case dalam 1 batas sistem utama.
+> 2. **Tab 2: Semua Use Case (Gambar 4.1 - 4.4)** - Format 4 diagram sekaligus lengkap dengan kotak batas sistem masing-masing.
+> 3. **Tab 3: Gambar 4.1 Use Case Admin** - Format 1 halaman khusus Admin (siap ekspor Word/PDF).
+> 4. **Tab 4: Gambar 4.2 Use Case Ketua IPNU/IPPNU** - Format 1 halaman khusus Ketua.
+> 5. **Tab 5: Gambar 4.3 Use Case Ketua Departemen** - Format 1 halaman khusus Departemen.
+> 6. **Tab 6: Gambar 4.4 Use Case Pengunjung** - Format 1 halaman khusus Pengunjung.
 
 ---
 
 ## 4.4.1. Use Case Admin
 
-Aktor Admin memiliki hak akses tertinggi (*Super User*) di dalam sistem. Admin bertanggung jawab mengelola seluruh data master organisasi, akun pengguna pengurus, dan pengaturan konfigurasi website.
+Aktor Admin memiliki hak akses tertinggi (*Super User*) di dalam sistem. Admin bertanggung jawab mengelola seluruh data master organisasi, akun pengguna pengurus, dan pengaturan konfigurasi website. Aktor Admin berada di luar batas sistem dan berinteraksi dengan 6 use case utama di dalam kotak sistem.
 
 ```mermaid
 flowchart LR
-    %% Aktor Kiri
+    %% Aktor di LUAR Kotak
     Admin["👤 Admin"]
 
-    %% 6 Elips Utama Vertikal
-    UC1(["Login"])
-    UC2(["Lihat Dashboard Admin"])
-    UC3(["Kelola Data Master (CRUD)"])
-    UC4(["Kelola Pengguna (User)"])
-    UC5(["Kelola Pengaturan Situs"])
-    UC6(["Logout"])
+    subgraph SysAdmin["Sistem Informasi PKPT IPNU IPPNU UNSIQ"]
+        %% 6 Elips Utama Vertikal
+        UC1(["Login"])
+        UC2(["Lihat Dashboard Admin"])
+        UC3(["Kelola Data Master (CRUD)"])
+        UC4(["Kelola Pengguna (User)"])
+        UC5(["Kelola Pengaturan Situs"])
+        UC6(["Logout"])
 
-    %% 3 Sub-Elips di Kanan (Include)
-    Sub1(["Data Anggota"])
-    Sub2(["Agenda Kegiatan"])
-    Sub3(["Berita & Artikel"])
+        %% 3 Sub-Elips di Kanan (Include)
+        Sub1(["Data Anggota"])
+        Sub2(["Agenda Kegiatan"])
+        Sub3(["Berita & Artikel"])
 
-    %% Asosiasi Lurus
+        %% Relasi Include Antar Use Case
+        UC3 -.->|«include»| Sub1
+        UC3 -.->|«include»| Sub2
+        UC3 -.->|«include»| Sub3
+    end
+
+    %% Garis Asosiasi dari Luar Kotak ke Dalam Kotak
     Admin --- UC1
     Admin --- UC2
     Admin --- UC3
     Admin --- UC4
     Admin --- UC5
     Admin --- UC6
-
-    %% Relasi Include
-    UC3 -.->|«include»| Sub1
-    UC3 -.->|«include»| Sub2
-    UC3 -.->|«include»| Sub3
 ```
 
 <div align="center">
@@ -70,34 +81,36 @@ Aktor Ketua IPNU/IPPNU memegang wewenang manajerial organisasi tingkat pimpinan:
 
 ```mermaid
 flowchart LR
-    %% Aktor Kiri
+    %% Aktor di LUAR Kotak
     Ketua["👤 Ketua IPNU/IPPNU"]
 
-    %% 6 Elips Utama Vertikal
-    UC1(["Login"])
-    UC2(["Lihat Dashboard"])
-    UC3(["Kelola Kegiatan & Pendaftar"])
-    UC4(["Kelola Data Anggota"])
-    UC5(["Kelola Galeri & Statistik"])
-    UC6(["Logout"])
+    subgraph SysKetua["Sistem Informasi PKPT IPNU IPPNU UNSIQ"]
+        %% 6 Elips Utama Vertikal
+        UC1(["Login"])
+        UC2(["Lihat Dashboard"])
+        UC3(["Kelola Kegiatan & Pendaftar"])
+        UC4(["Kelola Data Anggota"])
+        UC5(["Kelola Galeri & Statistik"])
+        UC6(["Logout"])
 
-    %% 3 Sub-Elips di Kanan
-    Sub1(["Agenda Kegiatan"])
-    Sub2(["Verifikasi Pendaftar"])
-    Sub3(["Sinkronisasi Midtrans"])
+        %% 3 Sub-Elips di Kanan
+        Sub1(["Agenda Kegiatan"])
+        Sub2(["Verifikasi Pendaftar"])
+        Sub3(["Sinkronisasi Midtrans"])
 
-    %% Asosiasi Lurus
+        %% Relasi Include & Extend
+        UC3 -.->|«include»| Sub1
+        UC3 -.->|«include»| Sub2
+        Sub3 -.->|«extend»| UC3
+    end
+
+    %% Garis Asosiasi
     Ketua --- UC1
     Ketua --- UC2
     Ketua --- UC3
     Ketua --- UC4
     Ketua --- UC5
     Ketua --- UC6
-
-    %% Relasi Include & Extend
-    UC3 -.->|«include»| Sub1
-    UC3 -.->|«include»| Sub2
-    Sub3 -.->|«extend»| UC3
 ```
 
 <div align="center">
@@ -120,34 +133,36 @@ Aktor Ketua Departemen bertanggung jawab atas publikasi media, literasi, artikel
 
 ```mermaid
 flowchart LR
-    %% Aktor Kiri
+    %% Aktor di LUAR Kotak
     Dept["👤 Ketua Departemen"]
 
-    %% 6 Elips Utama Vertikal
-    UC1(["Login"])
-    UC2(["Lihat Dashboard"])
-    UC3(["Kelola Publikasi Konten"])
-    UC4(["Kelola Quotes"])
-    UC5(["Kelola Profil Akun"])
-    UC6(["Logout"])
+    subgraph SysDept["Sistem Informasi PKPT IPNU IPPNU UNSIQ"]
+        %% 6 Elips Utama Vertikal
+        UC1(["Login"])
+        UC2(["Lihat Dashboard"])
+        UC3(["Kelola Publikasi Konten"])
+        UC4(["Kelola Quotes"])
+        UC5(["Kelola Profil Akun"])
+        UC6(["Logout"])
 
-    %% 3 Sub-Elips di Kanan
-    Sub1(["Berita Organisasi"])
-    Sub2(["Artikel Opini / Kader"])
-    Sub3(["Kategori Konten"])
+        %% 3 Sub-Elips di Kanan
+        Sub1(["Berita Organisasi"])
+        Sub2(["Artikel Opini / Kader"])
+        Sub3(["Kategori Konten"])
 
-    %% Asosiasi Lurus
+        %% Relasi Include
+        UC3 -.->|«include»| Sub1
+        UC3 -.->|«include»| Sub2
+        UC3 -.->|«include»| Sub3
+    end
+
+    %% Garis Asosiasi
     Dept --- UC1
     Dept --- UC2
     Dept --- UC3
     Dept --- UC4
     Dept --- UC5
     Dept --- UC6
-
-    %% Relasi Include
-    UC3 -.->|«include»| Sub1
-    UC3 -.->|«include»| Sub2
-    UC3 -.->|«include»| Sub3
 ```
 
 <div align="center">
@@ -169,34 +184,36 @@ Aktor Pengunjung merupakan pihak luar (masyarakat, siswa, calon kader) yang meng
 
 ```mermaid
 flowchart LR
-    %% Aktor Kiri
+    %% Aktor di LUAR Kotak
     Guest["👤 Pengunjung"]
 
-    %% 6 Elips Utama Vertikal
-    UC1(["Melihat Profil Organisasi"])
-    UC2(["Membaca Berita & Artikel"])
-    UC3(["Melihat Galeri & Agenda"])
-    UC4(["Mendaftar Kegiatan"])
-    UC5(["Melakukan Pembayaran"])
-    UC6(["Melihat Bukti & Tiket"])
+    subgraph SysGuest["Sistem Informasi PKPT IPNU IPPNU UNSIQ"]
+        %% 6 Elips Utama Vertikal
+        UC1(["Melihat Profil Organisasi"])
+        UC2(["Membaca Berita & Artikel"])
+        UC3(["Melihat Galeri & Agenda"])
+        UC4(["Mendaftar Kegiatan"])
+        UC5(["Melakukan Pembayaran"])
+        UC6(["Melihat Bukti & Tiket"])
 
-    %% 3 Sub-Elips di Kanan (Metode Pembayaran)
-    Sub1(["Tunai / Cash"])
-    Sub2(["Transfer Bank"])
-    Sub3(["Midtrans (QRIS & VA)"])
+        %% 3 Sub-Elips di Kanan (Metode Pembayaran)
+        Sub1(["Tunai / Cash"])
+        Sub2(["Transfer Bank"])
+        Sub3(["Midtrans (QRIS & VA)"])
 
-    %% Asosiasi Lurus
+        %% Relasi Extend Pilihan Pembayaran
+        Sub1 -.->|«extend»| UC5
+        Sub2 -.->|«extend»| UC5
+        Sub3 -.->|«extend»| UC5
+    end
+
+    %% Garis Asosiasi
     Guest --- UC1
     Guest --- UC2
     Guest --- UC3
     Guest --- UC4
     Guest --- UC5
     Guest --- UC6
-
-    %% Relasi Extend Pilihan Pembayaran
-    Sub1 -.->|«extend»| UC5
-    Sub2 -.->|«extend»| UC5
-    Sub3 -.->|«extend»| UC5
 ```
 
 <div align="center">
