@@ -1,8 +1,8 @@
 <!-- ======================================================== -->
-<!-- HEADER BANNER ANIMASI (WAVING GRADIENT + FADE IN)       -->
+<!-- HEADER BANNER ANIMASI SVG LOKAL (RESILIENT & OFFLINE)    -->
 <!-- ======================================================== -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0:064e3b,25:047857,60:059669,100:10b981&height=220&section=header&text=PKPT%20IPNU%20IPPNU%20UNSIQ&fontSize=42&fontColor=ffffff&animation=fadeIn&fontAlignY=36&desc=Sistem%20Informasi%20Kaderisasi%20%26%20Digitalisasi%20Organisasi&descAlignY=60&descSize=16" alt="Header Banner PKPT IPNU IPPNU UNSIQ" width="100%" />
+  <img src="public/banner.svg" alt="PKPT IPNU IPPNU UNSIQ Header Banner" width="100%" />
 </p>
 
 <!-- ======================================================== -->
@@ -10,7 +10,7 @@
 <!-- ======================================================== -->
 <p align="center">
   <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=3000&pause=1000&color=059669&center=true&vCenter=true&width=680&lines=%E2%9C%A8+Selamat+Datang+di+Portal+Resmi+PKPT+IPNU+IPPNU+UNSIQ;%F0%9F%8C%BF+Semboyan%3A+Belajar%2C+Berjuang%2C+Bertaqwa;%F0%9F%92%B3+Sistem+Pendaftaran+Kegiatan+%2B+Midtrans+Payment;%F0%9F%94%90+Multi-Role+Access+(Admin%2C+Ketua%2C+Departemen);%F0%9F%9A%80+Modern+Full-Stack+Web+Application" alt="Typing Tagline" />
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=19&duration=3000&pause=1000&color=059669&center=true&vCenter=true&width=700&lines=%E2%9C%A8+Portal+Resmi+%26+Sistem+Informasi+PKPT+IPNU+IPPNU+UNSIQ;%F0%9F%8C%BF+Semboyan%3A+Belajar%2C+Berjuang%2C+Bertaqwa;%F0%9F%92%B3+Sistem+Pendaftaran+Kegiatan+%2B+Midtrans+Payment+Gateway;%F0%9F%94%90+Multi-Role+Access+(Super+Admin%2C+Ketua%2C+Departemen);%F0%9F%9A%80+Modern+Full-Stack+Web+App+(Laravel+12+%2B+React+19)" alt="Typing Tagline" />
   </a>
 </p>
 
@@ -18,17 +18,17 @@
 <!-- BADGES                                                   -->
 <!-- ======================================================== -->
 <p align="center">
-  <img src="https://img.shields.io/badge/Status-Active_Development-10B981?style=for-the-badge&logo=git&logoColor=white" alt="Status">
+  <img src="https://img.shields.io/badge/Status-Aktif_Dikembangkan-10B981?style=for-the-badge&logo=git&logoColor=white" alt="Status">
   <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
   <img src="https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React">
   <img src="https://img.shields.io/badge/Inertia.js-2.0-9553E9?style=for-the-badge&logo=inertia&logoColor=white" alt="Inertia.js">
   <img src="https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
   <img src="https://img.shields.io/badge/Midtrans-Payment_Gateway-002B49?style=for-the-badge&logo=cashapp&logoColor=white" alt="Midtrans">
-  <img src="https://img.shields.io/badge/License-MIT-047857.svg?style=for-the-badge" alt="License">
+  <img src="https://img.shields.io/badge/Lisensi-MIT-047857.svg?style=for-the-badge" alt="Lisensi">
 </p>
 
 <!-- ======================================================== -->
-<!-- TECH STACK ICONS DENGAN THEME DARK                      -->
+<!-- TECH STACK ICONS                                         -->
 <!-- ======================================================== -->
 <p align="center">
   <a href="https://skillicons.dev">
@@ -38,85 +38,85 @@
 
 ---
 
-## 📌 Sekilas Tentang Platform
+## 📌 Ringkasan Platform
 
-> **"Mewujudkan tata kelola organisasi pelajar santri yang adaptif, modern, dan berkemajuan di era digital."**
+> **"Mewujudkan digitalisasi organisasi pelajar santri yang adaptif, terintegrasi, dan profesional."**
 
-**Sistem Informasi PKPT IPNU IPPNU UNSIQ** dirancang khusus sebagai pusat informasi publik, portal kaderisasi, serta manajemen administratif terpadu bagi **Pimpinan Komisariat Perguruan Tinggi Ikatan Pelajar Nahdlatul Ulama & Ikatan Pelajar Putri Nahdlatul Ulama Universitas Sains Al-Qur'an (UNSIQ) Wonosobo**.
-
-Platform ini mengintegrasikan alur pendaftaran kegiatan mahasiswa baru / kader secara mandiri dengan sistem verifikasi transaksi otomatis (QRIS, Bank Transfer, dan e-Wallet).
-
----
-
-## 🔄 Alur Sistem Aplikasi (System Workflow)
-
-```mermaid
-flowchart LR
-    A["🌐 Calon Kader / Mahasiswa"] --> B["Portal Informasi & Agenda"]
-    B --> C["Form Pendaftaran Kegiatan"]
-    C --> D["💳 Midtrans Payment Gateway"]
-    D -- Notifikasi Pembayaran --> E["⚡ Webhook / Auto Verification"]
-    E --> F["📄 Bukti Pendaftaran & Tiket"]
-    F --> G["👥 Database Anggota & Rekap Panitia"]
-    
-    style A fill:#047857,stroke:#fff,stroke-width:2px,color:#fff
-    style D fill:#002b49,stroke:#fff,stroke-width:2px,color:#fff
-    style G fill:#064e3b,stroke:#fff,stroke-width:2px,color:#fff
-```
+**Sistem Informasi PKPT IPNU IPPNU UNSIQ** adalah ekosistem aplikasi web modern yang dibangun untuk menunjang kebutuhan:
+* 🌐 **Media Publikasi Resmi:** Warta berita, artikel/opini ilmiah kader, galeri multimedia, dan agenda kegiatan komisariat.
+* 💳 **Kaderisasi & Event Terpadu:** Sistem pendaftaran kegiatan (Makesta, Pelatihan, Seminar) dengan integrasi otomatis **Payment Gateway Midtrans** (QRIS, e-Wallet, Virtual Account).
+* 👥 **Database Kader & Organisasi:** Pencatatan keanggotaan terpusat, rekapitulasi data pendaftar, dan statistik komisariat.
+* 🛡️ **Multi-Role Back Office:** Otorisasi bertingkat untuk Super Admin, Ketua IPNU & IPPNU, dan Ketua Departemen.
 
 ---
 
-## 🌟 Fitur & Komponen Unggulan
+## 🔄 Alur Kerja Sistem (System Workflow)
+
+<p align="center">
+  <img src="public/workflow.svg" alt="Diagram Alur Sistem Aplikasi" width="100%" />
+</p>
+
+| No | Tahapan | Deskripsi Interaksi |
+| :---: | :--- | :--- |
+| **01** | 🌐 **Calon Kader / Mahasiswa** | Mengakses portal publik untuk melihat informasi profil, agenda, dan warta terbaru. |
+| **02** | 📰 **Portal & Agenda** | Memilih agenda kegiatan yang sedang dibuka pendaftarannya. |
+| **03** | 📝 **Form Registrasi** | Mengisi formulir online yang dilengkapi auto-validation format NIK. |
+| **04** | 💳 **Midtrans Payment** | Menyelesaikan transaksi via QRIS (GoPay, ShopeePay, Dana, dll.) atau Virtual Account Bank. |
+| **05** | 📊 **Dashboard & Tiket** | Webhook Midtrans mengonfirmasi pembayaran seketika, tiket diterbitkan, dan data tersimpan di panel panitia. |
+
+---
+
+## 🌟 Fitur & Modul Utama
 
 <details open>
 <summary><b>🌐 1. Portal Publik (Front Office)</b></summary>
 <br>
 
-* 🏛️ **Profil Lembaga Lengkap:** Sejarah pendirian, visi misi pergerakan, dan bagan struktur kepengurusan interaktif.
-* 📰 **Pusat Media & Berita:** Kabar terupdate agenda kegiatan komisariat, liputan opini, esai, dan karya literasi kader.
-* 🖼️ **Galeri Multimedia:** Dokumentasi momen kegiatan formal maupun non-formal (kaderisasi, workshop, kajian).
-* 📅 **Kalender Agenda & Event:** Penayangan jadwal kegiatan mendatang lengkap dengan deskripsi, pamflet, dan kuota peserta.
-* 💬 **Mutiara Kata (Quotes):** Tampilan kutipan bijak dan nasihat dari para muassis NU serta tokoh inspiratif.
+* 🏛️ **Profil Organisasi:** Visi, Misi, Kilas Sejarah, serta Bagan Struktur Kepengurusan dinamis.
+* 📰 **Warta & Artikel:** Portal penerbitan berita seputar komisariat, opini pemikiran kader, dan artikel keislaman.
+* 🖼️ **Galeri Kegiatan:** Dokumentasi foto dan dokumentasi kegiatan komisariat berkualitas tinggi.
+* 📅 **Agenda Kegiatan:** Kalender jadwal event dengan countdown, detail pamflet, dan kuota pendaftar.
+* 💬 **Quotes Mutiara:** Kutipan inspiratif para kiai, ulama, dan tokoh pergerakan NU.
 
 </details>
 
 <details open>
-<summary><b>💳 2. Sistem Pendaftaran Kegiatan & Payment Gateway Otomatis</b></summary>
+<summary><b>💳 2. Pendaftaran Online & Payment Gateway Midtrans</b></summary>
 <br>
 
-* 📝 **Registrasi Online:** Formulir pendaftaran cerdas yang dilengkapi validasi data otomatis (termasuk parser NIK).
-* 💰 **Payment Gateway Midtrans:** Pembayaran instan via **QRIS (GoPay, OVO, ShopeePay, Dana)**, **Virtual Account (BCA, BNI, BRI, Mandiri)**.
-* 🔄 **Sinkronisasi Realtime:** Callback webhook otomatis mengubah status pembayaran peserta tanpa perlu konfirmasi manual yang melelahkan.
-* 🖨️ **Struk / Bukti Registrasi:** Peserta mendapatkan kode unik registrasi dan bukti keikutsertaan kegiatan.
+* 📝 **Validasi Identitas Cerdas:** Pengecekan keabsahan format NIK dan kontak WhatsApp secara otomatis.
+* ⚡ **Metode Pembayaran Lengkap:** QRIS instan, e-Wallet, dan Virtual Account berbagai bank nasional.
+* 🔄 **Sinkronisasi Otomatis (Webhook Callback):** Status pembayaran langsung lunas seketika tanpa perlu kirim bukti transfer manual ke admin.
+* 🎫 **Unduh Bukti Registrasi:** Peserta memperoleh kode unik invoice dan ringkasan pendaftaran.
 
 </details>
 
 <details>
-<summary><b>🛡️ 3. Manajemen Multi-Role Dashboard (Back Office)</b></summary>
+<summary><b>🛡️ 3. Panel Manajemen Multi-Role (Back Office)</b></summary>
 <br>
 
-Sistem membagi hak akses berdasarkan tingkatan peran pengurus:
+Sistem membagi tugas kepengurusan menjadi 3 hak akses terpisah:
 
-| Peran (Role) | Lencana | Cakupan Fitur & Tanggung Jawab |
+| Peran (Role) | Lencana | Tanggung Jawab & Hak Akses |
 | :--- | :---: | :--- |
-| **Super Admin** | 👑 | Mengelola akun user & role, konfigurasi website (*Site Settings*), serta manajemen tampilan halaman (*Page Settings*). |
-| **Ketua IPNU & IPPNU** | 🔰 | Monitoring pendaftar kegiatan, sinkronisasi massal status Midtrans, database kader (*Members*), statistik organisasi, dan kurasi galeri. |
-| **Ketua Departemen** | ✍️ | Publikasi warta berita (*Posts*), artikel & karya tulis (*Articles*), serta kurasi kutipan inspiratif (*Quotes*). |
+| **Super Admin** | 👑 | Manajemen User & Akun, Pengaturan Halaman Dinamis (*Page Settings*), Konfigurasi Website (*Site Settings*). |
+| **Ketua IPNU & IPPNU** | 🔰 | Manajemen Agenda, Verifikasi & Sinkronisasi Massal Midtrans, Database Anggota/Kader (*Members*), Statistik, dan Kurasi Galeri. |
+| **Ketua Departemen** | ✍️ | Pengelolaan Publikasi Berita (*Posts*), Artikel/Opini Kader (*Articles*), dan Kutipan Inspiratif (*Quotes*). |
 
 </details>
 
 ---
 
-## 💻 Panduan Instalasi & Menjalankan di Lokal
+## 💻 Panduan Instalasi di Komputer Lokal
 
 <details>
-<summary><b>📋 Prasyarat Komputer (Prerequisites)</b></summary>
+<summary><b>📋 Prasyarat Sistem</b></summary>
 <br>
 
-* **PHP:** Versi `>= 8.2` (dengan ekstensi `pdo_mysql`, `mbstring`, `openssl`, `curl`)
+* **PHP:** Versi `>= 8.2`
 * **Composer:** Versi `>= 2.x`
-* **Node.js & NPM:** Node `>= 18.x`
-* **Database:** MySQL / MariaDB (Direkomendasikan via **Laragon**)
+* **Node.js:** Versi `>= 18.x`
+* **Database & Server:** MySQL (Direkomendasikan via **Laragon**)
 
 </details>
 
@@ -130,19 +130,22 @@ git clone https://github.com/username/pk-ipnu-ippnu.git
 cd pk-ipnu-ippnu
 ```
 
-**2. Instalasi Paket Dependensi:**
+**2. Instalasi Dependensi Backend & Frontend:**
 ```bash
+# Dependensi PHP
 composer install
+
+# Dependensi JavaScript
 npm install
 ```
 
-**3. Setup File Environment (`.env`):**
+**3. Setup Environment File (`.env`):**
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
-**4. Konfigurasi Database & Kunci Integrasi (`.env`):**
+**4. Sesuaikan Konfigurasi Database & Midtrans:**
 ```env
 APP_NAME="PKPT IPNU IPPNU UNSIQ"
 APP_URL=http://pk-ipnu-ippnu.test
@@ -154,13 +157,13 @@ DB_DATABASE=pk_ipnu_ippnu
 DB_USERNAME=root
 DB_PASSWORD=
 
-# Integrasi Midtrans
+# Kredensial Midtrans
 MIDTRANS_SERVER_KEY=SB-Mid-server-xxxxxxxxx
 MIDTRANS_CLIENT_KEY=SB-Mid-client-xxxxxxxxx
 MIDTRANS_IS_PRODUCTION=false
 ```
 
-**5. Migrasi & Data Seeder:**
+**5. Migrasi Database & Storage Symlink:**
 ```bash
 php artisan migrate --seed
 php artisan storage:link
@@ -168,37 +171,41 @@ php artisan storage:link
 
 **6. Jalankan Server Aplikasi:**
 
-*Mode Simultan (Concurrent)*:
+*Mode Simultan (Otomatis):*
 ```bash
 composer run dev
 ```
 
-*Atau Mode Terpisah*:
+*Atau Mode Terpisah:*
 ```bash
-# Terminal 1 (Backend API & Web Server)
+# Terminal 1: Server Laravel
 php artisan serve
 
-# Terminal 2 (Vite Frontend React Compiler)
+# Terminal 2: Vite Compiler
 npm run dev
 ```
 
-Akses aplikasi pada peramban melalui `http://127.0.0.1:8000` atau via Laragon `http://pk-ipnu-ippnu.test`.
+Akses web di peramban: `http://127.0.0.1:8000` atau `http://pk-ipnu-ippnu.test`.
 
 </details>
 
 ---
 
-## 📂 Struktur Direktori Proyek
+## 📂 Struktur Direktori Utama
 
 ```plaintext
 pk-ipnu-ippnu/
 ├── app/
-│   ├── Http/Controllers/        # Public, Admin & Auth Controllers
+│   ├── Http/Controllers/        # Controller Publik, Admin & Auth
 │   ├── Middleware/             # Role authorization (admin, ketua, departemen)
 │   └── Models/                 # Agenda, Registration, Member, Post, etc.
 ├── database/
 │   ├── migrations/             # Skema tabel database
-│   └── seeders/                # Data default & seeder akun
+│   └── seeders/                # Data default & akun admin
+├── public/
+│   ├── banner.svg              # Asset Header Banner Animasi
+│   ├── workflow.svg            # Asset Diagram Alur Sistem
+│   └── footer.svg              # Asset Footer Banner
 ├── resources/
 │   ├── js/
 │   │   ├── Components/         # Komponen React (Navbar, Footer, Card, Modal)
@@ -206,21 +213,16 @@ pk-ipnu-ippnu/
 │   │   └── Pages/              # View halaman React (Inertia Pages)
 │   └── css/                    # Desain kustom Tailwind CSS
 ├── routes/
-│   ├── web.php                 # Routing website publik & panel admin
+│   ├── web.php                 # Routing publik & panel admin
 │   └── auth.php                # Routing autentikasi login
-└── vite.config.js              # Bundler konfigurasi Vite + React
+└── vite.config.js              # Konfigurasi bundler Vite + React
 ```
 
 ---
 
-<p align="center">
-  <b>"Belajar, Berjuang, Bertaqwa"</b><br>
-  Dikelola dengan dedikasi oleh <strong>Departemen Media & Komunikasi PKPT IPNU IPPNU UNSIQ</strong>
-</p>
-
 <!-- ======================================================== -->
-<!-- FOOTER BANNER ANIMASI (WAVING GRADIENT)                  -->
+<!-- FOOTER BANNER ANIMASI SVG LOKAL                          -->
 <!-- ======================================================== -->
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0:064e3b,25:047857,60:059669,100:10b981&height=120&section=footer" alt="Footer Banner" width="100%" />
+  <img src="public/footer.svg" alt="Footer Banner PKPT IPNU IPPNU UNSIQ" width="100%" />
 </p>
