@@ -38,6 +38,7 @@ export default function Edit({ agenda }) {
         location: agenda.location || '',
         description: agenda.description || '',
         is_registration_open: agenda.is_registration_open || false,
+        max_participants: agenda.max_participants || '',
         registration_fee: agenda.registration_fee || '',
         payment_account: agenda.payment_account || '',
         image: null,
@@ -401,6 +402,23 @@ export default function Edit({ agenda }) {
                                     exit={{ opacity: 0, height: 0 }}
                                     className="space-y-8 overflow-hidden pt-4 border-t border-slate-100 dark:border-slate-800"
                                 >
+                                    <div>
+                                        <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+                                            <Users size={16} className="text-slate-400" />
+                                            Batas Maksimal Kuota Peserta (Opsional)
+                                        </label>
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            value={data.max_participants || ''}
+                                            onChange={e => setData('max_participants', e.target.value)}
+                                            className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all placeholder:text-slate-300 font-bold"
+                                            placeholder="Contoh: 100 (kosongkan jika kuota tidak terbatas)"
+                                        />
+                                        <p className="mt-2 text-xs text-slate-500 font-medium">Jika diisi, pendaftaran otomatis ditutup ketika kuota terpenuhi.</p>
+                                        {errors.max_participants && <p className="mt-2 text-xs font-bold text-red-500 uppercase tracking-wider">{errors.max_participants}</p>}
+                                    </div>
+
                                     <div>
                                         <label className="block text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
                                             <DollarSign size={16} className="text-slate-400" />

@@ -2,15 +2,19 @@ import React, { useState } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import Pagination from '@/Components/Pagination';
-import { Trash2, Users, Download, Check, X, FileImage, Eye, Filter, RefreshCw, CreditCard } from 'lucide-react';
+import { Trash2, Users, Download, Check, X, FileImage, Eye, Filter, RefreshCw, CreditCard, Search, FileSpreadsheet } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Swal from 'sweetalert2';
+import axios from 'axios';
+import ExcelJS from 'exceljs';
 import { parseFullNik } from '@/Utils/nikParser';
 
 export default function RegistrationsIndex({ registrations, agendas, filters }) {
     const [selectedReg, setSelectedReg] = useState(null);
     const [syncingId, setSyncingId] = useState(null);
     const [isSyncingAll, setIsSyncingAll] = useState(false);
+    const [isExporting, setIsExporting] = useState(false);
+    const [searchTerm, setSearchTerm] = useState(filters.search || '');
 
     const handleFilterChange = (key, value) => {
         router.get(route('admin.registrations.index'), { ...filters, [key]: value }, { preserveState: true, preserveScroll: true });
@@ -43,6 +47,220 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
             preserveScroll: true,
             onFinish: () => setIsSyncingAll(false),
         });
+    };
+
+    const handleExportExcel = async () => {
+        setIsExporting(true);
+        try {
+            const response = await axios.get(route('admin.registrations.exportData'), {
+                params: {
+                    agenda_id: filters.agenda_id || '',
+                    status: filters.status || '',
+                    search: filters.search || '',
+                }
+            });
+
+            const list = response.data?.data || [];
+            if (list.length === 0) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Data Tidak Ditemukan',
+                    text: 'Tidak ada data pendaftar yang cocok dengan filter saat ini untuk diekspor.',
+                    confirmButtonColor: '#059669',
+                });
+                return;
+            }
+
+            const workbook = new ExcelJS.Workbook();
+            workbook.creator = 'PK IPNU IPPNU';
+            workbook.created = new Date();
+
+            const sheet = workbook.addWorksheet('Rekap Pendaftar', {
+                views: [{ showGridLines: true }]
+            });
+
+            // Collect all unique dynamic question labels across all agendas in dataset
+            const dynamicQuestionsMap = new Map();
+            list.forEach(item => {
+                if (Array.isArray(item.form_schema)) {
+                    item.form_schema.forEach(field => {
+                        if (field.id && field.label) {
+                            dynamicQuestionsMap.set(field.id, field.label);
+                        }
+                    });
+                }
+            });
+
+            // Title Rows
+            sheet.mergeCells('A1', 'K1');
+            const titleCell = sheet.getCell('A1');
+            titleCell.value = 'DATA REKAP PENDAFTAR KEGIATAN - PK IPNU IPPNU';
+            titleCell.font = { name: 'Calibri', size: 15, bold: true, color: { argb: 'FF065F46' } };
+            titleCell.alignment = { vertical: 'middle', horizontal: 'center' };
+            sheet.getRow(1).height = 28;
+
+            // Subtitle Info
+            const selectedAgenda = agendas.find(a => String(a.id) === String(filters.agenda_id));
+            const subtitle = selectedAgenda ? `Agenda: ${selectedAgenda.title}` : 'Semua Agenda Kegiatan';
+            sheet.mergeCells('A2', 'K2');
+            const subCell = sheet.getCell('A2');
+            subCell.value = `${subtitle} | Waktu Ekspor: ${new Date().toLocaleString('id-ID')} | Total: ${list.length} Pendaftar`;
+            subCell.font = { name: 'Calibri', size: 10, italic: true, color: { argb: 'FF4B5563' } };
+            subCell.alignment = { vertical: 'middle', horizontal: 'center' };
+            sheet.getRow(2).height = 20;
+
+            // Empty row
+            sheet.addRow([]);
+
+            // Base Headers
+            const baseHeaders = [
+                { header: 'No', key: 'no', width: 6 },
+                { header: 'Kode Tiket', key: 'ticket_code', width: 14 },
+                { header: 'Waktu Daftar', key: 'registered_at', width: 18 },
+                { header: 'Nama Agenda', key: 'agenda_title', width: 28 },
+                { header: 'Nama Peserta', key: 'registrant_name', width: 24 },
+                { header: 'WhatsApp / HP', key: 'registrant_phone', width: 18 },
+                { header: 'Email', key: 'registrant_email', width: 25 },
+                { header: 'NIK', key: 'registrant_nik', width: 20 },
+                { header: 'Status', key: 'status', width: 14 },
+                { header: 'Metode Bayar', key: 'payment_method', width: 18 },
+                { header: 'Order ID Midtrans', key: 'midtrans_order_id', width: 24 },
+            ];
+
+            // Dynamic Field Headers
+            const dynamicHeaders = [];
+            dynamicQuestionsMap.forEach((label, id) => {
+                dynamicHeaders.push({
+                    header: label,
+                    key: `custom_${id}`,
+                    width: Math.max(16, label.length + 4),
+                    fieldId: id,
+                });
+            });
+
+            const allColumns = [...baseHeaders, ...dynamicHeaders];
+            
+            // Add Header Row
+            const headerRow = sheet.addRow(allColumns.map(c => c.header));
+            headerRow.height = 26;
+
+            // Style Header Row
+            headerRow.eachCell((cell) => {
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FF047857' } // Emerald 700
+                };
+                cell.font = {
+                    name: 'Calibri',
+                    size: 11,
+                    bold: true,
+                    color: { argb: 'FFFFFFFF' }
+                };
+                cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+                cell.border = {
+                    top: { style: 'thin', color: { argb: 'FFD1D5DB' } },
+                    bottom: { style: 'medium', color: { argb: 'FF064E3B' } },
+                    left: { style: 'thin', color: { argb: 'FFD1D5DB' } },
+                    right: { style: 'thin', color: { argb: 'FFD1D5DB' } },
+                };
+            });
+
+            // Add Data Rows
+            list.forEach((item, index) => {
+                const rowValues = [
+                    index + 1,
+                    item.ticket_code,
+                    item.registered_at,
+                    item.agenda_title,
+                    item.registrant_name,
+                    item.registrant_phone,
+                    item.registrant_email,
+                    item.registrant_nik,
+                    item.status,
+                    item.payment_method,
+                    item.midtrans_order_id,
+                ];
+
+                dynamicHeaders.forEach(dyn => {
+                    const ans = item.responses?.[dyn.fieldId] ?? '-';
+                    rowValues.push(typeof ans === 'object' ? JSON.stringify(ans) : String(ans));
+                });
+
+                const row = sheet.addRow(rowValues);
+                row.height = 22;
+
+                const isEven = index % 2 === 0;
+                row.eachCell((cell, colNumber) => {
+                    cell.font = { name: 'Calibri', size: 10 };
+                    cell.alignment = { 
+                        vertical: 'middle', 
+                        horizontal: [1, 2, 6, 8, 9, 10].includes(colNumber) ? 'center' : 'left' 
+                    };
+                    cell.border = {
+                        top: { style: 'thin', color: { argb: 'FFE5E7EB' } },
+                        bottom: { style: 'thin', color: { argb: 'FFE5E7EB' } },
+                        left: { style: 'thin', color: { argb: 'FFE5E7EB' } },
+                        right: { style: 'thin', color: { argb: 'FFE5E7EB' } },
+                    };
+                    if (!isEven) {
+                        cell.fill = {
+                            type: 'pattern',
+                            pattern: 'solid',
+                            fgColor: { argb: 'FFF9FAFB' }
+                        };
+                    }
+
+                    // Status styling
+                    if (colNumber === 9) {
+                        if (item.status === 'APPROVED') {
+                            cell.font = { bold: true, color: { argb: 'FF059669' } };
+                        } else if (item.status === 'REJECTED') {
+                            cell.font = { bold: true, color: { argb: 'FFDC2626' } };
+                        } else {
+                            cell.font = { bold: true, color: { argb: 'FFD97706' } };
+                        }
+                    }
+                });
+            });
+
+            // Apply Column Widths
+            allColumns.forEach((col, idx) => {
+                sheet.getColumn(idx + 1).width = col.width;
+            });
+
+            // Generate buffer & trigger browser download
+            const buffer = await workbook.xlsx.writeBuffer();
+            const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const agendaSlug = selectedAgenda ? selectedAgenda.title.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 30) : 'Semua_Agenda';
+            const dateStr = new Date().toISOString().slice(0, 10);
+            a.download = `Rekap_Pendaftar_${agendaSlug}_${dateStr}.xlsx`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Ekspor Berhasil!',
+                text: `${list.length} data pendaftar berhasil diekspor ke file Excel.`,
+                timer: 2000,
+                showConfirmButton: false,
+            });
+        } catch (err) {
+            console.error('Gagal mengekspor data ke Excel:', err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal Ekspor',
+                text: 'Terjadi kendala saat memproses ekspor Excel. Silakan coba kembali.',
+                confirmButtonColor: '#ef4444',
+            });
+        } finally {
+            setIsExporting(false);
+        }
     };
 
     const handleUpdateStatus = (id, status) => {
@@ -111,12 +329,22 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
     return (
         <AdminLayout>
             <Head title="Semua Pendaftar" />
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+            <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 mb-8">
                 <div>
                     <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white leading-tight mb-2">Data Pendaftar Global</h1>
-                    <p className="text-slate-500 dark:text-slate-400 font-medium">Kelola semua pendaftar dari berbagai agenda.</p>
+                    <p className="text-slate-500 dark:text-slate-400 font-medium">Kelola, verifikasi, dan ekspor pendaftar dari seluruh agenda kegiatan.</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-3">
+                    <button
+                        onClick={handleExportExcel}
+                        disabled={isExporting}
+                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-900 text-white dark:bg-slate-700 dark:hover:bg-slate-600 rounded-lg text-sm font-bold shadow-md transition-all disabled:opacity-50"
+                        title="Ekspor seluruh data pendaftar yang sesuai filter ke file Excel (.xlsx)"
+                    >
+                        <FileSpreadsheet size={16} className={isExporting ? "animate-spin" : "text-emerald-400"} />
+                        <span>{isExporting ? "Mengekspor..." : "Ekspor Excel"}</span>
+                    </button>
+
                     <button
                         onClick={handleSyncAllMidtrans}
                         disabled={isSyncingAll}
@@ -124,21 +352,86 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                         title="Periksa dan perbarui status semua transaksi Midtrans yang masih pending"
                     >
                         <RefreshCw size={15} className={isSyncingAll ? "animate-spin" : ""} />
-                        <span>{isSyncingAll ? "Menyinkronkan..." : "Sinkronkan Semua Midtrans"}</span>
+                        <span>{isSyncingAll ? "Menyinkronkan..." : "Sinkronkan Midtrans"}</span>
                     </button>
+                </div>
+            </div>
 
-                    <div className="relative">
-                        <select 
-                            value={filters.agenda_id || ''} 
-                            onChange={(e) => handleFilterChange('agenda_id', e.target.value)}
-                            className="pl-4 pr-10 py-2.5 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-lg text-sm font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors appearance-none min-w-[200px]"
-                        >
-                            <option value="">Semua Agenda</option>
-                            {agendas.map(a => (
-                                <option key={a.id} value={a.id}>{a.title}</option>
-                            ))}
-                        </select>
-                        <Filter size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+            {/* Filter & Search Bar */}
+            <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-100 dark:border-slate-800 shadow-md shadow-slate-200/40 dark:shadow-none mb-6">
+                <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+                    {/* Search Input */}
+                    <div className="relative flex-1">
+                        <input 
+                            type="text"
+                            placeholder="Cari nama, WhatsApp, email, NIK, atau Order ID..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    handleFilterChange('search', searchTerm);
+                                }
+                            }}
+                            className="w-full pl-10 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors"
+                        />
+                        <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                        {searchTerm ? (
+                            <button
+                                onClick={() => {
+                                    setSearchTerm('');
+                                    handleFilterChange('search', '');
+                                }}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg leading-none p-1"
+                                title="Hapus pencarian"
+                            >
+                                &times;
+                            </button>
+                        ) : null}
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-3">
+                        {/* Agenda Filter */}
+                        <div className="relative min-w-[180px] flex-1 sm:flex-initial">
+                            <select 
+                                value={filters.agenda_id || ''} 
+                                onChange={(e) => handleFilterChange('agenda_id', e.target.value)}
+                                className="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-lg text-sm font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors appearance-none"
+                            >
+                                <option value="">Semua Agenda</option>
+                                {agendas.map(a => (
+                                    <option key={a.id} value={a.id}>{a.title}</option>
+                                ))}
+                            </select>
+                            <Filter size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                        </div>
+
+                        {/* Status Filter */}
+                        <div className="relative min-w-[150px] flex-1 sm:flex-initial">
+                            <select 
+                                value={filters.status || ''} 
+                                onChange={(e) => handleFilterChange('status', e.target.value)}
+                                className="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-lg text-sm font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors appearance-none"
+                            >
+                                <option value="">Semua Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                            <Filter size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                        </div>
+
+                        {/* Reset Filter Button */}
+                        {(filters.agenda_id || filters.status || filters.search) && (
+                            <button
+                                onClick={() => {
+                                    setSearchTerm('');
+                                    router.get(route('admin.registrations.index'), {}, { preserveState: false });
+                                }}
+                                className="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-lg text-xs font-bold transition-colors"
+                            >
+                                Reset Filter
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
@@ -221,8 +514,8 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-center">
-                                        {reg.payment_proof ? (
-                                            <a href={`/${reg.payment_proof}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center p-2 bg-blue-50 text-blue-500 hover:bg-blue-100 rounded-lg transition-colors" title="Lihat Bukti Bayar">
+                                        {(reg.payment_proof_url || reg.payment_proof) ? (
+                                            <a href={reg.payment_proof_url || `/${reg.payment_proof}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center p-2 bg-blue-50 text-blue-500 hover:bg-blue-100 rounded-lg transition-colors" title="Lihat Bukti Bayar">
                                                 <FileImage size={16} />
                                             </a>
                                         ) : (

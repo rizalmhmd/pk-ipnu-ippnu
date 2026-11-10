@@ -60,6 +60,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     // ── Ketua IPNU/IPPNU: agenda, galeri, anggota, statistik, pendaftar ────────────────
     Route::middleware('role:admin,ketua')->group(function () {
+        Route::get('registrations/export-data', [AgendaRegistrationController::class, 'exportData'])->name('registrations.exportData');
         Route::get('registrations', [AgendaRegistrationController::class, 'index'])->name('registrations.index');
         Route::put('registrations/{id}/status', [AgendaRegistrationController::class, 'updateStatus'])->name('registrations.updateStatus');
         Route::post('registrations/{id}/sync-midtrans', [AgendaRegistrationController::class, 'syncMidtrans'])->name('registrations.syncMidtrans');

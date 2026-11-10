@@ -159,6 +159,10 @@ class PublicController extends Controller
             return back()->withErrors(['message' => 'Pendaftaran ditutup.']);
         }
 
+        if ($agenda->is_quota_full) {
+            return back()->withErrors(['message' => 'Mohon maaf, kuota pendaftaran untuk kegiatan ini sudah penuh.'])->withInput();
+        }
+
         // Validate the dynamic fields based on schema (fallback to default if empty)
         $schema = (!empty($agenda->form_schema) && is_array($agenda->form_schema)) ? $agenda->form_schema : [
             ['id' => 'field_name', 'label' => 'Nama Lengkap', 'type' => 'text', 'required' => true],
@@ -309,7 +313,7 @@ class PublicController extends Controller
         $paymentMethod = $validated['payment_method'] ?? 'cash';
         
         if ($paymentMethod === 'transfer' && $request->hasFile('payment_proof')) {
-            $paymentProofPath = $request->file('payment_proof')->store('payment_proofs');
+            $paymentProofPath = $request->file('payment_proof')->store('payment_proofs', 'public');
         }
 
         $registration = $agenda->registrations()->create([

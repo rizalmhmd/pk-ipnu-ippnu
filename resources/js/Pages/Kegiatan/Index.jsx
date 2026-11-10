@@ -221,24 +221,47 @@ export default function KegiatanIndex({ kegiatans = [], pageSetting }) {
                                                                 )}
                                                                 
                                                                 {/* Registration Info */}
-                                                                {(item.is_registration_open || item.registration_fee) && (
+                                                                {(item.is_registration_open || item.registration_fee || item.max_participants > 0) && (
                                                                     <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-                                                                        {item.registration_fee && (
-                                                                            <div className="flex items-center gap-2 text-emerald-700 font-bold bg-emerald-50 px-4 py-2 rounded-lg">
-                                                                                <i className="fas fa-ticket-alt"></i>
-                                                                                HTM: {item.registration_fee}
-                                                                            </div>
-                                                                        )}
-                                                                        {!item.registration_fee && <div></div>}
+                                                                        <div className="flex flex-wrap items-center gap-2">
+                                                                            {item.registration_fee && (
+                                                                                <div className="flex items-center gap-2 text-emerald-700 font-bold bg-emerald-50 px-4 py-2 rounded-lg text-xs">
+                                                                                    <i className="fas fa-ticket-alt"></i>
+                                                                                    HTM: {item.registration_fee}
+                                                                                </div>
+                                                                            )}
+                                                                            {item.max_participants > 0 && (
+                                                                                <div className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold ${
+                                                                                    item.is_quota_full 
+                                                                                        ? 'bg-red-50 text-red-600 border border-red-100' 
+                                                                                        : 'bg-slate-50 text-slate-700 border border-slate-200'
+                                                                                }`}>
+                                                                                    <i className="fas fa-users"></i>
+                                                                                    {item.is_quota_full 
+                                                                                        ? 'Kuota Penuh' 
+                                                                                        : `Sisa: ${item.remaining_quota} kursi`}
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
                                                                         
                                                                         {item.is_registration_open && (
-                                                                            <Link
-                                                                                href={route('kegiatan.daftar', item.id)}
-                                                                                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white rounded-xl font-bold shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm uppercase tracking-widest"
-                                                                            >
-                                                                                Daftar Sekarang
-                                                                                <i className="fas fa-arrow-right text-xs"></i>
-                                                                            </Link>
+                                                                            item.is_quota_full ? (
+                                                                                <button
+                                                                                    disabled
+                                                                                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-slate-200 text-slate-400 rounded-xl font-bold text-xs uppercase tracking-wider cursor-not-allowed"
+                                                                                >
+                                                                                    <i className="fas fa-ban text-xs"></i>
+                                                                                    Kuota Penuh
+                                                                                </button>
+                                                                            ) : (
+                                                                                <Link
+                                                                                    href={route('kegiatan.daftar', item.id)}
+                                                                                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white rounded-xl font-bold shadow-lg shadow-emerald-900/20 hover:shadow-xl hover:-translate-y-0.5 transition-all text-sm uppercase tracking-widest"
+                                                                                >
+                                                                                    Daftar Sekarang
+                                                                                    <i className="fas fa-arrow-right text-xs"></i>
+                                                                                </Link>
+                                                                            )
                                                                         )}
                                                                     </div>
                                                                 )}

@@ -127,6 +127,7 @@ class MidtransService
         $settlementTime = $statusData->settlement_time ?? null;
 
         // Determine mapped status
+        $oldStatus = $registration->status;
         $newStatus = $registration->status;
 
         if ($transactionStatus === 'capture') {
@@ -146,6 +147,18 @@ class MidtransService
             'midtrans_settlement_time' => $settlementTime ? Carbon::parse($settlementTime) : null,
             'status' => $newStatus,
         ]);
+
+        // Send E-Ticket email if status changed to approved
+        if ($newStatus === 'approved' && $oldStatus !== 'approved') {
+            try {
+                $email = $registration->getRegistrantEmail();
+                if ($email) {
+                    \Illuminate\Support\Facades\Mail::to($email)->send(new \App\Mail\RegistrationApprovedMail($registration));
+                }
+            } catch (\Throwable $e) {
+                Log::error("Failed to send Midtrans approval email for REG-{$registration->id}: " . $e->getMessage());
+            }
+        }
 
         return [
             'success' => true,
@@ -206,6 +219,7 @@ class MidtransService
             $registration = AgendaRegistration::find($registrationId);
 
             if ($registration) {
+                $oldStatus = $registration->status;
                 $newStatus = $registration->status;
 
                 if ($transactionStatus === 'capture') {
@@ -225,6 +239,17 @@ class MidtransService
                     'midtrans_settlement_time' => $settlementTime ? Carbon::parse($settlementTime) : null,
                     'status' => $newStatus,
                 ]);
+
+                if ($newStatus === 'approved' && $oldStatus !== 'approved') {
+                    try {
+                        $email = $registration->getRegistrantEmail();
+                        if ($email) {
+                            \Illuminate\Support\Facades\Mail::to($email)->send(new \App\Mail\RegistrationApprovedMail($registration));
+                        }
+                    } catch (\Throwable $e) {
+                        Log::error("Failed to send webhook approval email for REG-{$registration->id}: " . $e->getMessage());
+                    }
+                }
 
                 return ['success' => true, 'message' => 'Registration updated successfully'];
             }

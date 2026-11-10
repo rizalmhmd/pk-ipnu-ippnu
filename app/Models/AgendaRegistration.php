@@ -25,6 +25,29 @@ class AgendaRegistration extends Model
         'midtrans_settlement_time' => 'datetime',
     ];
 
+    protected $appends = ['payment_proof_url'];
+
+    public function getPaymentProofUrlAttribute(): ?string
+    {
+        if (!$this->payment_proof) {
+            return null;
+        }
+
+        if (filter_var($this->payment_proof, FILTER_VALIDATE_URL)) {
+            return $this->payment_proof;
+        }
+
+        if (file_exists(public_path($this->payment_proof))) {
+            return asset($this->payment_proof);
+        }
+
+        try {
+            return \Illuminate\Support\Facades\Storage::url($this->payment_proof);
+        } catch (\Throwable $e) {
+            return '/storage/' . ltrim($this->payment_proof, '/');
+        }
+    }
+
     public function agenda()
     {
         return $this->belongsTo(Agenda::class);

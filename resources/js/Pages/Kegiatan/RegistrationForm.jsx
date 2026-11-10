@@ -233,6 +233,52 @@ export default function RegistrationForm({ agenda, pageSetting, existingRegistra
                                 </div>
                             )}
 
+                            {/* Quota Information Bar */}
+                            {agenda.max_participants > 0 && (
+                                <div className="mb-8 p-5 rounded-xl border border-emerald-100 bg-emerald-50/50">
+                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                                        <div className="flex items-center gap-2">
+                                            <i className="fas fa-users text-emerald-600"></i>
+                                            <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">Kuota Peserta</span>
+                                        </div>
+                                        <span className={`text-xs font-black px-2.5 py-1 rounded-full ${
+                                            agenda.is_quota_full 
+                                                ? 'bg-red-100 text-red-700' 
+                                                : 'bg-emerald-100 text-emerald-800'
+                                        }`}>
+                                            {agenda.is_quota_full 
+                                                ? 'Kuota Penuh' 
+                                                : `Tersisa ${agenda.remaining_quota} Kursi (${agenda.total_registered}/${agenda.max_participants})`}
+                                        </span>
+                                    </div>
+                                    <div className="w-full h-2.5 bg-slate-200 rounded-full overflow-hidden">
+                                        <div 
+                                            className={`h-full transition-all duration-500 ${agenda.is_quota_full ? 'bg-red-500' : 'bg-emerald-500'}`}
+                                            style={{ width: `${Math.min(100, Math.round(((agenda.total_registered || 0) / agenda.max_participants) * 100))}%` }}
+                                        ></div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Quota Full Notice */}
+                            {agenda.is_quota_full && (!existingRegistration || existingRegistration.status === 'rejected') ? (
+                                <div className="p-8 text-center bg-red-50/80 border-2 border-red-200 rounded-2xl mb-6">
+                                    <div className="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                                        <i className="fas fa-user-slash"></i>
+                                    </div>
+                                    <h3 className="text-xl font-black text-red-800 mb-2">Pendaftaran Telah Ditutup</h3>
+                                    <p className="text-sm text-red-600 mb-6 max-w-md mx-auto">
+                                        Mohon maaf, kuota pendaftaran untuk kegiatan <strong>{agenda.title}</strong> telah terpenuhi (maksimal {agenda.max_participants} peserta).
+                                    </p>
+                                    <Link 
+                                        href={route('kegiatan.index')} 
+                                        className="inline-flex items-center gap-2 px-6 py-2.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-lg transition-colors"
+                                    >
+                                        <i className="fas fa-arrow-left"></i> Kembali ke Daftar Kegiatan
+                                    </Link>
+                                </div>
+                            ) : (
+
                             <form onSubmit={submit} className="space-y-6">
                                 {errors.message && (
                                     <div className="p-4 mb-6 bg-red-50 border-l-4 border-red-500 rounded-r-lg">
@@ -501,6 +547,7 @@ export default function RegistrationForm({ agenda, pageSetting, existingRegistra
                                     </button>
                                 </div>
                             </form>
+                            )}
                         </motion.div>
                     )}
                 </div>
