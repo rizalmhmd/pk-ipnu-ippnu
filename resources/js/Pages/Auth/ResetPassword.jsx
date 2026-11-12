@@ -57,7 +57,7 @@ export default function ResetPassword({ token, email }) {
                             value={data.password}
                             className="block w-full pl-11 pr-12 py-4 bg-slate-50 border-none rounded-lg text-slate-900 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:bg-white transition-all outline-none font-medium"
                             autoComplete="new-password"
-                            isFocused={true}
+                            autoFocus
                             onChange={(e) => setData('password', e.target.value)}
                         />
                         <button

@@ -28,37 +28,16 @@ class PageSetting extends Model
 
     public function getFeatureImageUrlAttribute()
     {
-        if (!$this->feature_image) return null;
-        if (filter_var($this->feature_image, FILTER_VALIDATE_URL)) return $this->feature_image;
-        
-        try {
-            return \Illuminate\Support\Facades\Storage::url($this->feature_image);
-        } catch (\Throwable $e) {
-            return null;
-        }
+        return \App\Services\FileStorageService::url($this->feature_image);
     }
 
     public function getHeroImageUrlAttribute()
     {
-        if (!$this->hero_image) return null;
-        if (filter_var($this->hero_image, FILTER_VALIDATE_URL)) return $this->hero_image;
-        
-        try {
-            return \Illuminate\Support\Facades\Storage::url($this->hero_image);
-        } catch (\Throwable $e) {
-            return null;
-        }
+        return \App\Services\FileStorageService::url($this->hero_image);
     }
 
     public function getHeaderBgImageUrlAttribute()
     {
-        if (!$this->header_bg_image) return null;
-        if (filter_var($this->header_bg_image, FILTER_VALIDATE_URL)) return $this->header_bg_image;
-        
-        try {
-            return \Illuminate\Support\Facades\Storage::url($this->header_bg_image);
-        } catch (\Throwable $e) {
-            return null;
-        }
+        return \App\Services\FileStorageService::url($this->header_bg_image);
     }
 }

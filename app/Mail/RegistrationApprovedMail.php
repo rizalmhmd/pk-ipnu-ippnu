@@ -29,8 +29,9 @@ class RegistrationApprovedMail extends Mailable
         $this->agendaTitle = $registration->agenda?->title ?? 'Kegiatan';
         $this->ticketCode = 'REG-' . str_pad((string) $registration->id, 5, '0', STR_PAD_LEFT);
         
-        // Generate QR code image URL for easy check-in
-        $qrData = urlencode("TICKET:{$this->ticketCode}|AGENDA:{$this->agendaTitle}|NAME:{$this->registrantName}");
+        // Generate QR code image URL with opaque ticket signature (no registrant PII leaked externally)
+        $sig = substr(hash_hmac('sha256', "{$this->ticketCode}|{$registration->agenda_id}", (string) config('app.key')), 0, 12);
+        $qrData = urlencode("TICKET:{$this->ticketCode}|SIG:{$sig}");
         $this->qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data={$qrData}";
     }
 

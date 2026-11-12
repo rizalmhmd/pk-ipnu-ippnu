@@ -19,19 +19,7 @@ class Article extends Model
 
     public function getImageUrlAttribute()
     {
-        if (!$this->image) {
-            return null;
-        }
-
-        if (filter_var($this->image, FILTER_VALIDATE_URL)) {
-            return $this->image;
-        }
-
-        try {
-            return Storage::url($this->image);
-        } catch (\Throwable $e) {
-            return null;
-        }
+        return \App\Services\FileStorageService::url($this->image);
     }
 
     protected $casts = [

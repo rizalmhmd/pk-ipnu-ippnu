@@ -36,6 +36,25 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $siteSetting = null;
+        $activeQuotes = [];
+        $adminCounts = null;
+
+        try {
+            $siteSetting = \App\Models\SiteSetting::first();
+            $activeQuotes = \App\Models\Quote::where('is_active', true)->orderBy('order', 'asc')->get();
+            if ($request->user()) {
+                $adminCounts = [
+                    'posts' => \App\Models\Post::count(),
+                    'galleries' => \App\Models\Gallery::count(),
+                    'members' => \App\Models\Member::count(),
+                    'agendas' => \App\Models\Agenda::count(),
+                ];
+            }
+        } catch (\Throwable $e) {
+            // Silently fallback if tables are not migrated yet
+        }
+
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user() ? [
@@ -51,17 +70,19 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
-            'siteSetting' => \App\Models\SiteSetting::first() ?? null,
-            'activeQuotes' => \App\Models\Quote::where('is_active', true)->orderBy('order', 'asc')->get(),
-            'adminCounts' => $request->user() ? [
-                'posts' => \App\Models\Post::count(),
-                'galleries' => \App\Models\Gallery::count(),
-                'members' => \App\Models\Member::count(),
-                'agendas' => \App\Models\Agenda::count(),
-            ] : null,
-            'adminNotifications' => fn () => $request->user()
-                ? app(\App\Services\NotificationService::class)->getAdminNotifications($request->user())
-                : [],
+            'siteSetting' => $siteSetting,
+            'activeQuotes' => $activeQuotes,
+            'adminCounts' => $adminCounts,
+            'adminNotifications' => function () use ($request) {
+                if (!$request->user()) {
+                    return [];
+                }
+                try {
+                    return app(\App\Services\NotificationService::class)->getAdminNotifications($request->user());
+                } catch (\Throwable $e) {
+                    return [];
+                }
+            },
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
                 'error'   => fn () => $request->session()->get('error'),

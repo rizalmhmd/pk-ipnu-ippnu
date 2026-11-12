@@ -17,7 +17,8 @@ export default function RegistrationForm({ agenda, pageSetting, existingRegistra
         ? agenda.form_schema
         : defaultSchema;
 
-    const isFree = !agenda.registration_fee || ['0', 'gratis', 'free', '-', 'rp 0', 'rp. 0'].includes(String(agenda.registration_fee).toLowerCase().trim());
+    const numericFee = parseInt(String(agenda.registration_fee || '').replace(/[^0-9]/g, ''), 10) || 0;
+    const isFree = !agenda.registration_fee || ['0', 'gratis', 'free', '-', 'rp 0', 'rp. 0'].includes(String(agenda.registration_fee).toLowerCase().trim()) || numericFee <= 0;
     
     // Initialize form data with schema keys
     const initialData = {};
@@ -209,7 +210,7 @@ export default function RegistrationForm({ agenda, pageSetting, existingRegistra
                                             </p>
                                             {existingRegistration.payment_method === 'midtrans' && (
                                                 <Link
-                                                    href={route('kegiatan.payment', existingRegistration.id)}
+                                                    href={existingRegistration.payment_url || route('kegiatan.payment', existingRegistration.id)}
                                                     className="inline-flex items-center gap-2 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-lg transition-colors shadow-sm"
                                                 >
                                                     <i className="fas fa-wallet"></i> Lanjutkan Pembayaran Sekarang
@@ -384,7 +385,7 @@ export default function RegistrationForm({ agenda, pageSetting, existingRegistra
                                     const fieldId = field.id;
                                     const fieldLabelLower = (field.label || '').toLowerCase();
                                     const isNikField = field.type === 'nik' || fieldId.includes('nik') || fieldLabelLower.includes('nik');
-                                    const isPhoneField = !isNikField && (field.type === 'number' || fieldId.includes('phone') || fieldId.includes('whatsapp') || fieldLabelLower.includes('telepon') || fieldLabelLower.includes('whatsapp') || fieldLabelLower.includes('hp'));
+                                    const isPhoneField = !isNikField && (field.type === 'tel' || fieldId.includes('phone') || fieldId.includes('whatsapp') || fieldLabelLower.includes('telepon') || fieldLabelLower.includes('whatsapp') || fieldLabelLower.includes('no. wa') || fieldLabelLower.includes('no wa') || fieldLabelLower.includes('hp'));
                                     
                                     const rawVal = data.responses[fieldId] || '';
                                     const nikInfo = isNikField ? parseFullNik(rawVal) : null;

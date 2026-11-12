@@ -40,10 +40,13 @@ class AgendaRegistrationController extends Controller
 
         if ($request->filled('search')) {
             $search = trim($request->search);
-            $query->where(function ($q) use ($search) {
+            $castExpr = \Illuminate\Support\Facades\DB::getDriverName() === 'sqlite'
+                ? 'CAST(responses AS TEXT) LIKE ?'
+                : 'CAST(responses AS CHAR) LIKE ?';
+            $query->where(function ($q) use ($search, $castExpr) {
                 $q->where('midtrans_order_id', 'like', "%{$search}%")
                   ->orWhere('id', 'like', "%{$search}%")
-                  ->orWhereRaw('CAST(responses AS CHAR) LIKE ?', ["%{$search}%"])
+                  ->orWhereRaw($castExpr, ["%{$search}%"])
                   ->orWhereHas('user', function ($uq) use ($search) {
                       $uq->where('name', 'like', "%{$search}%")
                          ->orWhere('email', 'like', "%{$search}%");
@@ -77,10 +80,13 @@ class AgendaRegistrationController extends Controller
 
         if ($request->filled('search')) {
             $search = trim($request->search);
-            $query->where(function ($q) use ($search) {
+            $castExpr = \Illuminate\Support\Facades\DB::getDriverName() === 'sqlite'
+                ? 'CAST(responses AS TEXT) LIKE ?'
+                : 'CAST(responses AS CHAR) LIKE ?';
+            $query->where(function ($q) use ($search, $castExpr) {
                 $q->where('midtrans_order_id', 'like', "%{$search}%")
                   ->orWhere('id', 'like', "%{$search}%")
-                  ->orWhereRaw('CAST(responses AS CHAR) LIKE ?', ["%{$search}%"])
+                  ->orWhereRaw($castExpr, ["%{$search}%"])
                   ->orWhereHas('user', function ($uq) use ($search) {
                       $uq->where('name', 'like', "%{$search}%")
                          ->orWhere('email', 'like', "%{$search}%");
@@ -210,9 +216,7 @@ class AgendaRegistrationController extends Controller
         $registration = AgendaRegistration::findOrFail($id);
         
         // Delete payment proof if exists
-        if ($registration->payment_proof) {
-            \Illuminate\Support\Facades\Storage::delete($registration->payment_proof);
-        }
+        \App\Services\FileStorageService::delete($registration->payment_proof);
 
         $registration->delete();
 

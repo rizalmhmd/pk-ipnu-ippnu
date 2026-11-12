@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Head, Link, useForm, router } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import {
     ArrowLeft,
@@ -17,7 +17,7 @@ import {
 import { motion } from 'framer-motion';
 
 export default function Edit({ pageSetting }) {
-    const { data, setData, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         hero_title: pageSetting.hero_title || '',
         hero_description: pageSetting.hero_description || '',
         header_bg_color: pageSetting.header_bg_color || '',
@@ -129,7 +129,9 @@ export default function Edit({ pageSetting }) {
     };
     const submit = (e) => {
         e.preventDefault();
-        router.post(route('admin.page-settings.update', pageSetting.id), data);
+        post(route('admin.page-settings.update', pageSetting.id), {
+            forceFormData: true,
+        });
     };
 
     const isProfilePage = pageSetting.page_name === 'profile';

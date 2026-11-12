@@ -25,7 +25,7 @@ export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
     // Track unread notifications using last read timestamp in localStorage
     const [lastReadTime, setLastReadTime] = useState(() => {
         try {
-            return parseInt(localStorage.getItem('admin_last_read_notifications') || '0', 10);
+            return parseInt(localStorage.getItem('admin_last_read_notifications') || '0', 10) || 0;
         } catch (e) {
             return 0;
         }

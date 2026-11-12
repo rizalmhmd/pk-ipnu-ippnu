@@ -82,10 +82,10 @@ export default function Create() {
     };
 
     const categories = [
-        { id: 'organisasi', name: 'Organisasi', color: 'emerald' },
-        { id: 'nasional', name: 'Nasional', color: 'red' },
-        { id: 'keagamaan', name: 'Keagamaan', color: 'blue' },
-        { id: 'khusus', name: 'Khusus', color: 'amber' },
+        { id: 'organisasi', name: 'Organisasi', activeClass: 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 text-emerald-600 dark:text-emerald-400' },
+        { id: 'nasional', name: 'Nasional', activeClass: 'bg-red-50 dark:bg-red-900/20 border-red-500 text-red-600 dark:text-red-400' },
+        { id: 'keagamaan', name: 'Keagamaan', activeClass: 'bg-blue-50 dark:bg-blue-900/20 border-blue-500 text-blue-600 dark:text-blue-400' },
+        { id: 'khusus', name: 'Khusus', activeClass: 'bg-amber-50 dark:bg-amber-900/20 border-amber-500 text-amber-600 dark:text-amber-400' },
     ];
 
     const submit = (e) => {
@@ -235,7 +235,7 @@ export default function Create() {
                                             type="button"
                                             onClick={() => setData('category', cat.id)}
                                             className={`p-4 rounded-lg border-2 transition-all font-bold text-xs uppercase tracking-widest ${data.category === cat.id
-                                                    ? `bg-${cat.color}-50 dark:bg-${cat.color}-900/20 border-${cat.color}-500 text-${cat.color}-600 dark:text-${cat.color}-400`
+                                                    ? cat.activeClass
                                                     : 'bg-slate-50 dark:bg-slate-800 border-transparent text-slate-400'
                                                 }`}
                                         >
@@ -368,9 +368,9 @@ export default function Create() {
                                             value={data.registration_fee}
                                             onChange={e => setData('registration_fee', e.target.value)}
                                             className="w-full px-6 py-4 bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 rounded-lg focus:outline-none transition-all placeholder:text-slate-300 font-bold"
-                                            placeholder="Contoh: Gratis, Rp 50.000, Infaq Seikhlasnya"
+                                            placeholder="Contoh: Gratis atau Rp 50.000"
                                         />
-                                        <p className="mt-2 text-xs text-slate-500 font-medium">Kosongkan jika tidak ada HTM.</p>
+                                        <p className="mt-2 text-xs text-slate-500 font-medium">Isi nominal angka jika berbayar (Midtrans membutuhkan nominal &gt; 0). Kosongkan atau isi &apos;Gratis&apos; jika tanpa HTM.</p>
                                     </div>
 
                                     <div>

@@ -12,16 +12,6 @@ class Gallery extends Model
 
     public function getImageUrlAttribute()
     {
-        if (!$this->image_path) {
-            return null;
-        }
-
-        if (filter_var($this->image_path, FILTER_VALIDATE_URL)) return $this->image_path;
-        
-        try {
-            return \Illuminate\Support\Facades\Storage::url($this->image_path);
-        } catch (\Throwable $e) {
-            return null;
-        }
+        return \App\Services\FileStorageService::url($this->image_path);
     }
 }

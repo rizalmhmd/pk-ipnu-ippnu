@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Head, Link, useForm, router } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import {
     ArrowLeft,
@@ -13,7 +13,7 @@ import {
 import { motion } from 'framer-motion';
 
 export default function Edit({ post }) {
-    const { data, setData, processing, errors } = useForm({
+    const { data, setData, post: submitForm, processing, errors } = useForm({
         title: post.title || '',
         content: post.content || '',
         image: null,
@@ -55,7 +55,8 @@ export default function Edit({ post }) {
     const submit = (e) => {
         e.preventDefault();
         // Use POST with method spoofing for file uploads
-        router.post(route('admin.posts.update', post.id), data, {
+        submitForm(route('admin.posts.update', post.id), {
+            forceFormData: true,
             onSuccess: () => {
                 // Flash message handled by layout
             },

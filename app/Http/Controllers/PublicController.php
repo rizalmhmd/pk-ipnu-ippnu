@@ -30,7 +30,8 @@ class PublicController extends Controller
         $greeting = PageSetting::where('page_name', 'home_greeting')->first();
         
         // Fetch upcoming agendas (including those from the last 3 days)
-        $agendas = Agenda::where('event_date', '>=', now()->subDays(3)->toDateString())
+        $agendas = Agenda::withActiveRegistrationCount()
+                        ->where('event_date', '>=', now()->subDays(3)->toDateString())
                         ->orderBy('event_date', 'asc')
                         ->take(5)
                         ->get();
@@ -112,11 +113,12 @@ class PublicController extends Controller
 
     public function agenda()
     {
-        $agendas = Agenda::where('event_date', '>=', now()->subMonths(1)->toDateString())
+        $agendas = Agenda::withActiveRegistrationCount()
+                         ->where('event_date', '>=', now()->subMonths(1)->toDateString())
                          ->orderBy('event_date', 'asc')
                          ->get();
         
-        $todayAgendas = Agenda::whereDate('event_date', now()->toDateString())->get();
+        $todayAgendas = Agenda::withActiveRegistrationCount()->whereDate('event_date', now()->toDateString())->get();
         $pageSetting = PageSetting::where('page_name', 'agenda')->first();
         
         // Include national holidays for the calendar view
@@ -127,7 +129,7 @@ class PublicController extends Controller
 
     public function kegiatan()
     {
-        $kegiatans = Agenda::orderBy('event_date', 'desc')->get();
+        $kegiatans = Agenda::withActiveRegistrationCount()->orderBy('event_date', 'desc')->get();
         
         $pageSetting = PageSetting::where('page_name', 'agenda')->first();
         
@@ -140,6 +142,10 @@ class PublicController extends Controller
             abort(404, 'Pendaftaran untuk kegiatan ini tidak tersedia atau sudah ditutup.');
         }
 
+        $agenda->loadCount([
+            'registrations as active_registrations_count' => fn ($q) => $q->whereIn('status', ['approved', 'pending']),
+        ]);
+
         $existingRegistration = null;
         if (auth()->check()) {
             $existingRegistration = $agenda->registrations()
@@ -147,6 +153,16 @@ class PublicController extends Controller
                 ->whereIn('status', ['approved', 'pending'])
                 ->latest()
                 ->first();
+
+            if ($existingRegistration && $existingRegistration->payment_method === 'midtrans') {
+                $existingRegistration->setAttribute(
+                    'payment_url',
+                    route('kegiatan.payment', [
+                        'registration' => $existingRegistration->id,
+                        'token' => $existingRegistration->getPaymentAccessToken(),
+                    ])
+                );
+            }
         }
 
         $pageSetting = PageSetting::where('page_name', 'agenda')->first();
@@ -159,14 +175,10 @@ class PublicController extends Controller
             return back()->withErrors(['message' => 'Pendaftaran ditutup.']);
         }
 
-        if ($agenda->is_quota_full) {
-            return back()->withErrors(['message' => 'Mohon maaf, kuota pendaftaran untuk kegiatan ini sudah penuh.'])->withInput();
-        }
-
         // Validate the dynamic fields based on schema (fallback to default if empty)
         $schema = (!empty($agenda->form_schema) && is_array($agenda->form_schema)) ? $agenda->form_schema : [
             ['id' => 'field_name', 'label' => 'Nama Lengkap', 'type' => 'text', 'required' => true],
-            ['id' => 'field_phone', 'label' => 'Nomor WhatsApp / HP', 'type' => 'text', 'required' => true],
+            ['id' => 'field_phone', 'label' => 'Nomor WhatsApp / HP', 'type' => 'tel', 'required' => true],
             ['id' => 'field_email', 'label' => 'Alamat Email', 'type' => 'email', 'required' => true],
             ['id' => 'field_nik', 'label' => 'NIK (KTP / KK)', 'type' => 'nik', 'required' => false],
         ];
@@ -183,35 +195,54 @@ class PublicController extends Controller
             'payment_proof.max' => 'Ukuran maksimal file bukti pembayaran adalah 5MB.',
         ];
 
+        $phoneFieldIds = [];
+        $emailFieldIds = [];
+        $nikFieldIds = [];
+
         foreach ($schema as $field) {
             $fieldRules = [];
             if (!empty($field['required'])) $fieldRules[] = 'required';
             else $fieldRules[] = 'nullable';
 
-            $fieldType = $field['type'] ?? '';
+            $fieldType = strtolower($field['type'] ?? '');
             $fieldId = $field['id'] ?? '';
+            $fieldIdLower = strtolower($fieldId);
             $fieldLabel = strtolower($field['label'] ?? '');
 
-            if ($fieldType === 'email' || str_contains($fieldId, 'email') || str_contains($fieldLabel, 'email')) {
+            if ($fieldType === 'email' || str_contains($fieldIdLower, 'email') || str_contains($fieldLabel, 'email')) {
                 $fieldRules[] = 'email';
+                $emailFieldIds[] = $fieldId;
             }
 
-            if ($fieldType === 'nik' || str_contains($fieldId, 'nik') || str_contains($fieldLabel, 'nik')) {
+            if ($fieldType === 'nik' || str_contains($fieldIdLower, 'nik') || str_contains($fieldLabel, 'nik')) {
                 // If NIK provided, must be exactly 16 numeric digits
                 $fieldRules[] = 'regex:/^[0-9]{16}$/';
                 $customMessages['responses.' . $fieldId . '.regex'] = 'NIK harus berupa 16 digit angka (sesuai KTP atau Kartu Keluarga).';
-            } elseif ($fieldType === 'number' || str_contains($fieldId, 'phone') || str_contains($fieldId, 'whatsapp') || str_contains($fieldLabel, 'telepon') || str_contains($fieldLabel, 'whatsapp') || str_contains($fieldLabel, 'hp')) {
+                $nikFieldIds[] = $fieldId;
+            } elseif (
+                $fieldType === 'tel'
+                || str_contains($fieldIdLower, 'phone')
+                || str_contains($fieldIdLower, 'whatsapp')
+                || str_contains($fieldIdLower, 'hp')
+                || str_contains($fieldLabel, 'telepon')
+                || str_contains($fieldLabel, 'whatsapp')
+                || str_contains($fieldLabel, 'hp')
+                || str_contains($fieldLabel, 'no. wa')
+            ) {
                 // Phone / WhatsApp validation
                 $fieldRules[] = 'regex:/^[0-9+\-\s()]+$/';
                 $fieldRules[] = 'min:9';
                 $customMessages['responses.' . $fieldId . '.min'] = 'Nomor WhatsApp minimal 9 digit.';
+                $phoneFieldIds[] = $fieldId;
+            } elseif ($fieldType === 'number') {
+                $fieldRules[] = 'numeric';
             }
 
-            $rules['responses.' . $field['id']] = $fieldRules;
+            $rules['responses.' . $fieldId] = $fieldRules;
         }
 
-        // Add payment_proof rule if agenda has registration_fee
-        $isFree = empty($agenda->registration_fee) || in_array(strtolower(trim($agenda->registration_fee)), ['0', 'gratis', 'free', '-', 'rp 0', 'rp. 0']);
+        // Only enable paid flow when registration_fee has a positive numeric amount
+        $isFree = \App\Services\MidtransService::parseNumericFee($agenda->registration_fee) <= 0;
         if (!$isFree) {
             $rules['payment_method'] = ['required', 'in:cash,transfer,midtrans'];
             if ($request->input('payment_method') === 'transfer') {
@@ -227,8 +258,27 @@ class PublicController extends Controller
         $rawEmail = null;
         $rawNik = null;
 
+        foreach ($phoneFieldIds as $fid) {
+            if (!empty($inputResponses[$fid])) {
+                $rawPhone = $inputResponses[$fid];
+                break;
+            }
+        }
+        foreach ($emailFieldIds as $fid) {
+            if (!empty($inputResponses[$fid])) {
+                $rawEmail = $inputResponses[$fid];
+                break;
+            }
+        }
+        foreach ($nikFieldIds as $fid) {
+            if (!empty($inputResponses[$fid])) {
+                $rawNik = $inputResponses[$fid];
+                break;
+            }
+        }
+
         foreach ($inputResponses as $key => $val) {
-            $k = strtolower($key);
+            $k = strtolower((string) $key);
             if (!$rawPhone && (str_contains($k, 'phone') || str_contains($k, 'whatsapp') || str_contains($k, 'hp'))) {
                 $rawPhone = $val;
             }
@@ -242,66 +292,129 @@ class PublicController extends Controller
 
         $normPhone = \App\Models\AgendaRegistration::normalizePhone($rawPhone);
         $normEmail = $rawEmail ? strtolower(trim($rawEmail)) : null;
-        $normNik = $rawNik ? preg_replace('/[^0-9]/', '', $rawNik) : null;
+        $normNik = $rawNik ? preg_replace('/[^0-9]/', '', (string) $rawNik) : null;
         $currentUserId = auth()->id();
 
-        // Check against existing non-rejected registrations in this agenda
-        $existingRegistrations = $agenda->registrations()
-            ->whereIn('status', ['approved', 'pending'])
-            ->get();
+        $paymentMethod = $isFree ? 'cash' : ($validated['payment_method'] ?? 'cash');
+        $uploadedProofPath = null;
 
-        $existingRegistration = null;
-        $duplicateReason = null;
+        try {
+            $txResult = \Illuminate\Support\Facades\DB::transaction(function () use (
+                $agenda,
+                $normPhone,
+                $normEmail,
+                $normNik,
+                $rawPhone,
+                $rawEmail,
+                $currentUserId,
+                $validated,
+                $paymentMethod,
+                $request,
+                &$uploadedProofPath
+            ) {
+                $lockedAgenda = Agenda::where('id', $agenda->id)->lockForUpdate()->firstOrFail();
 
-        foreach ($existingRegistrations as $reg) {
-            // Layer 1: Check WhatsApp / Phone (Primary Key)
-            if ($normPhone && $reg->getRegistrantPhone()) {
-                $regNormPhone = \App\Models\AgendaRegistration::normalizePhone($reg->getRegistrantPhone());
-                if ($regNormPhone && $regNormPhone === $normPhone) {
-                    $existingRegistration = $reg;
-                    $duplicateReason = "Nomor WhatsApp ({$rawPhone})";
-                    break;
+                if (!$lockedAgenda->is_registration_open) {
+                    return ['error' => 'Pendaftaran ditutup.'];
                 }
-            }
 
-            // Layer 2: Check Email
-            if ($normEmail && $reg->getRegistrantEmail()) {
-                if (strtolower(trim($reg->getRegistrantEmail())) === $normEmail) {
-                    $existingRegistration = $reg;
-                    $duplicateReason = "Alamat Email ({$rawEmail})";
-                    break;
+                // Check against existing non-rejected registrations in this agenda
+                $existingRegistrations = $lockedAgenda->registrations()
+                    ->with('agenda')
+                    ->whereIn('status', ['approved', 'pending'])
+                    ->get();
+
+                $existingRegistration = null;
+                $duplicateReason = null;
+
+                foreach ($existingRegistrations as $reg) {
+                    // Layer 1: Check WhatsApp / Phone (Primary Key)
+                    if ($normPhone && $reg->getRegistrantPhone()) {
+                        $regNormPhone = \App\Models\AgendaRegistration::normalizePhone($reg->getRegistrantPhone());
+                        if ($regNormPhone && $regNormPhone === $normPhone) {
+                            $existingRegistration = $reg;
+                            $duplicateReason = "Nomor WhatsApp ({$rawPhone})";
+                            break;
+                        }
+                    }
+
+                    // Layer 2: Check Email
+                    if ($normEmail && $reg->getRegistrantEmail()) {
+                        if (strtolower(trim($reg->getRegistrantEmail())) === $normEmail) {
+                            $existingRegistration = $reg;
+                            $duplicateReason = "Alamat Email ({$rawEmail})";
+                            break;
+                        }
+                    }
+
+                    // Layer 3: Check NIK (if provided)
+                    if ($normNik && strlen($normNik) === 16 && $reg->getRegistrantNik()) {
+                        $regNik = preg_replace('/[^0-9]/', '', $reg->getRegistrantNik());
+                        if ($regNik === $normNik) {
+                            $existingRegistration = $reg;
+                            $duplicateReason = "NIK ({$normNik})";
+                            break;
+                        }
+                    }
+
+                    // Layer 4: Check User Account (if logged in)
+                    if ($currentUserId && $reg->user_id === $currentUserId) {
+                        $existingRegistration = $reg;
+                        $duplicateReason = "Akun Anda";
+                        break;
+                    }
                 }
-            }
 
-            // Layer 3: Check NIK (if provided)
-            if ($normNik && strlen($normNik) === 16 && $reg->getRegistrantNik()) {
-                $regNik = preg_replace('/[^0-9]/', '', $reg->getRegistrantNik());
-                if ($regNik === $normNik) {
-                    $existingRegistration = $reg;
-                    $duplicateReason = "NIK ({$normNik})";
-                    break;
+                if ($existingRegistration) {
+                    return [
+                        'duplicate' => $existingRegistration,
+                        'reason' => $duplicateReason,
+                    ];
                 }
-            }
 
-            // Layer 4: Check User Account (if logged in)
-            if ($currentUserId && $reg->user_id === $currentUserId) {
-                $existingRegistration = $reg;
-                $duplicateReason = "Akun Anda";
-                break;
-            }
+                // Atomic quota check inside transaction
+                if ($lockedAgenda->max_participants > 0 && $existingRegistrations->count() >= (int) $lockedAgenda->max_participants) {
+                    return ['error' => 'Mohon maaf, kuota pendaftaran untuk kegiatan ini sudah penuh.'];
+                }
+
+                if ($paymentMethod === 'transfer' && $request->hasFile('payment_proof')) {
+                    $uploadedProofPath = \App\Services\FileStorageService::upload($request->file('payment_proof'), 'payment_proofs');
+                }
+
+                $registration = $lockedAgenda->registrations()->create([
+                    'user_id' => $currentUserId,
+                    'responses' => $validated['responses'] ?? [],
+                    'status' => 'pending',
+                    'payment_proof' => $uploadedProofPath,
+                    'payment_method' => $paymentMethod,
+                ]);
+
+                return ['registration' => $registration, 'agenda' => $lockedAgenda];
+            });
+        } catch (\Throwable $e) {
+            \App\Services\FileStorageService::delete($uploadedProofPath);
+            throw $e;
         }
 
-        if ($existingRegistration) {
+        if (!empty($txResult['error'])) {
+            return back()->withErrors(['message' => $txResult['error']])->withInput();
+        }
+
+        if (!empty($txResult['duplicate'])) {
+            $existingRegistration = $txResult['duplicate'];
+            $duplicateReason = $txResult['reason'];
+
             if ($existingRegistration->status === 'approved') {
                 return back()->withErrors([
                     'message' => "{$duplicateReason} sudah terdaftar dan berstatus disetujui (Approved) untuk kegiatan ini. Pendaftaran ganda tidak diperbolehkan."
                 ])->withInput();
             }
 
-            // If pending with midtrans and snap token is available, smart redirect to existing payment
             if ($existingRegistration->payment_method === 'midtrans' && $existingRegistration->snap_token) {
-                return redirect()->route('kegiatan.payment', $existingRegistration->id)
-                    ->with('info', "{$duplicateReason} sudah memiliki pendaftaran yang menunggu pembayaran. Silakan selesaikan pembayaran berikut.");
+                return redirect()->route('kegiatan.payment', [
+                    'registration' => $existingRegistration->id,
+                    'token' => $existingRegistration->getPaymentAccessToken(),
+                ])->with('info', "{$duplicateReason} sudah memiliki pendaftaran yang menunggu pembayaran. Silakan selesaikan pembayaran berikut.");
             }
 
             return back()->withErrors([
@@ -309,30 +422,22 @@ class PublicController extends Controller
             ])->withInput();
         }
 
-        $paymentProofPath = null;
-        $paymentMethod = $validated['payment_method'] ?? 'cash';
-        
-        if ($paymentMethod === 'transfer' && $request->hasFile('payment_proof')) {
-            $paymentProofPath = $request->file('payment_proof')->store('payment_proofs', 'public');
-        }
-
-        $registration = $agenda->registrations()->create([
-            'user_id' => auth()->id(), // null if not logged in
-            'responses' => $validated['responses'] ?? [],
-            'status' => 'pending',
-            'payment_proof' => $paymentProofPath,
-            'payment_method' => $paymentMethod,
-        ]);
+        $registration = $txResult['registration'];
+        $lockedAgenda = $txResult['agenda'];
 
         if ($paymentMethod === 'midtrans' && !$isFree) {
             try {
                 $midtransService = new \App\Services\MidtransService();
-                $snapToken = $midtransService->createSnapToken($registration, $agenda);
-                
-                return redirect()->route('kegiatan.payment', $registration->id);
+                $midtransService->createSnapToken($registration, $lockedAgenda);
+
+                return redirect()->route('kegiatan.payment', [
+                    'registration' => $registration->id,
+                    'token' => $registration->getPaymentAccessToken(),
+                ]);
             } catch (\Exception $e) {
                 \Illuminate\Support\Facades\Log::error('Midtrans Snap Error: ' . $e->getMessage());
-                return back()->withErrors(['message' => 'Gagal menginisiasi pembayaran Midtrans: ' . $e->getMessage()]);
+                $registration->delete();
+                return back()->withErrors(['message' => 'Gagal menginisiasi pembayaran Midtrans: ' . $e->getMessage()])->withInput();
             }
         }
 
@@ -340,8 +445,22 @@ class PublicController extends Controller
             ->with('success', 'Pendaftaran berhasil dikirim. Terima kasih!');
     }
 
-    public function kegiatanPayment(\App\Models\AgendaRegistration $registration)
+    protected function authorizePaymentAccess(\App\Models\AgendaRegistration $registration, Request $request): void
     {
+        $token = $request->query('token') ?? $request->input('token');
+        $hasValidToken = $registration->hasValidPaymentToken(is_string($token) ? $token : null);
+        $user = auth()->user();
+        $isOwnerOrAdmin = $user && ($registration->user_id === $user->id || in_array($user->role, ['admin', 'ketua'], true));
+
+        if (!$hasValidToken && !$isOwnerOrAdmin) {
+            abort(403, 'Akses pembayaran tidak valid atau kedaluwarsa.');
+        }
+    }
+
+    public function kegiatanPayment(\App\Models\AgendaRegistration $registration, Request $request)
+    {
+        $this->authorizePaymentAccess($registration, $request);
+
         if ($registration->status === 'approved') {
             return redirect()->route('kegiatan.index')
                 ->with('success', 'Pendaftaran Anda sudah berhasil disetujui dan pembayaran telah terkonfirmasi.');
@@ -358,12 +477,14 @@ class PublicController extends Controller
             return redirect()->route('kegiatan.index')
                 ->with('success', 'Pembayaran berhasil terkonfirmasi! Status pendaftaran Anda telah disetujui.');
         }
-        
-        $agenda = $registration->agenda;
+
+        $registration->load('agenda');
         $pageSetting = PageSetting::where('page_name', 'agenda')->first();
 
         return Inertia::render('Kegiatan/Payment', [
-            'registration' => $registration->load('agenda'),
+            'registration' => $registration,
+            'registrantName' => $registration->getRegistrantName(),
+            'paymentToken' => $registration->getPaymentAccessToken(),
             'snapToken' => $registration->snap_token,
             'pageSetting' => $pageSetting,
             'clientKey' => config('midtrans.client_key'),
@@ -373,9 +494,11 @@ class PublicController extends Controller
 
     public function kegiatanVerifyPayment(\App\Models\AgendaRegistration $registration, Request $request)
     {
+        $this->authorizePaymentAccess($registration, $request);
+
         $orderId = $request->input('order_id');
         $midtransService = new \App\Services\MidtransService();
-        $syncResult = $midtransService->syncRegistration($registration, $orderId);
+        $syncResult = $midtransService->syncRegistration($registration, is_string($orderId) ? $orderId : null);
 
         return response()->json([
             'success' => $syncResult['success'],

@@ -236,7 +236,7 @@ function StructureCard({ member, isTop, isDept, isStaff, themeColor, onClick }) 
 
     return (
         <motion.div
-            Layout
+            layout
             onClick={() => onClick(member)}
             className={`relative group cursor-pointer transition-all duration-500 ${isTop ? 'w-full' : 'w-full'} 
             ${isStaff ? 'scale-[0.85] hover:scale-95' : isDept ? 'scale-[0.95] hover:scale-105' : 'hover:scale-105'}`}

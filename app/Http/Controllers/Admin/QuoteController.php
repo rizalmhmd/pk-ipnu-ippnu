@@ -22,27 +22,22 @@ class QuoteController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'content' => 'required|string|max:200',
             'author' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'order' => 'nullable|integer',
             'is_active' => 'boolean',
         ]);
 
-        $data = $request->all();
-        $data['is_active'] = $request->has('is_active');
+        $validated['order'] = (int) ($request->order ?? 0);
+        $validated['is_active'] = $request->boolean('is_active');
 
         if ($request->hasFile('image')) {
-            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
-                $path = Storage::disk('cloudinary')->putFile('quotes', $request->file('image'));
-                $data['image'] = Storage::disk('cloudinary')->url($path);
-            } else {
-                $data['image'] = $request->file('image')->store('quotes', 'public');
-            }
+            $validated['image'] = \App\Services\FileStorageService::upload($request->file('image'), 'quotes');
         }
 
-        Quote::create($data);
+        Quote::create($validated);
 
         return redirect()->route('admin.quotes.index')->with('success', 'Kutipan berhasil ditambahkan');
     }
@@ -54,56 +49,35 @@ class QuoteController extends Controller
 
     public function update(Request $request, Quote $quote)
     {
-        $request->validate([
+        $validated = $request->validate([
             'content' => 'required|string|max:200',
             'author' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
             'order' => 'nullable|integer',
             'is_active' => 'boolean',
         ]);
 
-        $data = $request->except(['image']);
-        $data['is_active'] = $request->has('is_active');
+        $validated['order'] = (int) ($request->order ?? 0);
+        $validated['is_active'] = $request->boolean('is_active');
 
         if ($request->hasFile('image')) {
-            if ($quote->image) {
-                try {
-                    Storage::delete($quote->image);
-                } catch (\Throwable $e) {
-                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
-                }
-            }
-            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
-                $path = Storage::disk('cloudinary')->putFile('quotes', $request->file('image'));
-                $data['image'] = Storage::disk('cloudinary')->url($path);
-            } else {
-                $data['image'] = $request->file('image')->store('quotes', 'public');
-            }
-        } elseif ($request->remove_image == 'true' || $request->remove_image === true) {
-            if ($quote->image) {
-                try {
-                    Storage::delete($quote->image);
-                } catch (\Throwable $e) {
-                    \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
-                }
-            }
-            $data['image'] = null;
+            \App\Services\FileStorageService::delete($quote->image);
+            $validated['image'] = \App\Services\FileStorageService::upload($request->file('image'), 'quotes');
+        } elseif ($request->boolean('remove_image') || $request->remove_image == 'true') {
+            \App\Services\FileStorageService::delete($quote->image);
+            $validated['image'] = null;
+        } else {
+            unset($validated['image']);
         }
 
-        $quote->update($data);
+        $quote->update($validated);
 
         return redirect()->route('admin.quotes.index')->with('success', 'Kutipan berhasil diperbarui');
     }
 
     public function destroy(Quote $quote)
     {
-        if ($quote->image) {
-            try {
-                Storage::delete($quote->image);
-            } catch (\Throwable $e) {
-                \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
-            }
-        }
+        \App\Services\FileStorageService::delete($quote->image);
         $quote->delete();
 
         return redirect()->route('admin.quotes.index')->with('success', 'Kutipan berhasil dihapus');

@@ -287,14 +287,19 @@ export default function Navbar() {
                             <div className="p-8 border-t border-white/5 bg-black/10">
                                 <p className="text-[10px] text-emerald-500/50 font-bold uppercase tracking-[0.2em] mb-4">Get in Touch</p>
                                 <div className="flex gap-4">
-                                    {['instagram', 'whatsapp', 'envelope'].map((social) => (
+                                    {[
+                                        { key: 'instagram', href: siteSetting?.instagram, iconClass: 'fab fa-instagram' },
+                                        { key: 'youtube', href: siteSetting?.youtube, iconClass: 'fab fa-youtube' },
+                                        { key: 'envelope', href: siteSetting?.email ? `mailto:${siteSetting.email}` : null, iconClass: 'fas fa-envelope' },
+                                    ].filter((social) => Boolean(social.href)).map((social) => (
                                         <a
-                                            key={social}
-                                            href={social === 'whatsapp' ? siteSetting?.youtube : (social === 'instagram' ? siteSetting?.instagram : `mailto:${siteSetting?.email}`)}
-                                            target="_blank"
+                                            key={social.key}
+                                            href={social.href}
+                                            target={social.key === 'envelope' ? undefined : '_blank'}
+                                            rel={social.key === 'envelope' ? undefined : 'noopener noreferrer'}
                                             className="w-10 h-10 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-emerald-400/60 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
                                         >
-                                            <i className={`fab fa-${social === 'envelope' ? '' : social}${social === 'envelope' ? 'fas fa-envelope' : ''} text-sm`}></i>
+                                            <i className={`${social.iconClass} text-sm`}></i>
                                         </a>
                                     ))}
                                 </div>

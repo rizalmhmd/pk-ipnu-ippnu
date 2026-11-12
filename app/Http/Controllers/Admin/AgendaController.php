@@ -14,7 +14,7 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        $agendas = Agenda::latest('event_date')->paginate(10);
+        $agendas = Agenda::withActiveRegistrationCount()->latest('event_date')->paginate(10);
         return \Inertia\Inertia::render('Admin/Agendas/Index', compact('agendas'));
     }
 
@@ -47,7 +47,7 @@ class AgendaController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('pamflet');
+            $validated['image'] = \App\Services\FileStorageService::upload($request->file('image'), 'pamflet');
         }
 
         Agenda::create($validated);
@@ -86,25 +86,11 @@ class AgendaController extends Controller
         ]);
 
         if ($request->boolean('remove_image') || $request->remove_image === 'true' || $request->remove_image === '1') {
-            if ($agenda->image) {
-                try {
-                    \Illuminate\Support\Facades\Storage::delete($agenda->image);
-                } catch (\Throwable $e) {}
-                if (file_exists(public_path($agenda->image))) {
-                    @unlink(public_path($agenda->image));
-                }
-            }
+            \App\Services\FileStorageService::delete($agenda->image);
             $validated['image'] = null;
         } elseif ($request->hasFile('image')) {
-            if ($agenda->image) {
-                try {
-                    \Illuminate\Support\Facades\Storage::delete($agenda->image);
-                } catch (\Throwable $e) {}
-                if (file_exists(public_path($agenda->image))) {
-                    @unlink(public_path($agenda->image));
-                }
-            }
-            $validated['image'] = $request->file('image')->store('pamflet');
+            \App\Services\FileStorageService::delete($agenda->image);
+            $validated['image'] = \App\Services\FileStorageService::upload($request->file('image'), 'pamflet');
         } else {
             unset($validated['image']);
         }
@@ -120,9 +106,7 @@ class AgendaController extends Controller
      */
     public function destroy(Agenda $agenda)
     {
-        if ($agenda->image) {
-            \Illuminate\Support\Facades\Storage::delete($agenda->image);
-        }
+        \App\Services\FileStorageService::delete($agenda->image);
 
         $agenda->delete();
 

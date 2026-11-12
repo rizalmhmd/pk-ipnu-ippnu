@@ -29,23 +29,25 @@ class AgendaRegistration extends Model
 
     public function getPaymentProofUrlAttribute(): ?string
     {
-        if (!$this->payment_proof) {
-            return null;
+        return \App\Services\FileStorageService::url($this->payment_proof);
+    }
+
+    /**
+     * Get effective schema (custom or default fields) for parsing responses.
+     */
+    public function getEffectiveSchema(): array
+    {
+        $schema = $this->agenda?->form_schema;
+        if (is_array($schema) && count($schema) > 0) {
+            return $schema;
         }
 
-        if (filter_var($this->payment_proof, FILTER_VALIDATE_URL)) {
-            return $this->payment_proof;
-        }
-
-        if (file_exists(public_path($this->payment_proof))) {
-            return asset($this->payment_proof);
-        }
-
-        try {
-            return \Illuminate\Support\Facades\Storage::url($this->payment_proof);
-        } catch (\Throwable $e) {
-            return '/storage/' . ltrim($this->payment_proof, '/');
-        }
+        return [
+            ['id' => 'field_name', 'label' => 'Nama Lengkap', 'type' => 'text', 'required' => true],
+            ['id' => 'field_phone', 'label' => 'Nomor WhatsApp / HP', 'type' => 'tel', 'required' => true],
+            ['id' => 'field_email', 'label' => 'Alamat Email', 'type' => 'email', 'required' => true],
+            ['id' => 'field_nik', 'label' => 'NIK (KTP / KK)', 'type' => 'nik', 'required' => false],
+        ];
     }
 
     public function agenda()
@@ -59,19 +61,40 @@ class AgendaRegistration extends Model
     }
 
     /**
+     * Generate a deterministic HMAC token for accessing payment status/checkout.
+     */
+    public function getPaymentAccessToken(): string
+    {
+        return hash_hmac('sha256', "kegiatan-payment:{$this->id}", (string) config('app.key'));
+    }
+
+    /**
+     * Validate a payment access token.
+     */
+    public function hasValidPaymentToken(?string $token): bool
+    {
+        if (!$token) {
+            return false;
+        }
+
+        return hash_equals($this->getPaymentAccessToken(), $token);
+    }
+
+    /**
      * Get email address of the registrant.
      */
     public function getRegistrantEmail(): ?string
     {
-        $schema = $this->agenda?->form_schema;
-        if (is_array($schema) && is_array($this->responses)) {
+        $schema = $this->getEffectiveSchema();
+        if (is_array($this->responses)) {
             // First check by schema field with type 'email' or label containing 'email'
             foreach ($schema as $field) {
+                $id = strtolower($field['id'] ?? '');
                 $type = strtolower($field['type'] ?? '');
                 $label = strtolower($field['label'] ?? '');
-                if ($type === 'email' || str_contains($label, 'email')) {
+                if ($type === 'email' || str_contains($id, 'email') || str_contains($label, 'email')) {
                     $emailVal = $this->responses[$field['id']] ?? null;
-                    if ($emailVal && filter_var($emailVal, FILTER_VALIDATE_EMAIL)) {
+                    if ($emailVal && is_string($emailVal) && filter_var(trim($emailVal), FILTER_VALIDATE_EMAIL)) {
                         return trim($emailVal);
                     }
                 }
@@ -98,11 +121,12 @@ class AgendaRegistration extends Model
      */
     public function getRegistrantName(): string
     {
-        $schema = $this->agenda?->form_schema;
-        if (is_array($schema) && is_array($this->responses)) {
+        $schema = $this->getEffectiveSchema();
+        if (is_array($this->responses)) {
             foreach ($schema as $field) {
+                $id = strtolower($field['id'] ?? '');
                 $label = strtolower($field['label'] ?? '');
-                if (str_contains($label, 'nama')) {
+                if (str_contains($id, 'name') || str_contains($id, 'nama') || str_contains($label, 'nama')) {
                     $val = $this->responses[$field['id']] ?? null;
                     if ($val && is_string($val)) {
                         return trim($val);
@@ -143,20 +167,33 @@ class AgendaRegistration extends Model
      */
     public function getRegistrantPhone(): ?string
     {
-        $schema = $this->agenda?->form_schema;
-        if (is_array($schema) && is_array($this->responses)) {
+        $schema = $this->getEffectiveSchema();
+        if (is_array($this->responses)) {
             foreach ($schema as $field) {
                 $id = strtolower($field['id'] ?? '');
+                $type = strtolower($field['type'] ?? '');
                 $label = strtolower($field['label'] ?? '');
-                if (str_contains($id, 'phone') || str_contains($id, 'whatsapp') || str_contains($label, 'telepon') || str_contains($label, 'whatsapp') || str_contains($label, 'hp')) {
+                if (
+                    $type === 'tel'
+                    || str_contains($id, 'phone')
+                    || str_contains($id, 'whatsapp')
+                    || str_contains($id, 'hp')
+                    || str_contains($label, 'telepon')
+                    || str_contains($label, 'whatsapp')
+                    || str_contains($label, 'hp')
+                    || str_contains($label, 'no. wa')
+                ) {
                     $val = $this->responses[$field['id']] ?? null;
-                    if ($val) return trim($val);
+                    if ($val) return trim((string) $val);
                 }
             }
-        }
 
-        if (isset($this->responses['field_phone'])) {
-            return trim($this->responses['field_phone']);
+            foreach ($this->responses as $key => $val) {
+                $k = strtolower((string) $key);
+                if ($val && (str_contains($k, 'phone') || str_contains($k, 'whatsapp') || str_contains($k, 'hp'))) {
+                    return trim((string) $val);
+                }
+            }
         }
 
         return null;
@@ -167,20 +204,23 @@ class AgendaRegistration extends Model
      */
     public function getRegistrantNik(): ?string
     {
-        $schema = $this->agenda?->form_schema;
-        if (is_array($schema) && is_array($this->responses)) {
+        $schema = $this->getEffectiveSchema();
+        if (is_array($this->responses)) {
             foreach ($schema as $field) {
                 $id = strtolower($field['id'] ?? '');
+                $type = strtolower($field['type'] ?? '');
                 $label = strtolower($field['label'] ?? '');
-                if (str_contains($id, 'nik') || str_contains($label, 'nik')) {
+                if ($type === 'nik' || str_contains($id, 'nik') || str_contains($label, 'nik')) {
                     $val = $this->responses[$field['id']] ?? null;
-                    if ($val) return trim($val);
+                    if ($val) return trim((string) $val);
                 }
             }
-        }
 
-        if (isset($this->responses['field_nik'])) {
-            return trim($this->responses['field_nik']);
+            foreach ($this->responses as $key => $val) {
+                if ($val && str_contains(strtolower((string) $key), 'nik')) {
+                    return trim((string) $val);
+                }
+            }
         }
 
         return null;

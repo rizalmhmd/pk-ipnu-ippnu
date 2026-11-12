@@ -24,28 +24,22 @@ class ArticleController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
             'author' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
-        $data = $request->all();
-        $data['user_id'] = auth()->id();
-        $data['slug'] = Str::slug($request->title) . '-' . time();
-        $data['published_at'] = now();
+        $validated['user_id'] = auth()->id();
+        $validated['slug'] = Str::slug($request->title) . '-' . time();
+        $validated['published_at'] = now();
 
         if ($request->hasFile('image')) {
-            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
-                $path = Storage::disk('cloudinary')->putFile('articles', $request->file('image'));
-                $data['image'] = Storage::disk('cloudinary')->url($path);
-            } else {
-                $data['image'] = $request->file('image')->store('articles', 'public');
-            }
+            $validated['image'] = \App\Services\FileStorageService::upload($request->file('image'), 'articles');
         }
 
-        Article::create($data);
+        Article::create($validated);
 
         return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil ditambahkan');
     }
@@ -57,62 +51,35 @@ class ArticleController extends Controller
 
     public function update(Request $request, Article $article)
     {
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
             'author' => 'nullable|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
         ]);
 
-        $data = $request->all();
-        
         if ($request->title !== $article->title) {
-            $data['slug'] = Str::slug($request->title) . '-' . time();
-        } else {
-            unset($data['slug']);
+            $validated['slug'] = Str::slug($request->title) . '-' . time();
         }
 
         if ($request->hasFile('image')) {
-            if ($article->image) {
-                try {
-                    Storage::delete($article->image);
-                } catch (\Throwable $e) {
-                    \Illuminate\Support\Facades\Log::warning("Storage delete failed: " . $e->getMessage());
-                }
-            }
-            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
-                $path = Storage::disk('cloudinary')->putFile('articles', $request->file('image'));
-                $data['image'] = Storage::disk('cloudinary')->url($path);
-            } else {
-                $data['image'] = $request->file('image')->store('articles', 'public');
-            }
-        } elseif ($request->remove_image == 'true' || $request->remove_image === true) {
-            if ($article->image) {
-                try {
-                    Storage::delete($article->image);
-                } catch (\Throwable $e) {
-                    \Illuminate\Support\Facades\Log::warning("Storage delete failed: " . $e->getMessage());
-                }
-            }
-            $data['image'] = null;
+            \App\Services\FileStorageService::delete($article->image);
+            $validated['image'] = \App\Services\FileStorageService::upload($request->file('image'), 'articles');
+        } elseif ($request->boolean('remove_image') || $request->remove_image == 'true') {
+            \App\Services\FileStorageService::delete($article->image);
+            $validated['image'] = null;
         } else {
-            unset($data['image']);
+            unset($validated['image']);
         }
 
-        $article->update($data);
+        $article->update($validated);
 
         return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil diperbarui');
     }
 
     public function destroy(Article $article)
     {
-        if ($article->image) {
-            try {
-                Storage::delete($article->image);
-            } catch (\Throwable $e) {
-                \Illuminate\Support\Facades\Log::warning("Storage delete failed: " . $e->getMessage());
-            }
-        }
+        \App\Services\FileStorageService::delete($article->image);
         $article->delete();
 
         return redirect()->route('admin.articles.index')->with('success', 'Artikel berhasil dihapus');

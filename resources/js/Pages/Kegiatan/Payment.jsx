@@ -6,7 +6,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { CreditCard, CheckCircle2, RefreshCw, AlertCircle, ArrowLeft, Wallet } from 'lucide-react';
 
-export default function Payment({ registration, snapToken, pageSetting, clientKey, isProduction }) {
+export default function Payment({ registration, snapToken, pageSetting, clientKey, isProduction, registrantName, paymentToken }) {
     const [isSnapLoaded, setIsSnapLoaded] = useState(false);
     const [isVerifying, setIsVerifying] = useState(false);
     const [paymentVerified, setPaymentVerified] = useState(registration.status === 'approved');
@@ -17,6 +17,7 @@ export default function Payment({ registration, snapToken, pageSetting, clientKe
         try {
             const response = await axios.post(route('kegiatan.payment.verify', registration.id), {
                 order_id: orderId || registration.midtrans_order_id,
+                token: paymentToken,
             });
 
             if (response.data.success && response.data.status === 'approved') {
@@ -228,7 +229,7 @@ export default function Payment({ registration, snapToken, pageSetting, clientKe
                                     </div>
                                     <div className="flex justify-between items-center text-sm">
                                         <span className="text-slate-500">Nama Peserta</span>
-                                        <span className="font-semibold text-slate-800">{registration.responses?.field_name || 'Peserta'}</span>
+                                        <span className="font-semibold text-slate-800">{registrantName || registration.responses?.field_name || 'Peserta'}</span>
                                     </div>
                                     <div className="flex justify-between items-center text-sm pt-2 border-t border-slate-200/60">
                                         <span className="text-slate-500">Status Pembayaran</span>

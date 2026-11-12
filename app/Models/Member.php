@@ -17,16 +17,6 @@ class Member extends Model
 
     public function getPhotoUrlAttribute()
     {
-        if (!$this->photo) {
-            return null;
-        }
-
-        if (filter_var($this->photo, FILTER_VALIDATE_URL)) return $this->photo;
-        
-        try {
-            return \Illuminate\Support\Facades\Storage::url($this->photo);
-        } catch (\Throwable $e) {
-            return null;
-        }
+        return \App\Services\FileStorageService::url($this->photo);
     }
 }

@@ -26,15 +26,32 @@ class MidtransService
     }
 
     /**
+     * Extract numeric registration fee in IDR; returns 0 when free/non-numeric.
+     */
+    public static function parseNumericFee(?string $fee): int
+    {
+        if (!$fee) {
+            return 0;
+        }
+
+        $normalized = strtolower(trim($fee));
+        if (in_array($normalized, ['0', 'gratis', 'free', '-', 'rp 0', 'rp. 0'], true)) {
+            return 0;
+        }
+
+        return (int) preg_replace('/[^0-9]/', '', $fee);
+    }
+
+    /**
      * Generate Snap Token for Agenda Registration and store order_id.
      */
     public function createSnapToken(AgendaRegistration $registration, Agenda $agenda): string
     {
         self::init();
 
-        $grossAmount = (int) preg_replace('/[^0-9]/', '', (string) $agenda->registration_fee);
+        $grossAmount = self::parseNumericFee($agenda->registration_fee);
         if ($grossAmount <= 0) {
-            $grossAmount = 10000;
+            throw new \InvalidArgumentException('Nominal HTM agenda harus berupa angka lebih dari 0 untuk pembayaran Midtrans.');
         }
 
         $orderId = 'REG-' . $registration->id . '-' . time();
@@ -47,7 +64,7 @@ class MidtransService
             'customer_details' => [
                 'first_name' => $registration->getRegistrantName(),
                 'email' => $registration->getRegistrantEmail() ?? 'peserta@example.com',
-                'phone' => $registration->responses['field_phone'] ?? null,
+                'phone' => $registration->getRegistrantPhone(),
             ],
             'item_details' => [
                 [
@@ -95,6 +112,26 @@ class MidtransService
         self::init();
 
         $orderId = $orderId ?: $registration->midtrans_order_id;
+
+        if ($orderId) {
+            $expectedPrefix = "REG-{$registration->id}-";
+            if (!str_starts_with($orderId, $expectedPrefix)) {
+                return [
+                    'success' => false,
+                    'message' => 'Order ID tidak sesuai dengan pendaftaran ini.',
+                    'status' => $registration->status,
+                    'transaction_status' => null,
+                ];
+            }
+            if ($registration->midtrans_order_id && $orderId !== $registration->midtrans_order_id) {
+                return [
+                    'success' => false,
+                    'message' => 'Order ID tidak cocok dengan transaksi yang tercatat.',
+                    'status' => $registration->status,
+                    'transaction_status' => null,
+                ];
+            }
+        }
 
         // If orderId is missing, attempt to discover order_id around registration created_at
         if (!$orderId && $registration->created_at) {
@@ -215,10 +252,10 @@ class MidtransService
 
         $parts = explode('-', (string) $orderId);
         if (count($parts) >= 2 && $parts[0] === 'REG') {
-            $registrationId = $parts[1];
+            $registrationId = (int) $parts[1];
             $registration = AgendaRegistration::find($registrationId);
 
-            if ($registration) {
+            if ($registration && (!$registration->midtrans_order_id || $registration->midtrans_order_id === $orderId)) {
                 $oldStatus = $registration->status;
                 $newStatus = $registration->status;
 

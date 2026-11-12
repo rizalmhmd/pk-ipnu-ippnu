@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import HeroSection from '@/Components/HeroSection';
 import { motion } from 'framer-motion';
+import { sanitizeHtml } from '@/Utils/sanitizeHtml';
 
 export default function ArticleDetail({ article }) {
     const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
@@ -81,7 +82,7 @@ export default function ArticleDetail({ article }) {
                     {/* Article Content */}
                     <article
                         className="prose prose-lg prose-emerald max-w-none text-slate-600 leading-relaxed mb-20 px-2 lg:px-0 text-justify"
-                        dangerouslySetInnerHTML={{ __html: article.content }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(article.content) }}
                     />
 
                     {/* Footer / Social Share */}

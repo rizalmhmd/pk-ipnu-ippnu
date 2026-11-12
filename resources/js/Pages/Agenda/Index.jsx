@@ -61,9 +61,9 @@ export default function AgendaIndex({ agendas = [], todayAgendas = [], pageSetti
             <Head title="Agenda & Kegiatan" />
 
             <HeroSection
-                bgImage={pageSetting?.banner_image ? `/${pageSetting.banner_image}` : "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"}
-                title={pageSetting?.title || "Agenda & Kegiatan"}
-                subtitle={pageSetting?.subtitle || "Jadwal agenda organisasi & kalender hari libur nasional"}
+                bgImage={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"}
+                title={pageSetting?.hero_title || "Agenda & Kegiatan"}
+                subtitle={pageSetting?.hero_description || "Jadwal agenda organisasi & kalender hari libur nasional"}
             />
 
 

@@ -10,7 +10,6 @@ import { router } from '@inertiajs/react';
 export const useRealtimeUpdates = (modelType = null, propName = null) => {
     useEffect(() => {
         if (!window.Echo) {
-            console.error('Laravel Echo is not initialized.');
             return;
         }
 

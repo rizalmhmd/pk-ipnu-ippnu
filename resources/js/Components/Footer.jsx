@@ -34,7 +34,7 @@ export default function Footer() {
                             { icon: 'facebook-f', link: siteSetting?.facebook },
                             { icon: 'instagram', link: siteSetting?.instagram },
                             { icon: 'twitter', link: siteSetting?.twitter },
-                            { icon: 'whatsapp', link: siteSetting?.youtube },
+                            { icon: 'youtube', link: siteSetting?.youtube },
                         ].map((social, idx) => social.link && (
                             <a
                                 key={idx}

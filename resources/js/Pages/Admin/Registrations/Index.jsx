@@ -637,7 +637,19 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                                 )}
 
                                 <div className="space-y-4 border-t border-slate-100 dark:border-slate-800 pt-4">
-                                    {selectedReg.agenda?.form_schema?.map(field => {
+                                    {(selectedReg.agenda?.form_schema && selectedReg.agenda.form_schema.length > 0
+                                        ? selectedReg.agenda.form_schema
+                                        : Object.keys(selectedReg.responses || {}).map((key) => ({
+                                            id: key,
+                                            type: key.includes('nik') ? 'nik' : 'text',
+                                            label: ({
+                                                field_name: 'Nama Lengkap',
+                                                field_email: 'Alamat Email',
+                                                field_phone: 'Nomor WhatsApp / Telepon',
+                                                field_asal: 'Asal Instansi / Pimpinan / Ranting',
+                                            }[key] || key.replace(/^field_/, '').replace(/_/g, ' ')),
+                                        }))
+                                    ).map(field => {
                                         const val = selectedReg.responses?.[field.id];
                                         const isNik = field.type === 'nik' || field.id.includes('nik') || (field.label || '').toLowerCase().includes('nik');
                                         const parsed = (isNik && val) ? parseFullNik(val) : null;

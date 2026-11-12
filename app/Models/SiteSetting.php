@@ -31,37 +31,16 @@ class SiteSetting extends Model
 
     public function getSiteLogoUrlAttribute()
     {
-        if (!$this->site_logo) return null;
-        if (filter_var($this->site_logo, FILTER_VALIDATE_URL)) return $this->site_logo;
-        
-        try {
-            return \Illuminate\Support\Facades\Storage::url($this->site_logo);
-        } catch (\Throwable $e) {
-            return null;
-        }
+        return \App\Services\FileStorageService::url($this->site_logo);
     }
 
     public function getFaviconUrlAttribute()
     {
-        if (!$this->favicon) return null;
-        if (filter_var($this->favicon, FILTER_VALIDATE_URL)) return $this->favicon;
-        
-        try {
-            return \Illuminate\Support\Facades\Storage::url($this->favicon);
-        } catch (\Throwable $e) {
-            return null;
-        }
+        return \App\Services\FileStorageService::url($this->favicon);
     }
 
     public function getDefaultHeroImageUrlAttribute()
     {
-        if (!$this->default_hero_image) return null;
-        if (filter_var($this->default_hero_image, FILTER_VALIDATE_URL)) return $this->default_hero_image;
-        
-        try {
-            return \Illuminate\Support\Facades\Storage::url($this->default_hero_image);
-        } catch (\Throwable $e) {
-            return null;
-        }
+        return \App\Services\FileStorageService::url($this->default_hero_image);
     }
 }

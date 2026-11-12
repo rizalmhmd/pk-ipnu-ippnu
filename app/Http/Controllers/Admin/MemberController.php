@@ -23,29 +23,24 @@ class MemberController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'position' => 'required',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
-            'instagram' => 'nullable|string',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'instagram' => 'nullable|string|max:255',
             'type' => 'required|in:ipnu,ippnu',
             'order' => 'nullable|integer',
             'level' => 'required|integer|min:1|max:3',
             'department' => 'nullable|string|max:255',
         ]);
 
-        $data = $request->all();
+        $validated['order'] = (int) ($request->order ?? 0);
 
         if ($request->hasFile('photo')) {
-            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
-                $path = Storage::disk('cloudinary')->putFile('members', $request->file('photo'));
-                $data['photo'] = Storage::disk('cloudinary')->url($path);
-            } else {
-                $data['photo'] = $request->file('photo')->store('members', 'public');
-            }
+            $validated['photo'] = \App\Services\FileStorageService::upload($request->file('photo'), 'members');
         }
 
-        Member::create($data);
+        Member::create($validated);
 
         return redirect()->route('admin.members.index')->with('success', 'Anggota berhasil ditambahkan');
     }
@@ -58,10 +53,10 @@ class MemberController extends Controller
     public function update(Request $request, Member $member)
     {
         $request->validate([
-            'name' => 'required',
-            'position' => 'required',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
-            'instagram' => 'nullable|string',
+            'name' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'instagram' => 'nullable|string|max:255',
             'type' => 'required|in:ipnu,ippnu',
             'order' => 'nullable|integer',
             'level' => 'required|integer|min:1|max:3',
@@ -72,27 +67,10 @@ class MemberController extends Controller
         $data['order'] = (int) ($request->order ?? 0);
 
         if ($request->hasFile('photo')) {
-            if ($member->photo) {
-                try {
-                    Storage::delete($member->photo);
-                } catch (\Throwable $e) {
-                    \Illuminate\Support\Facades\Log::warning("Photo delete failed: " . $e->getMessage());
-                }
-            }
-            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary' || config('cloudinary.cloud_url')) {
-                $path = Storage::disk('cloudinary')->putFile('members', $request->file('photo'));
-                $data['photo'] = Storage::disk('cloudinary')->url($path);
-            } else {
-                $data['photo'] = $request->file('photo')->store('members', 'public');
-            }
-        } elseif ($request->remove_photo == 'true' || $request->remove_photo === true) {
-            if ($member->photo) {
-                try {
-                    Storage::delete($member->photo);
-                } catch (\Throwable $e) {
-                    \Illuminate\Support\Facades\Log::warning("Photo delete failed: " . $e->getMessage());
-                }
-            }
+            \App\Services\FileStorageService::delete($member->photo);
+            $data['photo'] = \App\Services\FileStorageService::upload($request->file('photo'), 'members');
+        } elseif ($request->boolean('remove_photo') || $request->remove_photo == 'true') {
+            \App\Services\FileStorageService::delete($member->photo);
             $data['photo'] = null;
         }
 
@@ -103,13 +81,7 @@ class MemberController extends Controller
 
     public function destroy(Member $member)
     {
-        if ($member->photo) {
-            try {
-                Storage::delete($member->photo);
-            } catch (\Throwable $e) {
-                \Illuminate\Support\Facades\Log::warning("Cloudinary delete failed: " . $e->getMessage());
-            }
-        }
+        \App\Services\FileStorageService::delete($member->photo);
         $member->delete();
 
         return redirect()->route('admin.members.index')->with('success', 'Anggota berhasil dihapus');

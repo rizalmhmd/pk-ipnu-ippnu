@@ -25,28 +25,22 @@ class Agenda extends Model
 
     public function getImageUrlAttribute()
     {
-        if (!$this->image) {
-            return null;
-        }
+        return \App\Services\FileStorageService::url($this->image);
+    }
 
-        if (filter_var($this->image, FILTER_VALIDATE_URL)) {
-            return $this->image;
-        }
-
-        // Cek apakah berkas ada di folder public lokal
-        if (file_exists(public_path($this->image))) {
-            return asset($this->image);
-        }
-
-        try {
-            return \Illuminate\Support\Facades\Storage::url($this->image);
-        } catch (\Throwable $e) {
-            return '/' . ltrim($this->image, '/');
-        }
+    public function scopeWithActiveRegistrationCount($query)
+    {
+        return $query->withCount([
+            'registrations as active_registrations_count' => fn ($q) => $q->whereIn('status', ['approved', 'pending']),
+        ]);
     }
 
     public function getTotalRegisteredAttribute(): int
     {
+        if (array_key_exists('active_registrations_count', $this->attributes)) {
+            return (int) $this->attributes['active_registrations_count'];
+        }
+
         // Hitung peserta yang statusnya approved atau pending
         if ($this->relationLoaded('registrations')) {
             return $this->registrations->whereIn('status', ['approved', 'pending'])->count();

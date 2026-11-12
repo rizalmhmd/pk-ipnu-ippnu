@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import HeroSection from '@/Components/HeroSection';
 import { motion } from 'framer-motion';
+import { sanitizeHtml } from '@/Utils/sanitizeHtml';
 
 export default function NewsDetail({ post }) {
     const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
@@ -57,7 +58,7 @@ export default function NewsDetail({ post }) {
                             <div>
                                 <p className="text-xs font-bold uppercase tracking-widest text-slate-400">Diterbitkan</p>
                                 <p className="text-sm font-bold text-slate-800">
-                                    {new Date(post.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                    {new Date(post.published_at || post.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
                                 </p>
                             </div>
                         </div>
@@ -81,7 +82,7 @@ export default function NewsDetail({ post }) {
                     {/* Article Content */}
                     <article
                         className="prose prose-lg prose-emerald max-w-none text-slate-600 leading-relaxed mb-20 px-2 lg:px-0 text-justify"
-                        dangerouslySetInnerHTML={{ __html: post.content }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }}
                     />
 
                     {/* Footer / Social Share */}

@@ -38,37 +38,29 @@ class ProfileController extends Controller
         $user->save();
 
         // Handle Member Data
-        $memberData = $request->only(['position', 'instagram', 'type']);
-        
         $member = $user->member;
-        if (!$member) {
-            $member = new \App\Models\Member(['user_id' => $user->id]);
-        }
+        $hasMemberInputs = $request->filled('position')
+            || $request->filled('instagram')
+            || $request->hasFile('photo');
 
-        if ($request->hasFile('photo')) {
-            if ($member->photo) {
-                try {
-                    \Illuminate\Support\Facades\Storage::delete($member->photo);
-                } catch (\Throwable $e) {
-                }
+        if ($member || $hasMemberInputs) {
+            $memberData = [
+                'name' => $user->name,
+                'position' => $request->input('position') ?: ($member?->position ?: ($user->role_label ?? 'Pengurus')),
+                'instagram' => $request->input('instagram'),
+                'type' => $request->input('type') ?: ($member?->type ?: 'ipnu'),
+            ];
+
+            if ($request->hasFile('photo')) {
+                \App\Services\FileStorageService::delete($member?->photo);
+                $memberData['photo'] = \App\Services\FileStorageService::upload($request->file('photo'), 'members');
             }
-            
-            if (config('filesystems.default') == 'cloudinary' || env('FILESYSTEM_DISK') == 'cloudinary') {
-                $path = \Illuminate\Support\Facades\Storage::disk('cloudinary')->putFile('members', $request->file('photo'));
-                $memberData['photo'] = \Illuminate\Support\Facades\Storage::disk('cloudinary')->url($path);
+
+            if ($member) {
+                $member->update($memberData);
             } else {
-                $memberData['photo'] = $request->file('photo')->store('members', 'public');
+                \App\Models\Member::create(array_merge(['user_id' => $user->id], $memberData));
             }
-        }
-
-        // Ensure name is synced if changed in user but not in member (or just always sync)
-        $memberData['name'] = $user->name;
-
-        if ($member->exists) {
-            $member->update($memberData);
-        } else {
-            $member->fill($memberData);
-            $member->save();
         }
 
         return Redirect::route('admin.profile.edit')->with('status', 'profile-updated');

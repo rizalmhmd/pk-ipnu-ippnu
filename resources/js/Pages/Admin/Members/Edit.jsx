@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Head, Link, useForm, router } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import {
     ArrowLeft,
@@ -14,7 +14,7 @@ import {
 import { motion } from 'framer-motion';
 
 export default function Edit({ member }) {
-    const { data, setData, processing, errors } = useForm({
+    const { data, setData, post, transform, processing, errors } = useForm({
         name: member.name || '',
         position: member.position || '',
         photo: null,
@@ -60,12 +60,13 @@ export default function Edit({ member }) {
 
     const submit = (e) => {
         e.preventDefault();
-        // Ensure order is a number
-        const submitData = {
-            ...data,
-            order: parseInt(data.order) || 0
-        };
-        router.post(route('admin.members.update', member.id), submitData);
+        transform((formData) => ({
+            ...formData,
+            order: parseInt(formData.order, 10) || 0,
+        }));
+        post(route('admin.members.update', member.id), {
+            forceFormData: true,
+        });
     };
 
     return (
