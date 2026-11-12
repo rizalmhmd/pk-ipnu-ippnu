@@ -3,7 +3,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
-    const { siteSetting, auth } = usePage().props;
+    const { siteSetting } = usePage().props;
     const { url } = usePage();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -126,15 +126,6 @@ export default function Navbar() {
                                 )}
                             </div>
                         ))}
-
-                        {auth?.user && (
-                            <Link
-                                href="/admin/dashboard"
-                                className="ml-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-black uppercase tracking-wider transition-all shadow-lg flex items-center gap-2"
-                            >
-                                <i className="fas fa-lock"></i> Dashboard
-                            </Link>
-                        )}
                     </div>
 
                     {/* Mobile Toggler */}
@@ -268,19 +259,6 @@ export default function Navbar() {
                                         )}
                                     </motion.div>
                                 ))}
-
-                                {auth?.user && (
-                                    <div className="pt-6 mt-6 border-t border-white/5 px-2">
-                                        <Link
-                                            href="/admin/dashboard"
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                            className="w-full flex items-center justify-center gap-3 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-2xl text-sm font-black uppercase tracking-widest shadow-lg shadow-blue-900/20 transition-all active:scale-[0.98]"
-                                        >
-                                            <i className="fas fa-lock"></i>
-                                            Dashboard Admin
-                                        </Link>
-                                    </div>
-                                )}
                             </div>
 
                             {/* Footer / Contact */}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, usePage } from '@inertiajs/react';
 
 export default function Footer() {
-    const { siteSetting } = usePage().props;
+    const { siteSetting, auth } = usePage().props;
 
     return (
         <footer className="bg-slate-950 text-slate-400 pt-12 pb-8 border-t border-white/5">
@@ -84,7 +84,21 @@ export default function Footer() {
                             <li><a href="#" className="hover:text-white transition-colors">Kebijakan Privasi</a></li>
                             <li><a href="#" className="hover:text-white transition-colors">Syarat & Ketentuan</a></li>
                             <li><a href="#" className="hover:text-white transition-colors">Bantuan / FAQ</a></li>
-                            <li><Link href="/login" className="hover:text-white transition-colors font-bold text-emerald-500">Login Pengurus</Link></li>
+                            <li>
+                                {auth?.user ? (
+                                    <Link
+                                        href="/admin/dashboard"
+                                        className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-all shadow-lg shadow-emerald-950/30"
+                                    >
+                                        <i className="fas fa-lock text-[11px]"></i>
+                                        Dashboard
+                                    </Link>
+                                ) : (
+                                    <Link href="/login" className="hover:text-white transition-colors font-bold text-emerald-500">
+                                        Login Pengurus
+                                    </Link>
+                                )}
+                            </li>
                         </ul>
                     </div>
 
