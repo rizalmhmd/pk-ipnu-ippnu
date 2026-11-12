@@ -18,6 +18,8 @@ export default function History({ pageSetting }) {
 
             <HeroSection
                 bgImage={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1464695110811-47a0584c9c61?ixlib=rb-4.0.3"}
+                title={pageSetting?.hero_title || "Sejarah Organisasi"}
+                subtitle={pageSetting?.hero_description || "Jejak langkah & khidmah PKPT IPNU IPPNU"}
             />
 
             <div className="container mx-auto px-6 py-20">
@@ -76,7 +78,7 @@ export default function History({ pageSetting }) {
                     viewport={{ once: true }}
                     className="mt-32 p-12 bg-slate-900 rounded-lg text-center text-white relative overflow-hidden shadow-2xl"
                 >
-                    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                    <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] opacity-10"></div>
                     <div className="relative z-10">
                         <h3 className="text-2xl md:text-3xl font-bold font-serif mb-6 italic tracking-tight">"Menolak Lupa, Merawat Tradisi, Menatap Masa Depan"</h3>
                         <p className="text-emerald-400 uppercase tracking-[0.4em] text-[10px] font-black">Khidmah Tanpa Batas</p>

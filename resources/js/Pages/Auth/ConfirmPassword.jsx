@@ -61,7 +61,7 @@ export default function ConfirmPassword() {
                     {processing ? (
                         <i className="fas fa-circle-notch animate-spin"></i>
                     ) : (
-                        <i className="fas fa-shield-check text-xs"></i>
+                        <i className="fas fa-shield-alt text-xs"></i>
                     )}
                     Konfirmasi Password
                 </button>

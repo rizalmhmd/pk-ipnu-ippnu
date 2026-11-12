@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import ExcelJS from 'exceljs';
 import { parseFullNik } from '@/Utils/nikParser';
+import { confirmDelete } from '@/Utils/confirmDelete';
 
 export default function RegistrationsIndex({ registrations, agendas, filters }) {
     const [selectedReg, setSelectedReg] = useState(null);
@@ -21,9 +22,9 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
     };
 
     const handleDelete = (id) => {
-        if (confirm('Apakah Anda yakin ingin menghapus pendaftar ini?')) {
+        confirmDelete('Apakah Anda yakin ingin menghapus pendaftar ini?', () => {
             router.delete(route('admin.registrations.destroy', id), { preserveScroll: true });
-        }
+        });
     };
 
     const handleSyncMidtrans = (id) => {

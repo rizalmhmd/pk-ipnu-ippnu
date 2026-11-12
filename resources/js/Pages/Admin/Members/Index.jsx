@@ -14,15 +14,16 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useRealtimeUpdates } from '@/Hooks/useRealtimeUpdates';
+import { confirmDelete } from '@/Utils/confirmDelete';
 
 export default function Index({ members }) {
     useRealtimeUpdates('Member', 'members');
     const handleDelete = (id) => {
-        if (confirm('Apakah Anda yakin ingin menghapus data anggota ini?')) {
+        confirmDelete('Apakah Anda yakin ingin menghapus data anggota ini?', () => {
             router.delete(route('admin.members.destroy', id), {
                 preserveScroll: true,
             });
-        }
+        });
     };
 
     return (

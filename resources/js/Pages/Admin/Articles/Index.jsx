@@ -15,19 +15,17 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useRealtimeUpdates } from '@/Hooks/useRealtimeUpdates';
+import { confirmDelete } from '@/Utils/confirmDelete';
 
 export default function Index({ articles }) {
     useRealtimeUpdates('Article', 'articles');
 
     const handleDelete = (id) => {
-        if (confirm('Apakah Anda yakin ingin menghapus artikel ini?')) {
+        confirmDelete('Apakah Anda yakin ingin menghapus artikel ini?', () => {
             router.delete(route('admin.articles.destroy', id), {
                 preserveScroll: true,
-                onSuccess: () => {
-                    // Flash message handled by layout
-                }
             });
-        }
+        });
     };
 
     return (

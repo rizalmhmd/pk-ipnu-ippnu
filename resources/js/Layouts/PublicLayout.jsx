@@ -9,6 +9,11 @@ export default function PublicLayout({ children }) {
     const { siteSetting } = props;
 
     useEffect(() => {
+        // Ensure admin dark mode class never leaks onto public pages
+        document.documentElement.classList.remove('dark');
+    }, [url]);
+
+    useEffect(() => {
         if (window.Echo) {
             console.log('Echo initialized, subscribing to public-content...');
             const channel = window.Echo.channel('public-content')

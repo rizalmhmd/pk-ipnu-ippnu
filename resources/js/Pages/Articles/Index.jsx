@@ -13,6 +13,8 @@ export default function ArticlesIndex({ articles, pageSetting }) {
 
             <HeroSection
                 bgImage={pageSetting?.hero_image_url ? pageSetting.hero_image_url : 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'}
+                title={pageSetting?.hero_title || 'Artikel & Opini'}
+                subtitle={pageSetting?.hero_description || 'Wawasan & pemikiran kader pelajar'}
             />
 
 
@@ -28,7 +30,7 @@ export default function ArticlesIndex({ articles, pageSetting }) {
 
                 {articles.data.length === 0 && (
                     <div className="py-20 text-center bg-white rounded-lg shadow-xl shadow-slate-200/50 border border-slate-100">
-                        <i className="far fa-file-alt text-6xl text-slate-100 mb-6 block"></i>
+                        <i className="far fa-file-alt text-6xl text-slate-300 mb-6 block"></i>
                         <p className="text-slate-500 font-medium">Belum ada artikel yang diterbitkan saat ini.</p>
                     </div>
                 )}

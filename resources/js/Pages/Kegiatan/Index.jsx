@@ -55,9 +55,9 @@ export default function KegiatanIndex({ kegiatans = [], pageSetting }) {
             <Head title="Kegiatan Organisasi" />
 
             <HeroSection
-                bgImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
-                title="Kegiatan Organisasi"
-                subtitle="Dokumentasi dan jadwal program kerja PKPT IPNU IPPNU"
+                bgImage={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"}
+                title={pageSetting?.hero_title || "Kegiatan Organisasi"}
+                subtitle={pageSetting?.hero_description || "Dokumentasi dan jadwal program kerja PKPT IPNU IPPNU"}
             />
 
             <div className="container mx-auto px-6 md:px-12 py-16">

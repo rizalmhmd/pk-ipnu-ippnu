@@ -13,15 +13,16 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useRealtimeUpdates } from '@/Hooks/useRealtimeUpdates';
+import { confirmDelete } from '@/Utils/confirmDelete';
 
 export default function Index({ quotes }) {
     useRealtimeUpdates('Quote', 'quotes');
     const handleDelete = (id) => {
-        if (confirm('Apakah Anda yakin ingin menghapus kutipan ini?')) {
+        confirmDelete('Apakah Anda yakin ingin menghapus kutipan ini?', () => {
             router.delete(route('admin.quotes.destroy', id), {
                 preserveScroll: true,
             });
-        }
+        });
     };
 
     return (

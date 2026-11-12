@@ -1,12 +1,11 @@
 import React from 'react';
-import { Head, Link, usePage, router } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import { UserCog, Plus, Edit, Trash2, Shield, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { confirmDelete } from '@/Utils/confirmDelete';
 
 export default function UsersIndex({ users }) {
-    const { flash } = usePage().props;
-
     const roleBadge = {
         admin:      { bg: 'bg-red-100 dark:bg-red-900/30', text: 'text-red-700 dark:text-red-400', label: 'Administrator' },
         ketua:      { bg: 'bg-blue-100 dark:bg-blue-900/30', text: 'text-blue-700 dark:text-blue-400', label: 'Ketua IPNU/IPPNU' },
@@ -14,34 +13,14 @@ export default function UsersIndex({ users }) {
     };
 
     const handleDelete = (user) => {
-        if (confirm(`Hapus user "${user.name}"? Tindakan ini tidak bisa dibatalkan.`)) {
+        confirmDelete(`Hapus user "${user.name}"? Tindakan ini tidak bisa dibatalkan.`, () => {
             router.delete(`/admin/users/${user.id}`);
-        }
+        });
     };
 
     return (
         <AdminLayout>
             <Head title="Manajemen User" />
-
-            {/* Flash Messages */}
-            {flash?.success && (
-                <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mb-6 p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 rounded-lg text-sm font-medium"
-                >
-                    ✓ {flash.success}
-                </motion.div>
-            )}
-            {flash?.error && (
-                <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 rounded-lg text-sm font-medium"
-                >
-                    ✕ {flash.error}
-                </motion.div>
-            )}
 
             {/* Header */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
@@ -66,7 +45,7 @@ export default function UsersIndex({ users }) {
             </div>
 
             {/* Users Grid */}
-            <div className="flex flex-wrap gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {users.map((user, idx) => {
                     const badge = roleBadge[user.role] || roleBadge.admin;
                     return (
@@ -75,7 +54,7 @@ export default function UsersIndex({ users }) {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.05 }}
-                            className="flex-grow min-w-[300px] max-w-[500px] bg-white dark:bg-slate-900 rounded-lg p-6 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 group hover:shadow-2xl transition-all duration-300"
+                            className="bg-white dark:bg-slate-900 rounded-lg p-6 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 group hover:shadow-2xl transition-all duration-300"
                         >
                             <div className="flex items-start justify-between mb-6">
                                 <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-emerald-200/50 dark:shadow-none">

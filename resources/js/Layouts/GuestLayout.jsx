@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, usePage, Head } from '@inertiajs/react'; // Import usePage
 import { motion } from 'framer-motion';
 
 export default function GuestLayout({ children }) {
     const { siteSetting } = usePage().props; // Get siteSetting from Inertia props
+
+    useEffect(() => {
+        document.documentElement.classList.remove('dark');
+    }, []);
 
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-slate-50 selection:bg-emerald-200 selection:text-emerald-900 px-4">

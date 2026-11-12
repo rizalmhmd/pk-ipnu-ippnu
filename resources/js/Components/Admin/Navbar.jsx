@@ -19,8 +19,25 @@ import {
 
 export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
     const { auth, adminNotifications = [] } = usePage().props;
+    const { url } = usePage();
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+
+    const getPageTitle = () => {
+        if (url.startsWith('/admin/posts')) return 'Berita & Warta';
+        if (url.startsWith('/admin/articles')) return 'Artikel & Opini';
+        if (url.startsWith('/admin/galleries')) return 'Galeri Foto';
+        if (url.startsWith('/admin/members')) return 'Kelola Anggota';
+        if (url.startsWith('/admin/quotes')) return 'Quote & Inspirasi';
+        if (url.startsWith('/admin/agendas')) return 'Agenda & Kegiatan';
+        if (url.startsWith('/admin/registrations')) return 'Pendaftar Kegiatan';
+        if (url.startsWith('/admin/statistics')) return 'Statistik';
+        if (url.startsWith('/admin/page-settings')) return 'Manajemen Halaman';
+        if (url.startsWith('/admin/site-settings')) return 'Pengaturan Website';
+        if (url.startsWith('/admin/users')) return 'Manajemen User';
+        if (url.startsWith('/admin/profile')) return 'Profil Saya';
+        return 'Dashboard';
+    };
 
     // Track unread notifications using last read timestamp in localStorage
     const [lastReadTime, setLastReadTime] = useState(() => {
@@ -69,7 +86,7 @@ export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
                         <Menu size={24} />
                     </button>
                     <h1 className="text-xl font-bold text-slate-800 dark:text-white hidden sm:block">
-                        Dashboard
+                        {getPageTitle()}
                     </h1>
                 </div>
 
@@ -114,7 +131,7 @@ export default function Navbar({ toggleSidebar, darkMode, toggleDarkMode }) {
                                     className="fixed inset-0 z-40 cursor-default"
                                     onClick={() => setIsNotificationOpen(false)}
                                 />
-                                <div className="absolute right-0 mt-3 w-80 sm:w-96 bg-white dark:bg-[#0a1320] rounded-2xl shadow-2xl border border-slate-200/80 dark:border-slate-800/80 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-150">
+                                <div className="absolute right-0 mt-3 w-80 sm:w-96 bg-white dark:bg-[#0a1320] rounded-2xl shadow-2xl border border-slate-200/80 dark:border-slate-800/80 overflow-hidden z-50 transition-all">
                                     {/* Header */}
                                     <div className="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800/70 flex items-center justify-between bg-slate-50/70 dark:bg-[#060c14]/80">
                                         <div className="flex items-center gap-2">

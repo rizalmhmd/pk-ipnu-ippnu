@@ -15,15 +15,16 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useRealtimeUpdates } from '@/Hooks/useRealtimeUpdates';
+import { confirmDelete } from '@/Utils/confirmDelete';
 
 export default function Index({ agendas }) {
     useRealtimeUpdates('Agenda', 'agendas');
     const handleDelete = (id) => {
-        if (confirm('Apakah Anda yakin ingin menghapus agenda ini?')) {
+        confirmDelete('Apakah Anda yakin ingin menghapus agenda ini?', () => {
             router.delete(route('admin.agendas.destroy', id), {
                 preserveScroll: true,
             });
-        }
+        });
     };
 
     const categoryStyles = {

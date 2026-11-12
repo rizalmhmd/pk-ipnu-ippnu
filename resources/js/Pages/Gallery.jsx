@@ -15,6 +15,8 @@ export default function Gallery({ galleries, pageSetting }) {
 
             <HeroSection
                 bgImage={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3"}
+                title={pageSetting?.hero_title || "Galeri Foto"}
+                subtitle={pageSetting?.hero_description || "Dokumentasi visual kegiatan organisasi"}
             />
 
 
@@ -50,7 +52,7 @@ export default function Gallery({ galleries, pageSetting }) {
 
                 {galleries.data.length === 0 && (
                     <div className="py-20 text-center bg-white rounded-lg shadow-xl shadow-slate-200/50 border border-slate-100">
-                        <i className="far fa-images text-6xl text-slate-100 mb-6 block"></i>
+                        <i className="far fa-images text-6xl text-slate-300 mb-6 block"></i>
                         <p className="text-slate-500 font-medium">Galeri foto belum memiliki koleksi saat ini.</p>
                     </div>
                 )}

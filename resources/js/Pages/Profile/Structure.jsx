@@ -51,6 +51,8 @@ export default function Structure({ organizations, pageSetting }) {
 
             <HeroSection
                 bgImage={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3"}
+                title={pageSetting?.hero_title || "Struktur Pengurus"}
+                subtitle={pageSetting?.hero_description || "Susunan kepengurusan aktif PKPT IPNU IPPNU"}
             />
 
             <div className="container mx-auto px-6 py-20">

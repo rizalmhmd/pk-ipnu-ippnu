@@ -16,7 +16,9 @@ import { motion } from 'framer-motion';
 export default function Index({ settings }) {
     const pageIcons = {
         home: Home,
-        about: Info,
+        profile: Info,
+        news: Search,
+        articles: Layout,
         gallery: ImageIcon,
         agenda: Calendar,
         home_greeting: Home,
@@ -26,7 +28,9 @@ export default function Index({ settings }) {
     const getPageName = (slug) => {
         switch (slug) {
             case 'home': return 'Beranda';
-            case 'about': return 'Profil / Tentang';
+            case 'profile': return 'Profil / Tentang';
+            case 'news': return 'Berita & Warta';
+            case 'articles': return 'Artikel & Opini';
             case 'gallery': return 'Galeri Foto';
             case 'agenda': return 'Agenda & Kegiatan';
             case 'home_greeting': return 'Beranda: Sambutan';
@@ -46,7 +50,7 @@ export default function Index({ settings }) {
                 </div>
             </div>
 
-            <div className="flex flex-wrap gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {settings.map((page, idx) => {
                     const Icon = pageIcons[page.page_name] || Layout;
                     return (
@@ -55,7 +59,7 @@ export default function Index({ settings }) {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 }}
-                            className="flex-grow min-w-[320px] max-w-[450px] bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none p-10 relative group overflow-hidden flex flex-col h-full"
+                            className="bg-white dark:bg-slate-900 rounded-lg border border-slate-100 dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none p-8 relative group overflow-hidden flex flex-col h-full"
                         >
                             {/* Accent Background */}
                             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full -mr-16 -mt-16 group-hover:bg-emerald-500/10 transition-colors"></div>
