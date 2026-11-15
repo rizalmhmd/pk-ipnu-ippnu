@@ -47,16 +47,11 @@ class FileStorageService
             return asset($path);
         }
 
-        try {
-            if (Storage::disk('public')->exists($path)) {
-                return asset('storage/' . ltrim($path, '/'));
-            }
-        } catch (\Throwable $e) {
-            // Fall through to configured disk
-        }
-
         if (self::shouldUseCloudinary()) {
             try {
+                if (Storage::disk('public')->exists($path)) {
+                    return asset('storage/' . ltrim($path, '/'));
+                }
                 return Storage::disk('cloudinary')->url($path);
             } catch (\Throwable $e) {
                 Log::warning('Cloudinary URL resolution failed: ' . $e->getMessage());

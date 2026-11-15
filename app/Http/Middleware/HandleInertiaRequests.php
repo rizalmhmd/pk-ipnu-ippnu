@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -38,19 +39,10 @@ class HandleInertiaRequests extends Middleware
     {
         $siteSetting = null;
         $activeQuotes = [];
-        $adminCounts = null;
 
         try {
-            $siteSetting = \App\Models\SiteSetting::first();
-            $activeQuotes = \App\Models\Quote::where('is_active', true)->orderBy('order', 'asc')->get();
-            if ($request->user()) {
-                $adminCounts = [
-                    'posts' => \App\Models\Post::count(),
-                    'galleries' => \App\Models\Gallery::count(),
-                    'members' => \App\Models\Member::count(),
-                    'agendas' => \App\Models\Agenda::count(),
-                ];
-            }
+            $siteSetting = Cache::remember('site_setting_shared', 3600, fn () => \App\Models\SiteSetting::first());
+            $activeQuotes = Cache::remember('active_quotes_shared', 3600, fn () => \App\Models\Quote::where('is_active', true)->orderBy('order', 'asc')->get());
         } catch (\Throwable $e) {
             // Silently fallback if tables are not migrated yet
         }
@@ -72,7 +64,21 @@ class HandleInertiaRequests extends Middleware
             },
             'siteSetting' => $siteSetting,
             'activeQuotes' => $activeQuotes,
-            'adminCounts' => $adminCounts,
+            'adminCounts' => function () use ($request) {
+                if (!$request->user()) {
+                    return null;
+                }
+                try {
+                    return Cache::remember('admin_sidebar_counts', 300, fn () => [
+                        'posts' => \App\Models\Post::count(),
+                        'galleries' => \App\Models\Gallery::count(),
+                        'members' => \App\Models\Member::count(),
+                        'agendas' => \App\Models\Agenda::count(),
+                    ]);
+                } catch (\Throwable $e) {
+                    return null;
+                }
+            },
             'adminNotifications' => function () use ($request) {
                 if (!$request->user()) {
                     return [];

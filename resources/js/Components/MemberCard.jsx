@@ -26,6 +26,8 @@ export default function MemberCard({ member, idx, onClick }) {
                         <img
                             src={member.photo_url}
                             alt={member.name}
+                            loading="lazy"
+                            decoding="async"
                             className="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700"
                         />
                     ) : (

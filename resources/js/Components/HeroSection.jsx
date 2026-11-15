@@ -38,10 +38,11 @@ export default function HeroSection({ bgImage, title, subtitle, hideIndicators =
                     className="absolute inset-0 z-0"
                 >
                     <motion.img
-                        initial={{ scale: 1.1 }}
+                        initial={{ scale: 1.03 }}
                         animate={{ scale: 1 }}
-                        transition={{ duration: 1.5, ease: "easeOut" }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
                         src={quotesToDisplay && quotesToDisplay[currentQuote]?.image_url ? quotesToDisplay[currentQuote].image_url : bgImage}
+                        decoding="async"
                         className="w-full h-full object-cover brightness-[0.4]"
                         alt="Hero BG"
                     />
@@ -56,9 +57,9 @@ export default function HeroSection({ bgImage, title, subtitle, hideIndicators =
                     {title ? (
                         <motion.div
                             key="static-title"
-                            initial={{ y: 30, opacity: 0 }}
+                            initial={{ y: 12, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
                             className="max-w-4xl"
                         >
                             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight font-serif uppercase tracking-tight drop-shadow-2xl">

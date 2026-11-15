@@ -36,10 +36,8 @@ class PublicController extends Controller
                         ->take(5)
                         ->get();
 
-        // Fetch active quotes
-        $activeQuotes = Quote::where('is_active', true)
-                       ->orderBy('order', 'asc')
-                       ->get();
+        // Fetch active quotes (reuse shared cache)
+        $activeQuotes = Cache::remember('active_quotes_shared', 3600, fn () => Quote::where('is_active', true)->orderBy('order', 'asc')->get());
 
         // Fetch active statistics
         $statistics = Statistic::active()->ordered()->get();
@@ -539,29 +537,38 @@ class PublicController extends Controller
         $cacheKey = "national_holidays_id_{$year}_v3";
 
         return Cache::remember($cacheKey, now()->addDays(30), function () use ($year) {
-            try {
-                $response = Http::timeout(20)->get('https://libur.deno.dev/api');
+            $rawData = Cache::get('national_holidays_raw_api_v1');
 
-                if ($response->successful() && is_array($response->json())) {
-                    $normalized = collect($response->json())
-                        ->filter(function ($item) use ($year) {
-                            $date = $item['date'] ?? null;
-                            if (!$date) {
-                                return false;
-                            }
+            if ($rawData === null && !Cache::has('national_holidays_api_cooldown')) {
+                try {
+                    $response = Http::timeout(4)->get('https://libur.deno.dev/api');
+                    if ($response->successful() && is_array($response->json())) {
+                        $rawData = $response->json();
+                        Cache::put('national_holidays_raw_api_v1', $rawData, now()->addDays(30));
+                    } else {
+                        Cache::put('national_holidays_api_cooldown', true, now()->addMinutes(15));
+                    }
+                } catch (\Throwable $e) {
+                    \Log::warning("Failed to fetch national holidays for {$year}: " . $e->getMessage());
+                    Cache::put('national_holidays_api_cooldown', true, now()->addMinutes(15));
+                }
+            }
 
-                            return (int) substr($date, 0, 4) === $year;
-                        })
-                        ->map(fn ($item) => $this->normalizeNationalHoliday($item))
-                        ->filter()
-                        ->sortBy('date')
-                        ->values()
-                        ->all();
+            if (is_array($rawData)) {
+                $normalized = collect($rawData)
+                    ->filter(function ($item) use ($year) {
+                        $date = $item['date'] ?? null;
+                        return $date && (int) substr($date, 0, 4) === $year;
+                    })
+                    ->map(fn ($item) => $this->normalizeNationalHoliday($item))
+                    ->filter()
+                    ->sortBy('date')
+                    ->values()
+                    ->all();
 
+                if (!empty($normalized)) {
                     return $this->harmonizeCutiBersamaNames($normalized);
                 }
-            } catch (\Throwable $e) {
-                \Log::warning("Failed to fetch national holidays for {$year}: " . $e->getMessage());
             }
 
             return $this->getNationalHolidayFallback($year);

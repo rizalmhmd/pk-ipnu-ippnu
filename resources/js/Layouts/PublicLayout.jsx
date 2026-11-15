@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import Navbar from '../Components/Navbar';
 import Footer from '../Components/Footer';
-import { motion, AnimatePresence } from 'framer-motion';
-import { usePage, Head, router } from '@inertiajs/react';
+import { motion } from 'framer-motion';
+import { usePage, Head } from '@inertiajs/react';
 
 export default function PublicLayout({ children }) {
     const { url, props } = usePage();
@@ -12,24 +12,6 @@ export default function PublicLayout({ children }) {
         // Ensure admin dark mode class never leaks onto public pages
         document.documentElement.classList.remove('dark');
     }, [url]);
-
-    useEffect(() => {
-        if (window.Echo) {
-            console.log('Echo initialized, subscribing to public-content...');
-            const channel = window.Echo.channel('public-content')
-                .listen('.content.updated', (e) => {
-                    console.log('Real-time content update received:', e);
-                    router.reload({
-                        preserveScroll: true,
-                        preserveState: true
-                    });
-                });
-
-            return () => {
-                channel.stopListening('.content.updated');
-            };
-        }
-    }, []);
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-50 selection:bg-emerald-200 selection:text-emerald-900">
@@ -50,17 +32,14 @@ export default function PublicLayout({ children }) {
             <Navbar />
 
             <main className="flex-grow">
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={url}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3, ease: "easeOut" }}
-                    >
-                        {children}
-                    </motion.div>
-                </AnimatePresence>
+                <motion.div
+                    key={url}
+                    initial={{ opacity: 0.92 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.12, ease: "easeOut" }}
+                >
+                    {children}
+                </motion.div>
             </main>
 
             <Footer />

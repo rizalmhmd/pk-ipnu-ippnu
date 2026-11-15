@@ -6,7 +6,6 @@ import { Trash2, Users, Download, Check, X, FileImage, Eye, Filter, RefreshCw, C
 import { motion, AnimatePresence } from 'framer-motion';
 import Swal from 'sweetalert2';
 import axios from 'axios';
-import ExcelJS from 'exceljs';
 import { parseFullNik } from '@/Utils/nikParser';
 import { confirmDelete } from '@/Utils/confirmDelete';
 
@@ -72,6 +71,7 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                 return;
             }
 
+            const { default: ExcelJS } = await import('exceljs');
             const workbook = new ExcelJS.Workbook();
             workbook.creator = 'PK IPNU IPPNU';
             workbook.created = new Date();

@@ -249,7 +249,7 @@ function StructureCard({ member, isTop, isDept, isStaff, themeColor, onClick }) 
                 {/* Photo with Overlay */}
                 <div className="relative aspect-square rounded-lg overflow-hidden mb-5 bg-slate-100 dark:bg-slate-800 group/img">
                     {member.photo_url ? (
-                        <img src={member.photo_url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={member.name} />
+                        <img src={member.photo_url} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt={member.name} />
                     ) : (
                         <div className="w-full h-full flex items-center justify-center">
                             <Users className={`w-12 h-12 ${isEmerald ? 'text-emerald-100 dark:text-emerald-900/40' : 'text-blue-100 dark:text-blue-900/40'}`} />

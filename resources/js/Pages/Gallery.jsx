@@ -37,6 +37,8 @@ export default function Gallery({ galleries, pageSetting }) {
                         >
                             <img
                                 src={item.image_url}
+                                loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                                 alt={item.title}
                             />
