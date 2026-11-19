@@ -22,26 +22,31 @@ use Midtrans\Notification;
 class PublicController extends Controller
 {
 
+    private function getPageSetting(string $pageName): ?PageSetting
+    {
+        return Cache::remember("page_setting_{$pageName}", 600, fn () => PageSetting::where('page_name', $pageName)->first());
+    }
+
     public function index()
     {
-        $posts = Post::latest()->take(4)->get();
-        $articles = Article::latest()->take(4)->get();
-        $pageSetting = PageSetting::where('page_name', 'home')->first();
-        $greeting = PageSetting::where('page_name', 'home_greeting')->first();
-        
+        $posts = Cache::remember('welcome_posts_4', 300, fn () => Post::latest()->take(4)->get());
+        $articles = Cache::remember('welcome_articles_4', 300, fn () => Article::latest()->take(4)->get());
+        $pageSetting = $this->getPageSetting('home');
+        $greeting = $this->getPageSetting('home_greeting');
+
         // Fetch upcoming agendas (including those from the last 3 days)
-        $agendas = Agenda::withActiveRegistrationCount()
-                        ->where('event_date', '>=', now()->subDays(3)->toDateString())
-                        ->orderBy('event_date', 'asc')
-                        ->take(5)
-                        ->get();
+        $agendas = Cache::remember('welcome_agendas_5', 180, fn () => Agenda::withActiveRegistrationCount()
+            ->where('event_date', '>=', now()->subDays(3)->toDateString())
+            ->orderBy('event_date', 'asc')
+            ->take(5)
+            ->get());
 
         // Fetch active quotes (reuse shared cache)
         $activeQuotes = Cache::remember('active_quotes_shared', 3600, fn () => Quote::where('is_active', true)->orderBy('order', 'asc')->get());
 
         // Fetch active statistics
-        $statistics = Statistic::active()->ordered()->get();
-        
+        $statistics = Cache::remember('public_statistics', 600, fn () => Statistic::active()->ordered()->get());
+
         return Inertia::render('Welcome', compact('posts', 'articles', 'pageSetting', 'greeting', 'agendas', 'activeQuotes', 'statistics'));
     }
 
@@ -52,7 +57,7 @@ class PublicController extends Controller
 
     public function visionMission()
     {
-        $pageSetting = PageSetting::where('page_name', 'profile')->first();
+        $pageSetting = $this->getPageSetting('profile');
         return Inertia::render('Profile/VisionMission', [
             'pageSetting' => $pageSetting,
         ]);
@@ -60,7 +65,7 @@ class PublicController extends Controller
 
     public function history()
     {
-        $pageSetting = PageSetting::where('page_name', 'profile')->first();
+        $pageSetting = $this->getPageSetting('profile');
         return Inertia::render('Profile/History', [
             'pageSetting' => $pageSetting,
         ]);
@@ -68,8 +73,8 @@ class PublicController extends Controller
 
     public function structure()
     {
-        $organizations = Member::orderBy('order', 'asc')->get();
-        $pageSetting = PageSetting::where('page_name', 'profile')->first();
+        $organizations = Cache::remember('public_members', 600, fn () => Member::orderBy('order', 'asc')->get());
+        $pageSetting = $this->getPageSetting('profile');
         return Inertia::render('Profile/Structure', [
             'organizations' => $organizations,
             'pageSetting' => $pageSetting,
@@ -78,59 +83,64 @@ class PublicController extends Controller
 
     public function news()
     {
-        $posts = Post::latest()->paginate(12);
-        $pageSetting = PageSetting::where('page_name', 'news')->first();
+        $page = max(1, (int) request('page', 1));
+        $posts = Cache::remember("public_news_page_{$page}", 300, fn () => Post::latest()->paginate(12));
+        $pageSetting = $this->getPageSetting('news');
         return Inertia::render('News/Index', compact('posts', 'pageSetting'));
     }
 
     public function newsDetail($slug)
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
+        $post = Cache::remember("public_news_detail_{$slug}", 300, fn () => Post::where('slug', $slug)->firstOrFail());
         return Inertia::render('News/Show', compact('post'));
     }
 
     public function articles()
     {
-        $articles = Article::latest()->paginate(12);
-        $pageSetting = PageSetting::where('page_name', 'articles')->first();
+        $page = max(1, (int) request('page', 1));
+        $articles = Cache::remember("public_articles_page_{$page}", 300, fn () => Article::latest()->paginate(12));
+        $pageSetting = $this->getPageSetting('articles');
         return Inertia::render('Articles/Index', compact('articles', 'pageSetting'));
     }
 
     public function articlesDetail($slug)
     {
-        $article = Article::where('slug', $slug)->firstOrFail();
+        $article = Cache::remember("public_article_detail_{$slug}", 300, fn () => Article::where('slug', $slug)->firstOrFail());
         return Inertia::render('Articles/Show', compact('article'));
     }
 
     public function gallery()
     {
-        $galleries = Gallery::latest()->paginate(12);
-        $pageSetting = PageSetting::where('page_name', 'gallery')->first();
+        $page = max(1, (int) request('page', 1));
+        $galleries = Cache::remember("public_galleries_page_{$page}", 300, fn () => Gallery::latest()->paginate(12));
+        $pageSetting = $this->getPageSetting('gallery');
         return Inertia::render('Gallery', compact('galleries', 'pageSetting'));
     }
 
     public function agenda()
     {
-        $agendas = Agenda::withActiveRegistrationCount()
-                         ->where('event_date', '>=', now()->subMonths(1)->toDateString())
-                         ->orderBy('event_date', 'asc')
-                         ->get();
-        
-        $todayAgendas = Agenda::withActiveRegistrationCount()->whereDate('event_date', now()->toDateString())->get();
-        $pageSetting = PageSetting::where('page_name', 'agenda')->first();
-        
+        $agendas = Cache::remember('public_agendas_list', 180, fn () => Agenda::withActiveRegistrationCount()
+            ->where('event_date', '>=', now()->subMonths(1)->toDateString())
+            ->orderBy('event_date', 'asc')
+            ->get());
+
+        $todayAgendas = Cache::remember('public_today_agendas', 180, fn () => Agenda::withActiveRegistrationCount()
+            ->whereDate('event_date', now()->toDateString())
+            ->get());
+        $pageSetting = $this->getPageSetting('agenda');
+
         // Include national holidays for the calendar view
         $nationalHolidays = $this->getNationalHolidaysData();
-        
+
         return Inertia::render('Agenda/Index', compact('agendas', 'todayAgendas', 'pageSetting', 'nationalHolidays'));
     }
 
     public function kegiatan()
     {
-        $kegiatans = Agenda::withActiveRegistrationCount()->orderBy('event_date', 'desc')->get();
-        
-        $pageSetting = PageSetting::where('page_name', 'agenda')->first();
-        
+        $kegiatans = Cache::remember('public_kegiatans_list', 120, fn () => Agenda::withActiveRegistrationCount()->orderBy('event_date', 'desc')->get());
+
+        $pageSetting = $this->getPageSetting('agenda');
+
         return Inertia::render('Kegiatan/Index', compact('kegiatans', 'pageSetting'));
     }
 
