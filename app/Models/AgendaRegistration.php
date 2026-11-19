@@ -18,18 +18,64 @@ class AgendaRegistration extends Model
         'midtrans_payment_type',
         'midtrans_transaction_status',
         'midtrans_settlement_time',
+        'attended_at',
+        'checked_in_by',
+        'attendance_note',
     ];
 
     protected $casts = [
         'responses' => 'array',
         'midtrans_settlement_time' => 'datetime',
+        'attended_at' => 'datetime',
     ];
 
-    protected $appends = ['payment_proof_url'];
+    protected $appends = ['payment_proof_url', 'ticket_code', 'qr_payload', 'qr_url', 'self_check_in_url'];
 
     public function getPaymentProofUrlAttribute(): ?string
     {
         return \App\Services\FileStorageService::url($this->payment_proof);
+    }
+
+    public function getTicketCodeAttribute(): string
+    {
+        return 'REG-' . str_pad((string) $this->id, 5, '0', STR_PAD_LEFT);
+    }
+
+    public function getTicketSignature(): string
+    {
+        return substr(hash_hmac('sha256', "{$this->ticket_code}|{$this->agenda_id}", (string) config('app.key')), 0, 12);
+    }
+
+    public function getQrPayloadAttribute(): string
+    {
+        return "TICKET:{$this->ticket_code}|SIG:{$this->getTicketSignature()}";
+    }
+
+    public function getQrUrlAttribute(): string
+    {
+        return 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' . urlencode($this->qr_payload);
+    }
+
+    public function getAttendanceToken(): string
+    {
+        return hash_hmac('sha256', "kegiatan-attendance:{$this->id}:{$this->agenda_id}", (string) config('app.key'));
+    }
+
+    public function hasValidAttendanceToken(?string $token): bool
+    {
+        if (!$token) {
+            return false;
+        }
+
+        return hash_equals($this->getAttendanceToken(), $token);
+    }
+
+    public function getSelfCheckInUrlAttribute(): string
+    {
+        return route('kegiatan.attendance.show', [
+            'registration' => $this->id,
+            'token' => $this->getAttendanceToken(),
+        ]);
     }
 
     /**
@@ -58,6 +104,11 @@ class AgendaRegistration extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function checkedInBy()
+    {
+        return $this->belongsTo(User::class, 'checked_in_by');
     }
 
     /**

@@ -36,6 +36,8 @@ Route::get('/api/agendas', [PublicController::class, 'getAgendasJson'])->name('a
 
 Route::get('/kegiatan/payment/{registration}', [PublicController::class, 'kegiatanPayment'])->name('kegiatan.payment');
 Route::post('/kegiatan/payment/{registration}/verify', [PublicController::class, 'kegiatanVerifyPayment'])->name('kegiatan.payment.verify');
+Route::get('/kegiatan/presensi/{registration}', [PublicController::class, 'kegiatanAttendance'])->name('kegiatan.attendance.show');
+Route::post('/kegiatan/presensi/{registration}/confirm', [PublicController::class, 'kegiatanConfirmAttendance'])->name('kegiatan.attendance.confirm');
 Route::post('/api/midtrans-callback', [PublicController::class, 'midtransCallback'])->name('api.midtrans-callback');
 
 // Admin Routes (Protected) - All authenticated users can access dashboard & profile
@@ -58,11 +60,15 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
 
     });
 
-    // ── Ketua IPNU/IPPNU: agenda, galeri, anggota, statistik, pendaftar ────────────────
+    // ── Ketua IPNU/IPPNU: agenda, galeri, anggota, statistik, pendaftar, presensi ────────────────
     Route::middleware('role:admin,ketua')->group(function () {
+        Route::get('attendance', [AgendaRegistrationController::class, 'attendance'])->name('attendance.index');
+        Route::post('attendance/check-in', [AgendaRegistrationController::class, 'checkIn'])->name('attendance.checkIn');
+        Route::put('attendance/{agenda}/toggle-open', [AgendaRegistrationController::class, 'toggleAgendaAttendance'])->name('attendance.toggleOpen');
         Route::get('registrations/export-data', [AgendaRegistrationController::class, 'exportData'])->name('registrations.exportData');
         Route::get('registrations', [AgendaRegistrationController::class, 'index'])->name('registrations.index');
         Route::put('registrations/{id}/status', [AgendaRegistrationController::class, 'updateStatus'])->name('registrations.updateStatus');
+        Route::put('registrations/{id}/attendance', [AgendaRegistrationController::class, 'toggleAttendance'])->name('registrations.toggleAttendance');
         Route::post('registrations/{id}/sync-midtrans', [AgendaRegistrationController::class, 'syncMidtrans'])->name('registrations.syncMidtrans');
         Route::post('registrations/sync-all-midtrans', [AgendaRegistrationController::class, 'syncAllMidtrans'])->name('registrations.syncAllMidtrans');
         Route::delete('registrations/{id}', [AgendaRegistrationController::class, 'destroy'])->name('registrations.destroy');

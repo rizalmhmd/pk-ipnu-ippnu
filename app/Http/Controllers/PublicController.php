@@ -507,6 +507,65 @@ class PublicController extends Controller
         ]);
     }
 
+    public function kegiatanAttendance(\App\Models\AgendaRegistration $registration, Request $request)
+    {
+        $token = $request->query('token');
+        if (!$registration->hasValidAttendanceToken(is_string($token) ? $token : null)) {
+            abort(403, 'Tautan presensi tidak valid atau kedaluwarsa.');
+        }
+
+        $registration->load('agenda');
+
+        return Inertia::render('Kegiatan/SelfCheckIn', [
+            'registration' => [
+                'id' => $registration->id,
+                'ticket_code' => $registration->ticket_code,
+                'status' => $registration->status,
+                'qr_url' => $registration->qr_url,
+                'attended_at' => $registration->attended_at?->toIso8601String(),
+                'registrant_name' => $registration->getRegistrantName(),
+                'agenda' => [
+                    'id' => $registration->agenda?->id,
+                    'title' => $registration->agenda?->title,
+                    'event_date' => $registration->agenda?->event_date?->format('d F Y'),
+                    'event_time' => $registration->agenda?->event_time,
+                    'location' => $registration->agenda?->location,
+                    'is_attendance_open' => (bool) $registration->agenda?->is_attendance_open,
+                ],
+            ],
+            'attendanceToken' => $token,
+        ]);
+    }
+
+    public function kegiatanConfirmAttendance(\App\Models\AgendaRegistration $registration, Request $request)
+    {
+        $token = $request->input('token');
+        if (!$registration->hasValidAttendanceToken(is_string($token) ? $token : null)) {
+            abort(403, 'Tautan presensi tidak valid.');
+        }
+
+        $registration->load('agenda');
+
+        if ($registration->status !== 'approved') {
+            return back()->with('error', 'Pendaftaran Anda belum berstatus Approved sehingga belum dapat melakukan presensi.');
+        }
+
+        if (!$registration->agenda?->is_attendance_open) {
+            return back()->with('error', 'Sesi presensi mandiri belum dibuka oleh panitia.');
+        }
+
+        if ($registration->attended_at) {
+            return back()->with('success', 'Kehadiran Anda sudah tercatat sebelumnya.');
+        }
+
+        $registration->update([
+            'attended_at' => now(),
+            'attendance_note' => 'Self check-in via tautan E-Ticket',
+        ]);
+
+        return back()->with('success', 'Presensi berhasil! Kehadiran Anda telah tercatat di sistem.');
+    }
+
     public function midtransCallback(Request $request)
     {
         $midtransService = new \App\Services\MidtransService();

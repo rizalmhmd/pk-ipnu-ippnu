@@ -14,6 +14,7 @@ class Agenda extends Model
         'event_time',
         'location',
         'is_registration_open',
+        'is_attendance_open',
         'max_participants',
         'registration_fee',
         'payment_account',
@@ -71,6 +72,7 @@ class Agenda extends Model
     protected $casts = [
         'event_date' => 'date:Y-m-d',
         'is_registration_open' => 'boolean',
+        'is_attendance_open' => 'boolean',
         'max_participants' => 'integer',
         'form_schema' => 'array',
     ];

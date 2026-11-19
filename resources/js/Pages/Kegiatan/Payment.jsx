@@ -201,9 +201,22 @@ export default function Payment({ registration, snapToken, pageSetting, clientKe
                                     <CheckCircle2 size={44} />
                                 </div>
                                 <h2 className="text-2xl font-bold text-slate-800 mb-2">Pendaftaran Telah Disetujui!</h2>
-                                <p className="text-slate-600 mb-8">
-                                    Terima kasih! Pembayaran Anda telah kami terima dan diverifikasi secara otomatis.
+                                <p className="text-slate-600 mb-6">
+                                    Terima kasih! Pembayaran Anda telah kami terima. Simpan E-Ticket &amp; QR Code berikut untuk presensi saat acara berlangsung.
                                 </p>
+                                {registration.qr_url && (
+                                    <div className="mb-6 p-5 bg-slate-50 border-2 border-dashed border-emerald-200 rounded-2xl inline-block">
+                                        <img
+                                            src={registration.qr_url}
+                                            alt={`QR Presensi ${registration.ticket_code || `REG-${registration.id}`}`}
+                                            className="w-44 h-44 mx-auto rounded-lg bg-white p-2 shadow-sm"
+                                        />
+                                        <p className="mt-3 text-xs font-bold uppercase tracking-widest text-slate-400">Kode E-Ticket</p>
+                                        <p className="text-lg font-mono font-black text-emerald-700">
+                                            {registration.ticket_code || `REG-${registration.id}`}
+                                        </p>
+                                    </div>
+                                )}
                                 <Link
                                     href={route('kegiatan.index')}
                                     className="inline-flex items-center justify-center gap-2 w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-200 transition-all"

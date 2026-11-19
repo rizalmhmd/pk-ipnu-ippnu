@@ -236,6 +236,19 @@
                 </div>
             </div>
 
+            <!-- Self Check-in CTA -->
+            <div style="text-align: center; background-color: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 20px; margin: 20px 0;">
+                <div style="font-size: 13px; font-weight: 700; color: #065f46; margin-bottom: 6px;">
+                    Presensi Kehadiran Mandiri (Self Check-in)
+                </div>
+                <p style="font-size: 12px; color: #047857; margin: 0 0 14px 0; line-height: 1.5;">
+                    Saat sesi presensi dibuka oleh panitia pada hari pelaksanaan kegiatan, Anda cukup mengklik tombol di bawah ini untuk mencatat kehadiran Anda secara otomatis:
+                </p>
+                <a href="{{ $attendanceUrl }}" style="display: inline-block; background-color: #059669; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 14px; padding: 12px 26px; border-radius: 8px;">
+                    &#10003; Konfirmasi Kehadiran (Hadir)
+                </a>
+            </div>
+
             <!-- Notice Card -->
             <div class="notice-card">
                 <strong>Catatan Penting untuk Peserta:</strong>

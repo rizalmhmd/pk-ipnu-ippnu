@@ -14,7 +14,8 @@ import {
     Globe,
     BarChart,
     UserCog,
-    UserCheck
+    UserCheck,
+    QrCode
 } from 'lucide-react';
 
 export default function Sidebar({ isOpen, setIsOpen }) {
@@ -33,6 +34,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         { name: 'Anggota', href: '/admin/members', icon: Users, roles: ['admin', 'ketua'] },
         { name: 'Agenda', href: '/admin/agendas', icon: Calendar, roles: ['admin', 'ketua'] },
         { name: 'Pendaftar', href: '/admin/registrations', icon: UserCheck, roles: ['admin', 'ketua'] },
+        { name: 'Presensi', href: '/admin/attendance', icon: QrCode, roles: ['admin', 'ketua'] },
         { name: 'Statistik', href: '/admin/statistics', icon: BarChart, roles: ['admin', 'ketua'] },
     ];
 

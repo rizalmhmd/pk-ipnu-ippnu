@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import AdminLayout from '@/Layouts/AdminLayout';
 import Pagination from '@/Components/Pagination';
-import { Trash2, Users, Download, Check, X, FileImage, Eye, Filter, RefreshCw, CreditCard, Search, FileSpreadsheet } from 'lucide-react';
+import { Trash2, Users, Download, Check, X, FileImage, Eye, Filter, RefreshCw, CreditCard, Search, FileSpreadsheet, QrCode, CheckCircle2, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -56,6 +56,7 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                 params: {
                     agenda_id: filters.agenda_id || '',
                     status: filters.status || '',
+                    attendance: filters.attendance || '',
                     search: filters.search || '',
                 }
             });
@@ -124,6 +125,8 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                 { header: 'Email', key: 'registrant_email', width: 25 },
                 { header: 'NIK', key: 'registrant_nik', width: 20 },
                 { header: 'Status', key: 'status', width: 14 },
+                { header: 'Presensi', key: 'attendance_status', width: 14 },
+                { header: 'Waktu Check-in', key: 'attended_at', width: 18 },
                 { header: 'Metode Bayar', key: 'payment_method', width: 18 },
                 { header: 'Order ID Midtrans', key: 'midtrans_order_id', width: 24 },
             ];
@@ -179,6 +182,8 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                     item.registrant_email,
                     item.registrant_nik,
                     item.status,
+                    item.attendance_status || 'BELUM HADIR',
+                    item.attended_at || '-',
                     item.payment_method,
                     item.midtrans_order_id,
                 ];
@@ -264,6 +269,10 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
         }
     };
 
+    const handleToggleAttendance = (id) => {
+        router.put(route('admin.registrations.toggleAttendance', id), {}, { preserveScroll: true });
+    };
+
     const handleUpdateStatus = (id, status) => {
         if (status === 'rejected') {
             Swal.fire({
@@ -336,6 +345,15 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                     <p className="text-slate-500 dark:text-slate-400 font-medium">Kelola, verifikasi, dan ekspor pendaftar dari seluruh agenda kegiatan.</p>
                 </div>
                 <div className="flex flex-wrap items-center gap-3">
+                    <Link
+                        href={route('admin.attendance.index')}
+                        className="inline-flex items-center gap-2 px-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-bold shadow-md shadow-teal-600/20 transition-all"
+                        title="Buka halaman Scan QR & Presensi Kehadiran Peserta"
+                    >
+                        <QrCode size={16} />
+                        <span>Presensi / Scan QR</span>
+                    </Link>
+
                     <button
                         onClick={handleExportExcel}
                         disabled={isExporting}
@@ -421,8 +439,22 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                             <Filter size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                         </div>
 
+                        {/* Attendance Filter */}
+                        <div className="relative min-w-[160px] flex-1 sm:flex-initial">
+                            <select
+                                value={filters.attendance || ''}
+                                onChange={(e) => handleFilterChange('attendance', e.target.value)}
+                                className="w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-lg text-sm font-bold text-slate-700 dark:text-slate-200 focus:outline-none focus:border-emerald-500 transition-colors appearance-none"
+                            >
+                                <option value="">Semua Presensi</option>
+                                <option value="present">Sudah Hadir</option>
+                                <option value="absent">Belum Hadir</option>
+                            </select>
+                            <Filter size={15} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                        </div>
+
                         {/* Reset Filter Button */}
-                        {(filters.agenda_id || filters.status || filters.search) && (
+                        {(filters.agenda_id || filters.status || filters.attendance || filters.search) && (
                             <button
                                 onClick={() => {
                                     setSearchTerm('');
@@ -446,6 +478,7 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                                 <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap">Pendaftar & Agenda</th>
                                 <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap text-center">Metode</th>
                                 <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap text-center">Status</th>
+                                <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap text-center">Presensi</th>
                                 <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest whitespace-nowrap text-center">Bukti Bayar</th>
                                 <th className="px-6 py-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest text-center">Aksi</th>
                             </tr>
@@ -513,6 +546,32 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                                                 </span>
                                             )}
                                         </div>
+                                    </td>
+                                    <td className="px-6 py-4 text-center">
+                                        {reg.status === 'approved' ? (
+                                            <button
+                                                type="button"
+                                                onClick={() => handleToggleAttendance(reg.id)}
+                                                className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${
+                                                    reg.attended_at
+                                                        ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-400'
+                                                        : 'bg-slate-100 text-slate-500 hover:bg-emerald-50 hover:text-emerald-600 dark:bg-slate-800 dark:text-slate-400'
+                                                }`}
+                                                title={reg.attended_at ? `Hadir pada ${new Date(reg.attended_at).toLocaleString('id-ID')} (klik untuk batalkan)` : 'Klik untuk tandai hadir'}
+                                            >
+                                                {reg.attended_at ? (
+                                                    <>
+                                                        <CheckCircle2 size={12} /> Hadir
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Clock size={12} /> Belum
+                                                    </>
+                                                )}
+                                            </button>
+                                        ) : (
+                                            <span className="text-xs text-slate-400 italic">-</span>
+                                        )}
                                     </td>
                                     <td className="px-6 py-4 text-center">
                                         {(reg.payment_proof_url || reg.payment_proof) ? (
@@ -598,6 +657,32 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Agenda</p>
                                     <p className="font-bold text-slate-800 dark:text-white">{selectedReg.agenda?.title}</p>
                                 </div>
+
+                                {selectedReg.status === 'approved' && selectedReg.qr_url && (
+                                    <div className="p-4 bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 rounded-xl flex items-center gap-4">
+                                        <img
+                                            src={selectedReg.qr_url}
+                                            alt={`QR ${selectedReg.ticket_code}`}
+                                            className="w-24 h-24 rounded-lg bg-white p-1.5 border border-slate-200 shrink-0"
+                                        />
+                                        <div className="space-y-1 text-xs">
+                                            <span className="inline-block px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold text-[10px] uppercase tracking-wider">
+                                                E-Ticket Presensi
+                                            </span>
+                                            <p className="font-mono text-base font-black text-slate-900 dark:text-white">
+                                                {selectedReg.ticket_code}
+                                            </p>
+                                            <p className="text-slate-500 dark:text-slate-400">
+                                                Status:{' '}
+                                                <strong className={selectedReg.attended_at ? 'text-emerald-600' : 'text-amber-600'}>
+                                                    {selectedReg.attended_at
+                                                        ? `Hadir (${new Date(selectedReg.attended_at).toLocaleString('id-ID')})`
+                                                        : 'Belum Hadir'}
+                                                </strong>
+                                            </p>
+                                        </div>
+                                    </div>
+                                )}
 
                                 {selectedReg.payment_method === 'midtrans' && (
                                     <div className="p-4 bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-200/80 dark:border-emerald-800/80 rounded-xl space-y-3">
