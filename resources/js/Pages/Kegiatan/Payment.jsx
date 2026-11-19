@@ -4,15 +4,22 @@ import PublicLayout from '@/Layouts/PublicLayout';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { CreditCard, CheckCircle2, RefreshCw, AlertCircle, ArrowLeft, Wallet } from 'lucide-react';
+import { CreditCard, CheckCircle2, RefreshCw, AlertCircle, ArrowLeft, Wallet, QrCode } from 'lucide-react';
 
 export default function Payment({ registration, snapToken, pageSetting, clientKey, isProduction, registrantName, paymentToken }) {
     const [isSnapLoaded, setIsSnapLoaded] = useState(false);
     const [isVerifying, setIsVerifying] = useState(false);
     const [paymentVerified, setPaymentVerified] = useState(registration.status === 'approved');
     const autoOpenAttempted = useRef(false);
+    const hasShownSuccessRef = useRef(registration.status === 'approved');
+    const isVerifyingRef = useRef(false);
 
     const verifyPaymentStatus = useCallback(async (orderId = null, showFeedback = false) => {
+        if (hasShownSuccessRef.current || isVerifyingRef.current) {
+            return hasShownSuccessRef.current;
+        }
+
+        isVerifyingRef.current = true;
         setIsVerifying(true);
         try {
             const response = await axios.post(route('kegiatan.payment.verify', registration.id), {
@@ -22,12 +29,16 @@ export default function Payment({ registration, snapToken, pageSetting, clientKe
 
             if (response.data.success && response.data.status === 'approved') {
                 setPaymentVerified(true);
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Pembayaran Berhasil!',
-                    text: 'E-Ticket & QR Code presensi Anda sudah siap di layar (juga dikirim ke email Anda).',
-                    confirmButtonColor: '#059669',
-                });
+                if (!hasShownSuccessRef.current) {
+                    hasShownSuccessRef.current = true;
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pembayaran Berhasil!',
+                        text: 'E-Ticket & QR Code presensi Anda sudah siap di layar (juga dikirim ke email Anda).',
+                        confirmButtonText: 'Lihat E-Ticket',
+                        confirmButtonColor: '#059669',
+                    });
+                }
                 return true;
             } else {
                 if (showFeedback) {
@@ -69,9 +80,10 @@ export default function Payment({ registration, snapToken, pageSetting, clientKe
             }
             return false;
         } finally {
+            isVerifyingRef.current = false;
             setIsVerifying(false);
         }
-    }, [registration.id, registration.midtrans_order_id]);
+    }, [registration.id, registration.midtrans_order_id, paymentToken]);
 
     const handlePay = useCallback(() => {
         if (!window.snap || !snapToken) {
@@ -107,6 +119,8 @@ export default function Payment({ registration, snapToken, pageSetting, clientKe
     }, [snapToken, verifyPaymentStatus]);
 
     useEffect(() => {
+        if (paymentVerified) return;
+
         const midtransScriptUrl = isProduction 
             ? 'https://app.midtrans.com/snap/snap.js'
             : 'https://app.sandbox.midtrans.com/snap/snap.js';
@@ -214,12 +228,23 @@ export default function Payment({ registration, snapToken, pageSetting, clientKe
                                         </p>
                                     </div>
                                 )}
-                                <Link
-                                    href={route('kegiatan.index')}
-                                    className="inline-flex items-center justify-center gap-2 w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-200 transition-all"
-                                >
-                                    Kembali ke Beranda Kegiatan
-                                </Link>
+                                <div className="space-y-3">
+                                    {registration.self_check_in_url && (
+                                        <a
+                                            href={registration.self_check_in_url}
+                                            className="inline-flex items-center justify-center gap-2 w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-200 transition-all"
+                                        >
+                                            <QrCode size={18} />
+                                            Buka E-Ticket &amp; Presensi Mandiri
+                                        </a>
+                                    )}
+                                    <Link
+                                        href={route('kegiatan.index')}
+                                        className="inline-flex items-center justify-center gap-2 w-full py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl border border-slate-200 transition-all"
+                                    >
+                                        Kembali ke Beranda Kegiatan
+                                    </Link>
+                                </div>
                             </div>
                         ) : (
                             <>

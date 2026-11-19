@@ -459,21 +459,15 @@ class PublicController extends Controller
     {
         $this->authorizePaymentAccess($registration, $request);
 
-        if ($registration->status === 'approved') {
-            return redirect()->route('kegiatan.index')
-                ->with('success', 'Pendaftaran Anda sudah berhasil disetujui dan pembayaran telah terkonfirmasi.');
-        }
+        if ($registration->status !== 'approved') {
+            if ($registration->payment_method !== 'midtrans' || !$registration->snap_token) {
+                return redirect()->route('kegiatan.index')->withErrors(['message' => 'Pembayaran ini tidak menggunakan Midtrans.']);
+            }
 
-        if ($registration->payment_method !== 'midtrans' || !$registration->snap_token) {
-            return redirect()->route('kegiatan.index')->withErrors(['message' => 'Pembayaran ini tidak menggunakan Midtrans.']);
-        }
-
-        // Proactively check status with Midtrans in case webhook was missed (e.g. local environment or network latency)
-        $midtransService = new \App\Services\MidtransService();
-        $syncResult = $midtransService->syncRegistration($registration);
-        if ($syncResult['success'] && $syncResult['status'] === 'approved') {
-            return redirect()->route('kegiatan.index')
-                ->with('success', 'Pembayaran berhasil terkonfirmasi! Status pendaftaran Anda telah disetujui.');
+            // Proactively check status with Midtrans in case webhook was missed (e.g. local environment or network latency)
+            $midtransService = new \App\Services\MidtransService();
+            $midtransService->syncRegistration($registration);
+            $registration->refresh();
         }
 
         $registration->load('agenda');
