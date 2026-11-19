@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Member;
 use App\Models\Gallery;
 use App\Models\Agenda;
+use App\Models\AgendaRegistration;
 use App\Models\Quote;
 use App\Models\SiteSetting;
 use App\Models\Article;
@@ -56,6 +57,7 @@ class AppServiceProvider extends ServiceProvider
         Member::observe(ContentObserver::class);
         Gallery::observe(ContentObserver::class);
         Agenda::observe(ContentObserver::class);
+        AgendaRegistration::observe(ContentObserver::class);
         Quote::observe(ContentObserver::class);
         SiteSetting::observe(ContentObserver::class);
         Article::observe(ContentObserver::class);

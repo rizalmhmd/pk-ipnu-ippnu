@@ -29,7 +29,7 @@ export default function HeroSection({ bgImage, title, subtitle, hideIndicators =
         : (quotesToDisplay && quotesToDisplay[currentQuote]?.image_url ? quotesToDisplay[currentQuote].image_url : bgImage);
 
     return (
-        <section className={`relative ${title ? 'h-[52vh] min-h-[360px] max-h-[520px] pt-16' : 'h-screen'} w-full overflow-hidden flex flex-col items-center justify-center shadow-2xl group bg-neutral-950`}>
+        <section className={`relative ${title ? 'min-h-[360px] md:min-h-[420px] pt-28 pb-16 md:pt-36 md:pb-20' : 'h-screen'} w-full overflow-hidden flex flex-col items-center justify-center shadow-2xl group bg-neutral-950`}>
             {/* Background Image with Cross-fade Effect */}
             <AnimatePresence>
                 <motion.div
@@ -65,7 +65,7 @@ export default function HeroSection({ bgImage, title, subtitle, hideIndicators =
                             transition={{ duration: 0.3, ease: "easeOut" }}
                             className="max-w-4xl"
                         >
-                            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight font-serif uppercase tracking-tight drop-shadow-2xl">
+                            <h1 className={`${title.length > 35 ? 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl' : 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl'} font-black text-white mb-5 leading-tight font-serif uppercase tracking-tight drop-shadow-2xl`}>
                                 {title}
                             </h1>
                             {subtitle && (
