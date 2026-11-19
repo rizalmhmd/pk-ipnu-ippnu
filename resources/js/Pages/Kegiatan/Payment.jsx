@@ -25,11 +25,8 @@ export default function Payment({ registration, snapToken, pageSetting, clientKe
                 Swal.fire({
                     icon: 'success',
                     title: 'Pembayaran Berhasil!',
-                    text: 'Status pendaftaran Anda telah disetujui. Mengalihkan ke halaman kegiatan...',
-                    timer: 2500,
-                    showConfirmButton: false,
-                }).then(() => {
-                    window.location.href = response.data.redirect_url || (route('kegiatan.index') + '?status=success');
+                    text: 'E-Ticket & QR Code presensi Anda sudah siap di layar (juga dikirim ke email Anda).',
+                    confirmButtonColor: '#059669',
                 });
                 return true;
             } else {

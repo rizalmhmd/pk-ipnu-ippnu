@@ -94,7 +94,7 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
             });
 
             // Title Rows
-            sheet.mergeCells('A1', 'K1');
+            sheet.mergeCells('A1', 'M1');
             const titleCell = sheet.getCell('A1');
             titleCell.value = 'DATA REKAP PENDAFTAR KEGIATAN - PK IPNU IPPNU';
             titleCell.font = { name: 'Calibri', size: 15, bold: true, color: { argb: 'FF065F46' } };
@@ -104,7 +104,7 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
             // Subtitle Info
             const selectedAgenda = agendas.find(a => String(a.id) === String(filters.agenda_id));
             const subtitle = selectedAgenda ? `Agenda: ${selectedAgenda.title}` : 'Semua Agenda Kegiatan';
-            sheet.mergeCells('A2', 'K2');
+            sheet.mergeCells('A2', 'M2');
             const subCell = sheet.getCell('A2');
             subCell.value = `${subtitle} | Waktu Ekspor: ${new Date().toLocaleString('id-ID')} | Total: ${list.length} Pendaftar`;
             subCell.font = { name: 'Calibri', size: 10, italic: true, color: { argb: 'FF4B5563' } };
@@ -201,7 +201,7 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                     cell.font = { name: 'Calibri', size: 10 };
                     cell.alignment = { 
                         vertical: 'middle', 
-                        horizontal: [1, 2, 6, 8, 9, 10].includes(colNumber) ? 'center' : 'left' 
+                        horizontal: [1, 2, 6, 8, 9, 10, 11, 12].includes(colNumber) ? 'center' : 'left' 
                     };
                     cell.border = {
                         top: { style: 'thin', color: { argb: 'FFE5E7EB' } },
@@ -225,6 +225,15 @@ export default function RegistrationsIndex({ registrations, agendas, filters }) 
                             cell.font = { bold: true, color: { argb: 'FFDC2626' } };
                         } else {
                             cell.font = { bold: true, color: { argb: 'FFD97706' } };
+                        }
+                    }
+
+                    // Attendance styling
+                    if (colNumber === 10) {
+                        if (item.attendance_status === 'HADIR') {
+                            cell.font = { bold: true, color: { argb: 'FF059669' } };
+                        } else {
+                            cell.font = { bold: true, color: { argb: 'FF64748B' } };
                         }
                     }
                 });
