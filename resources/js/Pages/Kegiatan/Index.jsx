@@ -1,12 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import HeroSection from '@/Components/HeroSection';
 import { motion, AnimatePresence } from 'framer-motion';
 import Swal from 'sweetalert2';
 
 export default function KegiatanIndex({ kegiatans = [], pageSetting }) {
+    const { flash } = usePage().props;
     const [activeFilter, setActiveFilter] = useState('semua');
+
+    useEffect(() => {
+        if (flash?.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Pendaftaran Berhasil!',
+                text: flash.success,
+                confirmButtonColor: '#059669',
+            });
+        } else if (flash?.error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Terjadi Kesalahan',
+                text: flash.error,
+                confirmButtonColor: '#ef4444',
+            });
+        }
+    }, [flash?.success, flash?.error]);
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);

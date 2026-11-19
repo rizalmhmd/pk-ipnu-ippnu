@@ -36,6 +36,9 @@ export default function NewsDetail({ post }) {
 
             <HeroSection
                 bgImage={post.image_url ? post.image_url : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80'}
+                title={post.title}
+                subtitle="Berita & Warta Organisasi"
+                hideIndicators
             />
 
 

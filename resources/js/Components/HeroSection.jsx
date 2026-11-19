@@ -7,13 +7,13 @@ export default function HeroSection({ bgImage, title, subtitle, hideIndicators =
     const [currentQuote, setCurrentQuote] = useState(0);
 
     useEffect(() => {
-        if (activeQuotes?.length > 1) {
+        if (!title && activeQuotes?.length > 1) {
             const timer = setInterval(() => {
                 nextQuote();
             }, 8000);
             return () => clearInterval(timer);
         }
-    }, [activeQuotes, currentQuote]);
+    }, [activeQuotes, currentQuote, title]);
 
     const nextQuote = () => {
         setCurrentQuote((prev) => (prev + 1) % activeQuotes.length);
@@ -23,14 +23,17 @@ export default function HeroSection({ bgImage, title, subtitle, hideIndicators =
         setCurrentQuote((prev) => (prev - 1 + activeQuotes.length) % activeQuotes.length);
     };
 
-    const quotesToDisplay = activeQuotes?.length > 0 ? activeQuotes : null;
+    const quotesToDisplay = !title && activeQuotes?.length > 0 ? activeQuotes : null;
+    const activeBgImage = title
+        ? bgImage
+        : (quotesToDisplay && quotesToDisplay[currentQuote]?.image_url ? quotesToDisplay[currentQuote].image_url : bgImage);
 
     return (
-        <section className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center shadow-2xl group bg-neutral-950">
+        <section className={`relative ${title ? 'h-[52vh] min-h-[360px] max-h-[520px] pt-16' : 'h-screen'} w-full overflow-hidden flex flex-col items-center justify-center shadow-2xl group bg-neutral-950`}>
             {/* Background Image with Cross-fade Effect */}
             <AnimatePresence>
                 <motion.div
-                    key={quotesToDisplay && quotesToDisplay[currentQuote]?.image ? quotesToDisplay[currentQuote].image : 'default-bg'}
+                    key={!title && quotesToDisplay && quotesToDisplay[currentQuote]?.image ? quotesToDisplay[currentQuote].image : `default-bg-${activeBgImage}`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -41,7 +44,7 @@ export default function HeroSection({ bgImage, title, subtitle, hideIndicators =
                         initial={{ scale: 1.03 }}
                         animate={{ scale: 1 }}
                         transition={{ duration: 0.5, ease: "easeOut" }}
-                        src={quotesToDisplay && quotesToDisplay[currentQuote]?.image_url ? quotesToDisplay[currentQuote].image_url : bgImage}
+                        src={activeBgImage}
                         decoding="async"
                         className="w-full h-full object-cover brightness-[0.4]"
                         alt="Hero BG"

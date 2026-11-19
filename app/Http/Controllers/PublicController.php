@@ -449,8 +449,14 @@ class PublicController extends Controller
             }
         }
 
+        $successMessage = $isFree
+            ? 'Pendaftaran berhasil dikirim! Data Anda sedang menunggu verifikasi panitia, dan E-Ticket akan dikirim ke email setelah disetujui.'
+            : ($paymentMethod === 'transfer'
+                ? 'Pendaftaran & bukti transfer berhasil dikirim! Panitia akan memverifikasi pembayaran Anda dan mengirimkan E-Ticket ke email Anda.'
+                : 'Pendaftaran berhasil dikirim! Silakan lakukan pembayaran Cash/Tunai ke panitia. E-Ticket akan dikirim ke email setelah diverifikasi.');
+
         return redirect()->route('kegiatan.index')
-            ->with('success', 'Pendaftaran berhasil dikirim. Terima kasih!');
+            ->with('success', $successMessage);
     }
 
     protected function authorizePaymentAccess(\App\Models\AgendaRegistration $registration, Request $request): void
