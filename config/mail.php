@@ -112,7 +112,9 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'name' => ($mailFromName = env('MAIL_FROM_NAME')) && $mailFromName !== '${APP_NAME}'
+            ? $mailFromName
+            : env('APP_NAME', 'PKPT IPNU IPPNU UNSIQ'),
     ],
 
 ];
