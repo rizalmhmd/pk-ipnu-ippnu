@@ -34,5 +34,9 @@ foreach ($tmpDirs as $dir) {
     }
 }
 
+// Pastikan Laravel tidak menganggap '/api' sebagai base path (agar route '/api/...' tidak 404)
+$_SERVER['SCRIPT_NAME'] = '/index.php';
+$_SERVER['PHP_SELF'] = '/index.php';
+
 // Teruskan request ke entry point asli Laravel
 require __DIR__ . '/../public/index.php';
