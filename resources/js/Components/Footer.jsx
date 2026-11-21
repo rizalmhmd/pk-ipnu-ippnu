@@ -4,6 +4,29 @@ import { Link, usePage } from '@inertiajs/react';
 export default function Footer() {
     const { siteSetting, auth } = usePage().props;
 
+    const normalizeSocialUrl = (platform, value) => {
+        if (!value) return null;
+        const trimmed = String(value).trim();
+        if (!trimmed) return null;
+        if (/^https?:\/\//i.test(trimmed)) return trimmed;
+
+        const handle = trimmed.replace(/^@/, '');
+        switch (platform) {
+            case 'instagram':
+                return `https://www.instagram.com/${handle}`;
+            case 'facebook':
+                return `https://www.facebook.com/${handle}`;
+            case 'twitter':
+                return `https://x.com/${handle}`;
+            case 'youtube':
+                return trimmed.startsWith('@')
+                    ? `https://www.youtube.com/${trimmed}`
+                    : `https://www.youtube.com/results?search_query=${encodeURIComponent(trimmed)}`;
+            default:
+                return `https://${trimmed}`;
+        }
+    };
+
     return (
         <footer className="bg-slate-950 text-slate-400 pt-12 pb-8 border-t border-white/5">
             <div className="container mx-auto px-6 md:px-12">
@@ -31,15 +54,16 @@ export default function Footer() {
 
                     <div className="flex gap-4">
                         {[
-                            { icon: 'facebook-f', link: siteSetting?.facebook },
-                            { icon: 'instagram', link: siteSetting?.instagram },
-                            { icon: 'twitter', link: siteSetting?.twitter },
-                            { icon: 'youtube', link: siteSetting?.youtube },
+                            { icon: 'facebook-f', link: normalizeSocialUrl('facebook', siteSetting?.facebook) },
+                            { icon: 'instagram', link: normalizeSocialUrl('instagram', siteSetting?.instagram) },
+                            { icon: 'twitter', link: normalizeSocialUrl('twitter', siteSetting?.twitter) },
+                            { icon: 'youtube', link: normalizeSocialUrl('youtube', siteSetting?.youtube) },
                         ].map((social, idx) => social.link && (
                             <a
                                 key={idx}
                                 href={social.link}
                                 target="_blank"
+                                rel="noopener noreferrer"
                                 className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-emerald-600 hover:border-emerald-500 hover:-translate-y-1 transition-all duration-300"
                             >
                                 <i className={`fab fa-${social.icon}`}></i>

@@ -28,7 +28,7 @@ export default function VisionMission({ pageSetting }) {
             <Head title="Visi & Misi - PKPT IPNU IPPNU" />
 
             <HeroSection
-                bgImage={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3"}
+                bgImage={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"}
                 title={pageSetting?.hero_title || "Visi & Misi"}
                 subtitle={pageSetting?.hero_description || "Arah gerak & cita-cita kader pelajar NU"}
             />
@@ -45,7 +45,11 @@ export default function VisionMission({ pageSetting }) {
                         >
                             <div className="absolute -top-10 -left-10 w-40 h-40 bg-emerald-100/50 rounded-full blur-3xl opacity-50"></div>
                             <img
-                                src={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1522202176988-66273c2ea55f?ixlib=rb-4.0.3"}
+                                src={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1523240715639-9988d1ee9b1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"}
+                                onError={(e) => {
+                                    e.currentTarget.onerror = null;
+                                    e.currentTarget.src = "https://images.unsplash.com/photo-1523240715639-9988d1ee9b1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80";
+                                }}
                                 className="relative z-10 rounded-lg shadow-2xl border-4 sm:border-8 border-white dark:border-slate-900 w-full object-cover aspect-[4/3]"
                                 alt="Organization"
                             />

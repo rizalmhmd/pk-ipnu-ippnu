@@ -17,7 +17,7 @@ export default function History({ pageSetting }) {
             <Head title="Sejarah - PKPT IPNU IPPNU" />
 
             <HeroSection
-                bgImage={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1464695110811-47a0584c9c61?ixlib=rb-4.0.3"}
+                bgImage={pageSetting?.hero_image_url || "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"}
                 title={pageSetting?.hero_title || "Sejarah Organisasi"}
                 subtitle={pageSetting?.hero_description || "Jejak langkah & khidmah PKPT IPNU IPPNU"}
             />

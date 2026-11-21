@@ -603,7 +603,7 @@ class PublicController extends Controller
 
     private function getNationalHolidaysByYear(int $year): array
     {
-        $cacheKey = "national_holidays_id_{$year}_v3";
+        $cacheKey = "national_holidays_id_{$year}_v4";
 
         return Cache::remember($cacheKey, now()->addDays(30), function () use ($year) {
             $rawData = Cache::get('national_holidays_raw_api_v1');
@@ -790,16 +790,103 @@ class PublicController extends Controller
 
     private function getNationalHolidayFallback(int $year): array
     {
-        // Fallback minimum to keep UI stable when external API is unavailable.
+        if ($year === 2026) {
+            // Data resmi SKB 3 Menteri Tahun 2026 (17 Libur Nasional + 8 Cuti Bersama)
+            $holidays2026 = [
+                ['2026-01-01', 'Tahun Baru 2026 Masehi', 'nasional', 'libur_nasional'],
+                ['2026-01-16', 'Isra Mikraj Nabi Muhammad SAW', 'keagamaan', 'libur_nasional'],
+                ['2026-02-16', 'Cuti Bersama Tahun Baru Imlek 2577 Kongzili', 'cuti_bersama', 'cuti_bersama'],
+                ['2026-02-17', 'Tahun Baru Imlek 2577 Kongzili', 'keagamaan', 'libur_nasional'],
+                ['2026-03-18', 'Cuti Bersama Hari Suci Nyepi (Tahun Baru Saka 1948)', 'cuti_bersama', 'cuti_bersama'],
+                ['2026-03-19', 'Hari Suci Nyepi (Tahun Baru Saka 1948)', 'keagamaan', 'libur_nasional'],
+                ['2026-03-20', 'Cuti Bersama Hari Raya Idulfitri 1447 Hijriah', 'cuti_bersama', 'cuti_bersama'],
+                ['2026-03-21', 'Hari Raya Idulfitri 1447 Hijriah', 'keagamaan', 'libur_nasional'],
+                ['2026-03-22', 'Hari Raya Idulfitri 1447 Hijriah', 'keagamaan', 'libur_nasional'],
+                ['2026-03-23', 'Cuti Bersama Hari Raya Idulfitri 1447 Hijriah', 'cuti_bersama', 'cuti_bersama'],
+                ['2026-03-24', 'Cuti Bersama Hari Raya Idulfitri 1447 Hijriah', 'cuti_bersama', 'cuti_bersama'],
+                ['2026-04-03', 'Wafat Yesus Kristus', 'keagamaan', 'libur_nasional'],
+                ['2026-04-05', 'Kebangkitan Yesus Kristus (Paskah)', 'keagamaan', 'libur_nasional'],
+                ['2026-05-01', 'Hari Buruh Internasional', 'nasional', 'libur_nasional'],
+                ['2026-05-14', 'Kenaikan Yesus Kristus', 'keagamaan', 'libur_nasional'],
+                ['2026-05-15', 'Cuti Bersama Kenaikan Yesus Kristus', 'cuti_bersama', 'cuti_bersama'],
+                ['2026-05-27', 'Hari Raya Iduladha 1447 Hijriah', 'keagamaan', 'libur_nasional'],
+                ['2026-05-28', 'Cuti Bersama Hari Raya Iduladha 1447 Hijriah', 'cuti_bersama', 'cuti_bersama'],
+                ['2026-05-31', 'Hari Raya Waisak 2570 BE', 'keagamaan', 'libur_nasional'],
+                ['2026-06-01', 'Hari Lahir Pancasila', 'nasional', 'libur_nasional'],
+                ['2026-06-16', '1 Muharam Tahun Baru Islam 1448 Hijriah', 'keagamaan', 'libur_nasional'],
+                ['2026-08-17', 'Proklamasi Kemerdekaan Republik Indonesia', 'nasional', 'libur_nasional'],
+                ['2026-08-25', 'Maulid Nabi Muhammad SAW', 'keagamaan', 'libur_nasional'],
+                ['2026-12-24', 'Cuti Bersama Kelahiran Yesus Kristus (Natal)', 'cuti_bersama', 'cuti_bersama'],
+                ['2026-12-25', 'Kelahiran Yesus Kristus (Natal)', 'keagamaan', 'libur_nasional'],
+            ];
+
+            return array_map(function ($item) {
+                [$date, $title, $cat, $type] = $item;
+                return [
+                    'title' => $title,
+                    'official_name' => $title,
+                    'date' => $date,
+                    'event_date' => $date,
+                    'cat' => $cat,
+                    'type' => $type,
+                    'desc' => $type === 'cuti_bersama'
+                        ? 'Cuti Bersama (SKB 3 Menteri 2026)'
+                        : 'Libur Nasional Indonesia (SKB 3 Menteri 2026)',
+                    'source' => 'skb-3-menteri-2026',
+                ];
+            }, $holidays2026);
+        }
+
+        // Fallback hari libur tetap nasional untuk tahun lain ketika API eksternal tidak tersedia.
         return [
             [
-                'title' => "Tahun Baru Masehi {$year}",
-                'official_name' => "Tahun Baru Masehi {$year}",
+                'title' => "Tahun Baru {$year} Masehi",
+                'official_name' => "Tahun Baru {$year} Masehi",
                 'date' => "{$year}-01-01",
                 'event_date' => "{$year}-01-01",
                 'cat' => 'nasional',
                 'type' => 'libur_nasional',
-                'desc' => 'Fallback kalender nasional (API tidak tersedia)',
+                'desc' => 'Libur Nasional Indonesia',
+                'source' => 'local-fallback',
+            ],
+            [
+                'title' => 'Hari Buruh Internasional',
+                'official_name' => 'Hari Buruh Internasional',
+                'date' => "{$year}-05-01",
+                'event_date' => "{$year}-05-01",
+                'cat' => 'nasional',
+                'type' => 'libur_nasional',
+                'desc' => 'Libur Nasional Indonesia',
+                'source' => 'local-fallback',
+            ],
+            [
+                'title' => 'Hari Lahir Pancasila',
+                'official_name' => 'Hari Lahir Pancasila',
+                'date' => "{$year}-06-01",
+                'event_date' => "{$year}-06-01",
+                'cat' => 'nasional',
+                'type' => 'libur_nasional',
+                'desc' => 'Libur Nasional Indonesia',
+                'source' => 'local-fallback',
+            ],
+            [
+                'title' => 'Proklamasi Kemerdekaan Republik Indonesia',
+                'official_name' => 'Proklamasi Kemerdekaan Republik Indonesia',
+                'date' => "{$year}-08-17",
+                'event_date' => "{$year}-08-17",
+                'cat' => 'nasional',
+                'type' => 'libur_nasional',
+                'desc' => 'Libur Nasional Indonesia',
+                'source' => 'local-fallback',
+            ],
+            [
+                'title' => 'Kelahiran Yesus Kristus (Natal)',
+                'official_name' => 'Kelahiran Yesus Kristus (Natal)',
+                'date' => "{$year}-12-25",
+                'event_date' => "{$year}-12-25",
+                'cat' => 'keagamaan',
+                'type' => 'libur_nasional',
+                'desc' => 'Libur Nasional Indonesia',
                 'source' => 'local-fallback',
             ],
         ];
