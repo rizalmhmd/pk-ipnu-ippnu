@@ -1,17 +1,12 @@
 import React from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import PublicLayout from '@/Layouts/PublicLayout';
 import HeroSection from '@/Components/HeroSection';
+import ProfileTabs from '@/Components/ProfileTabs';
 import { motion } from 'framer-motion';
 import { Sprout, ScrollText, Compass, Globe, BookOpen } from 'lucide-react';
 
 export default function History({ pageSetting }) {
-    const profileTabs = [
-        { label: 'Visi & Misi', href: '/profil/visi-misi', active: false },
-        { label: 'Sejarah', href: '/profil/sejarah', active: true },
-        { label: 'Struktur Organisasi', href: '/profil/struktur-organisasi', active: false },
-    ];
-
     const historyParagraphs = (pageSetting?.content_sejarah || '')
         .split(/\r?\n\s*\n/)
         .map((paragraph) => paragraph.trim())
@@ -59,24 +54,7 @@ export default function History({ pageSetting }) {
             />
 
             <div className="container mx-auto px-6 py-12 md:py-20">
-                {/* Sub-navigasi Profil */}
-                <div className="max-w-3xl mx-auto mb-10 md:mb-12 flex justify-center">
-                    <div className="inline-flex flex-wrap justify-center gap-1 p-1.5 bg-slate-100 rounded-xl border border-slate-200/70">
-                        {profileTabs.map((tab) => (
-                            <Link
-                                key={tab.href}
-                                href={tab.href}
-                                className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${
-                                    tab.active
-                                        ? 'bg-white text-emerald-700 shadow-sm'
-                                        : 'text-slate-600 hover:text-emerald-700 hover:bg-white/60'
-                                }`}
-                            >
-                                {tab.label}
-                            </Link>
-                        ))}
-                    </div>
-                </div>
+                <ProfileTabs active="history" />
 
                 {/* Narasi Sejarah */}
                 <div className="max-w-3xl mx-auto mb-14 md:mb-16 pb-12 border-b border-slate-200/80">
